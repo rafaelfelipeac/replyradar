@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.answeryourfriends
+package com.rafaelfelipeac.replyradar
 
 interface Platform {
     val name: String

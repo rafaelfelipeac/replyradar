@@ -87,11 +87,11 @@ kotlin {
 }
 
 android {
-    namespace = "com.rafaelfelipeac.answeryourfriends"
+    namespace = "com.rafaelfelipeac.replyradar"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.rafaelfelipeac.answeryourfriends"
+        applicationId = "com.rafaelfelipeac.replyradar"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -119,11 +119,11 @@ dependencies {
 
 compose.desktop {
     application {
-        mainClass = "com.rafaelfelipeac.answeryourfriends.MainKt"
+        mainClass = "com.rafaelfelipeac.replyradar.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.rafaelfelipeac.answeryourfriends"
+            packageName = "com.rafaelfelipeac.replyradar"
             packageVersion = "1.0.0"
         }
     }

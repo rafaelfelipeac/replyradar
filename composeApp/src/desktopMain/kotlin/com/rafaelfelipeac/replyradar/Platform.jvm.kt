@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.answeryourfriends
+package com.rafaelfelipeac.replyradar
 
 class JVMPlatform: Platform {
     override val name: String = "Java ${System.getProperty("java.version")}"

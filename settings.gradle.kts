@@ -1,4 +1,4 @@
-rootProject.name = "AnswerYourFriends"
+rootProject.name = "ReplyRadar"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
