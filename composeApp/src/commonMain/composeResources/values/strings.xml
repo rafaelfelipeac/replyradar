@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="to_reply">To Reply</string>
+    <string name="replied">Replied</string>
+    <string name="no_search_results">Oops, there aren't any replies for your search query.</string>
+    <string name="no_replies_resolved">No replies resolved yet.</string>
+    <string name="description">Description</string>
+</resources>
