@@ -1,8 +1,10 @@
-package com.rafaelfelipeac.replyradar.reply.presentation.reply_list
+package com.rafaelfelipeac.replyradar.reply.presentation.replylist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rafaelfelipeac.replyradar.reply.domain.ReplyRepository
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetMode
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -33,14 +35,45 @@ class ReplyListViewModel(
 
     fun onAction(action: ReplyListAction) {
         when (action) {
-            is ReplyListAction.OnReplyClick -> {
+            is ReplyListAction.OnAddReplyClick -> {
+                _state.update {
+                    it.copy(
+                        bottomSheetState = BottomSheetState(
+                            mode = BottomSheetMode.CREATE
+                        )
+                    )
+                }
+            }
 
+            is ReplyListAction.OnReplyClick -> {
+                _state.update {
+                    it.copy(
+                        bottomSheetState = BottomSheetState(
+                            mode = BottomSheetMode.EDIT,
+                            reply = action.reply
+                        )
+                    )
+                }
             }
 
             is ReplyListAction.OnTabSelected -> {
                 _state.update {
                     it.copy(selectedTabIndex = action.index)
                 }
+            }
+
+            is ReplyListAction.OnAddReply -> {
+                val x = "add"
+            }
+
+            is ReplyListAction.OnEditReply -> {
+                val x = "edit"
+            }
+
+            ReplyListAction.OnDismissBottomSheet -> {
+                _state.value = state.value.copy(
+                    bottomSheetState = null
+                )
             }
         }
     }

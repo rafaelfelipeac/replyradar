@@ -3,8 +3,8 @@ package com.rafaelfelipeac.replyradar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.reply.domain.Reply
-import com.rafaelfelipeac.replyradar.reply.presentation.reply_list.ReplyListScreen
-import com.rafaelfelipeac.replyradar.reply.presentation.reply_list.ReplyListState
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListScreen
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListState
 
 private val replies = (1..100).map {
     Reply(

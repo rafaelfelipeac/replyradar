@@ -8,11 +8,9 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import com.rafaelfelipeac.replyradar.reply.data.repository.ReplyRepositoryImpl
-import com.rafaelfelipeac.replyradar.reply.presentation.reply_list.ReplyListViewModel
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModelOf
-import com.rafaelfelipeac.replyradar.reply.presentation.reply_detail.ReplyDetailViewModel
-import com.rafaelfelipeac.replyradar.reply.presentation.SelectedReplyViewModel
 
 expect val platformModule: Module
 
@@ -27,6 +25,4 @@ val sharedModule = module {
     single { get<FavoriteReplyDatabase>().replyDao }
 
     viewModelOf(::ReplyListViewModel)
-    viewModelOf(::ReplyDetailViewModel)
-    viewModelOf(::SelectedReplyViewModel)
 }

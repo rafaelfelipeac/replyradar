@@ -9,7 +9,4 @@ sealed interface Route {
 
     @Serializable
     data object ReplyList: Route
-
-    @Serializable
-    data class ReplyDetail(val id: String): Route
 }

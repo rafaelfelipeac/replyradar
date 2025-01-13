@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.replyradar.reply.presentation.reply_list.components
+package com.rafaelfelipeac.replyradar.reply.presentation.replylist.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.rafaelfelipeac.replyradar.core.presentation.LightBlue
 import com.rafaelfelipeac.replyradar.reply.domain.Reply
 
 @Composable
@@ -35,7 +34,6 @@ fun ReplyListItem(
         shape = RoundedCornerShape(32.dp),
         modifier = modifier
             .clickable(onClick = onClick),
-        color = LightBlue.copy(alpha = 0.2f)
     ) {
         Row(
             modifier = Modifier

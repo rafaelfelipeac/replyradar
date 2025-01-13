@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.replyradar.reply.presentation.reply_list.components
+package com.rafaelfelipeac.replyradar.reply.presentation.replylist.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
