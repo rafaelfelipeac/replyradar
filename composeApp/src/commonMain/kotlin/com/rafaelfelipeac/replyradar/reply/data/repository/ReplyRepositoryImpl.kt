@@ -1,15 +1,10 @@
 package com.rafaelfelipeac.replyradar.reply.data.repository
 
-import androidx.sqlite.SQLiteException
-import com.rafaelfelipeac.replyradar.core.domain.DataError
-import com.rafaelfelipeac.replyradar.core.domain.EmptyResult
 import com.rafaelfelipeac.replyradar.reply.data.database.dao.ReplyDao
 import com.rafaelfelipeac.replyradar.reply.data.mapper.toReplyEntity
 import com.rafaelfelipeac.replyradar.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.reply.domain.repository.ReplyRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
-import com.rafaelfelipeac.replyradar.core.domain.Result
 import com.rafaelfelipeac.replyradar.reply.data.mapper.toReply
 import kotlinx.coroutines.flow.map
 
@@ -25,13 +20,8 @@ class ReplyRepositoryImpl(
             }
     }
 
-    override suspend fun toggleReplyResolve(reply: Reply): EmptyResult<DataError.Local> { // DC
-        return try {
-            replyDao.upsert(reply.toReplyEntity())
-            Result.Success(Unit) // ???
-        } catch (e: SQLiteException) {
-            Result.Error(DataError.Local.DISK_FULL) // ?
-        }
+    override suspend fun toggleReplyResolve(reply: Reply) { // DC
+        replyDao.upsert(reply.toReplyEntity())
     }
 
     override suspend fun upsertReply(reply: Reply) {
