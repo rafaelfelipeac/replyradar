@@ -2,6 +2,7 @@ package com.rafaelfelipeac.replyradar.core.database
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.rafaelfelipeac.replyradar.core.AppConstants.DB_NAME
 import java.io.File
 
 actual class DatabaseFactory {
@@ -18,7 +19,7 @@ actual class DatabaseFactory {
             appDataDir.mkdirs()
         }
 
-        val dbFile = File(appDataDir, ReplyDatabase.DB_NAME)
+        val dbFile = File(appDataDir, DB_NAME)
         return Room.databaseBuilder(dbFile.absolutePath)
     }
 }

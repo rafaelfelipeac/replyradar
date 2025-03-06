@@ -13,8 +13,4 @@ import com.rafaelfelipeac.replyradar.reply.data.database.entity.ReplyEntity
 @ConstructedBy(ReplyDatabaseConstructor::class)
 abstract class ReplyDatabase: RoomDatabase() {
     abstract val replyDao: ReplyDao
-
-    companion object {
-        const val DB_NAME = "replyradar.db"
-    }
 }

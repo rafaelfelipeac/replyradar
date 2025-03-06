@@ -2,6 +2,7 @@ package com.rafaelfelipeac.replyradar.core.database
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.rafaelfelipeac.replyradar.core.AppConstants.DB_NAME
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
@@ -10,7 +11,7 @@ import platform.Foundation.NSUserDomainMask
 @OptIn(ExperimentalForeignApi::class)
 actual class DatabaseFactory {
     actual fun create(): RoomDatabase.Builder<ReplyDatabase> {
-        val dbFile = documentDirectory() + "/${ReplyDatabase.DB_NAME}"
+        val dbFile = documentDirectory() + "/${DB_NAME}"
         return Room.databaseBuilder<ReplyDatabase>(
             name = dbFile
         )
