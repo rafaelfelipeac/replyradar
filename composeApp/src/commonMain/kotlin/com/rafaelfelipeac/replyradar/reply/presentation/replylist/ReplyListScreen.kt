@@ -32,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -40,9 +41,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rafaelfelipeac.replyradar.core.presentation.DeepSkyBlue
 import com.rafaelfelipeac.replyradar.core.presentation.DesertWhite
 import com.rafaelfelipeac.replyradar.core.presentation.RichLavender
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnAddReply
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnDeleteReply
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnEditReply
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnReplyClick
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnToggleResolve
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetContent
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetMode
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.ReplyList
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetMode.CREATE
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetMode.EDIT
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import replyradar.composeapp.generated.resources.Res
@@ -73,12 +80,7 @@ fun ReplyListScreen(
     onAction: (ReplyListAction) -> Unit,
 ) {
     val pagerState = rememberPagerState { 2 }
-    val searchResultsListState = rememberLazyListState()
-    val favoriteRepliesListState = rememberLazyListState()
-
-    LaunchedEffect(state.results) {
-        searchResultsListState.animateScrollToItem(0)
-    }
+    val favoriteRepliesListState = rememberLazyListState() // used for done?
 
     LaunchedEffect(state.selectedTabIndex) {
         pagerState.animateScrollToPage(state.selectedTabIndex)
@@ -96,7 +98,7 @@ fun ReplyListScreen(
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = CenterHorizontally
         ) {
             Surface(
                 modifier = Modifier
@@ -110,7 +112,7 @@ fun ReplyListScreen(
                 )
             ) {
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = CenterHorizontally
                 ) {
                     TabRow(
                         selectedTabIndex = state.selectedTabIndex,
@@ -189,7 +191,7 @@ fun ReplyListScreen(
                                                 )
                                             }
 
-                                            state.results.isEmpty() -> {
+                                            state.replies.isEmpty() -> {
                                                 Text(
                                                     text = stringResource(Res.string.reply_list_placeholder_on_the_radar),
                                                     textAlign = TextAlign.Center,
@@ -199,12 +201,11 @@ fun ReplyListScreen(
 
                                             else -> {
                                                 ReplyList(
-                                                    replies = state.results,
+                                                    replies = state.replies,
                                                     onReplyClick = {
-                                                        onAction(ReplyListAction.OnReplyClick(it))
+                                                        onAction(OnReplyClick(it))
                                                     },
                                                     modifier = Modifier.fillMaxSize(),
-                                                    scrollState = searchResultsListState
                                                 )
                                             }
                                         }
@@ -212,7 +213,7 @@ fun ReplyListScreen(
                                 }
 
                                 1 -> {
-                                    if (state.favoriteReplies.isEmpty()) {
+                                    if (state.resolvedReplies.isEmpty()) {
                                         Text(
                                             text = stringResource(Res.string.reply_list_placeholder_archived),
                                             textAlign = TextAlign.Center,
@@ -220,12 +221,11 @@ fun ReplyListScreen(
                                         )
                                     } else {
                                         ReplyList(
-                                            replies = state.favoriteReplies,
+                                            replies = state.resolvedReplies,
                                             onReplyClick = {
-                                                onAction(ReplyListAction.OnReplyClick(it))
+                                                onAction(OnReplyClick(it))
                                             },
                                             modifier = Modifier.fillMaxSize(),
-                                            scrollState = favoriteRepliesListState
                                         )
                                     }
                                 }
@@ -257,23 +257,35 @@ fun ReplyListScreen(
                 }
             ) {
                 when (state.bottomSheetState.mode) {
-                    BottomSheetMode.CREATE -> {
+                    CREATE -> {
                         BottomSheetContent(
-                            mode = BottomSheetMode.CREATE,
+                            mode = CREATE,
                             reply = null,
-                            onComplete = { name ->
-                                onAction(ReplyListAction.OnAddReply(name))
+                            onComplete = { reply ->
+                                onAction(OnAddReply(reply))
+                            },
+                            onResolve = { reply ->
+                                onAction(OnToggleResolve(reply))
+                            },
+                            onDelete = { reply ->
+                                onAction(OnDeleteReply((reply)))
                             }
                         )
                     }
 
-                    BottomSheetMode.EDIT -> {
+                    EDIT -> {
                         if (state.bottomSheetState.reply != null) {
                             BottomSheetContent(
-                                mode = BottomSheetMode.EDIT,
+                                mode = EDIT,
                                 reply = state.bottomSheetState.reply,
-                                onComplete = { name ->
-                                    onAction(ReplyListAction.OnEditReply(name))
+                                onComplete = { reply ->
+                                    onAction(OnEditReply(reply))
+                                },
+                                onResolve = { reply ->
+                                    onAction(OnToggleResolve(reply))
+                                },
+                                onDelete = { reply ->
+                                    onAction(OnDeleteReply((reply)))
                                 }
                             )
                         }

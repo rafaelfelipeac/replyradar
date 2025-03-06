@@ -1,6 +1,6 @@
 package com.rafaelfelipeac.replyradar.di
 
-import com.rafaelfelipeac.replyradar.reply.data.database.DatabaseFactory
+import com.rafaelfelipeac.replyradar.core.database.DatabaseFactory
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
 import org.koin.android.ext.koin.androidApplication

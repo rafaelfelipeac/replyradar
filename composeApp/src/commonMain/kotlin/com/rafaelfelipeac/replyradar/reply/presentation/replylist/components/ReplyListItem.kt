@@ -2,6 +2,8 @@ package com.rafaelfelipeac.replyradar.reply.presentation.replylist.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Center
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -18,11 +20,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.rafaelfelipeac.replyradar.reply.domain.Reply
+import com.rafaelfelipeac.replyradar.reply.domain.model.Reply
 
 @Composable
 fun ReplyListItem(
@@ -40,14 +42,14 @@ fun ReplyListItem(
                 .padding(16.dp)
                 .fillMaxWidth()
                 .height(IntrinsicSize.Min),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            verticalAlignment = CenterVertically,
+            horizontalArrangement = spacedBy(16.dp)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
                     .weight(1f),
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Center
             ) {
                 Text(
                     text = reply.title,

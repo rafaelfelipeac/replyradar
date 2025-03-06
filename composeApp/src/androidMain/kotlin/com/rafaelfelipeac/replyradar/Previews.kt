@@ -2,15 +2,16 @@ package com.rafaelfelipeac.replyradar
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.rafaelfelipeac.replyradar.reply.domain.Reply
+import com.rafaelfelipeac.replyradar.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListScreen
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListState
 
-private val replies = (1..100).map {
+private val replies = (1..10).map {
     Reply(
-        id = it.toString(),
+        id = it,
         title = "Reply $it",
-        description = "Description $it"
+        description = "Description $it",
+        isResolved = true
     )
 }
 
@@ -19,7 +20,7 @@ private val replies = (1..100).map {
 private fun ReplyListScreenPreview() {
     ReplyListScreen(
         state = ReplyListState(
-            results = replies
+            replies = replies
         ),
         onAction = {}
     )

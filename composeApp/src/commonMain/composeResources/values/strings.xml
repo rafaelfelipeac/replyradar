@@ -3,7 +3,7 @@
     <string name="reply_list_tab_on_the_radar">On the Radar</string>
     <string name="reply_list_tab_archived">Archived</string>
     <string name="reply_list_placeholder_on_the_radar">Nothing on the radar for now! How about adding something?</string>
-    <string name="reply_list_placeholder_archived">No archived replies yet. How about completing one?</string>
+    <string name="reply_list_placeholder_archived">No resolved replies yet. How about resolve one?</string>
     <string name="reply_list_fab_content_description">Add a new reply to your radar.</string>
     <string name="reply_list_bottom_sheet_add_reply">Add Reply</string>
     <string name="reply_list_bottom_sheet_edit_reply">Edit Reply</string>

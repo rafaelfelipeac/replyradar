@@ -1,11 +1,12 @@
-package com.rafaelfelipeac.replyradar.reply.data.database
+package com.rafaelfelipeac.replyradar.core.database
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.rafaelfelipeac.replyradar.reply.data.database.ReplyDatabase
 import java.io.File
 
 actual class DatabaseFactory {
-    actual fun create(): RoomDatabase.Builder<FavoriteReplyDatabase> {
+    actual fun create(): RoomDatabase.Builder<ReplyDatabase> {
         val os = System.getProperty("os.name").lowercase()
         val userHome = System.getProperty("user.home")
         val appDataDir = when {
@@ -18,7 +19,7 @@ actual class DatabaseFactory {
             appDataDir.mkdirs()
         }
 
-        val dbFile = File(appDataDir, FavoriteReplyDatabase.DB_NAME)
+        val dbFile = File(appDataDir, ReplyDatabase.DB_NAME)
         return Room.databaseBuilder(dbFile.absolutePath)
     }
 }

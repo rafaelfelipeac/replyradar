@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.rafaelfelipeac.replyradar.app.Route.ReplyGraph
+import com.rafaelfelipeac.replyradar.app.Route.ReplyList
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListScreenRoot
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -21,12 +23,12 @@ fun App() {
 
         NavHost(
             navController = navController,
-            startDestination = Route.ReplyGraph
+            startDestination = ReplyGraph
         ) {
-            navigation<Route.ReplyGraph>(
-                startDestination = Route.ReplyList
+            navigation<ReplyGraph>(
+                startDestination = ReplyList
             ) {
-                composable<Route.ReplyList>(
+                composable<ReplyList>(
                     exitTransition = { slideOutHorizontally() },
                     popEnterTransition = { slideInHorizontally() }
                 ) {
