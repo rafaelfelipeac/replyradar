@@ -2,7 +2,6 @@ package com.rafaelfelipeac.replyradar.core.database
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.rafaelfelipeac.replyradar.reply.data.database.ReplyDatabase
 import java.io.File
 
 actual class DatabaseFactory {

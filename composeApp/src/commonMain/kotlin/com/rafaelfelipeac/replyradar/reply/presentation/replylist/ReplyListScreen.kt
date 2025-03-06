@@ -184,7 +184,7 @@ fun ReplyListScreen(
                                         when {
                                             state.errorMessage != null -> {
                                                 Text(
-                                                    text = state.errorMessage.asString(),
+                                                    text = state.errorMessage,
                                                     textAlign = TextAlign.Center,
                                                     style = MaterialTheme.typography.headlineSmall,
                                                     color = MaterialTheme.colorScheme.error

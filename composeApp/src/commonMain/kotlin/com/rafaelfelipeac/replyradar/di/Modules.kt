@@ -2,7 +2,7 @@ package com.rafaelfelipeac.replyradar.di
 
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.rafaelfelipeac.replyradar.core.database.DatabaseFactory
-import com.rafaelfelipeac.replyradar.reply.data.database.ReplyDatabase
+import com.rafaelfelipeac.replyradar.core.database.ReplyDatabase
 import com.rafaelfelipeac.replyradar.reply.domain.repository.ReplyRepository
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind

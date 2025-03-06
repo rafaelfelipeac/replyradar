@@ -7,7 +7,9 @@ interface DeleteReplyUseCase {
     suspend fun deleteReply(reply: Reply)
 }
 
-class DeleteReplyUseCaseImpl(private val repository: ReplyRepository) : DeleteReplyUseCase {
+class DeleteReplyUseCaseImpl(
+    private val repository: ReplyRepository
+) : DeleteReplyUseCase {
 
     override suspend fun deleteReply(reply: Reply) {
         repository.deleteReply(reply)

@@ -20,7 +20,7 @@ class ReplyRepositoryImpl(
             }
     }
 
-    override suspend fun toggleReplyResolve(reply: Reply) { // DC
+    override suspend fun toggleReplyResolve(reply: Reply) {
         replyDao.upsert(reply.toReplyEntity())
     }
 

@@ -7,7 +7,9 @@ interface UpsertReplyUseCase {
     suspend fun upsertReply(reply: Reply)
 }
 
-class UpsertReplyUseCaseImpl(private val repository: ReplyRepository) : UpsertReplyUseCase {
+class UpsertReplyUseCaseImpl(
+    private val repository: ReplyRepository
+) : UpsertReplyUseCase {
 
     override suspend fun upsertReply(reply: Reply) {
         repository.upsertReply(reply)

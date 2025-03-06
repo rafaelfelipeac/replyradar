@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.replyradar.reply.data.database
+package com.rafaelfelipeac.replyradar.core.database
 
 import androidx.room.RoomDatabaseConstructor
 
