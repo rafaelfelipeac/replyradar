@@ -29,6 +29,9 @@ import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_save
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_edit_reply
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_name
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_add
+import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_delete
+import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_reopen
+import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_resolve
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_subject
 
 @Composable
@@ -89,7 +92,7 @@ fun BottomSheetContent(
                     },
                     enabled = name.isNotBlank()
                 ) {
-                    Text("Delete")
+                    Text(stringResource(Res.string.reply_list_bottom_sheet_delete))
                 }
 
                 Button(
@@ -102,7 +105,13 @@ fun BottomSheetContent(
                     },
                     enabled = name.isNotBlank()
                 ) {
-                    Text("Resolve")
+                    Text(
+                        if (reply != null && reply.isResolved) {
+                            stringResource(Res.string.reply_list_bottom_sheet_reopen)
+                        } else {
+                            stringResource(Res.string.reply_list_bottom_sheet_resolve)
+                        }
+                    )
                 }
             }
 
