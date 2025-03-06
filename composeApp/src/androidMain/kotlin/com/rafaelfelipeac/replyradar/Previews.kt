@@ -9,8 +9,8 @@ import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListState
 private val replies = (1..10).map {
     Reply(
         id = it,
-        title = "Reply $it",
-        description = "Description $it",
+        name = "Reply $it",
+        subject = "Subject $it",
         isResolved = true
     )
 }

@@ -6,8 +6,8 @@ import com.rafaelfelipeac.replyradar.reply.domain.model.Reply
 fun Reply.toReplyEntity(): ReplyEntity {
     return ReplyEntity(
         id = id,
-        title = title,
-        description = description,
+        name = name,
+        subject = subject,
         isResolved = isResolved
     )
 }
@@ -15,8 +15,8 @@ fun Reply.toReplyEntity(): ReplyEntity {
 fun ReplyEntity.toReply(): Reply {
     return Reply(
         id = id,
-        title = title,
-        description = description,
+        name = name,
+        subject = subject,
         isResolved = isResolved
     )
 }

@@ -56,7 +56,7 @@ import replyradar.composeapp.generated.resources.Res
 import replyradar.composeapp.generated.resources.reply_list_fab_content_description
 import replyradar.composeapp.generated.resources.reply_list_placeholder_archived
 import replyradar.composeapp.generated.resources.reply_list_placeholder_on_the_radar
-import replyradar.composeapp.generated.resources.reply_list_tab_archived
+import replyradar.composeapp.generated.resources.reply_list_tab_resolved
 import replyradar.composeapp.generated.resources.reply_list_tab_on_the_radar
 
 @Composable
@@ -155,7 +155,7 @@ fun ReplyListScreen(
                             unselectedContentColor = Color.Black.copy(alpha = 0.5f)
                         ) {
                             Text(
-                                text = stringResource(Res.string.reply_list_tab_archived),
+                                text = stringResource(Res.string.reply_list_tab_resolved),
                                 modifier = Modifier
                                     .padding(vertical = 12.dp)
                             )

@@ -3,9 +3,9 @@ package com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bo
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Arrangement.End
-import androidx.compose.foundation.layout.Arrangement.SpaceBetween
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,10 +25,11 @@ import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bot
 import org.jetbrains.compose.resources.stringResource
 import replyradar.composeapp.generated.resources.Res
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_add_reply
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_edit
+import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_save
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_edit_reply
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_name
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_add
+import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_subject
 
 @Composable
 fun BottomSheetContent(
@@ -38,7 +39,8 @@ fun BottomSheetContent(
     onResolve: (Reply) -> Unit,
     onDelete: (Reply) -> Unit
 ) {
-    var name by remember { mutableStateOf(reply?.title ?: EMPTY) }
+    var name by remember { mutableStateOf(reply?.name ?: EMPTY) }
+    var subject by remember { mutableStateOf(reply?.subject ?: EMPTY) }
 
     Column(
         modifier = Modifier
@@ -54,8 +56,19 @@ fun BottomSheetContent(
 
         TextField(
             value = name,
+            singleLine = true,
             onValueChange = { name = it },
             label = { Text(stringResource(Res.string.reply_list_bottom_sheet_name)) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+
+        TextField(
+            value = subject,
+            singleLine = true,
+            onValueChange = { subject = it },
+            label = { Text(stringResource(Res.string.reply_list_bottom_sheet_subject)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
@@ -65,32 +78,10 @@ fun BottomSheetContent(
             horizontalArrangement = End,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Button(
-                onClick = {
-                    if (reply != null) {
-                        onComplete(
-                            reply.copy(
-                                title = name
-                            )
-                        )
-                    } else {
-                        onComplete(Reply(title = name))
-                    }
-                },
-                enabled = name.isNotBlank()
-            ) {
-                Text(stringResource(if (reply == null) Res.string.reply_list_bottom_sheet_add else Res.string.reply_list_bottom_sheet_edit))
-            }
-        }
-
-        if (mode == EDIT) {
-            Row(
-                horizontalArrangement = SpaceBetween,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 32.dp)
-            ) {
+            if (mode == EDIT) {
                 Button(
+                    modifier = Modifier.weight(1f)
+                        .padding(end = 8.dp),
                     onClick = {
                         if (reply != null) {
                             onDelete(reply)
@@ -102,6 +93,8 @@ fun BottomSheetContent(
                 }
 
                 Button(
+                    modifier = Modifier.weight(1f)
+                        .padding(start = 8.dp, end = 8.dp),
                     onClick = {
                         if (reply != null) {
                             onResolve(reply)
@@ -111,6 +104,35 @@ fun BottomSheetContent(
                 ) {
                     Text("Resolve")
                 }
+            }
+
+            Button(
+                modifier = if (mode == EDIT) {
+                    Modifier.weight(1f)
+                        .padding(start = 8.dp)
+                } else {
+                    Modifier.wrapContentWidth()
+                },
+                onClick = {
+                    if (reply != null) {
+                        onComplete(
+                            reply.copy(
+                                name = name,
+                                subject = subject
+                            )
+                        )
+                    } else {
+                        onComplete(
+                            Reply(
+                                name = name,
+                                subject = subject
+                            )
+                        )
+                    }
+                },
+                enabled = name.isNotBlank()
+            ) {
+                Text(stringResource(if (reply == null) Res.string.reply_list_bottom_sheet_add else Res.string.reply_list_bottom_sheet_save))
             }
         }
     }

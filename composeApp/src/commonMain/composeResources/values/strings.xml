@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
     <string name="reply_list_tab_on_the_radar">On the Radar</string>
-    <string name="reply_list_tab_archived">Archived</string>
-    <string name="reply_list_placeholder_on_the_radar">Nothing on the radar for now! How about adding something?</string>
-    <string name="reply_list_placeholder_archived">No resolved replies yet. How about resolve one?</string>
+    <string name="reply_list_tab_resolved">Resolved</string>
+    <string name="reply_list_placeholder_on_the_radar">Nothing on the radar for now!&#10;How about adding something?</string>
+    <string name="reply_list_placeholder_archived">No resolved replies yet.&#10;Time to get something done?</string>
     <string name="reply_list_fab_content_description">Add a new reply to your radar.</string>
     <string name="reply_list_bottom_sheet_add_reply">Add Reply</string>
     <string name="reply_list_bottom_sheet_edit_reply">Edit Reply</string>
     <string name="reply_list_bottom_sheet_name">Name</string>
+    <string name="reply_list_bottom_sheet_subject">Subject (optional)</string>
     <string name="reply_list_bottom_sheet_add">Add</string>
-    <string name="reply_list_bottom_sheet_edit">Edit</string>
+    <string name="reply_list_bottom_sheet_save">Save</string>
 </resources>

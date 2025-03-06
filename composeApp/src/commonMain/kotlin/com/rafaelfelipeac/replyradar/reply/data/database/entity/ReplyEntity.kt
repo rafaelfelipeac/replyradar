@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class ReplyEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
-    val title: String,
-    val description: String,
+    val name: String,
+    val subject: String,
     val isResolved: Boolean
 )
