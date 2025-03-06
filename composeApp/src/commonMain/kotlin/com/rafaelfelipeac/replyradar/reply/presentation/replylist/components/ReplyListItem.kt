@@ -71,6 +71,7 @@ fun ReplyListItem(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
+                tint = RichLavender,
                 modifier = Modifier
                     .size(24.dp)
             )

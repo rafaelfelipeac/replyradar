@@ -80,7 +80,6 @@ fun ReplyListScreen(
     onAction: (ReplyListAction) -> Unit,
 ) {
     val pagerState = rememberPagerState { 2 }
-    val favoriteRepliesListState = rememberLazyListState() // used for done?
 
     LaunchedEffect(state.selectedTabIndex) {
         pagerState.animateScrollToPage(state.selectedTabIndex)

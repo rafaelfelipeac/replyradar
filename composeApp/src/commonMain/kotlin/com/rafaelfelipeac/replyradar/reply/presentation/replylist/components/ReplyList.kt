@@ -19,7 +19,8 @@ fun ReplyList(
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier
+            .padding(top = 16.dp),
         verticalArrangement = spacedBy(12.dp),
         horizontalAlignment = CenterHorizontally
     ) {
@@ -31,8 +32,7 @@ fun ReplyList(
                 reply = reply,
                 modifier = Modifier
                     .widthIn(max = 700.dp)
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .fillMaxWidth(),
                 onClick = {
                     onReplyClick(reply)
                 }
