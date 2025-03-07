@@ -15,9 +15,9 @@ import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListActio
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnReplyClick
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnTabSelected
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnToggleResolve
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetMode.CREATE
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetMode.EDIT
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetState
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -54,7 +54,7 @@ class ReplyListViewModel(
             is OnAddReplyClick -> {
                 _state.update {
                     it.copy(
-                        bottomSheetState = BottomSheetState(
+                        replyBottomSheetState = ReplyBottomSheetState(
                             mode = CREATE
                         )
                     )
@@ -64,7 +64,7 @@ class ReplyListViewModel(
             is OnReplyClick -> {
                 _state.update {
                     it.copy(
-                        bottomSheetState = BottomSheetState(
+                        replyBottomSheetState = ReplyBottomSheetState(
                             mode = EDIT,
                             reply = action.reply
                         )
@@ -82,7 +82,7 @@ class ReplyListViewModel(
                 onUpsertReply(action.reply)
 
                 _state.value = state.value.copy(
-                    bottomSheetState = null
+                    replyBottomSheetState = null
                 )
             }
 
@@ -90,13 +90,13 @@ class ReplyListViewModel(
                 onUpsertReply(action.reply)
 
                 _state.value = state.value.copy(
-                    bottomSheetState = null
+                    replyBottomSheetState = null
                 )
             }
 
             OnDismissBottomSheet -> {
                 _state.value = state.value.copy(
-                    bottomSheetState = null
+                    replyBottomSheetState = null
                 )
             }
 
@@ -104,7 +104,7 @@ class ReplyListViewModel(
                 onToggleResolveReply(action.reply)
 
                 _state.value = state.value.copy(
-                    bottomSheetState = null
+                    replyBottomSheetState = null
                 )
             }
 
@@ -112,7 +112,7 @@ class ReplyListViewModel(
                 deleteReply(action.reply)
 
                 _state.value = state.value.copy(
-                    bottomSheetState = null
+                    replyBottomSheetState = null
                 )
             }
         }

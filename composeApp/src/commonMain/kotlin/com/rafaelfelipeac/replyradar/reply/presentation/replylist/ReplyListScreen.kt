@@ -35,24 +35,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rafaelfelipeac.replyradar.core.presentation.DeepSkyBlue
-import com.rafaelfelipeac.replyradar.core.presentation.DesertWhite
-import com.rafaelfelipeac.replyradar.core.presentation.RichLavender
-import com.rafaelfelipeac.replyradar.core.presentation.UnselectedTabColor
-import com.rafaelfelipeac.replyradar.core.presentation.cardCornerRadius
-import com.rafaelfelipeac.replyradar.core.presentation.paddingLarge
-import com.rafaelfelipeac.replyradar.core.presentation.paddingMedium
-import com.rafaelfelipeac.replyradar.core.presentation.spacerSmall
-import com.rafaelfelipeac.replyradar.core.presentation.tabVerticalPadding
+import com.rafaelfelipeac.replyradar.core.ui.DeepSkyBlue
+import com.rafaelfelipeac.replyradar.core.ui.DesertWhite
+import com.rafaelfelipeac.replyradar.core.ui.RichLavender
+import com.rafaelfelipeac.replyradar.core.ui.UnselectedTabColor
+import com.rafaelfelipeac.replyradar.core.ui.cardCornerRadius
+import com.rafaelfelipeac.replyradar.core.ui.paddingLarge
+import com.rafaelfelipeac.replyradar.core.ui.paddingMedium
+import com.rafaelfelipeac.replyradar.core.ui.spacerSmall
+import com.rafaelfelipeac.replyradar.core.ui.tabVerticalPadding
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnAddReply
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnDeleteReply
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnEditReply
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnReplyClick
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnToggleResolve
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetContent
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetContent
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.ReplyList
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetMode.CREATE
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetMode.EDIT
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import replyradar.composeapp.generated.resources.Res.string
@@ -256,15 +256,15 @@ fun ReplyListScreen(
             )
         }
 
-        if (state.bottomSheetState != null) {
+        if (state.replyBottomSheetState != null) {
             ModalBottomSheet(
                 onDismissRequest = {
                     onAction(ReplyListAction.OnDismissBottomSheet)
                 }
             ) {
-                when (state.bottomSheetState.mode) {
+                when (state.replyBottomSheetState.mode) {
                     CREATE -> {
-                        BottomSheetContent(
+                        ReplyBottomSheetContent(
                             mode = CREATE,
                             reply = null,
                             onComplete = { reply ->
@@ -280,10 +280,10 @@ fun ReplyListScreen(
                     }
 
                     EDIT -> {
-                        if (state.bottomSheetState.reply != null) {
-                            BottomSheetContent(
+                        if (state.replyBottomSheetState.reply != null) {
+                            ReplyBottomSheetContent(
                                 mode = EDIT,
-                                reply = state.bottomSheetState.reply,
+                                reply = state.replyBottomSheetState.reply,
                                 onComplete = { reply ->
                                     onAction(OnEditReply(reply))
                                 },

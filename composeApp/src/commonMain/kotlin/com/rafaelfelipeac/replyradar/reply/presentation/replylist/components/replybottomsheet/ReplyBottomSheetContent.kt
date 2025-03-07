@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet
+package com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,11 +18,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import com.rafaelfelipeac.replyradar.core.AppConstants.EMPTY
-import com.rafaelfelipeac.replyradar.core.presentation.paddingMedium
-import com.rafaelfelipeac.replyradar.core.presentation.paddingSmall
+import com.rafaelfelipeac.replyradar.core.ui.paddingMedium
+import com.rafaelfelipeac.replyradar.core.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.reply.domain.model.Reply
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetMode.CREATE
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetMode.EDIT
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import org.jetbrains.compose.resources.stringResource
 import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_add_reply
@@ -38,8 +38,8 @@ import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_subject
 private const val WEIGHT = 1f
 
 @Composable
-fun BottomSheetContent(
-    mode: BottomSheetMode,
+fun ReplyBottomSheetContent(
+    mode: ReplyBottomSheetMode,
     reply: Reply?,
     onComplete: (Reply) -> Unit,
     onResolve: (Reply) -> Unit,

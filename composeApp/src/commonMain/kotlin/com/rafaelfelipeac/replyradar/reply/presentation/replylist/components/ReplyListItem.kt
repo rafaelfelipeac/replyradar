@@ -23,10 +23,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import com.rafaelfelipeac.replyradar.core.presentation.RichLavender
-import com.rafaelfelipeac.replyradar.core.presentation.cardBorderWidth
-import com.rafaelfelipeac.replyradar.core.presentation.cardIconSize
-import com.rafaelfelipeac.replyradar.core.presentation.paddingMedium
+import com.rafaelfelipeac.replyradar.core.ui.RichLavender
+import com.rafaelfelipeac.replyradar.core.ui.cardBorderWidth
+import com.rafaelfelipeac.replyradar.core.ui.cardIconSize
+import com.rafaelfelipeac.replyradar.core.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.reply.domain.model.Reply
 
 private const val WEIGHT = 1f

@@ -8,8 +8,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import com.rafaelfelipeac.replyradar.core.presentation.paddingMedium
-import com.rafaelfelipeac.replyradar.core.presentation.replyListVerticalPadding
+import com.rafaelfelipeac.replyradar.core.ui.paddingMedium
+import com.rafaelfelipeac.replyradar.core.ui.replyListVerticalPadding
 import com.rafaelfelipeac.replyradar.reply.domain.model.Reply
 
 @Composable
