@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,11 +34,16 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rafaelfelipeac.replyradar.core.presentation.DeepSkyBlue
 import com.rafaelfelipeac.replyradar.core.presentation.DesertWhite
 import com.rafaelfelipeac.replyradar.core.presentation.RichLavender
+import com.rafaelfelipeac.replyradar.core.presentation.UnselectedTabColor
+import com.rafaelfelipeac.replyradar.core.presentation.cardCornerRadius
+import com.rafaelfelipeac.replyradar.core.presentation.paddingLarge
+import com.rafaelfelipeac.replyradar.core.presentation.paddingMedium
+import com.rafaelfelipeac.replyradar.core.presentation.spacerSmall
+import com.rafaelfelipeac.replyradar.core.presentation.tabVerticalPadding
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnAddReply
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnDeleteReply
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnEditReply
@@ -52,12 +55,17 @@ import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bot
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetMode.EDIT
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import replyradar.composeapp.generated.resources.Res
+import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.reply_list_fab_content_description
 import replyradar.composeapp.generated.resources.reply_list_placeholder_archived
 import replyradar.composeapp.generated.resources.reply_list_placeholder_on_the_radar
 import replyradar.composeapp.generated.resources.reply_list_tab_resolved
 import replyradar.composeapp.generated.resources.reply_list_tab_on_the_radar
+
+private const val PAGER_PAGE_COUNT = 2
+private const val WEIGHT = 1f
+private const val FIRST_PAGE_INDEX = 0
+private const val SECOND_PAGE_INDEX = 1
 
 @Composable
 fun ReplyListScreenRoot(
@@ -79,7 +87,7 @@ fun ReplyListScreen(
     state: ReplyListState,
     onAction: (ReplyListAction) -> Unit,
 ) {
-    val pagerState = rememberPagerState { 2 }
+    val pagerState = rememberPagerState { PAGER_PAGE_COUNT }
 
     LaunchedEffect(state.selectedTabIndex) {
         pagerState.animateScrollToPage(state.selectedTabIndex)
@@ -101,13 +109,13 @@ fun ReplyListScreen(
         ) {
             Surface(
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(top = 24.dp)
+                    .weight(WEIGHT)
+                    .padding(top = paddingLarge)
                     .fillMaxWidth(),
                 color = DesertWhite,
                 shape = RoundedCornerShape(
-                    topStart = 32.dp,
-                    topEnd = 32.dp
+                    topStart = cardCornerRadius,
+                    topEnd = cardCornerRadius
                 )
             ) {
                 Column(
@@ -116,8 +124,7 @@ fun ReplyListScreen(
                     TabRow(
                         selectedTabIndex = state.selectedTabIndex,
                         modifier = Modifier
-                            .padding(vertical = 12.dp)
-                            .widthIn(max = 700.dp)
+                            .padding(vertical = tabVerticalPadding)
                             .fillMaxWidth(),
                         containerColor = DesertWhite,
                         indicator = { tabPositions ->
@@ -129,54 +136,54 @@ fun ReplyListScreen(
                         }
                     ) {
                         Tab(
-                            selected = state.selectedTabIndex == 0,
+                            selected = state.selectedTabIndex == FIRST_PAGE_INDEX,
                             onClick = {
-                                onAction(ReplyListAction.OnTabSelected(0))
+                                onAction(ReplyListAction.OnTabSelected(FIRST_PAGE_INDEX))
                             },
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.weight(WEIGHT),
                             selectedContentColor = RichLavender,
-                            unselectedContentColor = Color.Black.copy(alpha = 0.5f)
+                            unselectedContentColor = UnselectedTabColor
                         ) {
                             Text(
-                                text = stringResource(Res.string.reply_list_tab_on_the_radar),
+                                text = stringResource(string.reply_list_tab_on_the_radar),
                                 modifier = Modifier
-                                    .padding(vertical = 12.dp)
+                                    .padding(vertical = tabVerticalPadding)
                             )
                         }
 
                         Tab(
-                            selected = state.selectedTabIndex == 1,
+                            selected = state.selectedTabIndex == SECOND_PAGE_INDEX,
                             onClick = {
-                                onAction(ReplyListAction.OnTabSelected(1))
+                                onAction(ReplyListAction.OnTabSelected(SECOND_PAGE_INDEX))
                             },
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.weight(WEIGHT),
                             selectedContentColor = RichLavender,
-                            unselectedContentColor = Color.Black.copy(alpha = 0.5f)
+                            unselectedContentColor = UnselectedTabColor
                         ) {
                             Text(
-                                text = stringResource(Res.string.reply_list_tab_resolved),
+                                text = stringResource(string.reply_list_tab_resolved),
                                 modifier = Modifier
-                                    .padding(vertical = 12.dp)
+                                    .padding(vertical = tabVerticalPadding)
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(spacerSmall))
 
                     HorizontalPager(
                         state = pagerState,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(1f)
+                            .weight(WEIGHT)
                     ) { pageIndex ->
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(horizontal = 16.dp),
+                                .padding(horizontal = paddingMedium),
                             contentAlignment = Alignment.Center
                         ) {
                             when (pageIndex) {
-                                0 -> {
+                                FIRST_PAGE_INDEX -> {
                                     if (state.isLoading) {
                                         CircularProgressIndicator()
                                     } else {
@@ -192,7 +199,7 @@ fun ReplyListScreen(
 
                                             state.replies.isEmpty() -> {
                                                 Text(
-                                                    text = stringResource(Res.string.reply_list_placeholder_on_the_radar),
+                                                    text = stringResource(string.reply_list_placeholder_on_the_radar),
                                                     textAlign = TextAlign.Center,
                                                     style = MaterialTheme.typography.headlineSmall,
                                                 )
@@ -211,10 +218,10 @@ fun ReplyListScreen(
                                     }
                                 }
 
-                                1 -> {
+                                SECOND_PAGE_INDEX -> {
                                     if (state.resolvedReplies.isEmpty()) {
                                         Text(
-                                            text = stringResource(Res.string.reply_list_placeholder_archived),
+                                            text = stringResource(string.reply_list_placeholder_archived),
                                             textAlign = TextAlign.Center,
                                             style = MaterialTheme.typography.headlineSmall,
                                         )
@@ -239,12 +246,12 @@ fun ReplyListScreen(
             onClick = { onAction(ReplyListAction.OnAddReplyClick) },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(16.dp),
+                .padding(paddingMedium),
             containerColor = RichLavender
         ) {
             Icon(
                 imageVector = Icons.Filled.Add,
-                contentDescription = stringResource(Res.string.reply_list_fab_content_description),
+                contentDescription = stringResource(string.reply_list_fab_content_description),
                 tint = Color.White
             )
         }

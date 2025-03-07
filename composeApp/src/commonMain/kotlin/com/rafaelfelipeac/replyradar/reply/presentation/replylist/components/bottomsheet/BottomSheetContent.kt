@@ -17,13 +17,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.rafaelfelipeac.replyradar.core.AppConstants.EMPTY
+import com.rafaelfelipeac.replyradar.core.presentation.paddingMedium
+import com.rafaelfelipeac.replyradar.core.presentation.paddingSmall
 import com.rafaelfelipeac.replyradar.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetMode.CREATE
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.bottomsheet.BottomSheetMode.EDIT
 import org.jetbrains.compose.resources.stringResource
-import replyradar.composeapp.generated.resources.Res
+import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_add_reply
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_save
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_edit_reply
@@ -33,6 +34,8 @@ import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_delete
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_reopen
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_resolve
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_subject
+
+private const val WEIGHT = 1f
 
 @Composable
 fun BottomSheetContent(
@@ -48,33 +51,33 @@ fun BottomSheetContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(paddingMedium),
         horizontalAlignment = CenterHorizontally
     ) {
         Text(
-            text = stringResource(if (mode == CREATE) Res.string.reply_list_bottom_sheet_add_reply else Res.string.reply_list_bottom_sheet_edit_reply),
+            text = stringResource(if (mode == CREATE) string.reply_list_bottom_sheet_add_reply else string.reply_list_bottom_sheet_edit_reply),
             style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = paddingMedium)
         )
 
         TextField(
             value = name,
             singleLine = true,
             onValueChange = { name = it },
-            label = { Text(stringResource(Res.string.reply_list_bottom_sheet_name)) },
+            label = { Text(stringResource(string.reply_list_bottom_sheet_name)) },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
+                .padding(bottom = paddingMedium)
         )
 
         TextField(
             value = subject,
             singleLine = true,
             onValueChange = { subject = it },
-            label = { Text(stringResource(Res.string.reply_list_bottom_sheet_subject)) },
+            label = { Text(stringResource(string.reply_list_bottom_sheet_subject)) },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
+                .padding(bottom = paddingMedium)
         )
 
         Row(
@@ -83,8 +86,8 @@ fun BottomSheetContent(
         ) {
             if (mode == EDIT) {
                 Button(
-                    modifier = Modifier.weight(1f)
-                        .padding(end = 8.dp),
+                    modifier = Modifier.weight(WEIGHT)
+                        .padding(end = paddingSmall),
                     onClick = {
                         if (reply != null) {
                             onDelete(reply)
@@ -92,12 +95,12 @@ fun BottomSheetContent(
                     },
                     enabled = name.isNotBlank()
                 ) {
-                    Text(stringResource(Res.string.reply_list_bottom_sheet_delete))
+                    Text(stringResource(string.reply_list_bottom_sheet_delete))
                 }
 
                 Button(
-                    modifier = Modifier.weight(1f)
-                        .padding(start = 8.dp, end = 8.dp),
+                    modifier = Modifier.weight(WEIGHT)
+                        .padding(start = paddingSmall, end = paddingSmall),
                     onClick = {
                         if (reply != null) {
                             onResolve(reply)
@@ -107,9 +110,9 @@ fun BottomSheetContent(
                 ) {
                     Text(
                         if (reply != null && reply.isResolved) {
-                            stringResource(Res.string.reply_list_bottom_sheet_reopen)
+                            stringResource(string.reply_list_bottom_sheet_reopen)
                         } else {
-                            stringResource(Res.string.reply_list_bottom_sheet_resolve)
+                            stringResource(string.reply_list_bottom_sheet_resolve)
                         }
                     )
                 }
@@ -117,8 +120,8 @@ fun BottomSheetContent(
 
             Button(
                 modifier = if (mode == EDIT) {
-                    Modifier.weight(1f)
-                        .padding(start = 8.dp)
+                    Modifier.weight(WEIGHT)
+                        .padding(start = paddingSmall)
                 } else {
                     Modifier.wrapContentWidth()
                 },
@@ -141,7 +144,7 @@ fun BottomSheetContent(
                 },
                 enabled = name.isNotBlank()
             ) {
-                Text(stringResource(if (reply == null) Res.string.reply_list_bottom_sheet_add else Res.string.reply_list_bottom_sheet_save))
+                Text(stringResource(if (reply == null) string.reply_list_bottom_sheet_add else string.reply_list_bottom_sheet_save))
             }
         }
     }

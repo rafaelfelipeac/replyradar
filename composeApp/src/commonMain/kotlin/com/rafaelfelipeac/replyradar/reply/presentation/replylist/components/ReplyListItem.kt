@@ -23,9 +23,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.rafaelfelipeac.replyradar.core.presentation.RichLavender
+import com.rafaelfelipeac.replyradar.core.presentation.cardBorderWidth
+import com.rafaelfelipeac.replyradar.core.presentation.cardIconSize
+import com.rafaelfelipeac.replyradar.core.presentation.paddingMedium
 import com.rafaelfelipeac.replyradar.reply.domain.model.Reply
+
+private const val WEIGHT = 1f
+private const val MAX_LINES = 1
 
 @Composable
 fun ReplyListItem(
@@ -34,29 +39,29 @@ fun ReplyListItem(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(2.dp, RichLavender),
+        shape = RoundedCornerShape(paddingMedium),
+        border = BorderStroke(cardBorderWidth, RichLavender),
         modifier = modifier
             .clickable(onClick = onClick),
     ) {
         Row(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(paddingMedium)
                 .fillMaxWidth()
                 .height(IntrinsicSize.Min),
             verticalAlignment = CenterVertically,
-            horizontalArrangement = spacedBy(16.dp)
+            horizontalArrangement = spacedBy(paddingMedium)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .weight(1f),
+                    .weight(WEIGHT),
                 verticalArrangement = Center
             ) {
                 Text(
                     text = reply.name,
                     style = MaterialTheme.typography.titleMedium,
-                    maxLines = 2,
+                    maxLines = MAX_LINES,
                     overflow = TextOverflow.Ellipsis
                 )
 
@@ -73,7 +78,7 @@ fun ReplyListItem(
                 contentDescription = null,
                 tint = RichLavender,
                 modifier = Modifier
-                    .size(24.dp)
+                    .size(cardIconSize)
             )
         }
     }

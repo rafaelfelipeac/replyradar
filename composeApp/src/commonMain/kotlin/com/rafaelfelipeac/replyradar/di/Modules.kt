@@ -24,6 +24,7 @@ expect val platformModule: Module
 
 val sharedModule = module {
     singleOf(::ReplyRepositoryImpl).bind<ReplyRepository>()
+
     singleOf(::GetRepliesUseCaseImpl).bind<GetRepliesUseCase>()
     singleOf(::UpsertReplyUseCaseImpl).bind<UpsertReplyUseCase>()
     singleOf(::ToggleResolveReplyUseCaseImpl).bind<ToggleResolveReplyUseCase>()
