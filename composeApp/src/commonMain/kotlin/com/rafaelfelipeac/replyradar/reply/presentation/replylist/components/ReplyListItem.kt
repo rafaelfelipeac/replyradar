@@ -22,10 +22,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
-import com.rafaelfelipeac.replyradar.core.ui.RichLavender
+import com.rafaelfelipeac.replyradar.core.ui.PrimaryColor
 import com.rafaelfelipeac.replyradar.core.ui.cardBorderWidth
 import com.rafaelfelipeac.replyradar.core.ui.cardIconSize
+import com.rafaelfelipeac.replyradar.core.ui.cardItemCornerRadius
 import com.rafaelfelipeac.replyradar.core.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.reply.domain.model.Reply
 
@@ -39,8 +41,9 @@ fun ReplyListItem(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        shape = RoundedCornerShape(paddingMedium),
-        border = BorderStroke(cardBorderWidth, RichLavender),
+        shape = RoundedCornerShape(cardItemCornerRadius),
+        border = BorderStroke(cardBorderWidth, PrimaryColor),
+        color = Color.White,
         modifier = modifier
             .clickable(onClick = onClick),
     ) {
@@ -76,7 +79,7 @@ fun ReplyListItem(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
-                tint = RichLavender,
+                tint = PrimaryColor,
                 modifier = Modifier
                     .size(cardIconSize)
             )

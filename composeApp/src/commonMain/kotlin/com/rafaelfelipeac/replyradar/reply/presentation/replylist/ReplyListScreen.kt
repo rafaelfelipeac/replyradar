@@ -35,9 +35,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rafaelfelipeac.replyradar.core.ui.DeepSkyBlue
+import com.rafaelfelipeac.replyradar.core.ui.PrimaryColor
 import com.rafaelfelipeac.replyradar.core.ui.DesertWhite
-import com.rafaelfelipeac.replyradar.core.ui.RichLavender
+import com.rafaelfelipeac.replyradar.core.ui.AccentColor
 import com.rafaelfelipeac.replyradar.core.ui.UnselectedTabColor
 import com.rafaelfelipeac.replyradar.core.ui.cardCornerRadius
 import com.rafaelfelipeac.replyradar.core.ui.paddingLarge
@@ -100,7 +100,7 @@ fun ReplyListScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(DeepSkyBlue)
+            .background(PrimaryColor)
             .statusBarsPadding()
     ) {
         Column(
@@ -129,7 +129,7 @@ fun ReplyListScreen(
                         containerColor = DesertWhite,
                         indicator = { tabPositions ->
                             TabRowDefaults.SecondaryIndicator(
-                                color = RichLavender,
+                                color = AccentColor,
                                 modifier = Modifier
                                     .tabIndicatorOffset(tabPositions[state.selectedTabIndex])
                             )
@@ -141,7 +141,7 @@ fun ReplyListScreen(
                                 onAction(ReplyListAction.OnTabSelected(FIRST_PAGE_INDEX))
                             },
                             modifier = Modifier.weight(WEIGHT),
-                            selectedContentColor = RichLavender,
+                            selectedContentColor = AccentColor,
                             unselectedContentColor = UnselectedTabColor
                         ) {
                             Text(
@@ -157,7 +157,7 @@ fun ReplyListScreen(
                                 onAction(ReplyListAction.OnTabSelected(SECOND_PAGE_INDEX))
                             },
                             modifier = Modifier.weight(WEIGHT),
-                            selectedContentColor = RichLavender,
+                            selectedContentColor = AccentColor,
                             unselectedContentColor = UnselectedTabColor
                         ) {
                             Text(
@@ -247,7 +247,7 @@ fun ReplyListScreen(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(paddingMedium),
-            containerColor = RichLavender
+            containerColor = AccentColor
         ) {
             Icon(
                 imageVector = Icons.Filled.Add,
@@ -260,7 +260,8 @@ fun ReplyListScreen(
             ModalBottomSheet(
                 onDismissRequest = {
                     onAction(ReplyListAction.OnDismissBottomSheet)
-                }
+                },
+                containerColor = DesertWhite
             ) {
                 when (state.replyBottomSheetState.mode) {
                     CREATE -> {

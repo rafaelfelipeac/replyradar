@@ -1,5 +1,6 @@
 package com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Arrangement.End
@@ -7,9 +8,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,6 +21,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import com.rafaelfelipeac.replyradar.core.AppConstants.EMPTY
+import com.rafaelfelipeac.replyradar.core.ui.AccentColor
+import com.rafaelfelipeac.replyradar.core.ui.DesertWhite
+import com.rafaelfelipeac.replyradar.core.ui.FocusedTextFieldContainerColor
+import com.rafaelfelipeac.replyradar.core.ui.UnfocusedTextFieldContainerColor
 import com.rafaelfelipeac.replyradar.core.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.reply.domain.model.Reply
@@ -51,6 +58,7 @@ fun ReplyBottomSheetContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .background(DesertWhite)
             .padding(paddingMedium),
         horizontalAlignment = CenterHorizontally
     ) {
@@ -63,6 +71,13 @@ fun ReplyBottomSheetContent(
         TextField(
             value = name,
             singleLine = true,
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = FocusedTextFieldContainerColor,
+                unfocusedContainerColor = UnfocusedTextFieldContainerColor,
+                focusedLabelColor = AccentColor,
+                focusedIndicatorColor = AccentColor,
+                cursorColor = AccentColor
+            ),
             onValueChange = { name = it },
             label = { Text(stringResource(string.reply_list_bottom_sheet_name)) },
             modifier = Modifier
@@ -73,6 +88,13 @@ fun ReplyBottomSheetContent(
         TextField(
             value = subject,
             singleLine = true,
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = FocusedTextFieldContainerColor,
+                unfocusedContainerColor = UnfocusedTextFieldContainerColor,
+                focusedLabelColor = AccentColor,
+                focusedIndicatorColor = AccentColor,
+                cursorColor = AccentColor
+            ),
             onValueChange = { subject = it },
             label = { Text(stringResource(string.reply_list_bottom_sheet_subject)) },
             modifier = Modifier
@@ -93,6 +115,9 @@ fun ReplyBottomSheetContent(
                             onDelete(reply)
                         }
                     },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = AccentColor
+                    ),
                     enabled = name.isNotBlank()
                 ) {
                     Text(stringResource(string.reply_list_bottom_sheet_delete))
@@ -106,6 +131,9 @@ fun ReplyBottomSheetContent(
                             onResolve(reply)
                         }
                     },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = AccentColor
+                    ),
                     enabled = name.isNotBlank()
                 ) {
                     Text(
@@ -142,6 +170,9 @@ fun ReplyBottomSheetContent(
                         )
                     }
                 },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = AccentColor
+                ),
                 enabled = name.isNotBlank()
             ) {
                 Text(stringResource(if (reply == null) string.reply_list_bottom_sheet_add else string.reply_list_bottom_sheet_save))

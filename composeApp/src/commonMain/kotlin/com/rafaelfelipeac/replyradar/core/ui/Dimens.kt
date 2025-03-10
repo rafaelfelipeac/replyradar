@@ -7,7 +7,8 @@ val paddingMedium = 16.dp
 val paddingLarge = 24.dp
 
 val cardCornerRadius = 32.dp
-val cardBorderWidth = 2.dp
+val cardItemCornerRadius = 8.dp
+val cardBorderWidth = 1.dp
 val cardIconSize = 24.dp
 
 val replyListVerticalPadding = 12.dp
