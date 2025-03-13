@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import com.rafaelfelipeac.replyradar.platform.ui.ListItemColor
 import com.rafaelfelipeac.replyradar.platform.ui.PrimaryColor
@@ -65,7 +66,10 @@ fun ReplyListItem(
                     ReplyListItemLabel(label = name)
 
                     if (subject.isNotEmpty()) {
-                        ReplyListItemLabel(label = subject)
+                        ReplyListItemLabel(
+                            label = subject,
+                            style = MaterialTheme.typography.bodySmall
+                        )
                     }
                 }
             }
@@ -82,10 +86,10 @@ fun ReplyListItem(
 }
 
 @Composable
-fun ReplyListItemLabel(label: String) {
+fun ReplyListItemLabel(label: String, style: TextStyle = MaterialTheme.typography.titleMedium) {
     Text(
         text = label,
-        style = MaterialTheme.typography.titleMedium,
+        style = style,
         maxLines = MAX_LINES,
         overflow = TextOverflow.Ellipsis
     )
