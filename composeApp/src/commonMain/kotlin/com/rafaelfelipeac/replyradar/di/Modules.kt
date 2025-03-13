@@ -23,12 +23,14 @@ import org.koin.core.module.dsl.viewModelOf
 expect val platformModule: Module
 
 val sharedModule = module {
-    singleOf(::ReplyRepositoryImpl).bind<ReplyRepository>()
+    viewModelOf(::ReplyListViewModel)
 
     singleOf(::GetRepliesUseCaseImpl).bind<GetRepliesUseCase>()
     singleOf(::UpsertReplyUseCaseImpl).bind<UpsertReplyUseCase>()
     singleOf(::ToggleResolveReplyUseCaseImpl).bind<ToggleResolveReplyUseCase>()
     singleOf(::DeleteReplyUseCaseImpl).bind<DeleteReplyUseCase>()
+
+    singleOf(::ReplyRepositoryImpl).bind<ReplyRepository>()
 
     single {
         get<DatabaseFactory>().create()
@@ -36,6 +38,4 @@ val sharedModule = module {
             .build()
     }
     single { get<ReplyDatabase>().replyDao }
-
-    viewModelOf(::ReplyListViewModel)
 }

@@ -14,58 +14,44 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rafaelfelipeac.replyradar.core.ui.PrimaryColor
-import com.rafaelfelipeac.replyradar.core.ui.DesertWhite
-import com.rafaelfelipeac.replyradar.core.ui.AccentColor
-import com.rafaelfelipeac.replyradar.core.ui.UnselectedTabColor
-import com.rafaelfelipeac.replyradar.core.ui.cardCornerRadius
-import com.rafaelfelipeac.replyradar.core.ui.paddingLarge
-import com.rafaelfelipeac.replyradar.core.ui.paddingMedium
-import com.rafaelfelipeac.replyradar.core.ui.spacerSmall
-import com.rafaelfelipeac.replyradar.core.ui.tabVerticalPadding
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnAddReply
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnDeleteReply
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnEditReply
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnReplyClick
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnToggleResolve
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetContent
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.ReplyList
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
+import com.rafaelfelipeac.replyradar.platform.ui.AccentColor
+import com.rafaelfelipeac.replyradar.platform.ui.DesertWhite
+import com.rafaelfelipeac.replyradar.platform.ui.PrimaryColor
+import com.rafaelfelipeac.replyradar.platform.ui.cardCornerRadius
+import com.rafaelfelipeac.replyradar.platform.ui.components.ReplyTab
+import com.rafaelfelipeac.replyradar.platform.ui.paddingLarge
+import com.rafaelfelipeac.replyradar.platform.ui.paddingMedium
+import com.rafaelfelipeac.replyradar.platform.ui.spacerSmall
+import com.rafaelfelipeac.replyradar.platform.ui.tabVerticalPadding
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.RepliesOnTheRadarScreen
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.RepliesResolvedScreen
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheet
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.reply_list_fab_content_description
-import replyradar.composeapp.generated.resources.reply_list_placeholder_archived
-import replyradar.composeapp.generated.resources.reply_list_placeholder_on_the_radar
-import replyradar.composeapp.generated.resources.reply_list_tab_resolved
 import replyradar.composeapp.generated.resources.reply_list_tab_on_the_radar
+import replyradar.composeapp.generated.resources.reply_list_tab_resolved
 
 private const val PAGER_PAGE_COUNT = 2
 private const val WEIGHT = 1f
-private const val FIRST_PAGE_INDEX = 0
-private const val SECOND_PAGE_INDEX = 1
+private const val ON_THE_RADAR_INDEX = 0
+private const val RESOLVED_INDEX = 1
 
 @Composable
 fun ReplyListScreenRoot(
@@ -75,17 +61,16 @@ fun ReplyListScreenRoot(
 
     ReplyListScreen(
         state = state,
-        onAction = { action ->
-            viewModel.onAction(action)
+        onIntent = { intent ->
+            viewModel.onIntent(intent)
         }
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReplyListScreen(
     state: ReplyListState,
-    onAction: (ReplyListAction) -> Unit,
+    onIntent: (ReplyListScreenIntent) -> Unit
 ) {
     val pagerState = rememberPagerState { PAGER_PAGE_COUNT }
 
@@ -94,7 +79,7 @@ fun ReplyListScreen(
     }
 
     LaunchedEffect(pagerState.currentPage) {
-        onAction(ReplyListAction.OnTabSelected(pagerState.currentPage))
+        onIntent(OnTabSelected(pagerState.currentPage))
     }
 
     Box(
@@ -122,59 +107,41 @@ fun ReplyListScreen(
                     horizontalAlignment = CenterHorizontally
                 ) {
                     TabRow(
-                        selectedTabIndex = state.selectedTabIndex,
                         modifier = Modifier
                             .padding(vertical = tabVerticalPadding)
                             .fillMaxWidth(),
+                        selectedTabIndex = state.selectedTabIndex,
                         containerColor = DesertWhite,
                         indicator = { tabPositions ->
                             TabRowDefaults.SecondaryIndicator(
-                                color = AccentColor,
                                 modifier = Modifier
-                                    .tabIndicatorOffset(tabPositions[state.selectedTabIndex])
+                                    .tabIndicatorOffset(tabPositions[state.selectedTabIndex]),
+                                color = AccentColor
                             )
                         }
                     ) {
-                        Tab(
-                            selected = state.selectedTabIndex == FIRST_PAGE_INDEX,
-                            onClick = {
-                                onAction(ReplyListAction.OnTabSelected(FIRST_PAGE_INDEX))
-                            },
+                        ReplyTab(
                             modifier = Modifier.weight(WEIGHT),
-                            selectedContentColor = AccentColor,
-                            unselectedContentColor = UnselectedTabColor
-                        ) {
-                            Text(
-                                text = stringResource(string.reply_list_tab_on_the_radar),
-                                modifier = Modifier
-                                    .padding(vertical = tabVerticalPadding)
-                            )
-                        }
+                            selected = state.selectedTabIndex == ON_THE_RADAR_INDEX,
+                            onClick = { onIntent(OnTabSelected(ON_THE_RADAR_INDEX)) },
+                            text = stringResource(string.reply_list_tab_on_the_radar)
+                        )
 
-                        Tab(
-                            selected = state.selectedTabIndex == SECOND_PAGE_INDEX,
-                            onClick = {
-                                onAction(ReplyListAction.OnTabSelected(SECOND_PAGE_INDEX))
-                            },
+                        ReplyTab(
                             modifier = Modifier.weight(WEIGHT),
-                            selectedContentColor = AccentColor,
-                            unselectedContentColor = UnselectedTabColor
-                        ) {
-                            Text(
-                                text = stringResource(string.reply_list_tab_resolved),
-                                modifier = Modifier
-                                    .padding(vertical = tabVerticalPadding)
-                            )
-                        }
+                            selected = state.selectedTabIndex == RESOLVED_INDEX,
+                            onClick = { onIntent(OnTabSelected(RESOLVED_INDEX)) },
+                            text = stringResource(string.reply_list_tab_resolved)
+                        )
                     }
 
                     Spacer(modifier = Modifier.height(spacerSmall))
 
                     HorizontalPager(
-                        state = pagerState,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(WEIGHT)
+                            .weight(WEIGHT),
+                        state = pagerState
                     ) { pageIndex ->
                         Box(
                             modifier = Modifier
@@ -183,58 +150,8 @@ fun ReplyListScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             when (pageIndex) {
-                                FIRST_PAGE_INDEX -> {
-                                    if (state.isLoading) {
-                                        CircularProgressIndicator()
-                                    } else {
-                                        when {
-                                            state.errorMessage != null -> {
-                                                Text(
-                                                    text = state.errorMessage,
-                                                    textAlign = TextAlign.Center,
-                                                    style = MaterialTheme.typography.headlineSmall,
-                                                    color = MaterialTheme.colorScheme.error
-                                                )
-                                            }
-
-                                            state.replies.isEmpty() -> {
-                                                Text(
-                                                    text = stringResource(string.reply_list_placeholder_on_the_radar),
-                                                    textAlign = TextAlign.Center,
-                                                    style = MaterialTheme.typography.headlineSmall,
-                                                )
-                                            }
-
-                                            else -> {
-                                                ReplyList(
-                                                    replies = state.replies,
-                                                    onReplyClick = {
-                                                        onAction(OnReplyClick(it))
-                                                    },
-                                                    modifier = Modifier.fillMaxSize(),
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-
-                                SECOND_PAGE_INDEX -> {
-                                    if (state.resolvedReplies.isEmpty()) {
-                                        Text(
-                                            text = stringResource(string.reply_list_placeholder_archived),
-                                            textAlign = TextAlign.Center,
-                                            style = MaterialTheme.typography.headlineSmall,
-                                        )
-                                    } else {
-                                        ReplyList(
-                                            replies = state.resolvedReplies,
-                                            onReplyClick = {
-                                                onAction(OnReplyClick(it))
-                                            },
-                                            modifier = Modifier.fillMaxSize(),
-                                        )
-                                    }
-                                }
+                                ON_THE_RADAR_INDEX -> RepliesOnTheRadarScreen(state, onIntent)
+                                RESOLVED_INDEX -> RepliesResolvedScreen(state, onIntent)
                             }
                         }
                     }
@@ -243,62 +160,24 @@ fun ReplyListScreen(
         }
 
         FloatingActionButton(
-            onClick = { onAction(ReplyListAction.OnAddReplyClick) },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(paddingMedium),
+            onClick = { onIntent(OnAddReplyClick) },
             containerColor = AccentColor
         ) {
             Icon(
                 imageVector = Icons.Filled.Add,
                 contentDescription = stringResource(string.reply_list_fab_content_description),
-                tint = Color.White
+                tint = DesertWhite
             )
         }
 
         if (state.replyBottomSheetState != null) {
-            ModalBottomSheet(
-                onDismissRequest = {
-                    onAction(ReplyListAction.OnDismissBottomSheet)
-                },
-                containerColor = DesertWhite
-            ) {
-                when (state.replyBottomSheetState.mode) {
-                    CREATE -> {
-                        ReplyBottomSheetContent(
-                            mode = CREATE,
-                            reply = null,
-                            onComplete = { reply ->
-                                onAction(OnAddReply(reply))
-                            },
-                            onResolve = { reply ->
-                                onAction(OnToggleResolve(reply))
-                            },
-                            onDelete = { reply ->
-                                onAction(OnDeleteReply((reply)))
-                            }
-                        )
-                    }
-
-                    EDIT -> {
-                        if (state.replyBottomSheetState.reply != null) {
-                            ReplyBottomSheetContent(
-                                mode = EDIT,
-                                reply = state.replyBottomSheetState.reply,
-                                onComplete = { reply ->
-                                    onAction(OnEditReply(reply))
-                                },
-                                onResolve = { reply ->
-                                    onAction(OnToggleResolve(reply))
-                                },
-                                onDelete = { reply ->
-                                    onAction(OnDeleteReply((reply)))
-                                }
-                            )
-                        }
-                    }
-                }
-            }
+            ReplyBottomSheet(
+                onIntent = onIntent,
+                replyBottomSheetState = state.replyBottomSheetState
+            )
         }
     }
 }

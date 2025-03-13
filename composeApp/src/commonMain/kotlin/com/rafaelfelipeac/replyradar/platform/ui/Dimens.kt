@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.replyradar.core.ui
+package com.rafaelfelipeac.replyradar.platform.ui
 
 import androidx.compose.ui.unit.dp
 

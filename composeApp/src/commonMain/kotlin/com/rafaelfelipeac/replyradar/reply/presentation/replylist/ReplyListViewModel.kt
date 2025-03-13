@@ -7,22 +7,17 @@ import com.rafaelfelipeac.replyradar.reply.domain.usecase.DeleteReplyUseCase
 import com.rafaelfelipeac.replyradar.reply.domain.usecase.GetRepliesUseCase
 import com.rafaelfelipeac.replyradar.reply.domain.usecase.ToggleResolveReplyUseCase
 import com.rafaelfelipeac.replyradar.reply.domain.usecase.UpsertReplyUseCase
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnAddReply
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnAddReplyClick
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnDeleteReply
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnDismissBottomSheet
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnEditReply
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnReplyClick
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnTabSelected
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListAction.OnToggleResolve
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.*
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyClick
+import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import com.rafaelfelipeac.replyradar.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -35,8 +30,6 @@ class ReplyListViewModel(
     private val deleteReplyUseCase: DeleteReplyUseCase
 ) : ViewModel() {
 
-    private var observeResolvedJob: Job? = null
-
     private val _state = MutableStateFlow(ReplyListState())
     val state = _state
         .onStart {
@@ -45,114 +38,81 @@ class ReplyListViewModel(
         }
         .stateIn(
             viewModelScope,
-            SharingStarted.WhileSubscribed(5000L), // DC
+            WhileSubscribed(STOP_TIMEOUT),
             _state.value
         )
 
-    fun onAction(action: ReplyListAction) {
-        when (action) {
-            is OnAddReplyClick -> {
-                _state.update {
-                    it.copy(
+    fun onIntent(intent: ReplyListScreenIntent) {
+        when (intent) {
+            is ReplyListIntent -> handleReplyListIntent(intent)
+            is ReplyBottomSheetIntent -> handleReplyBottomSheetIntent(intent)
+        }
+    }
+
+    private fun handleReplyListIntent(intent: ReplyListIntent) {
+        when (intent) {
+            OnAddReplyClick -> {
+                updateState {
+                    copy(
                         replyBottomSheetState = ReplyBottomSheetState(
-                            mode = CREATE
+                            replyBottomSheetMode = CREATE
                         )
                     )
                 }
             }
 
             is OnReplyClick -> {
-                _state.update {
-                    it.copy(
+                updateState {
+                    copy(
                         replyBottomSheetState = ReplyBottomSheetState(
-                            mode = EDIT,
-                            reply = action.reply
+                            replyBottomSheetMode = EDIT,
+                            reply = intent.reply
                         )
                     )
                 }
             }
 
             is OnTabSelected -> {
-                _state.update {
-                    it.copy(selectedTabIndex = action.index)
+                updateState {
+                    copy(selectedTabIndex = intent.index)
                 }
-            }
-
-            is OnAddReply -> {
-                onUpsertReply(action.reply)
-
-                _state.value = state.value.copy(
-                    replyBottomSheetState = null
-                )
-            }
-
-            is OnEditReply -> {
-                onUpsertReply(action.reply)
-
-                _state.value = state.value.copy(
-                    replyBottomSheetState = null
-                )
-            }
-
-            OnDismissBottomSheet -> {
-                _state.value = state.value.copy(
-                    replyBottomSheetState = null
-                )
-            }
-
-            is OnToggleResolve -> {
-                onToggleResolveReply(action.reply)
-
-                _state.value = state.value.copy(
-                    replyBottomSheetState = null
-                )
-            }
-
-            is OnDeleteReply -> {
-                deleteReply(action.reply)
-
-                _state.value = state.value.copy(
-                    replyBottomSheetState = null
-                )
             }
         }
     }
 
-    private fun getReplies() = viewModelScope.launch {
-        _state.update {
-            it.copy(
-                isLoading = true
-            )
+    private fun handleReplyBottomSheetIntent(intent: ReplyBottomSheetIntent) {
+        when (intent) {
+            is OnAddReply -> onUpsertReply(intent.reply)
+            is OnEditReply -> onUpsertReply(intent.reply)
+            is OnDeleteReply -> deleteReply(intent.reply)
+            is OnToggleResolve -> onToggleResolveReply(intent.reply)
+            OnDismissBottomSheet -> dismissBottomSheet()
         }
+
+        dismissBottomSheet()
+    }
+
+    private fun getReplies() = viewModelScope.launch {
+        updateState { copy(isLoading = true) }
+
         getRepliesUseCase
             .getReplies(isResolved = false)
-            .onEach { replies ->
-                _state.update {
-                    it.copy(
+            .collect { replies ->
+                updateState {
+                    copy(
                         isLoading = false,
                         replies = replies
                     )
                 }
             }
-            .launchIn(viewModelScope) // DC
     }
 
     private fun observeResolvedReplies() = viewModelScope.launch {
-        observeResolvedJob?.cancel()
-        observeResolvedJob = getRepliesUseCase
+        getRepliesUseCase
             .getReplies(isResolved = true)
-            .onEach { resolvedReplies ->
-                _state.update {
-                    it.copy(
-                        resolvedReplies = resolvedReplies
-                    )
-                }
+            .collect { resolvedReplies ->
+                updateState { copy(resolvedReplies = resolvedReplies) }
             }
-            .launchIn(viewModelScope)
-    }
-
-    private fun onToggleResolveReply(reply: Reply) = viewModelScope.launch {
-        toggleResolveReplyUseCase.toggleResolveReply(reply)
     }
 
     private fun onUpsertReply(reply: Reply) = viewModelScope.launch {
@@ -161,5 +121,21 @@ class ReplyListViewModel(
 
     private fun deleteReply(reply: Reply) = viewModelScope.launch {
         deleteReplyUseCase.deleteReply(reply)
+    }
+
+    private fun onToggleResolveReply(reply: Reply) = viewModelScope.launch {
+        toggleResolveReplyUseCase.toggleResolveReply(reply)
+    }
+
+    private fun dismissBottomSheet() {
+        updateState { copy(replyBottomSheetState = null) }
+    }
+
+    private fun updateState(update: ReplyListState.() -> ReplyListState) {
+        _state.update { it.update() }
+    }
+
+    companion object {
+        private const val STOP_TIMEOUT = 5_000L
     }
 }

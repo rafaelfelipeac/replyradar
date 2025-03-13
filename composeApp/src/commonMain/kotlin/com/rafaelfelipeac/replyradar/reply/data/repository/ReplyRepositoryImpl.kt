@@ -12,23 +12,23 @@ class ReplyRepositoryImpl(
     private val replyDao: ReplyDao
 ) : ReplyRepository {
 
-    override suspend fun getReplies(isResolved: Boolean): Flow<List<Reply>> {
-        return replyDao
-            .getReplies(isResolved)
-            .map { replyEntities ->
-                replyEntities.map { it.toReply() }
-            }
+    override suspend fun upsertReply(reply: Reply) {
+        replyDao.upsert(reply.toReplyEntity())
     }
 
     override suspend fun toggleReplyResolve(reply: Reply) {
         replyDao.upsert(reply.toReplyEntity())
     }
 
-    override suspend fun upsertReply(reply: Reply) {
-        replyDao.upsert(reply.toReplyEntity())
-    }
-
     override suspend fun deleteReply(reply: Reply) {
         replyDao.deleteReply(reply.id)
+    }
+
+    override suspend fun getReplies(isResolved: Boolean): Flow<List<Reply>> {
+        return replyDao
+            .getReplies(isResolved)
+            .map { replyEntities ->
+                replyEntities.map { it.toReply() }
+            }
     }
 }

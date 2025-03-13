@@ -22,13 +22,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
-import com.rafaelfelipeac.replyradar.core.ui.PrimaryColor
-import com.rafaelfelipeac.replyradar.core.ui.cardBorderWidth
-import com.rafaelfelipeac.replyradar.core.ui.cardIconSize
-import com.rafaelfelipeac.replyradar.core.ui.cardItemCornerRadius
-import com.rafaelfelipeac.replyradar.core.ui.paddingMedium
+import com.rafaelfelipeac.replyradar.platform.ui.ListItemColor
+import com.rafaelfelipeac.replyradar.platform.ui.PrimaryColor
+import com.rafaelfelipeac.replyradar.platform.ui.cardBorderWidth
+import com.rafaelfelipeac.replyradar.platform.ui.cardIconSize
+import com.rafaelfelipeac.replyradar.platform.ui.cardItemCornerRadius
+import com.rafaelfelipeac.replyradar.platform.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.reply.domain.model.Reply
 
 private const val WEIGHT = 1f
@@ -36,16 +36,16 @@ private const val MAX_LINES = 1
 
 @Composable
 fun ReplyListItem(
+    modifier: Modifier = Modifier,
     reply: Reply,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit
 ) {
     Surface(
-        shape = RoundedCornerShape(cardItemCornerRadius),
-        border = BorderStroke(cardBorderWidth, PrimaryColor),
-        color = Color.White,
         modifier = modifier
             .clickable(onClick = onClick),
+        shape = RoundedCornerShape(cardItemCornerRadius),
+        border = BorderStroke(cardBorderWidth, PrimaryColor),
+        color = ListItemColor
     ) {
         Row(
             modifier = Modifier
@@ -61,28 +61,32 @@ fun ReplyListItem(
                     .weight(WEIGHT),
                 verticalArrangement = Center
             ) {
-                Text(
-                    text = reply.name,
-                    style = MaterialTheme.typography.titleMedium,
-                    maxLines = MAX_LINES,
-                    overflow = TextOverflow.Ellipsis
-                )
+                with(reply) {
+                    ReplyListItemLabel(label = name)
 
-                if (reply.subject.isNotEmpty()) {
-                    Text(
-                        text = reply.subject,
-                        style = MaterialTheme.typography.labelMedium,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                    if (subject.isNotEmpty()) {
+                        ReplyListItemLabel(label = subject)
+                    }
                 }
             }
+
             Icon(
+                modifier = Modifier
+                    .size(cardIconSize),
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
-                tint = PrimaryColor,
-                modifier = Modifier
-                    .size(cardIconSize)
+                tint = PrimaryColor
             )
         }
     }
+}
+
+@Composable
+fun ReplyListItemLabel(label: String) {
+    Text(
+        text = label,
+        style = MaterialTheme.typography.titleMedium,
+        maxLines = MAX_LINES,
+        overflow = TextOverflow.Ellipsis
+    )
 }
