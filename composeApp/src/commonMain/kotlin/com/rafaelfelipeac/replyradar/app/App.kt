@@ -16,8 +16,3 @@ fun App() {
     }
 }
 
-/*
-MVP (v1)
-- readme
-- create History/User Actions database for V1?
-- unit tests
