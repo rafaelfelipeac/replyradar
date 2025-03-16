@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f8d2ecbec5886e36e6bb7044a8301c9a",
+    "identityHash": "c408e21c648ca56fbbcd55954b64610d",
     "entities": [
       {
         "tableName": "replies",
@@ -42,7 +42,7 @@
       },
       {
         "tableName": "user_actions",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `actionType` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `actionType` TEXT NOT NULL, `targetType` TEXT, `targetId` INTEGER, `timestamp` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -54,6 +54,22 @@
             "fieldPath": "actionType",
             "columnName": "actionType",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "targetType",
+            "columnName": "targetType",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "targetId",
+            "columnName": "targetId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -67,7 +83,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f8d2ecbec5886e36e6bb7044a8301c9a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c408e21c648ca56fbbcd55954b64610d')"
     ]
   }
 }

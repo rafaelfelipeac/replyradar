@@ -16,6 +16,12 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Message
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Complete
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Create
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Delete
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
 import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
@@ -84,10 +90,10 @@ class ReplyListViewModel(
 
     private fun handleReplyBottomSheetIntent(intent: ReplyBottomSheetIntent) {
         when (intent) {
-            is OnAddReply -> onUpsertReply(intent.reply)
-            is OnEditReply -> onUpsertReply(intent.reply)
-            is OnDeleteReply -> deleteReply(intent.reply)
-            is OnToggleResolve -> onToggleResolveReply(intent.reply)
+            is OnAddReply -> onUpsertReply(reply = intent.reply, actionType = Create)
+            is OnEditReply -> onUpsertReply(reply = intent.reply, actionType = Edit)
+            is OnDeleteReply -> deleteReply(reply = intent.reply)
+            is OnToggleResolve -> onToggleResolveReply(reply = intent.reply)
             OnDismissBottomSheet -> dismissBottomSheet()
         }
 
@@ -117,17 +123,22 @@ class ReplyListViewModel(
             }
     }
 
-    private fun onUpsertReply(reply: Reply) = viewModelScope.launch {
+    private fun onUpsertReply(reply: Reply, actionType: UserActionType) = viewModelScope.launch {
         upsertReplyUseCase.upsertReply(reply)
-        logUserActionUseCase.logUserAction(reply.name)
+
+        logUserAction(actionType = actionType, targetId = reply.id)
     }
 
     private fun deleteReply(reply: Reply) = viewModelScope.launch {
         deleteReplyUseCase.deleteReply(reply)
+
+        logUserAction(actionType = Delete, targetId = reply.id)
     }
 
     private fun onToggleResolveReply(reply: Reply) = viewModelScope.launch {
         toggleResolveReplyUseCase.toggleResolveReply(reply)
+
+        logUserAction(actionType = Complete, targetId = reply.id)
     }
 
     private fun dismissBottomSheet() {
@@ -136,6 +147,17 @@ class ReplyListViewModel(
 
     private fun updateState(update: ReplyListState.() -> ReplyListState) {
         _state.update { it.update() }
+    }
+
+    private suspend fun logUserAction(
+        actionType: UserActionType,
+        targetId: Long
+    ) {
+        logUserActionUseCase.logUserAction(
+            actionType = actionType,
+            targetType = Message,
+            targetId = targetId
+        )
     }
 
     companion object {

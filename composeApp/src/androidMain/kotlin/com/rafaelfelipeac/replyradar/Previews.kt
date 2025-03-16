@@ -5,7 +5,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreen
 
-private val replies = (1..10).map {
+private val replies = (1L..10L).map {
     Reply(
         id = it,
         name = "Reply $it",
