@@ -9,8 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.rafaelfelipeac.replyradar.app.navigation.Route.ReplyGraph
 import com.rafaelfelipeac.replyradar.app.navigation.Route.ReplyList
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListScreenRoot
-import com.rafaelfelipeac.replyradar.reply.presentation.replylist.ReplyListViewModel
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenRoot
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
