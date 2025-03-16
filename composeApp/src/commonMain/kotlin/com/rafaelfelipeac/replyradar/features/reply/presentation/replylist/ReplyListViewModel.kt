@@ -16,6 +16,7 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
+import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.onStart
@@ -27,10 +28,11 @@ class ReplyListViewModel(
     private val getRepliesUseCase: GetRepliesUseCase,
     private val toggleResolveReplyUseCase: ToggleResolveReplyUseCase,
     private val upsertReplyUseCase: UpsertReplyUseCase,
-    private val deleteReplyUseCase: DeleteReplyUseCase
+    private val deleteReplyUseCase: DeleteReplyUseCase,
+    private val logUserActionUseCase: LogUserActionUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState())
+    private val _state = MutableStateFlow(ReplyListState())
     val state = _state
         .onStart {
             getReplies()
@@ -117,6 +119,7 @@ class ReplyListViewModel(
 
     private fun onUpsertReply(reply: Reply) = viewModelScope.launch {
         upsertReplyUseCase.upsertReply(reply)
+        logUserActionUseCase.logUserAction(reply.name)
     }
 
     private fun deleteReply(reply: Reply) = viewModelScope.launch {
@@ -131,7 +134,7 @@ class ReplyListViewModel(
         updateState { copy(replyBottomSheetState = null) }
     }
 
-    private fun updateState(update: com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState.() -> com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState) {
+    private fun updateState(update: ReplyListState.() -> ReplyListState) {
         _state.update { it.update() }
     }
 

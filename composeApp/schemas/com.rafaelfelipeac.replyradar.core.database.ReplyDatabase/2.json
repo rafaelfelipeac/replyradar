@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "b9b660373c96593b5344cbce571644b9",
+    "identityHash": "c0b4c1c4f16464fbdcfa735bfc691864",
     "entities": [
       {
         "tableName": "ReplyEntity",
@@ -39,11 +39,35 @@
             "id"
           ]
         }
+      },
+      {
+        "tableName": "user_actions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `actionType` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actionType",
+            "columnName": "actionType",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b9b660373c96593b5344cbce571644b9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c0b4c1c4f16464fbdcfa735bfc691864')"
     ]
   }
 }

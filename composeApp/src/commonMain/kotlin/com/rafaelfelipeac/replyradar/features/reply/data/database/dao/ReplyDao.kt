@@ -12,9 +12,9 @@ interface ReplyDao {
     @Upsert
     suspend fun upsert(reply: ReplyEntity)
 
-    @Query("DELETE FROM ReplyEntity WHERE id = :id")
+    @Query("DELETE FROM replies WHERE id = :id")
     suspend fun deleteReply(id: Int)
 
-    @Query("SELECT * FROM ReplyEntity where isResolved == :isResolved")
+    @Query("SELECT * FROM replies where isResolved == :isResolved")
     fun getReplies(isResolved: Boolean): Flow<List<ReplyEntity>>
 }
