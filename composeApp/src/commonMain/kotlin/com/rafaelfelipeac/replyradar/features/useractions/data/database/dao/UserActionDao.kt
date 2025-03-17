@@ -8,7 +8,11 @@ interface UserActionDao {
 
     @Query(
         "INSERT INTO user_actions (actionType, targetType, targetId, timestamp) " +
-                "VALUES (:actionType, :targetType, :targetId, strftime('%s','now') * 1000)"
+                "VALUES (:actionType, :targetType, :targetId, strftime('%s','now') * $TIME_CONSTANT)"
     )
     suspend fun insert(actionType: String, targetType: String?, targetId: Long?)
+
+    companion object {
+        private const val TIME_CONSTANT = 1000
+    }
 }
