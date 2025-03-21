@@ -12,12 +12,10 @@ class ReplyRepositoryImpl(
     private val replyDao: ReplyDao
 ) : ReplyRepository {
 
-    override suspend fun upsertReply(reply: Reply) {
-        replyDao.upsert(reply.toReplyEntity())
-    }
+    override suspend fun upsertReply(reply: Reply) = replyDao.insert(reply.toReplyEntity())
 
     override suspend fun toggleReplyResolve(reply: Reply) {
-        replyDao.upsert(reply.toReplyEntity())
+        replyDao.update(reply.toReplyEntity())
     }
 
     override suspend fun deleteReply(reply: Reply) {

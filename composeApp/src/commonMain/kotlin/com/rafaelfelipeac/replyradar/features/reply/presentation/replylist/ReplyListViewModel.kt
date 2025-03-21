@@ -18,10 +18,11 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.compo
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Message
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType
-import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Complete
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Resolve
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Create
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Delete
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Reopen
 import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
@@ -31,10 +32,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ReplyListViewModel(
-    private val getRepliesUseCase: GetRepliesUseCase,
-    private val toggleResolveReplyUseCase: ToggleResolveReplyUseCase,
     private val upsertReplyUseCase: UpsertReplyUseCase,
+    private val toggleResolveReplyUseCase: ToggleResolveReplyUseCase,
     private val deleteReplyUseCase: DeleteReplyUseCase,
+    private val getRepliesUseCase: GetRepliesUseCase,
     private val logUserActionUseCase: LogUserActionUseCase
 ) : ViewModel() {
 
@@ -124,9 +125,9 @@ class ReplyListViewModel(
     }
 
     private fun onUpsertReply(reply: Reply, actionType: UserActionType) = viewModelScope.launch {
-        upsertReplyUseCase.upsertReply(reply)
+        val replyId = upsertReplyUseCase.upsertReply(reply)
 
-        logUserAction(actionType = actionType, targetId = reply.id)
+        logUserAction(actionType = actionType, targetId = replyId)
     }
 
     private fun deleteReply(reply: Reply) = viewModelScope.launch {
@@ -136,9 +137,9 @@ class ReplyListViewModel(
     }
 
     private fun onToggleResolveReply(reply: Reply) = viewModelScope.launch {
-        toggleResolveReplyUseCase.toggleResolveReply(reply)
+        val isResolved = toggleResolveReplyUseCase.toggleResolveReply(reply)
 
-        logUserAction(actionType = Complete, targetId = reply.id)
+        logUserAction(actionType = if (isResolved) Resolve else Reopen, targetId = reply.id)
     }
 
     private fun dismissBottomSheet() {

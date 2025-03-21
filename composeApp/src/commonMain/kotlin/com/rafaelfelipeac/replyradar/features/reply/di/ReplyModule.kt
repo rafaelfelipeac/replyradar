@@ -20,10 +20,10 @@ import org.koin.dsl.module
 val replyModule = module {
     viewModelOf(::ReplyListViewModel)
 
-    singleOf(::GetRepliesUseCaseImpl).bind<GetRepliesUseCase>()
     singleOf(::UpsertReplyUseCaseImpl).bind<UpsertReplyUseCase>()
     singleOf(::ToggleResolveReplyUseCaseImpl).bind<ToggleResolveReplyUseCase>()
     singleOf(::DeleteReplyUseCaseImpl).bind<DeleteReplyUseCase>()
+    singleOf(::GetRepliesUseCaseImpl).bind<GetRepliesUseCase>()
 
     singleOf(::ReplyRepositoryImpl).bind<ReplyRepository>()
 

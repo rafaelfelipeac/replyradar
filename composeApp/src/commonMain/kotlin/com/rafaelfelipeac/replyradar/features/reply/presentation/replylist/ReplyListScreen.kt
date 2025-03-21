@@ -69,7 +69,7 @@ fun ReplyListScreenRoot(
 
 @Composable
 fun ReplyListScreen(
-    state: com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState,
+    state: ReplyListState,
     onIntent: (ReplyListScreenIntent) -> Unit
 ) {
     val pagerState = rememberPagerState { PAGER_PAGE_COUNT }
