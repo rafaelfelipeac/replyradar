@@ -7,8 +7,10 @@ import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.DeleteReplyUs
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.DeleteReplyUseCaseImpl
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.GetRepliesUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.GetRepliesUseCaseImpl
+import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleArchiveReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleResolveReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleResolveReplyUseCaseImpl
+import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleArchiveReplyUseCaseImpl
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.UpsertReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.UpsertReplyUseCaseImpl
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListViewModel
@@ -22,6 +24,7 @@ val replyModule = module {
 
     singleOf(::UpsertReplyUseCaseImpl).bind<UpsertReplyUseCase>()
     singleOf(::ToggleResolveReplyUseCaseImpl).bind<ToggleResolveReplyUseCase>()
+    singleOf(::ToggleArchiveReplyUseCaseImpl).bind<ToggleArchiveReplyUseCase>()
     singleOf(::DeleteReplyUseCaseImpl).bind<DeleteReplyUseCase>()
     singleOf(::GetRepliesUseCaseImpl).bind<GetRepliesUseCase>()
 

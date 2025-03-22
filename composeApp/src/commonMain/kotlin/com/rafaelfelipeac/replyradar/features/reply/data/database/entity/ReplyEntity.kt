@@ -9,7 +9,9 @@ data class ReplyEntity(
     val name: String,
     val subject: String,
     val isResolved: Boolean,
+    val isArchived: Boolean,
     val createdAt: Long,
     val updatedAt: Long,
-    val resolvedAt: Long
+    val resolvedAt: Long,
+    val archivedAt: Long
 )

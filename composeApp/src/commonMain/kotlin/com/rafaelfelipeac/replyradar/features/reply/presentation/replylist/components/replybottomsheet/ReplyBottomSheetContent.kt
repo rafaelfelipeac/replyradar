@@ -29,11 +29,13 @@ import org.jetbrains.compose.resources.stringResource
 import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_add
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_add_reply
+import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_archive
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_delete
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_edit_reply
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_name
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_reopen
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_resolve
+import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_restore
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_save
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_subject
 
@@ -44,6 +46,7 @@ fun ReplyBottomSheetContent(
     replyBottomSheetState: ReplyBottomSheetState? = null,
     onComplete: (Reply) -> Unit,
     onResolve: (Reply) -> Unit,
+    onArchive: (Reply) -> Unit,
     onDelete: (Reply) -> Unit
 ) {
     replyBottomSheetState?.let { state ->
@@ -79,21 +82,38 @@ fun ReplyBottomSheetContent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = End
             ) {
-                state.reply?.let {
+                state.reply?.let { reply ->
                     if (state.replyBottomSheetMode == EDIT) {
-                        ReplyButton(
-                            modifier = Modifier.weight(WEIGHT)
-                                .padding(end = paddingSmall),
-                            text = stringResource(string.reply_list_bottom_sheet_delete),
-                            onClick = { onDelete(state.reply) }
-                        )
+                        with(reply) {
+                            when {
+                                !isArchived && !isResolved -> {
+                                    ActiveStateButtons(
+                                        modifier = Modifier.weight(WEIGHT),
+                                        reply = state.reply,
+                                        onArchive = onArchive,
+                                        onResolve = onResolve
+                                    )
+                                }
 
-                        ReplyButton(
-                            modifier = Modifier.weight(WEIGHT)
-                                .padding(start = paddingSmall, end = paddingSmall),
-                            text = stringResource(if (state.reply.isResolved) string.reply_list_bottom_sheet_reopen else string.reply_list_bottom_sheet_resolve),
-                            onClick = { onResolve(state.reply) }
-                        )
+                                isResolved -> {
+                                    ResolvedStateButtons(
+                                        modifier = Modifier.weight(WEIGHT),
+                                        reply = state.reply,
+                                        onArchive = onArchive,
+                                        onResolve = onResolve
+                                    )
+                                }
+
+                                isArchived -> {
+                                    ArchivedStateButton(
+                                        modifier = Modifier.weight(WEIGHT),
+                                        reply = state.reply,
+                                        onArchive = onArchive,
+                                        onDelete = onDelete
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -127,4 +147,70 @@ fun ReplyBottomSheetContent(
             }
         }
     }
+}
+
+@Composable
+private fun ActiveStateButtons(
+    modifier: Modifier = Modifier,
+    reply: Reply,
+    onArchive: (Reply) -> Unit,
+    onResolve: (Reply) -> Unit
+) {
+    ReplyButton(
+        modifier = modifier
+            .padding(end = paddingSmall),
+        text = stringResource(string.reply_list_bottom_sheet_archive),
+        onClick = { onArchive(reply) }
+    )
+
+    ReplyButton(
+        modifier = modifier
+            .padding(start = paddingSmall, end = paddingSmall),
+        text = stringResource(string.reply_list_bottom_sheet_resolve),
+        onClick = { onResolve(reply) }
+    )
+}
+
+@Composable
+private fun ResolvedStateButtons(
+    modifier: Modifier = Modifier,
+    reply: Reply,
+    onArchive: (Reply) -> Unit,
+    onResolve: (Reply) -> Unit
+) {
+    ReplyButton(
+        modifier = modifier
+            .padding(end = paddingSmall),
+        text = stringResource(string.reply_list_bottom_sheet_archive),
+        onClick = { onArchive(reply) }
+    )
+
+    ReplyButton(
+        modifier = modifier
+            .padding(end = paddingSmall),
+        text = stringResource(string.reply_list_bottom_sheet_reopen),
+        onClick = { onResolve(reply) }
+    )
+}
+
+@Composable
+private fun ArchivedStateButton(
+    modifier: Modifier = Modifier,
+    reply: Reply,
+    onArchive: (Reply) -> Unit,
+    onDelete: (Reply) -> Unit
+) {
+    ReplyButton(
+        modifier = modifier
+            .padding(end = paddingSmall),
+        text = stringResource(string.reply_list_bottom_sheet_restore),
+        onClick = { onArchive(reply) }
+    )
+
+    ReplyButton(
+        modifier = modifier
+            .padding(end = paddingSmall),
+        text = stringResource(string.reply_list_bottom_sheet_delete),
+        onClick = { onDelete(reply) }
+    )
 }

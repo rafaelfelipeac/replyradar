@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.DeleteReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.GetRepliesUseCase
+import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleArchiveReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleResolveReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.UpsertReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent
@@ -18,11 +19,13 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.compo
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Message
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Archive
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Resolve
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Create
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Delete
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Reopen
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Restore
 import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
@@ -34,6 +37,7 @@ import kotlinx.coroutines.launch
 class ReplyListViewModel(
     private val upsertReplyUseCase: UpsertReplyUseCase,
     private val toggleResolveReplyUseCase: ToggleResolveReplyUseCase,
+    private val toggleArchiveReplyUseCase: ToggleArchiveReplyUseCase,
     private val deleteReplyUseCase: DeleteReplyUseCase,
     private val getRepliesUseCase: GetRepliesUseCase,
     private val logUserActionUseCase: LogUserActionUseCase
@@ -44,6 +48,7 @@ class ReplyListViewModel(
         .onStart {
             getReplies()
             observeResolvedReplies()
+            observeArchivedReplies()
         }
         .stateIn(
             viewModelScope,
@@ -94,6 +99,7 @@ class ReplyListViewModel(
             is OnAddReply -> onUpsertReply(reply = intent.reply, actionType = Create)
             is OnEditReply -> onUpsertReply(reply = intent.reply, actionType = Edit)
             is OnDeleteReply -> deleteReply(reply = intent.reply)
+            is OnToggleArchive -> onToggleArchiveReply(reply = intent.reply)
             is OnToggleResolve -> onToggleResolveReply(reply = intent.reply)
             OnDismissBottomSheet -> dismissBottomSheet()
         }
@@ -105,7 +111,7 @@ class ReplyListViewModel(
         updateState { copy(isLoading = true) }
 
         getRepliesUseCase
-            .getReplies(isResolved = false)
+            .getReplies()
             .collect { replies ->
                 updateState {
                     copy(
@@ -124,22 +130,36 @@ class ReplyListViewModel(
             }
     }
 
+    private fun observeArchivedReplies() = viewModelScope.launch {
+        getRepliesUseCase
+            .getReplies(isArchived = true)
+            .collect { archivedReplies ->
+                updateState { copy(archivedReplies = archivedReplies) }
+            }
+    }
+
     private fun onUpsertReply(reply: Reply, actionType: UserActionType) = viewModelScope.launch {
         val replyId = upsertReplyUseCase.upsertReply(reply)
 
         logUserAction(actionType = actionType, targetId = replyId)
     }
 
-    private fun deleteReply(reply: Reply) = viewModelScope.launch {
-        deleteReplyUseCase.deleteReply(reply)
+    private fun onToggleArchiveReply(reply: Reply) = viewModelScope.launch {
+        val isArchived = toggleArchiveReplyUseCase.toggleArchiveReply(reply)
 
-        logUserAction(actionType = Delete, targetId = reply.id)
+        logUserAction(actionType = if (isArchived) Archive else Restore, targetId = reply.id)
     }
 
     private fun onToggleResolveReply(reply: Reply) = viewModelScope.launch {
         val isResolved = toggleResolveReplyUseCase.toggleResolveReply(reply)
 
         logUserAction(actionType = if (isResolved) Resolve else Reopen, targetId = reply.id)
+    }
+
+    private fun deleteReply(reply: Reply) = viewModelScope.launch {
+        deleteReplyUseCase.deleteReply(reply)
+
+        logUserAction(actionType = Delete, targetId = reply.id)
     }
 
     private fun dismissBottomSheet() {

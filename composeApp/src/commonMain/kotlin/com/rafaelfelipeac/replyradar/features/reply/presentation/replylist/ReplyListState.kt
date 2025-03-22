@@ -6,6 +6,7 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.compo
 data class ReplyListState(
     val replies: List<Reply> = emptyList(),
     val resolvedReplies: List<Reply> = emptyList(),
+    val archivedReplies: List<Reply> = emptyList(),
     val isLoading: Boolean = true,
     val errorMessage: String? = null,
     val selectedTabIndex: Int = 0,

@@ -38,6 +38,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.spacerSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.tabVerticalPadding
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesArchivedScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesOnTheRadarScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesResolvedScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheet
@@ -47,11 +48,13 @@ import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.reply_list_fab_content_description
 import replyradar.composeapp.generated.resources.reply_list_tab_on_the_radar
 import replyradar.composeapp.generated.resources.reply_list_tab_resolved
+import replyradar.composeapp.generated.resources.reply_list_tab_archived
 
-private const val PAGER_PAGE_COUNT = 2
 private const val WEIGHT = 1f
+private const val PAGER_PAGE_COUNT = 3
 private const val ON_THE_RADAR_INDEX = 0
 private const val RESOLVED_INDEX = 1
+private const val ARCHIVED_INDEX = 2
 
 @Composable
 fun ReplyListScreenRoot(
@@ -133,6 +136,13 @@ fun ReplyListScreen(
                             onClick = { onIntent(OnTabSelected(RESOLVED_INDEX)) },
                             text = stringResource(string.reply_list_tab_resolved)
                         )
+
+                        ReplyTab(
+                            modifier = Modifier.weight(WEIGHT),
+                            selected = state.selectedTabIndex == ARCHIVED_INDEX,
+                            onClick = { onIntent(OnTabSelected(ARCHIVED_INDEX)) },
+                            text = stringResource(string.reply_list_tab_archived)
+                        )
                     }
 
                     Spacer(modifier = Modifier.height(spacerSmall))
@@ -152,6 +162,7 @@ fun ReplyListScreen(
                             when (pageIndex) {
                                 ON_THE_RADAR_INDEX -> RepliesOnTheRadarScreen(state, onIntent)
                                 RESOLVED_INDEX -> RepliesResolvedScreen(state, onIntent)
+                                ARCHIVED_INDEX -> RepliesArchivedScreen(state, onIntent)
                             }
                         }
                     }

@@ -9,6 +9,7 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDeleteReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDismissBottomSheet
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnEditReply
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleArchive
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleResolve
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
@@ -29,6 +30,7 @@ fun ReplyBottomSheet(
                     replyBottomSheetState = ReplyBottomSheetState(CREATE),
                     onComplete = { onIntent(OnAddReply(it)) },
                     onResolve = { onIntent(OnToggleResolve(it)) },
+                    onArchive = { onIntent(OnToggleArchive(it)) },
                     onDelete = { onIntent(OnDeleteReply(it)) }
                 )
             }
@@ -42,6 +44,7 @@ fun ReplyBottomSheet(
                         ),
                         onComplete = { onIntent(OnEditReply(it)) },
                         onResolve = { onIntent(OnToggleResolve(it)) },
+                        onArchive = { onIntent(OnToggleArchive(it)) },
                         onDelete = { onIntent(OnDeleteReply(it)) }
                     )
                 }

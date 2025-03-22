@@ -31,7 +31,18 @@ class ReplyRepositoryImpl(
         replyDao.update(
             reply.toReplyEntity().copy(
                 resolvedAt = clock.now(),
-                isResolved = !reply.isResolved
+                isResolved = !reply.isResolved,
+                isArchived = false
+            )
+        )
+    }
+
+    override suspend fun toggleReplyArchive(reply: Reply) {
+        replyDao.update(
+            reply.toReplyEntity().copy(
+                archivedAt = clock.now(),
+                isArchived = !reply.isArchived,
+                isResolved = false
             )
         )
     }
@@ -40,11 +51,13 @@ class ReplyRepositoryImpl(
         replyDao.deleteReply(reply.id)
     }
 
-    override suspend fun getReplies(isResolved: Boolean): Flow<List<Reply>> {
-        return replyDao
-            .getReplies(isResolved)
-            .map { replyEntities ->
-                replyEntities.map { it.toReply() }
-            }
+    override suspend fun getReplies(isResolved: Boolean, isArchived: Boolean): Flow<List<Reply>> {
+        val sourceFlow = when {
+            isResolved -> replyDao.getResolvedReplies()
+            isArchived -> replyDao.getArchivedReplies()
+            else -> replyDao.getActiveReplies()
+        }
+
+        return sourceFlow.map { it.map { entity -> entity.toReply() } }
     }
 }

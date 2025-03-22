@@ -20,6 +20,12 @@ interface ReplyDao {
     @Query("DELETE FROM replies WHERE id = :id")
     suspend fun deleteReply(id: Long)
 
-    @Query("SELECT * FROM replies where isResolved == :isResolved")
-    fun getReplies(isResolved: Boolean): Flow<List<ReplyEntity>>
+    @Query("SELECT * FROM replies WHERE isResolved = 0 AND isArchived = 0")
+    fun getActiveReplies(): Flow<List<ReplyEntity>>
+
+    @Query("SELECT * FROM replies WHERE isResolved = 1")
+    fun getResolvedReplies(): Flow<List<ReplyEntity>>
+
+    @Query("SELECT * FROM replies WHERE isArchived = 1")
+    fun getArchivedReplies(): Flow<List<ReplyEntity>>
 }

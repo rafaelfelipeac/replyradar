@@ -14,6 +14,7 @@ sealed interface ReplyListScreenIntent {
         data class OnAddReply(val reply: Reply) : ReplyBottomSheetIntent
         data class OnEditReply(val reply: Reply) : ReplyBottomSheetIntent
         data class OnDeleteReply(val reply: Reply) : ReplyBottomSheetIntent
+        data class OnToggleArchive(val reply: Reply) : ReplyBottomSheetIntent
         data class OnToggleResolve(val reply: Reply) : ReplyBottomSheetIntent
         data object OnDismissBottomSheet : ReplyBottomSheetIntent
     }
