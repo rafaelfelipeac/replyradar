@@ -4,5 +4,8 @@ data class Reply(
     val id: Long = 0,
     val name: String,
     val subject: String,
-    val isResolved: Boolean = false
+    val isResolved: Boolean = false,
+    val createdAt: Long = 0,
+    val updatedAt: Long = 0,
+    val resolvedAt: Long = 0
 )

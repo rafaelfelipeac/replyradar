@@ -9,5 +9,5 @@ data class UserActionEntity(
     val actionType: String,
     val targetType: String?,
     val targetId: Long?,
-    val timestamp: Long = 0
+    val createdAt: Long
 )

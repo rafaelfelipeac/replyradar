@@ -1,5 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.reply.data.repository
 
+import com.rafaelfelipeac.replyradar.core.util.Clock
 import com.rafaelfelipeac.replyradar.features.reply.data.database.dao.ReplyDao
 import com.rafaelfelipeac.replyradar.features.reply.data.mapper.toReplyEntity
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
@@ -9,13 +10,30 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class ReplyRepositoryImpl(
-    private val replyDao: ReplyDao
+    private val replyDao: ReplyDao,
+    private val clock: Clock
 ) : ReplyRepository {
 
-    override suspend fun upsertReply(reply: Reply) = replyDao.insert(reply.toReplyEntity())
+    override suspend fun upsertReply(reply: Reply): Long {
+        val now = clock.now()
+        val replyEntity = reply.toReplyEntity()
+
+        val entityToSave = if (reply.id == 0L) {
+            replyEntity.copy(createdAt = now, updatedAt = now)
+        } else {
+            replyEntity.copy(updatedAt = now)
+        }
+
+        return replyDao.insert(entityToSave)
+    }
 
     override suspend fun toggleReplyResolve(reply: Reply) {
-        replyDao.update(reply.toReplyEntity())
+        replyDao.update(
+            reply.toReplyEntity().copy(
+                resolvedAt = clock.now(),
+                isResolved = !reply.isResolved
+            )
+        )
     }
 
     override suspend fun deleteReply(reply: Reply) {

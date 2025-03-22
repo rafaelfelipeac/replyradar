@@ -7,7 +7,10 @@ fun Reply.toReplyEntity() = ReplyEntity(
     id = id,
     name = name,
     subject = subject,
-    isResolved = isResolved
+    isResolved = isResolved,
+    createdAt = createdAt,
+    updatedAt = updatedAt,
+    resolvedAt = resolvedAt
 )
 
 
@@ -15,5 +18,8 @@ fun ReplyEntity.toReply() = Reply(
     id = id,
     name = name,
     subject = subject,
-    isResolved = isResolved
+    isResolved = isResolved,
+    createdAt = createdAt,
+    updatedAt = updatedAt,
+    resolvedAt = resolvedAt
 )

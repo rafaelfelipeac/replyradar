@@ -1,18 +1,13 @@
 package com.rafaelfelipeac.replyradar.features.useractions.data.database.dao
 
 import androidx.room.Dao
-import androidx.room.Query
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy.Companion.REPLACE
+import com.rafaelfelipeac.replyradar.features.useractions.data.database.entity.UserActionEntity
 
 @Dao
 interface UserActionDao {
 
-    @Query(
-        "INSERT INTO user_actions (actionType, targetType, targetId, timestamp) " +
-                "VALUES (:actionType, :targetType, :targetId, strftime('%s','now') * $TIME_CONSTANT)"
-    )
-    suspend fun insert(actionType: String, targetType: String?, targetId: Long?)
-
-    companion object {
-        private const val TIME_CONSTANT = 1000
-    }
+    @Insert(onConflict = REPLACE)
+    suspend fun insert(userActionEntity: UserActionEntity)
 }

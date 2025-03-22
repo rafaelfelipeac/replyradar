@@ -12,10 +12,8 @@ class ToggleResolveReplyUseCaseImpl(
 ) : ToggleResolveReplyUseCase {
 
     override suspend fun toggleResolveReply(reply: Reply) : Boolean {
-        val isResolved = !reply.isResolved
+        repository.toggleReplyResolve(reply)
 
-        repository.toggleReplyResolve(reply.copy(isResolved = isResolved))
-
-        return isResolved
+        return !reply.isResolved
     }
 }

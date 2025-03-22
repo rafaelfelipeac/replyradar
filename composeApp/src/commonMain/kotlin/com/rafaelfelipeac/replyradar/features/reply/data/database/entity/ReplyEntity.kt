@@ -8,5 +8,8 @@ data class ReplyEntity(
     @PrimaryKey(autoGenerate = true) val id: Long,
     val name: String,
     val subject: String,
-    val isResolved: Boolean
+    val isResolved: Boolean,
+    val createdAt: Long,
+    val updatedAt: Long,
+    val resolvedAt: Long
 )
