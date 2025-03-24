@@ -10,9 +10,9 @@ import platform.Foundation.NSUserDomainMask
 
 @OptIn(ExperimentalForeignApi::class)
 actual class DatabaseFactory {
-    actual fun create(): RoomDatabase.Builder<ReplyDatabase> {
+    actual fun create(): RoomDatabase.Builder<ReplyRadarDatabase> {
         val dbFile = documentDirectory() + "/${DB_NAME}"
-        return Room.databaseBuilder<ReplyDatabase>(
+        return Room.databaseBuilder<ReplyRadarDatabase>(
             name = dbFile
         )
     }

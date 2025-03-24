@@ -6,7 +6,7 @@ import com.rafaelfelipeac.replyradar.core.AppConstants.DB_NAME
 import java.io.File
 
 actual class DatabaseFactory {
-    actual fun create(): RoomDatabase.Builder<ReplyDatabase> {
+    actual fun create(): RoomDatabase.Builder<ReplyRadarDatabase> {
         val os = System.getProperty("os.name").lowercase()
         val userHome = System.getProperty("user.home")
         val appDataDir = when {

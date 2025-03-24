@@ -1,6 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.useractions.di
 
-import com.rafaelfelipeac.replyradar.core.database.ReplyDatabase
+import com.rafaelfelipeac.replyradar.core.database.ReplyRadarDatabase
 import com.rafaelfelipeac.replyradar.features.useractions.data.repository.UserActionRepositoryImpl
 import com.rafaelfelipeac.replyradar.features.useractions.domain.repository.UserActionRepository
 import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCase
@@ -14,5 +14,5 @@ val userActionModule = module {
 
     singleOf(::UserActionRepositoryImpl).bind<UserActionRepository>()
 
-    single { get<ReplyDatabase>().userActionDao }
+    single { get<ReplyRadarDatabase>().userActionDao }
 }

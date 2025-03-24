@@ -8,7 +8,7 @@ import com.rafaelfelipeac.replyradar.core.AppConstants.DB_NAME
 actual class DatabaseFactory(
     private val context: Context
 ) {
-    actual fun create(): RoomDatabase.Builder<ReplyDatabase> {
+    actual fun create(): RoomDatabase.Builder<ReplyRadarDatabase> {
         val appContext = context.applicationContext
         val dbFile = appContext.getDatabasePath(DB_NAME)
 

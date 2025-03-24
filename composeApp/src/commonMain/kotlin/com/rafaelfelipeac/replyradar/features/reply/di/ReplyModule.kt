@@ -1,6 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.reply.di
 
-import com.rafaelfelipeac.replyradar.core.database.ReplyDatabase
+import com.rafaelfelipeac.replyradar.core.database.ReplyRadarDatabase
 import com.rafaelfelipeac.replyradar.features.reply.data.repository.ReplyRepositoryImpl
 import com.rafaelfelipeac.replyradar.features.reply.domain.repository.ReplyRepository
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.DeleteReplyUseCase
@@ -30,5 +30,5 @@ val replyModule = module {
 
     singleOf(::ReplyRepositoryImpl).bind<ReplyRepository>()
 
-    single { get<ReplyDatabase>().replyDao }
+    single { get<ReplyRadarDatabase>().replyDao }
 }

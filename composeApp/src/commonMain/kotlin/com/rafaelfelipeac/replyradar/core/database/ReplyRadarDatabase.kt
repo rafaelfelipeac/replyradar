@@ -9,8 +9,8 @@ import com.rafaelfelipeac.replyradar.features.useractions.data.database.dao.User
 import com.rafaelfelipeac.replyradar.features.useractions.data.database.entity.UserActionEntity
 
 @Database(entities = [ReplyEntity::class, UserActionEntity::class], version = DATABASE_VERSION)
-@ConstructedBy(ReplyDatabaseConstructor::class)
-abstract class ReplyDatabase : RoomDatabase() {
+@ConstructedBy(ReplyRadarDatabaseConstructor::class)
+abstract class ReplyRadarDatabase : RoomDatabase() {
     abstract val replyDao: ReplyDao
     abstract val userActionDao: UserActionDao
 }
