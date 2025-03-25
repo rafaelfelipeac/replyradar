@@ -27,6 +27,10 @@ import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActio
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Reopen
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Restore
 import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCase
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.onStart
@@ -40,7 +44,8 @@ class ReplyListViewModel(
     private val toggleArchiveReplyUseCase: ToggleArchiveReplyUseCase,
     private val deleteReplyUseCase: DeleteReplyUseCase,
     private val getRepliesUseCase: GetRepliesUseCase,
-    private val logUserActionUseCase: LogUserActionUseCase
+    private val logUserActionUseCase: LogUserActionUseCase,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Main,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ReplyListState())
@@ -51,7 +56,7 @@ class ReplyListViewModel(
             observeArchivedReplies()
         }
         .stateIn(
-            viewModelScope,
+            CoroutineScope(dispatcher + SupervisorJob()),
             WhileSubscribed(STOP_TIMEOUT),
             _state.value
         )

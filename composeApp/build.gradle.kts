@@ -71,6 +71,13 @@ kotlin {
             implementation(libs.bundles.ktor)
             implementation(libs.bundles.coil)
         }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlin.test.annotations.common)
+            implementation(libs.assertk)
+            implementation(libs.coroutines.test)
+            implementation(libs.turbine)
+        }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)

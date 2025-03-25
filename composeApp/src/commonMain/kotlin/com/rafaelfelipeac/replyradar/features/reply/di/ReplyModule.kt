@@ -8,19 +8,34 @@ import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.DeleteReplyUs
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.GetRepliesUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.GetRepliesUseCaseImpl
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleArchiveReplyUseCase
+import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleArchiveReplyUseCaseImpl
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleResolveReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleResolveReplyUseCaseImpl
-import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleArchiveReplyUseCaseImpl
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.UpsertReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.UpsertReplyUseCaseImpl
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import org.koin.core.module.dsl.singleOf
-import org.koin.core.module.dsl.viewModelOf
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val replyModule = module {
-    viewModelOf(::ReplyListViewModel)
+    viewModel {
+        ReplyListViewModel(
+            upsertReplyUseCase = get(),
+            toggleResolveReplyUseCase = get(),
+            toggleArchiveReplyUseCase = get(),
+            deleteReplyUseCase = get(),
+            getRepliesUseCase = get(),
+            logUserActionUseCase = get(),
+            dispatcher = get()
+        )
+    }
+
+    single<CoroutineDispatcher> { Dispatchers.IO }
 
     singleOf(::UpsertReplyUseCaseImpl).bind<UpsertReplyUseCase>()
     singleOf(::ToggleResolveReplyUseCaseImpl).bind<ToggleResolveReplyUseCase>()
