@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -85,15 +86,26 @@ fun ReplyListScreen(
         onIntent(OnTabSelected(pagerState.currentPage))
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(PrimaryColor)
-            .statusBarsPadding()
-    ) {
+    Scaffold(
+        containerColor = PrimaryColor,
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { onIntent(OnAddReplyClick) },
+                containerColor = AccentColor
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = stringResource(string.reply_list_fab_content_description),
+                    tint = DesertWhite
+                )
+            }
+        }
+    ) { paddingValues ->
         Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = CenterHorizontally
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .statusBarsPadding()
         ) {
             Surface(
                 modifier = Modifier
@@ -168,20 +180,6 @@ fun ReplyListScreen(
                     }
                 }
             }
-        }
-
-        FloatingActionButton(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(paddingMedium),
-            onClick = { onIntent(OnAddReplyClick) },
-            containerColor = AccentColor
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Add,
-                contentDescription = stringResource(string.reply_list_fab_content_description),
-                tint = DesertWhite
-            )
         }
 
         if (state.replyBottomSheetState != null) {
