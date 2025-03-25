@@ -29,6 +29,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
 import com.rafaelfelipeac.replyradar.core.common.ui.cardBorderWidth
 import com.rafaelfelipeac.replyradar.core.common.ui.cardIconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.cardItemCornerRadius
+import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 
@@ -44,7 +45,7 @@ fun ReplyListItem(
     Surface(
         modifier = modifier
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(cardItemCornerRadius),
+        shape = ReplyRoundedCorner(cornerRadius = cardItemCornerRadius),
         border = BorderStroke(cardBorderWidth, PrimaryColor),
         color = ListItemColor
     ) {

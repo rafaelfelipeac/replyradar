@@ -1,6 +1,5 @@
 package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
@@ -31,12 +29,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rafaelfelipeac.replyradar.core.common.ui.AccentColor
 import com.rafaelfelipeac.replyradar.core.common.ui.DesertWhite
 import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
-import com.rafaelfelipeac.replyradar.core.common.ui.cardCornerRadius
+import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.spacerSmall
-import com.rafaelfelipeac.replyradar.core.common.ui.tabVerticalPadding
+import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesArchivedScreen
@@ -47,9 +45,9 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.reply_list_fab_content_description
+import replyradar.composeapp.generated.resources.reply_list_tab_archived
 import replyradar.composeapp.generated.resources.reply_list_tab_on_the_radar
 import replyradar.composeapp.generated.resources.reply_list_tab_resolved
-import replyradar.composeapp.generated.resources.reply_list_tab_archived
 
 private const val WEIGHT = 1f
 private const val PAGER_PAGE_COUNT = 3
@@ -113,17 +111,14 @@ fun ReplyListScreen(
                     .padding(top = paddingLarge)
                     .fillMaxWidth(),
                 color = DesertWhite,
-                shape = RoundedCornerShape(
-                    topStart = cardCornerRadius,
-                    topEnd = cardCornerRadius
-                )
+                shape = ReplyRoundedCorner()
             ) {
                 Column(
                     horizontalAlignment = CenterHorizontally
                 ) {
                     TabRow(
                         modifier = Modifier
-                            .padding(vertical = tabVerticalPadding)
+                            .padding(top = tabRowTopPadding)
                             .fillMaxWidth(),
                         selectedTabIndex = state.selectedTabIndex,
                         containerColor = DesertWhite,
