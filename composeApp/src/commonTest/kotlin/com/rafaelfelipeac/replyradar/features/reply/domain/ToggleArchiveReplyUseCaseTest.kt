@@ -7,7 +7,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 
-class ToggleArchiveReplyUseCaseImplTest {
+class ToggleArchiveReplyUseCaseTest {
 
     @Test
     fun `toggleArchiveReply should call repository and return toggled archive state`() = runTest {

@@ -9,12 +9,24 @@ style:
     maxLineLength: 120
   WildcardImport:
     active: true
+  UnusedPrivateMember:
+    ignoreAnnotated:
+      - 'Preview'
 
 naming:
   FunctionNaming:
+    active: true
     functionPattern: '^([a-z][a-zA-Z0-9]*)|(`.*`)$'
+    ignoreAnnotated:
+      - 'Composable'
+
   VariableNaming:
+    active: true
     variablePattern: '^(_)?[a-z][A-Za-z0-9]*$'
+
+  TopLevelPropertyNaming:
+    active: false
+
 
 complexity:
   LongMethod:
@@ -23,6 +35,16 @@ complexity:
   LargeClass:
     active: true
     threshold: 600
+  CyclomaticComplexMethod:
+    active: true
+    threshold: 20
+  LongParameterList:
+    active: true
+    constructorThreshold: 10
+    functionThreshold: 10
+  TooManyFunctions:
+    active: true
+    thresholdInClasses: 15
 
 comments:
   UndocumentedPublicClass:

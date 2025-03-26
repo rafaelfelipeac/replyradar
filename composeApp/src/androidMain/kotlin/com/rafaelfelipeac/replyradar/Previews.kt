@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreen
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState
 
 private val replies = (1L..10L).map {
     Reply(
@@ -18,7 +19,7 @@ private val replies = (1L..10L).map {
 @Composable
 private fun ReplyListScreenPreview() {
     ReplyListScreen(
-        state = com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState(
+        state = ReplyListState(
             replies = replies
         ),
         onIntent = {}

@@ -7,7 +7,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 
-class ToggleResolveReplyUseCaseImplTest {
+class ToggleResolveReplyUseCaseTest {
 
     @Test
     fun `toggleResolveReply should call repository and return toggled resolved state`() = runTest {

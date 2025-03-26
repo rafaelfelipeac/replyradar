@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 
-class GetRepliesUseCaseImplTest {
+class GetRepliesUseCaseTest {
 
     @Test
     fun `getReplies should call repository and return correct list`() = runTest {

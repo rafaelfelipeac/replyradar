@@ -11,7 +11,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 
-class UserActionRepositoryImplTest {
+class UserActionRepositoryTest {
 
     @Test
     fun `logUserAction should insert correct entity`() = runTest {

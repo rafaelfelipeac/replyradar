@@ -7,7 +7,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 
-class UpsertReplyUseCaseImplTest {
+class UpsertReplyUseCaseTest {
 
     @Test
     fun `upsertReply should call repository and return inserted id`() = runTest {

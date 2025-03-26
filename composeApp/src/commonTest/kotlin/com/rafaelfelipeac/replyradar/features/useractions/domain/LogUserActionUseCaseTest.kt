@@ -9,7 +9,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 
-class LogUserActionUseCaseImplTest {
+class LogUserActionUseCaseTest {
 
     @Test
     fun `logUserAction should call repository with correct params`() = runTest {

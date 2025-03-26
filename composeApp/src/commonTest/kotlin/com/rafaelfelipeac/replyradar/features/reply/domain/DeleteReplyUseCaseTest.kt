@@ -7,7 +7,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 
-class DeleteReplyUseCaseImplTest {
+class DeleteReplyUseCaseTest {
 
     @Test
     fun `deleteReply should call repository with correct reply`() = runTest {

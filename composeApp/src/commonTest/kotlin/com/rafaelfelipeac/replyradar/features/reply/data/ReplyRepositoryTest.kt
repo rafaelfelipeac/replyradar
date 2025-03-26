@@ -12,7 +12,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 
-class ReplyRepositoryImplTest {
+class ReplyRepositoryTest {
 
     @Test
     fun `upsertReply should insert reply with correct timestamps when id is 0`() = runTest {
