@@ -90,7 +90,7 @@ kotlin {
         }
 
         dependencies {
-            ksp(libs.androidx.room.compiler)
+            add("kspAndroid", libs.androidx.room.compiler)
         }
     }
 }
