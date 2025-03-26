@@ -124,7 +124,9 @@ android {
     }
     buildTypes {
         getByName("release") {
-            signingConfig = signingConfigs.getByName("release")
+            if (signingConfigs.getByName("release").storeFile != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             // TODO: Update before Play Store publication.
             isMinifyEnabled = false
             isShrinkResources = false
