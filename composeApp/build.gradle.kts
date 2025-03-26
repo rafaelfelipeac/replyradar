@@ -146,6 +146,9 @@ ktlint {
         reporter(PLAIN)
         reporter(CHECKSTYLE)
     }
+    filter {
+        exclude("**/generated/**")
+    }
 }
 
 detekt {
