@@ -15,7 +15,7 @@ actual class DatabaseFactory {
             else -> File(userHome, ".local/share/ReplyRadar")
         }
 
-        if(!appDataDir.exists()) {
+        if (!appDataDir.exists()) {
             appDataDir.mkdirs()
         }
 

@@ -20,11 +20,11 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.compo
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Message
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Archive
-import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Resolve
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Create
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Delete
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Reopen
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Resolve
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Restore
 import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -45,7 +45,7 @@ class ReplyListViewModel(
     private val deleteReplyUseCase: DeleteReplyUseCase,
     private val getRepliesUseCase: GetRepliesUseCase,
     private val logUserActionUseCase: LogUserActionUseCase,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.Main,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ReplyListState())
@@ -175,10 +175,7 @@ class ReplyListViewModel(
         _state.update { it.update() }
     }
 
-    private suspend fun logUserAction(
-        actionType: UserActionType,
-        targetId: Long
-    ) {
+    private suspend fun logUserAction(actionType: UserActionType, targetId: Long) {
         logUserActionUseCase.logUserAction(
             actionType = actionType,
             targetType = Message,

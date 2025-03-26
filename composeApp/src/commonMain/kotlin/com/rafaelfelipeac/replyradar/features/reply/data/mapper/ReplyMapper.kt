@@ -15,7 +15,6 @@ fun Reply.toReplyEntity() = ReplyEntity(
     archivedAt = archivedAt
 )
 
-
 fun ReplyEntity.toReply() = Reply(
     id = id,
     name = name,

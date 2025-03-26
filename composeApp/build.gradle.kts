@@ -1,6 +1,7 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -10,11 +11,11 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+    alias(libs.plugins.ktlint)
 }
 
 kotlin {
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
@@ -131,6 +132,16 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+ktlint {
+    android.set(true)
+    outputToConsole.set(true)
+    enableExperimentalRules.set(true)
+    reporters {
+        reporter(PLAIN)
+        reporter(CHECKSTYLE)
     }
 }
 

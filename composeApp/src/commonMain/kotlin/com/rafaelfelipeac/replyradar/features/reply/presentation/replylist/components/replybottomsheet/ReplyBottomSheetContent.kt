@@ -65,7 +65,9 @@ fun ReplyBottomSheetContent(
         ) {
             Text(
                 modifier = Modifier.padding(bottom = paddingSmall),
-                text = stringResource(if (state.replyBottomSheetMode == CREATE) string.reply_list_bottom_sheet_add_reply else string.reply_list_bottom_sheet_edit_reply),
+                text = stringResource(
+                    if (state.replyBottomSheetMode == CREATE) string.reply_list_bottom_sheet_add_reply else string.reply_list_bottom_sheet_edit_reply
+                ),
                 style = MaterialTheme.typography.headlineSmall
             )
 
@@ -133,7 +135,9 @@ fun ReplyBottomSheetContent(
                     } else {
                         Modifier.wrapContentWidth()
                     },
-                    text = stringResource(if (state.reply == null) string.reply_list_bottom_sheet_add else string.reply_list_bottom_sheet_save),
+                    text = stringResource(
+                        if (state.reply == null) string.reply_list_bottom_sheet_add else string.reply_list_bottom_sheet_save
+                    ),
                     onClick = {
                         if (state.reply != null) {
                             onComplete(
@@ -160,8 +164,7 @@ fun ReplyBottomSheetContent(
     }
 }
 
-private fun isEditMode(state: ReplyBottomSheetState) =
-    state.replyBottomSheetMode == EDIT
+private fun isEditMode(state: ReplyBottomSheetState) = state.replyBottomSheetMode == EDIT
 
 @Composable
 private fun ActiveStateButtons(

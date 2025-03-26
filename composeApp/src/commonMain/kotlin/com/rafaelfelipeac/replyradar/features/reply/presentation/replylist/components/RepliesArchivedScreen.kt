@@ -14,15 +14,12 @@ import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.reply_list_placeholder_archived
 
 @Composable
-fun RepliesArchivedScreen(
-    state: ReplyListState,
-    onIntent: (ReplyListScreenIntent) -> Unit
-) {
+fun RepliesArchivedScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> Unit) {
     if (state.archivedReplies.isEmpty()) {
         Text(
             text = stringResource(string.reply_list_placeholder_archived),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.headlineSmall,
+            style = MaterialTheme.typography.headlineSmall
         )
     } else {
         ReplyList(

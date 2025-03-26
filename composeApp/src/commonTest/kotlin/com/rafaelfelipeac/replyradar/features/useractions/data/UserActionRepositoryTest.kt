@@ -7,9 +7,9 @@ import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActio
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Create
 import com.rafaelfelipeac.replyradar.now
 import com.rafaelfelipeac.replyradar.targetId
-import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlinx.coroutines.test.runTest
 
 class UserActionRepositoryImplTest {
 

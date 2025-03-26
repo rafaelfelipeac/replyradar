@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import com.rafaelfelipeac.replyradar.core.common.ui.AccentColor
 
 @Composable
-fun ReplyButton(modifier: Modifier, text: String, onClick:() -> Unit, enabled: Boolean = true) {
+fun ReplyButton(modifier: Modifier, text: String, onClick: () -> Unit, enabled: Boolean = true) {
     Button(
         modifier = modifier,
         onClick = onClick,

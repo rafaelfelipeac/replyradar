@@ -10,7 +10,7 @@ fun main() {
     application {
         Window(
             onCloseRequest = ::exitApplication,
-            title = "Reply Radar",
+            title = "Reply Radar"
         ) {
             App()
         }

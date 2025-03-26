@@ -1,0 +1,3 @@
+[*.kt]
+insert_final_newline = true
+disabled_rules=trailing-comma

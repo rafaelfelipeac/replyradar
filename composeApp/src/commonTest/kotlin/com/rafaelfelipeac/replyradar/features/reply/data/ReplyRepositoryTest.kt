@@ -8,9 +8,9 @@ import com.rafaelfelipeac.replyradar.features.reply.data.repository.ReplyReposit
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.now
 import com.rafaelfelipeac.replyradar.util.valueOrEmpty
-import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlinx.coroutines.test.runTest
 
 class ReplyRepositoryImplTest {
 

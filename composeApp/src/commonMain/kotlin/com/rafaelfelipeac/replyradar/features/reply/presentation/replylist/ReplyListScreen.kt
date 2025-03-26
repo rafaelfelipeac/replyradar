@@ -56,9 +56,7 @@ private const val RESOLVED_INDEX = 1
 private const val ARCHIVED_INDEX = 2
 
 @Composable
-fun ReplyListScreenRoot(
-    viewModel: ReplyListViewModel = koinViewModel()
-) {
+fun ReplyListScreenRoot(viewModel: ReplyListViewModel = koinViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     ReplyListScreen(
@@ -70,10 +68,7 @@ fun ReplyListScreenRoot(
 }
 
 @Composable
-fun ReplyListScreen(
-    state: ReplyListState,
-    onIntent: (ReplyListScreenIntent) -> Unit
-) {
+fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> Unit) {
     val pagerState = rememberPagerState { PAGER_PAGE_COUNT }
 
     LaunchedEffect(state.selectedTabIndex) {

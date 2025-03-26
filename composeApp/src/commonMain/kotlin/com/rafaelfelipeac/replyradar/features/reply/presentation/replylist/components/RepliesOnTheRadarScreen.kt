@@ -15,10 +15,7 @@ import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.reply_list_placeholder_on_the_radar
 
 @Composable
-fun RepliesOnTheRadarScreen(
-    state: ReplyListState,
-    onIntent: (ReplyListScreenIntent) -> Unit
-) {
+fun RepliesOnTheRadarScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> Unit) {
     if (state.isLoading) {
         ReplyProgress()
     } else {
@@ -36,7 +33,7 @@ fun RepliesOnTheRadarScreen(
                 Text(
                     text = stringResource(string.reply_list_placeholder_on_the_radar),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineSmall,
+                    style = MaterialTheme.typography.headlineSmall
                 )
             }
 

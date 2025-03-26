@@ -5,9 +5,9 @@ import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActio
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Delete
 import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCaseImpl
 import com.rafaelfelipeac.replyradar.targetId
-import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlinx.coroutines.test.runTest
 
 class LogUserActionUseCaseImplTest {
 

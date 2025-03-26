@@ -3,9 +3,9 @@ package com.rafaelfelipeac.replyradar.features.reply.domain
 import com.rafaelfelipeac.replyradar.fakes.reply.data.FakeReplyRepository
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.DeleteReplyUseCaseImpl
-import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlinx.coroutines.test.runTest
 
 class DeleteReplyUseCaseImplTest {
 

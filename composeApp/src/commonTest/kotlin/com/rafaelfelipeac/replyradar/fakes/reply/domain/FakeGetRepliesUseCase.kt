@@ -6,10 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 class FakeGetRepliesUseCase : GetRepliesUseCase {
-    override suspend fun getReplies(
-        isResolved: Boolean,
-        isArchived: Boolean
-    ): Flow<List<Reply>> {
+    override suspend fun getReplies(isResolved: Boolean, isArchived: Boolean): Flow<List<Reply>> {
         return MutableSharedFlow()
     }
 }

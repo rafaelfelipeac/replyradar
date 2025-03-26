@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
@@ -37,11 +36,7 @@ private const val WEIGHT = 1f
 private const val MAX_LINES = 1
 
 @Composable
-fun ReplyListItem(
-    modifier: Modifier = Modifier,
-    reply: Reply,
-    onClick: () -> Unit
-) {
+fun ReplyListItem(modifier: Modifier = Modifier, reply: Reply, onClick: () -> Unit) {
     Surface(
         modifier = modifier
             .clickable(onClick = onClick),

@@ -4,7 +4,7 @@ import android.app.Application
 import com.rafaelfelipeac.replyradar.di.initKoin
 import org.koin.android.ext.koin.androidContext
 
-class ReplyRadarApplication: Application() {
+class ReplyRadarApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()

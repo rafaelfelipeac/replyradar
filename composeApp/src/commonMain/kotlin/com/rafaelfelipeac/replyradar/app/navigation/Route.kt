@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 sealed interface Route {
 
     @Serializable
-    data object ReplyGraph: Route
+    data object ReplyGraph : Route
 
     @Serializable
-    data object ReplyList: Route
+    data object ReplyList : Route
 }

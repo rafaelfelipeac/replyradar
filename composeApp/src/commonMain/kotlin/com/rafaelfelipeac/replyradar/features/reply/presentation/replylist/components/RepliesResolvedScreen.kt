@@ -21,7 +21,7 @@ fun RepliesResolvedScreen(
         Text(
             text = stringResource(string.reply_list_placeholder_resolved),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.headlineSmall,
+            style = MaterialTheme.typography.headlineSmall
         )
     } else {
         ReplyList(

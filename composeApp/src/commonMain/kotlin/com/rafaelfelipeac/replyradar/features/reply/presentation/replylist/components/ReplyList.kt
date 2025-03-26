@@ -13,11 +13,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.replyListVerticalPadding
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 
 @Composable
-fun ReplyList(
-    modifier: Modifier = Modifier,
-    replies: List<Reply>,
-    onReplyClick: (Reply) -> Unit
-) {
+fun ReplyList(modifier: Modifier = Modifier, replies: List<Reply>, onReplyClick: (Reply) -> Unit) {
     LazyColumn(
         modifier = modifier
             .padding(top = paddingMedium),

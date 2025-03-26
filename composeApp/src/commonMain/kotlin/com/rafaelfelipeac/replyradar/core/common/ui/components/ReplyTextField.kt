@@ -15,11 +15,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.UnfocusedTextFieldContainerC
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 
 @Composable
-fun ReplyTextField(
-    placeholder: String,
-    label: String,
-    onValueChange: (String) -> Unit
-) {
+fun ReplyTextField(placeholder: String, label: String, onValueChange: (String) -> Unit) {
     TextField(
         modifier = Modifier
             .fillMaxWidth()
