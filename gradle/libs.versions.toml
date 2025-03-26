@@ -85,6 +85,7 @@ jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serializati
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "room" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "11.3.2" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.8" }
 
 [bundles]
 ktor = [

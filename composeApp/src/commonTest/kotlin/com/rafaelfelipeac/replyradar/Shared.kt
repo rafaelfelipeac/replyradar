@@ -1,7 +1,7 @@
 package com.rafaelfelipeac.replyradar
 
-val now = 123456789L
-val targetId = 99L
+const val now = 123456789L
+const val targetId = 99L
 
 const val CREATE = "CREATE"
 const val EDIT = "EDIT"

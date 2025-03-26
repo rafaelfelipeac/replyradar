@@ -1,0 +1,31 @@
+style:
+  MagicNumber:
+    active: true
+    ignorePropertyDeclaration: true
+    ignoreAnnotated:
+      - 'Test'
+  MaxLineLength:
+    active: true
+    maxLineLength: 120
+  WildcardImport:
+    active: true
+
+naming:
+  FunctionNaming:
+    functionPattern: '^([a-z][a-zA-Z0-9]*)|(`.*`)$'
+  VariableNaming:
+    variablePattern: '^(_)?[a-z][A-Za-z0-9]*$'
+
+complexity:
+  LongMethod:
+    active: true
+    threshold: 120
+  LargeClass:
+    active: true
+    threshold: 600
+
+comments:
+  UndocumentedPublicClass:
+    active: false
+  UndocumentedPublicFunction:
+    active: false

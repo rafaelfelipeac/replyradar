@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.detekt)
 }
 
 kotlin {
@@ -143,6 +144,51 @@ ktlint {
         reporter(PLAIN)
         reporter(CHECKSTYLE)
     }
+}
+
+detekt {
+    config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
+    buildUponDefaultConfig = true
+    allRules = false
+    parallel = true
+    autoCorrect = true
+
+    source.setFrom(
+        files(
+            "src/commonMain/kotlin",
+            "src/commonTest/kotlin",
+            "src/androidMain/kotlin",
+            "src/iosMain/kotlin",
+            "src/desktopMain/kotlin",
+            "src/appleMain/kotlin",
+            "src/nativeMain/kotlin"
+        )
+    )
+}
+
+val detektSourceDirs = listOf(
+    "commonMain",
+    "commonTest",
+    "androidMain",
+    "iosMain",
+    "desktopMain",
+    "appleMain",
+    "nativeMain"
+).joinToString(",") { "${rootDir}/composeApp/src/$it/kotlin" }
+
+tasks.register<JavaExec>("detektFormat") {
+    group = "formatting"
+    description = "Runs Detekt CLI with auto-correct"
+
+    classpath = files("$rootDir/tools/detekt-cli-1.23.8-all.jar")
+    mainClass.set("io.gitlab.arturbosch.detekt.cli.Main")
+
+    args = listOf(
+        "--auto-correct",
+        "--input", detektSourceDirs,
+        "--config", "$rootDir/config/detekt/detekt.yml",
+        "--report", "txt:${buildDir}/reports/detekt/formatting-report.txt"
+    )
 }
 
 dependencies {
