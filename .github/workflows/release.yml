@@ -1,0 +1,53 @@
+name: "🚀 Release"
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Release app
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: ☕ Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Decode release.keystore from secret
+        run: echo "${{ secrets.RELEASE_KEYSTORE_BASE64 }}" | base64 -d > release.keystore
+
+      - name: Run tests
+        run: ./gradlew test
+
+      - name: Check versionCode/versionName bumped
+        run: |
+          VERSION_NAME=$(grep versionName composeApp/build.gradle.kts | grep -oP '"\K[^"]+')
+          VERSION_CODE=$(grep versionCode composeApp/build.gradle.kts | grep -oP '[0-9]+')
+          echo "versionName=$VERSION_NAME"
+          echo "versionCode=$VERSION_CODE"
+          [[ $VERSION_NAME != "" && $VERSION_CODE != "" ]]
+
+      - name: Build APK
+        run: ./gradlew :composeApp:assembleRelease
+
+      - name: Build AAB
+        run: ./gradlew :composeApp:bundleRelease
+
+      - name: Upload release artifacts
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            composeApp/build/outputs/apk/release/*.apk
+            composeApp/build/outputs/bundle/release/*.aab
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
