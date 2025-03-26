@@ -1,3 +1,6 @@
 [*.kt]
 insert_final_newline = true
-disabled_rules=trailing-comma
+ktlint_disabled_rules=trailing-comma
+
+[**/build/generated/**]
+ktlint_disabled_rules=indent,needless_blank_line,insert_final_newline
