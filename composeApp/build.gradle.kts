@@ -148,6 +148,9 @@ ktlint {
     }
     filter {
         exclude("**/generated/**")
+        exclude { fileTreeElement ->
+            fileTreeElement.file.path.contains("build/generated/ksp/")
+        }
     }
 }
 
