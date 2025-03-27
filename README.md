@@ -1,3 +1,8 @@
+[![📦 Build Status](https://github.com/rafaelfelipeac/replyradar/actions/workflows/build-test-lint.yml/badge.svg)](https://github.com/rafaelfelipeac/replyradar/actions/workflows/build-test-lint.yml)
+[![🚀 Release Status](https://github.com/rafaelfelipeac/replyradar/actions/workflows/release.yml/badge.svg)](https://github.com/rafaelfelipeac/replyradar/actions/workflows/release.yml)
+
+---
+
 # 📡 Reply Radar
 
 **Reply Radar** is a playful, personal project built to help people keep track of the messages they still need to reply to — because we all know how easy it is to read something, get distracted and then forget to respond for days (or... weeks 👀).
