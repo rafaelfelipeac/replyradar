@@ -15,4 +15,3 @@ fun App() {
         AppNavHost(navController = navController)
     }
 }
-
