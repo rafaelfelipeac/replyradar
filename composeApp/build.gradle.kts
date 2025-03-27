@@ -182,7 +182,7 @@ val detektSourceDirs = listOf(
     "desktopMain",
     "appleMain",
     "nativeMain"
-).joinToString(",") { "${rootDir}/composeApp/src/$it/kotlin" }
+).joinToString(",") { "$rootDir/composeApp/src/$it/kotlin" }
 
 tasks.register<JavaExec>("detektFormat") {
     group = "formatting"
@@ -193,9 +193,12 @@ tasks.register<JavaExec>("detektFormat") {
 
     args = listOf(
         "--auto-correct",
-        "--input", detektSourceDirs,
-        "--config", "$rootDir/config/detekt/detekt.yml",
-        "--report", "txt:${buildDir}/reports/detekt/formatting-report.txt"
+        "--input",
+        detektSourceDirs,
+        "--config",
+        "$rootDir/config/detekt/detekt.yml",
+        "--report",
+        "txt:$buildDir/reports/detekt/formatting-report.txt"
     )
 }
 
