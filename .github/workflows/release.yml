@@ -52,11 +52,17 @@ jobs:
       - name: Build AAB
         run: ./gradlew :composeApp:bundleRelease
 
+      - name: Rename release artifacts
+        run: |
+          VERSION=${{ github.ref_name }}
+          mv composeApp/build/outputs/apk/release/composeApp-release.apk composeApp/build/outputs/apk/release/replyradar-$VERSION.apk
+          mv composeApp/build/outputs/bundle/release/composeApp-release.aab composeApp/build/outputs/bundle/release/replyradar-$VERSION.aab
+
       - name: Upload release artifacts
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            composeApp/build/outputs/apk/release/*.apk
-            composeApp/build/outputs/bundle/release/*.aab
+            composeApp/build/outputs/apk/release/replyradar-*.apk
+            composeApp/build/outputs/bundle/release/replyradar-*.aab
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
