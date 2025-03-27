@@ -1,5 +1,9 @@
-📦 [![Build Status](https://github.com/rafaelfelipeac/replyradar/actions/workflows/build-test-lint.yml/badge.svg)](https://github.com/rafaelfelipeac/replyradar/actions/workflows/build-test-lint.yml)  
-🚀 [![Release Status](https://github.com/rafaelfelipeac/replyradar/actions/workflows/release.yml/badge.svg)](https://github.com/rafaelfelipeac/replyradar/actions/workflows/release.yml)
+📦 **Build Status**  
+[![Build](https://github.com/rafaelfelipeac/replyradar/actions/workflows/build-test-lint.yml/badge.svg)](https://github.com/rafaelfelipeac/replyradar/actions/workflows/build-test-lint.yml)
+
+🚀 **Release Status**  
+[![Release](https://github.com/rafaelfelipeac/replyradar/actions/workflows/release.yml/badge.svg)](https://github.com/rafaelfelipeac/replyradar/actions/workflows/release.yml)
+
 
 ---
 
