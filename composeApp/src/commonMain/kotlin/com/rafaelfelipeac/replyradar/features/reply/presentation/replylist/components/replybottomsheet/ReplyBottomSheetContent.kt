@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,15 +24,12 @@ import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextField
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import org.jetbrains.compose.resources.stringResource
 import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_add
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_add_reply
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_archive
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_delete
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_edit_reply
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_name
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_reopen
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_resolve
@@ -63,18 +58,6 @@ fun ReplyBottomSheetContent(
                 .padding(horizontal = paddingMedium),
             horizontalAlignment = CenterHorizontally
         ) {
-            Text(
-                modifier = Modifier.padding(bottom = paddingSmall),
-                text = stringResource(
-                    if (state.replyBottomSheetMode == CREATE) {
-                        string.reply_list_bottom_sheet_add_reply
-                    } else {
-                        string.reply_list_bottom_sheet_edit_reply
-                    }
-                ),
-                style = MaterialTheme.typography.headlineSmall
-            )
-
             ReplyTextField(
                 placeholder = name,
                 label = stringResource(string.reply_list_bottom_sheet_name),

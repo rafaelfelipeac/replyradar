@@ -34,9 +34,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rafaelfelipeac.replyradar.core.common.ui.AccentColor
+import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
 import com.rafaelfelipeac.replyradar.core.common.ui.SlightBlueGrey
 import com.rafaelfelipeac.replyradar.core.common.ui.White
-import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
@@ -52,6 +52,7 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.compo
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import replyradar.composeapp.generated.resources.Res.string
+import replyradar.composeapp.generated.resources.app_name
 import replyradar.composeapp.generated.resources.reply_list_fab_content_description
 import replyradar.composeapp.generated.resources.reply_list_tab_archived
 import replyradar.composeapp.generated.resources.reply_list_tab_on_the_radar
@@ -113,7 +114,7 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                     .padding(top = paddingMedium)
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center,
-                text = "Reply Radar",
+                text = stringResource(string.app_name),
                 style = MaterialTheme.typography.titleLarge.copy(fontSize = 18.sp),
                 color = PrimaryColor
             )
