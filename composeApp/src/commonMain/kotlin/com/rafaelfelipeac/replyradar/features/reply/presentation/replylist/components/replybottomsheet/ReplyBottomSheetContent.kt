@@ -20,7 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import com.rafaelfelipeac.replyradar.core.AppConstants.EMPTY
-import com.rafaelfelipeac.replyradar.core.common.ui.DesertWhite
+import com.rafaelfelipeac.replyradar.core.common.ui.SlightBlueGrey
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyButton
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextField
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
@@ -59,7 +59,7 @@ fun ReplyBottomSheetContent(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(DesertWhite)
+                .background(SlightBlueGrey)
                 .padding(horizontal = paddingMedium),
             horizontalAlignment = CenterHorizontally
         ) {

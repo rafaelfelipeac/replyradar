@@ -1,5 +1,7 @@
 package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,25 +16,31 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rafaelfelipeac.replyradar.core.common.ui.AccentColor
-import com.rafaelfelipeac.replyradar.core.common.ui.DesertWhite
+import com.rafaelfelipeac.replyradar.core.common.ui.SlightBlueGrey
+import com.rafaelfelipeac.replyradar.core.common.ui.White
 import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
-import com.rafaelfelipeac.replyradar.core.common.ui.paddingLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
+import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.spacerSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
@@ -80,7 +88,7 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
     }
 
     Scaffold(
-        containerColor = PrimaryColor,
+        containerColor = SlightBlueGrey,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { onIntent(OnAddReplyClick) },
@@ -89,7 +97,7 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription = stringResource(string.reply_list_fab_content_description),
-                    tint = DesertWhite
+                    tint = SlightBlueGrey
                 )
             }
         }
@@ -97,26 +105,38 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(bottom = paddingValues.calculateBottomPadding())
                 .statusBarsPadding()
         ) {
+            Text(
+                modifier = Modifier
+                    .padding(top = paddingMedium)
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                text = "Reply Radar",
+                style = MaterialTheme.typography.titleLarge.copy(fontSize = 18.sp),
+                color = PrimaryColor
+            )
+
             Surface(
                 modifier = Modifier
                     .weight(WEIGHT)
-                    .padding(top = paddingLarge)
                     .fillMaxWidth(),
-                color = DesertWhite,
-                shape = ReplyRoundedCorner()
+                color = SlightBlueGrey
             ) {
                 Column(
                     horizontalAlignment = CenterHorizontally
                 ) {
                     TabRow(
                         modifier = Modifier
-                            .padding(top = tabRowTopPadding)
+                            .padding(
+                                start = paddingMedium,
+                                top = tabRowTopPadding,
+                                end = paddingMedium
+                            )
                             .fillMaxWidth(),
                         selectedTabIndex = state.selectedTabIndex,
-                        containerColor = DesertWhite,
+                        containerColor = SlightBlueGrey,
                         indicator = { tabPositions ->
                             TabRowDefaults.SecondaryIndicator(
                                 modifier = Modifier
@@ -158,13 +178,23 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(horizontal = paddingMedium),
+                                .padding(paddingMedium)
+                                .clip(ReplyRoundedCorner(paddingMedium))
+                                .background(White),
                             contentAlignment = Alignment.Center
                         ) {
-                            when (pageIndex) {
-                                ON_THE_RADAR_INDEX -> RepliesOnTheRadarScreen(state, onIntent)
-                                RESOLVED_INDEX -> RepliesResolvedScreen(state, onIntent)
-                                ARCHIVED_INDEX -> RepliesArchivedScreen(state, onIntent)
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(paddingSmall)
+                                    .background(White),
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                when (pageIndex) {
+                                    ON_THE_RADAR_INDEX -> RepliesOnTheRadarScreen(state, onIntent)
+                                    RESOLVED_INDEX -> RepliesResolvedScreen(state, onIntent)
+                                    ARCHIVED_INDEX -> RepliesArchivedScreen(state, onIntent)
+                                }
                             }
                         }
                     }

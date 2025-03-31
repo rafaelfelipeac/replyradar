@@ -8,5 +8,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.cardCornerRadius
 @Composable
 fun ReplyRoundedCorner(cornerRadius: Dp = cardCornerRadius) = RoundedCornerShape(
     topStart = cornerRadius,
-    topEnd = cornerRadius
+    topEnd = cornerRadius,
+    bottomStart = cornerRadius,
+    bottomEnd = cornerRadius
 )

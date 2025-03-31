@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
+import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.replyListVerticalPadding
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 
@@ -16,7 +16,7 @@ import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 fun ReplyList(modifier: Modifier = Modifier, replies: List<Reply>, onReplyClick: (Reply) -> Unit) {
     LazyColumn(
         modifier = modifier
-            .padding(top = paddingMedium),
+            .padding(top = paddingSmall),
         verticalArrangement = spacedBy(replyListVerticalPadding),
         horizontalAlignment = CenterHorizontally
     ) {

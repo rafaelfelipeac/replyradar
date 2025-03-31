@@ -16,4 +16,4 @@ val replyListVerticalPadding = 12.dp
 val spacerSmall = 4.dp
 
 val tabVerticalPadding = 12.dp
-val tabRowTopPadding = 24.dp
+val tabRowTopPadding = 8.dp
