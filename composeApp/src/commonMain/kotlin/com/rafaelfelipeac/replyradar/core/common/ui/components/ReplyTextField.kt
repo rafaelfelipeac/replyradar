@@ -15,12 +15,12 @@ import com.rafaelfelipeac.replyradar.core.common.ui.UnfocusedTextFieldContainerC
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 
 @Composable
-fun ReplyTextField(placeholder: String, label: String, onValueChange: (String) -> Unit) {
+fun ReplyTextField(value: String, placeholder: String, onValueChange: (String) -> Unit) {
     TextField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = paddingSmall),
-        value = placeholder,
+        value = value,
         singleLine = true,
         colors = TextFieldDefaults.colors(
             focusedContainerColor = FocusedTextFieldContainerColor,
@@ -33,6 +33,6 @@ fun ReplyTextField(placeholder: String, label: String, onValueChange: (String) -
             capitalization = KeyboardCapitalization.Sentences
         ),
         onValueChange = { onValueChange(it) },
-        label = { Text(label) }
+        placeholder = { Text(placeholder) }
     )
 }

@@ -59,14 +59,14 @@ fun ReplyBottomSheetContent(
             horizontalAlignment = CenterHorizontally
         ) {
             ReplyTextField(
-                placeholder = name,
-                label = stringResource(string.reply_list_bottom_sheet_name),
+                value = name,
+                placeholder = stringResource(string.reply_list_bottom_sheet_name),
                 onValueChange = { name = it }
             )
 
             ReplyTextField(
-                placeholder = subject,
-                label = stringResource(string.reply_list_bottom_sheet_subject),
+                value = subject,
+                placeholder = stringResource(string.reply_list_bottom_sheet_subject),
                 onValueChange = { subject = it }
             )
 
