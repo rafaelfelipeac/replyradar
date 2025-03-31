@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## [v1.0.0] - 2025-03-31
+
+### Added
+- 1.0.0 release!
+
 ## [v0.1.4] - 2025-03-27
 
 ### Added
