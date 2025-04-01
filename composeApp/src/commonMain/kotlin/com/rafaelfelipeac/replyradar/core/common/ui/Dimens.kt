@@ -25,3 +25,8 @@ val tabRowTopPadding = 8.dp
 val textSizeSmall = 12.sp
 val textSizeMedium = 16.sp
 val textSizeLarge = 20.sp
+
+val buttonHeight = 34.dp
+val buttonIconHeight = 22.dp
+val buttonCornerRadius = 8.dp
+val buttonBorderWidth = 1.dp

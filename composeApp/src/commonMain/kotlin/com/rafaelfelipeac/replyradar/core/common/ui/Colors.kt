@@ -10,3 +10,5 @@ val WhiteBackground = White
 val GrayBackground = Color(0xFFEDEFF2)
 
 val ListItemColor = White
+
+val ButtonBorderColor = Color.LightGray
