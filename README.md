@@ -20,6 +20,8 @@ A gentle nudge. A little order. A friendlier inbox — on your terms.
         width="200">
 </a>  
 
+> Don’t leave your replies floating in space — keep them on the radar.
+
 ---
 
 ## ✨ What it does (for now)
@@ -61,8 +63,6 @@ Currently a solo mission, but who knows? Contributions might be welcome in the f
 ## 📬 Stay in touch (just like the app wants you to 😄)
 
 If this project resonates with you, feel free to star it, follow updates or fork it to build your own version.
-
-> Don’t leave your replies floating in space — keep them on the radar.
 
 ---
 
