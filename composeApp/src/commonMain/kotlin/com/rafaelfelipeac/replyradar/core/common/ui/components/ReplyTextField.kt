@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Normal
 import androidx.compose.ui.unit.TextUnit
 import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
 import com.rafaelfelipeac.replyradar.core.common.ui.WhiteBackground
+import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSize.Large
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSize.Medium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingXSmall
@@ -42,7 +43,7 @@ fun ReplyTextField(
         textStyle = TextStyle(
             fontSize = textSize.value,
             color = PrimaryColor,
-            fontWeight = if (value.isNotBlank()) Bold else Normal
+            fontWeight = if (value.isNotBlank() && textSize == Large) Bold else Normal
         ),
         decorationBox = { innerTextField ->
             Box(
