@@ -12,6 +12,14 @@ This app exists for anyone who's ever said, “Oops, I meant to reply to that!�
 With Reply Radar, your forgotten replies are finally on the radar.  
 A gentle nudge. A little order. A friendlier inbox — on your terms.
 
+
+<a href="https://play.google.com/store/apps/details?id=com.rafaelfelipeac.replyradar">
+    <img 
+        alt="Get it on Google Play" 
+        src="https://user-images.githubusercontent.com/9745110/89697876-99ab9480-d8f4-11ea-869d-32131a31ab96.png" 
+        width="200">
+</a>  
+
 ---
 
 ## ✨ What it does (for now)
