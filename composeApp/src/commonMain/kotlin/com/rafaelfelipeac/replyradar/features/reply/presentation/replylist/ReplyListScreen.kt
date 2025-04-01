@@ -35,8 +35,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rafaelfelipeac.replyradar.core.common.ui.AccentColor
 import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
-import com.rafaelfelipeac.replyradar.core.common.ui.SlightBlueGrey
-import com.rafaelfelipeac.replyradar.core.common.ui.White
+import com.rafaelfelipeac.replyradar.core.common.ui.WhiteBackground
+import com.rafaelfelipeac.replyradar.core.common.ui.GrayBackground
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
@@ -89,7 +89,7 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
     }
 
     Scaffold(
-        containerColor = SlightBlueGrey,
+        containerColor = WhiteBackground,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { onIntent(OnAddReplyClick) },
@@ -98,7 +98,7 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription = stringResource(string.reply_list_fab_content_description),
-                    tint = SlightBlueGrey
+                    tint = WhiteBackground
                 )
             }
         }
@@ -123,7 +123,7 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                 modifier = Modifier
                     .weight(WEIGHT)
                     .fillMaxWidth(),
-                color = SlightBlueGrey
+                color = WhiteBackground
             ) {
                 Column(
                     horizontalAlignment = CenterHorizontally
@@ -137,7 +137,7 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                             )
                             .fillMaxWidth(),
                         selectedTabIndex = state.selectedTabIndex,
-                        containerColor = SlightBlueGrey,
+                        containerColor = WhiteBackground,
                         indicator = { tabPositions ->
                             TabRowDefaults.SecondaryIndicator(
                                 modifier = Modifier
@@ -181,14 +181,14 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                                 .fillMaxSize()
                                 .padding(paddingMedium)
                                 .clip(ReplyRoundedCorner(paddingMedium))
-                                .background(White),
+                                .background(GrayBackground),
                             contentAlignment = Alignment.Center
                         ) {
                             Column(
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .padding(paddingSmall)
-                                    .background(White),
+                                    .background(GrayBackground),
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 when (pageIndex) {

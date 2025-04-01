@@ -11,7 +11,7 @@
     <string name="reply_list_placeholder_archived">Nothing archived yet!&#10;Got something to stash for later?</string>
 
     <string name="reply_list_bottom_sheet_name">Name</string>
-    <string name="reply_list_bottom_sheet_subject">Subject (optional)</string>
+    <string name="reply_list_bottom_sheet_subject">Subject</string>
     <string name="reply_list_bottom_sheet_add">Add</string>
     <string name="reply_list_bottom_sheet_save">Save</string>
     <string name="reply_list_bottom_sheet_resolve">Resolve</string>

@@ -11,16 +11,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.rafaelfelipeac.replyradar.core.AppConstants.EMPTY
-import com.rafaelfelipeac.replyradar.core.common.ui.SlightBlueGrey
+import com.rafaelfelipeac.replyradar.core.common.ui.WhiteBackground
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyButton
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextField
+import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSize.Large
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
@@ -54,14 +59,26 @@ fun ReplyBottomSheetContent(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(SlightBlueGrey)
-                .padding(horizontal = paddingMedium),
+                .background(WhiteBackground)
+                .padding(start = paddingMedium, top = paddingMedium, end = paddingMedium),
             horizontalAlignment = CenterHorizontally
         ) {
+            val focusRequester = remember { FocusRequester() }
+            val keyboardController = LocalSoftwareKeyboardController.current
+
+            LaunchedEffect(Unit) {
+                focusRequester.requestFocus()
+                keyboardController?.show()
+            }
+
             ReplyTextField(
+                modifier = Modifier
+                    .padding(top = paddingSmall)
+                    .focusRequester(focusRequester),
                 value = name,
                 placeholder = stringResource(string.reply_list_bottom_sheet_name),
-                onValueChange = { name = it }
+                onValueChange = { name = it },
+                textSize = Large
             )
 
             ReplyTextField(

@@ -6,9 +6,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 val PrimaryColor = Color(0xFF464152)
 val AccentColor = Color(0xFF7180ac)
 
-val SlightBlueGrey = Color(0xFFEDEFF2)
-val White = White
-val ListItemColor = White
+val WhiteBackground = White
+val GrayBackground = Color(0xFFEDEFF2)
 
-val FocusedTextFieldContainerColor = Color(0xFFeceff4)
-val UnfocusedTextFieldContainerColor = Color(0xFFeceff4)
+val ListItemColor = White
