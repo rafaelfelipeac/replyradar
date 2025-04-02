@@ -13,6 +13,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyProgress
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingLarge
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyClick
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyToggle
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState
 import org.jetbrains.compose.resources.stringResource
 import replyradar.composeapp.generated.resources.Res.string
@@ -52,9 +53,8 @@ fun RepliesOnTheRadarScreen(state: ReplyListState, onIntent: (ReplyListScreenInt
                 ReplyList(
                     modifier = Modifier.fillMaxSize(),
                     replies = state.replies,
-                    onReplyClick = {
-                        onIntent(OnReplyClick(it))
-                    }
+                    onReplyClick = { onIntent(OnReplyClick(it)) },
+                    onReplyToggle = { onIntent(OnReplyToggle(it)) }
                 )
             }
         }

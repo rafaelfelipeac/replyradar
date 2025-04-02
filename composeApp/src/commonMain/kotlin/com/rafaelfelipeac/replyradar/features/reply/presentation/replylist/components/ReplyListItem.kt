@@ -10,21 +10,17 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import com.rafaelfelipeac.replyradar.core.common.ui.GrayBackground
-import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
-import com.rafaelfelipeac.replyradar.core.common.ui.cardIconSize
+import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyToggle
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 
@@ -32,7 +28,12 @@ private const val WEIGHT = 1f
 private const val MAX_LINES = 1
 
 @Composable
-fun ReplyListItem(modifier: Modifier = Modifier, reply: Reply, onClick: () -> Unit) {
+fun ReplyListItem(
+    modifier: Modifier = Modifier,
+    reply: Reply,
+    onClick: () -> Unit,
+    onToggle: (Reply) -> Unit
+) {
     Surface(
         modifier = modifier
             .clickable(onClick = onClick),
@@ -46,6 +47,13 @@ fun ReplyListItem(modifier: Modifier = Modifier, reply: Reply, onClick: () -> Un
             verticalAlignment = CenterVertically,
             horizontalArrangement = spacedBy(paddingMedium)
         ) {
+            ReplyToggle(
+                modifier = Modifier
+                    .align(Alignment.Top),
+                isResolved = reply.isResolved,
+                onToggle = { onToggle(reply) }
+            )
+
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -63,14 +71,6 @@ fun ReplyListItem(modifier: Modifier = Modifier, reply: Reply, onClick: () -> Un
                     }
                 }
             }
-
-            Icon(
-                modifier = Modifier
-                    .size(cardIconSize),
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = null,
-                tint = PrimaryColor
-            )
         }
     }
 }

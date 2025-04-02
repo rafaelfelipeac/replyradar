@@ -15,7 +15,12 @@ import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 
 @Composable
-fun ReplyList(modifier: Modifier = Modifier, replies: List<Reply>, onReplyClick: (Reply) -> Unit) {
+fun ReplyList(
+    modifier: Modifier = Modifier,
+    replies: List<Reply>,
+    onReplyClick: (Reply) -> Unit,
+    onReplyToggle: ((Reply) -> Unit?)? = null
+) {
     LazyColumn(
         modifier = modifier
             .padding(top = paddingMedium),
@@ -27,9 +32,8 @@ fun ReplyList(modifier: Modifier = Modifier, replies: List<Reply>, onReplyClick:
                     modifier = Modifier
                         .fillMaxWidth(),
                     reply = reply,
-                    onClick = {
-                        onReplyClick(reply)
-                    }
+                    onClick = { onReplyClick(reply) },
+                    onToggle = { onReplyToggle?.let { onReplyToggle(reply) } }
                 )
 
                 if (index < replies.lastIndex) {

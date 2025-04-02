@@ -20,5 +20,7 @@
     <string name="reply_list_bottom_sheet_restore">Restore</string>
     <string name="reply_list_bottom_sheet_delete">Delete</string>
 
+    <string name="reply_list_item_resolve">Resolve</string>
+
     <string name="reply_list_fab_content_description">Add a new reply to your radar.</string>
 </resources>

@@ -31,7 +31,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import org.jetbrains.compose.resources.stringResource
-import replyradar.composeapp.generated.resources.Res
+import replyradar.composeapp.generated.resources.Res.drawable
 import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.ic_archive
 import replyradar.composeapp.generated.resources.ic_check
@@ -115,7 +115,7 @@ fun ReplyBottomSheetContent(
                                     )
                                 }
 
-                                isResolved -> {
+                                isResolved && !isArchived -> {
                                     ResolvedStateButtons(
                                         reply = state.reply,
                                         onArchive = onArchive,
@@ -180,13 +180,13 @@ private fun ActiveStateButtons(
 ) {
     ReplyOutlinedButton(
         text = stringResource(string.reply_list_bottom_sheet_resolve),
-        icon = Res.drawable.ic_check,
+        icon = drawable.ic_check,
         onClick = { onResolve(reply) }
     )
 
     ReplyOutlinedButton(
         text = stringResource(string.reply_list_bottom_sheet_archive),
-        icon = Res.drawable.ic_archive,
+        icon = drawable.ic_archive,
         onClick = { onArchive(reply) }
     )
 }
@@ -199,13 +199,13 @@ private fun ResolvedStateButtons(
 ) {
     ReplyOutlinedButton(
         text = stringResource(string.reply_list_bottom_sheet_reopen),
-        icon = Res.drawable.ic_reopen,
+        icon = drawable.ic_reopen,
         onClick = { onResolve(reply) }
     )
 
     ReplyOutlinedButton(
         text = stringResource(string.reply_list_bottom_sheet_archive),
-        icon = Res.drawable.ic_archive,
+        icon = drawable.ic_archive,
         onClick = { onArchive(reply) }
     )
 }
@@ -218,13 +218,13 @@ private fun ArchivedStateButton(
 ) {
     ReplyOutlinedButton(
         text = stringResource(string.reply_list_bottom_sheet_restore),
-        icon = Res.drawable.ic_unarchive,
+        icon = drawable.ic_unarchive,
         onClick = { onArchive(reply) }
     )
 
     ReplyOutlinedButton(
         text = stringResource(string.reply_list_bottom_sheet_delete),
-        icon = Res.drawable.ic_delete,
+        icon = drawable.ic_delete,
         onClick = { onDelete(reply) }
     )
 }

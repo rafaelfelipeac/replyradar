@@ -18,7 +18,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.ButtonBorderColor
 import com.rafaelfelipeac.replyradar.core.common.ui.buttonBorderWidth
 import com.rafaelfelipeac.replyradar.core.common.ui.buttonCornerRadius
 import com.rafaelfelipeac.replyradar.core.common.ui.buttonHeight
-import com.rafaelfelipeac.replyradar.core.common.ui.buttonIconHeight
+import com.rafaelfelipeac.replyradar.core.common.ui.buttonIconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingXSmall
 import org.jetbrains.compose.resources.DrawableResource
@@ -50,7 +50,7 @@ fun ReplyOutlinedButton(
         icon?.let { icon ->
             Icon(
                 modifier = Modifier
-                    .size(buttonIconHeight),
+                    .size(buttonIconSize),
                 painter = painterResource(icon),
                 tint = PrimaryColor,
                 contentDescription = text
