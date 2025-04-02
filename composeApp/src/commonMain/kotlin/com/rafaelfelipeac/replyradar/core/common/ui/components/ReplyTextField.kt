@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.font.FontWeight.Companion.Normal
+import androidx.compose.ui.text.input.KeyboardCapitalization.Companion.Sentences
 import androidx.compose.ui.unit.TextUnit
 import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
 import com.rafaelfelipeac.replyradar.core.common.ui.WhiteBackground
@@ -45,6 +47,7 @@ fun ReplyTextField(
             color = PrimaryColor,
             fontWeight = if (value.isNotBlank() && textSize == Large) Bold else Normal
         ),
+        keyboardOptions = KeyboardOptions(capitalization = Sentences),
         decorationBox = { innerTextField ->
             Box(
                 modifier = Modifier
