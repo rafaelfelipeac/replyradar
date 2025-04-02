@@ -1,6 +1,5 @@
 package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.Center
 import androidx.compose.foundation.layout.Arrangement.spacedBy
@@ -23,12 +22,9 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
-import com.rafaelfelipeac.replyradar.core.common.ui.ListItemColor
+import com.rafaelfelipeac.replyradar.core.common.ui.GrayBackground
 import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
-import com.rafaelfelipeac.replyradar.core.common.ui.cardBorderWidth
 import com.rafaelfelipeac.replyradar.core.common.ui.cardIconSize
-import com.rafaelfelipeac.replyradar.core.common.ui.cardItemCornerRadius
-import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 
@@ -40,13 +36,11 @@ fun ReplyListItem(modifier: Modifier = Modifier, reply: Reply, onClick: () -> Un
     Surface(
         modifier = modifier
             .clickable(onClick = onClick),
-        shape = ReplyRoundedCorner(cornerRadius = cardItemCornerRadius),
-        border = BorderStroke(cardBorderWidth, PrimaryColor),
-        color = ListItemColor
+        color = GrayBackground
     ) {
         Row(
             modifier = Modifier
-                .padding(paddingMedium)
+                .padding(horizontal = paddingMedium)
                 .fillMaxWidth()
                 .height(IntrinsicSize.Min),
             verticalAlignment = CenterVertically,

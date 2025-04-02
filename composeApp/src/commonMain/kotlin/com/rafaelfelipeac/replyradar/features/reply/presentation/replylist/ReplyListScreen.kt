@@ -178,16 +178,12 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                     ) { pageIndex ->
                         Box(
                             modifier = Modifier
-                                .fillMaxSize()
-                                .padding(paddingMedium)
-                                .clip(ReplyRoundedCorner(paddingMedium))
-                                .background(GrayBackground),
+                                .fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
                             Column(
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .padding(paddingSmall)
                                     .background(GrayBackground),
                                 verticalArrangement = Arrangement.Center
                             ) {

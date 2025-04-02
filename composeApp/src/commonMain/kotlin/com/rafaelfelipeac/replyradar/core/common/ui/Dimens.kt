@@ -30,3 +30,5 @@ val buttonHeight = 34.dp
 val buttonIconHeight = 22.dp
 val buttonCornerRadius = 8.dp
 val buttonBorderWidth = 1.dp
+
+val listDividerThickness = 0.5.dp

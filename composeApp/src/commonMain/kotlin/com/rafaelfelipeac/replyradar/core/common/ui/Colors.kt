@@ -7,7 +7,7 @@ val PrimaryColor = Color(0xFF464152)
 val AccentColor = Color(0xFF7180ac)
 
 val WhiteBackground = White
-val GrayBackground = Color(0xFFEDEFF2)
+val GrayBackground = White//Color(0xFFEDEFF2)
 
 val ListItemColor = White
 
