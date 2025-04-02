@@ -29,24 +29,16 @@ fun RepliesOnTheRadarScreen(state: ReplyListState, onIntent: (ReplyListScreenInt
                 Text(
                     text = state.errorMessage,
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.error
+                    style = MaterialTheme.typography.headlineSmall
                 )
             }
 
             state.replies.isEmpty() -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = paddingLarge),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = stringResource(string.reply_list_placeholder_on_the_radar),
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-                }
+                Text(
+                    text = stringResource(string.reply_list_placeholder_on_the_radar),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.headlineSmall
+                )
             }
 
             else -> {

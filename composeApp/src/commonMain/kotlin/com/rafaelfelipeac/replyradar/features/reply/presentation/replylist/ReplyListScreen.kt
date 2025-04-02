@@ -29,18 +29,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rafaelfelipeac.replyradar.core.common.ui.AccentColor
+import com.rafaelfelipeac.replyradar.core.common.ui.GrayBackground
 import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
 import com.rafaelfelipeac.replyradar.core.common.ui.WhiteBackground
-import com.rafaelfelipeac.replyradar.core.common.ui.GrayBackground
-import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
+import com.rafaelfelipeac.replyradar.core.common.ui.paddingLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
-import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.spacerSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
@@ -187,10 +185,28 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                                     .background(GrayBackground),
                                 verticalArrangement = Arrangement.Center
                             ) {
-                                when (pageIndex) {
-                                    ON_THE_RADAR_INDEX -> RepliesOnTheRadarScreen(state, onIntent)
-                                    RESOLVED_INDEX -> RepliesResolvedScreen(state, onIntent)
-                                    ARCHIVED_INDEX -> RepliesArchivedScreen(state, onIntent)
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(horizontal = paddingLarge),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    when (pageIndex) {
+                                        ON_THE_RADAR_INDEX -> RepliesOnTheRadarScreen(
+                                            state = state,
+                                            onIntent = onIntent
+                                        )
+
+                                        RESOLVED_INDEX -> RepliesResolvedScreen(
+                                            state = state,
+                                            onIntent = onIntent
+                                        )
+
+                                        ARCHIVED_INDEX -> RepliesArchivedScreen(
+                                            state = state,
+                                            onIntent = onIntent
+                                        )
+                                    }
                                 }
                             }
                         }
