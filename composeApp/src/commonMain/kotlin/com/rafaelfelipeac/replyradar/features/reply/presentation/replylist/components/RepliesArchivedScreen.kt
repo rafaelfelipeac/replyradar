@@ -8,13 +8,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyClick
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyToggle
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState
 import org.jetbrains.compose.resources.stringResource
 import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.reply_list_placeholder_archived
 
 @Composable
-fun RepliesArchivedScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> Unit) {
+fun RepliesArchivedScreen(
+    state: ReplyListState,
+    onIntent: (ReplyListScreenIntent) -> Unit
+) {
     if (state.archivedReplies.isEmpty()) {
         Text(
             text = stringResource(string.reply_list_placeholder_archived),
@@ -25,9 +29,8 @@ fun RepliesArchivedScreen(state: ReplyListState, onIntent: (ReplyListScreenInten
         ReplyList(
             modifier = Modifier.fillMaxSize(),
             replies = state.archivedReplies,
-            onReplyClick = {
-                onIntent(OnReplyClick(it))
-            }
+            onReplyClick = { onIntent(OnReplyClick(it)) },
+            onReplyToggle = { onIntent(OnReplyToggle(it)) }
         )
     }
 }
