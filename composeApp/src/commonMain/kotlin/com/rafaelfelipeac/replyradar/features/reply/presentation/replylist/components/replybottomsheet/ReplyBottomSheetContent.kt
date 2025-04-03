@@ -21,7 +21,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.rafaelfelipeac.replyradar.core.AppConstants.EMPTY
-import com.rafaelfelipeac.replyradar.core.common.ui.WhiteBackground
+import com.rafaelfelipeac.replyradar.core.common.ui.Background
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyButton
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyOutlinedButton
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextField
@@ -65,7 +65,7 @@ fun ReplyBottomSheetContent(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(WhiteBackground)
+                .background(Background)
                 .padding(start = paddingMedium, top = paddingMedium, end = paddingMedium),
             horizontalAlignment = CenterHorizontally
         ) {

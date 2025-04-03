@@ -11,7 +11,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import com.rafaelfelipeac.replyradar.core.common.ui.HorizontalDividerColor
 import com.rafaelfelipeac.replyradar.core.common.ui.listDividerThickness
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
@@ -43,7 +43,7 @@ fun ReplyList(
                         modifier = Modifier
                             .padding(paddingMedium),
                         thickness = listDividerThickness,
-                        color = Color.LightGray
+                        color = HorizontalDividerColor
                     )
                 }
                 else {

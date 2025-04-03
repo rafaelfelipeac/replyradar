@@ -13,7 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
-import com.rafaelfelipeac.replyradar.core.common.ui.WhiteBackground
+import com.rafaelfelipeac.replyradar.core.common.ui.Background
 import com.rafaelfelipeac.replyradar.core.common.ui.ButtonBorderColor
 import com.rafaelfelipeac.replyradar.core.common.ui.buttonBorderWidth
 import com.rafaelfelipeac.replyradar.core.common.ui.buttonCornerRadius
@@ -38,7 +38,7 @@ fun ReplyOutlinedButton(
         shape = RoundedCornerShape(buttonCornerRadius),
         border = BorderStroke(buttonBorderWidth, ButtonBorderColor),
         colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = WhiteBackground,
+            containerColor = Background,
             contentColor = PrimaryColor
         ),
         contentPadding = PaddingValues(horizontal = paddingSmall, vertical = paddingXSmall)

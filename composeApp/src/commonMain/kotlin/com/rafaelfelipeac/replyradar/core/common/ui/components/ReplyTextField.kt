@@ -10,14 +10,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.font.FontWeight.Companion.Normal
 import androidx.compose.ui.text.input.KeyboardCapitalization.Companion.Sentences
 import androidx.compose.ui.unit.TextUnit
+import com.rafaelfelipeac.replyradar.core.common.ui.Background
 import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
-import com.rafaelfelipeac.replyradar.core.common.ui.WhiteBackground
+import com.rafaelfelipeac.replyradar.core.common.ui.TextFieldPlaceholderColor
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSize.Large
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSize.Medium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
@@ -37,7 +37,7 @@ fun ReplyTextField(
     BasicTextField(
         modifier = modifier
             .fillMaxWidth()
-            .background(WhiteBackground)
+            .background(Background)
             .padding(horizontal = paddingSmall),
         value = value,
         onValueChange = onValueChange,
@@ -62,7 +62,7 @@ fun ReplyTextField(
                     ) {
                         Text(
                             text = placeholder,
-                            color = Color.Gray,
+                            color = TextFieldPlaceholderColor,
                             fontSize = textSize.value
                         )
                     }
