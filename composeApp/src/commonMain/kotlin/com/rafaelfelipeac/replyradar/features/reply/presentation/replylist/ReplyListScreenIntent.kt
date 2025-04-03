@@ -8,6 +8,7 @@ sealed interface ReplyListScreenIntent {
         data object OnAddReplyClick : ReplyListIntent
         data class OnTabSelected(val index: Int) : ReplyListIntent
         data class OnReplyClick(val reply: Reply) : ReplyListIntent
+        data class OnReplyToggle(val reply: Reply) : ReplyListIntent
     }
 
     sealed interface ReplyBottomSheetIntent : ReplyListScreenIntent {

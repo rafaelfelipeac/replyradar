@@ -8,7 +8,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun App() {
+fun ReplyRadarApp(onStatusBarConfig: @Composable (() -> Unit)? = null) {
+    onStatusBarConfig?.invoke()
+
     MaterialTheme {
         val navController = rememberNavController()
 

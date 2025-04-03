@@ -1,5 +1,7 @@
 package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,24 +16,26 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rafaelfelipeac.replyradar.core.common.ui.AccentColor
-import com.rafaelfelipeac.replyradar.core.common.ui.DesertWhite
+import com.rafaelfelipeac.replyradar.core.common.ui.Background
 import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
-import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
-import com.rafaelfelipeac.replyradar.core.common.ui.paddingLarge
+import com.rafaelfelipeac.replyradar.core.common.ui.components.fontSizeLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.spacerSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
@@ -44,6 +48,7 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.compo
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import replyradar.composeapp.generated.resources.Res.string
+import replyradar.composeapp.generated.resources.app_name
 import replyradar.composeapp.generated.resources.reply_list_fab_content_description
 import replyradar.composeapp.generated.resources.reply_list_tab_archived
 import replyradar.composeapp.generated.resources.reply_list_tab_on_the_radar
@@ -80,7 +85,7 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
     }
 
     Scaffold(
-        containerColor = PrimaryColor,
+        containerColor = Background,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { onIntent(OnAddReplyClick) },
@@ -89,7 +94,7 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription = stringResource(string.reply_list_fab_content_description),
-                    tint = DesertWhite
+                    tint = Background
                 )
             }
         }
@@ -97,26 +102,38 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(bottom = paddingValues.calculateBottomPadding())
                 .statusBarsPadding()
         ) {
+            Text(
+                modifier = Modifier
+                    .padding(top = paddingMedium)
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                text = stringResource(string.app_name),
+                style = MaterialTheme.typography.titleLarge.copy(fontSize = fontSizeLarge),
+                color = PrimaryColor
+            )
+
             Surface(
                 modifier = Modifier
                     .weight(WEIGHT)
-                    .padding(top = paddingLarge)
                     .fillMaxWidth(),
-                color = DesertWhite,
-                shape = ReplyRoundedCorner()
+                color = Background
             ) {
                 Column(
                     horizontalAlignment = CenterHorizontally
                 ) {
                     TabRow(
                         modifier = Modifier
-                            .padding(top = tabRowTopPadding)
+                            .padding(
+                                start = paddingMedium,
+                                top = tabRowTopPadding,
+                                end = paddingMedium
+                            )
                             .fillMaxWidth(),
                         selectedTabIndex = state.selectedTabIndex,
-                        containerColor = DesertWhite,
+                        containerColor = Background,
                         indicator = { tabPositions ->
                             TabRowDefaults.SecondaryIndicator(
                                 modifier = Modifier
@@ -155,18 +172,7 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                             .weight(WEIGHT),
                         state = pagerState
                     ) { pageIndex ->
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(horizontal = paddingMedium),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            when (pageIndex) {
-                                ON_THE_RADAR_INDEX -> RepliesOnTheRadarScreen(state, onIntent)
-                                RESOLVED_INDEX -> RepliesResolvedScreen(state, onIntent)
-                                ARCHIVED_INDEX -> RepliesArchivedScreen(state, onIntent)
-                            }
-                        }
+                        RepliesScreen(pageIndex = pageIndex, state = state, onIntent = onIntent)
                     }
                 }
             }
@@ -177,6 +183,49 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                 onIntent = onIntent,
                 replyBottomSheetState = state.replyBottomSheetState
             )
+        }
+    }
+}
+
+@Composable
+private fun RepliesScreen(
+    pageIndex: Int,
+    state: ReplyListState,
+    onIntent: (ReplyListScreenIntent) -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Background),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                when (pageIndex) {
+                    ON_THE_RADAR_INDEX -> RepliesOnTheRadarScreen(
+                        state = state,
+                        onIntent = onIntent
+                    )
+
+                    RESOLVED_INDEX -> RepliesResolvedScreen(
+                        state = state,
+                        onIntent = onIntent
+                    )
+
+                    ARCHIVED_INDEX -> RepliesArchivedScreen(
+                        state = state,
+                        onIntent = onIntent
+                    )
+                }
+            }
         }
     }
 }

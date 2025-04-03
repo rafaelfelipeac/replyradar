@@ -5,42 +5,48 @@ import androidx.compose.foundation.layout.Arrangement.End
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.rafaelfelipeac.replyradar.core.AppConstants.EMPTY
-import com.rafaelfelipeac.replyradar.core.common.ui.DesertWhite
+import com.rafaelfelipeac.replyradar.core.common.ui.Background
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyButton
+import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyOutlinedButton
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextField
+import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSize.Large
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import org.jetbrains.compose.resources.stringResource
+import replyradar.composeapp.generated.resources.Res.drawable
 import replyradar.composeapp.generated.resources.Res.string
+import replyradar.composeapp.generated.resources.ic_archive
+import replyradar.composeapp.generated.resources.ic_check
+import replyradar.composeapp.generated.resources.ic_delete
+import replyradar.composeapp.generated.resources.ic_reopen
+import replyradar.composeapp.generated.resources.ic_unarchive
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_add
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_add_reply
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_archive
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_delete
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_edit_reply
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_name
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_reopen
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_resolve
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_restore
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_save
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_subject
+import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_unarchive
 
 private const val WEIGHT = 1f
 
@@ -59,59 +65,58 @@ fun ReplyBottomSheetContent(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(DesertWhite)
-                .padding(horizontal = paddingMedium),
+                .background(Background)
+                .padding(start = paddingMedium, top = paddingMedium, end = paddingMedium),
             horizontalAlignment = CenterHorizontally
         ) {
-            Text(
-                modifier = Modifier.padding(bottom = paddingSmall),
-                text = stringResource(
-                    if (state.replyBottomSheetMode == CREATE) {
-                        string.reply_list_bottom_sheet_add_reply
-                    } else {
-                        string.reply_list_bottom_sheet_edit_reply
-                    }
-                ),
-                style = MaterialTheme.typography.headlineSmall
+            val focusRequester = remember { FocusRequester() }
+            val keyboardController = LocalSoftwareKeyboardController.current
+
+            LaunchedEffect(Unit) {
+                focusRequester.requestFocus()
+                keyboardController?.show()
+            }
+
+            ReplyTextField(
+                modifier = Modifier
+                    .padding(top = paddingSmall)
+                    .focusRequester(focusRequester),
+                value = name,
+                placeholder = stringResource(string.reply_list_bottom_sheet_name),
+                onValueChange = { name = it },
+                textSize = Large
             )
 
             ReplyTextField(
-                placeholder = name,
-                label = stringResource(string.reply_list_bottom_sheet_name),
-                onValueChange = { name = it }
-            )
-
-            ReplyTextField(
-                placeholder = subject,
-                label = stringResource(string.reply_list_bottom_sheet_subject),
+                value = subject,
+                placeholder = stringResource(string.reply_list_bottom_sheet_subject),
                 onValueChange = { subject = it }
             )
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = paddingSmall),
-                horizontalArrangement = if (isEditMode(state)) spacedBy(paddingSmall) else End
+                    .padding(vertical = paddingMedium),
+                horizontalArrangement = if (isEditMode(state)) spacedBy(paddingSmall) else End,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 if (state.reply != null && isEditMode(state)) {
-                    Column(
-                        modifier = Modifier.weight(WEIGHT),
-                        verticalArrangement = spacedBy(paddingSmall)
+                    Row(
+                        modifier = Modifier
+                            .weight(WEIGHT)
                     ) {
                         with(state.reply) {
                             when {
                                 !isArchived && !isResolved -> {
                                     ActiveStateButtons(
-                                        modifier = Modifier.fillMaxWidth(),
                                         reply = state.reply,
                                         onArchive = onArchive,
                                         onResolve = onResolve
                                     )
                                 }
 
-                                isResolved -> {
+                                isResolved && !isArchived -> {
                                     ResolvedStateButtons(
-                                        modifier = Modifier.fillMaxWidth(),
                                         reply = state.reply,
                                         onArchive = onArchive,
                                         onResolve = onResolve
@@ -120,7 +125,6 @@ fun ReplyBottomSheetContent(
 
                                 isArchived -> {
                                     ArchivedStateButton(
-                                        modifier = Modifier.fillMaxWidth(),
                                         reply = state.reply,
                                         onArchive = onArchive,
                                         onDelete = onDelete
@@ -132,13 +136,9 @@ fun ReplyBottomSheetContent(
                 }
 
                 ReplyButton(
-                    modifier = if (isEditMode(state)) {
-                        Modifier
-                            .weight(WEIGHT)
-                            .padding(start = paddingSmall)
-                    } else {
-                        Modifier.wrapContentWidth()
-                    },
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.CenterVertically),
                     text = stringResource(
                         if (state.reply == null) {
                             string.reply_list_bottom_sheet_add
@@ -166,8 +166,6 @@ fun ReplyBottomSheetContent(
                     enabled = name.isNotBlank()
                 )
             }
-
-            Spacer(modifier = Modifier.height(paddingMedium))
         }
     }
 }
@@ -176,60 +174,57 @@ private fun isEditMode(state: ReplyBottomSheetState) = state.replyBottomSheetMod
 
 @Composable
 private fun ActiveStateButtons(
-    modifier: Modifier = Modifier,
     reply: Reply,
     onArchive: (Reply) -> Unit,
     onResolve: (Reply) -> Unit
 ) {
-    ReplyButton(
-        modifier = modifier,
+    ReplyOutlinedButton(
         text = stringResource(string.reply_list_bottom_sheet_resolve),
+        icon = drawable.ic_check,
         onClick = { onResolve(reply) }
     )
 
-    ReplyButton(
-        modifier = modifier,
+    ReplyOutlinedButton(
         text = stringResource(string.reply_list_bottom_sheet_archive),
+        icon = drawable.ic_archive,
         onClick = { onArchive(reply) }
     )
 }
 
 @Composable
 private fun ResolvedStateButtons(
-    modifier: Modifier = Modifier,
     reply: Reply,
     onArchive: (Reply) -> Unit,
     onResolve: (Reply) -> Unit
 ) {
-    ReplyButton(
-        modifier = modifier,
+    ReplyOutlinedButton(
         text = stringResource(string.reply_list_bottom_sheet_reopen),
+        icon = drawable.ic_reopen,
         onClick = { onResolve(reply) }
     )
 
-    ReplyButton(
-        modifier = modifier,
+    ReplyOutlinedButton(
         text = stringResource(string.reply_list_bottom_sheet_archive),
+        icon = drawable.ic_archive,
         onClick = { onArchive(reply) }
     )
 }
 
 @Composable
 private fun ArchivedStateButton(
-    modifier: Modifier = Modifier,
     reply: Reply,
     onArchive: (Reply) -> Unit,
     onDelete: (Reply) -> Unit
 ) {
-    ReplyButton(
-        modifier = modifier,
-        text = stringResource(string.reply_list_bottom_sheet_restore),
+    ReplyOutlinedButton(
+        text = stringResource(string.reply_list_bottom_sheet_unarchive),
+        icon = drawable.ic_unarchive,
         onClick = { onArchive(reply) }
     )
 
-    ReplyButton(
-        modifier = modifier,
+    ReplyOutlinedButton(
         text = stringResource(string.reply_list_bottom_sheet_delete),
+        icon = drawable.ic_delete,
         onClick = { onDelete(reply) }
     )
 }

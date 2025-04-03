@@ -23,7 +23,7 @@ interface ReplyDao {
     @Query("SELECT * FROM replies WHERE isResolved = 0 AND isArchived = 0")
     fun getActiveReplies(): Flow<List<ReplyEntity>>
 
-    @Query("SELECT * FROM replies WHERE isResolved = 1")
+    @Query("SELECT * FROM replies WHERE isResolved = 1 AND isArchived = 0")
     fun getResolvedReplies(): Flow<List<ReplyEntity>>
 
     @Query("SELECT * FROM replies WHERE isArchived = 1")

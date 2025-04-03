@@ -18,6 +18,7 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyClick
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyToggle
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
@@ -30,7 +31,7 @@ import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActio
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Reopen
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Resolve
-import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Restore
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Unarchive
 import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -96,6 +97,8 @@ class ReplyListViewModel(
                 }
             }
 
+            is OnReplyToggle -> { onToggleResolveReply(reply = intent.reply) }
+
             is OnTabSelected -> {
                 updateState {
                     copy(selectedTabIndex = intent.index)
@@ -157,7 +160,7 @@ class ReplyListViewModel(
     private fun onToggleArchiveReply(reply: Reply) = viewModelScope.launch {
         val isArchived = toggleArchiveReplyUseCase.toggleArchiveReply(reply)
 
-        logUserAction(actionType = if (isArchived) Archive else Restore, targetId = reply.id)
+        logUserAction(actionType = if (isArchived) Archive else Unarchive, targetId = reply.id)
     }
 
     private fun onToggleResolveReply(reply: Reply) = viewModelScope.launch {
