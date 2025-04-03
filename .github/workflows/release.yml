@@ -99,4 +99,3 @@ jobs:
           releaseFiles: composeApp/build/outputs/bundle/release/replyradar-*.aab
           track: internal
           status: draft
-          whatsNew: ${{ steps.changelog.outputs.body }}
