@@ -59,48 +59,46 @@ class ReplyRepositoryTest {
     }
 
     @Test
-    fun `toggleReplyResolve should toggle isResolved and set resolvedAt`() =
-        runTest {
-            val dao = FakeReplyDao()
-            val clock = FakeClock(now)
-            val repository = ReplyRepositoryImpl(dao, clock)
+    fun `toggleReplyResolve should toggle isResolved and set resolvedAt`() = runTest {
+        val dao = FakeReplyDao()
+        val clock = FakeClock(now)
+        val repository = ReplyRepositoryImpl(dao, clock)
 
-            val reply = Reply(
-                id = 1L,
-                name = "Paul",
-                subject = "Party",
-                isArchived = true
-            )
+        val reply = Reply(
+            id = 1L,
+            name = "Paul",
+            subject = "Party",
+            isArchived = true
+        )
 
-            repository.toggleReplyResolve(reply)
+        repository.toggleReplyResolve(reply)
 
-            val updated = dao.updatedReplies.first()
-            assertEquals(true, updated.isResolved)
-            assertEquals(true, updated.isArchived)
-            assertEquals(now, updated.resolvedAt)
-        }
+        val updated = dao.updatedReplies.first()
+        assertEquals(true, updated.isResolved)
+        assertEquals(true, updated.isArchived)
+        assertEquals(now, updated.resolvedAt)
+    }
 
     @Test
-    fun `toggleReplyArchive should toggle isArchived and set archivedAt`() =
-        runTest {
-            val dao = FakeReplyDao()
-            val clock = FakeClock(now)
-            val repository = ReplyRepositoryImpl(dao, clock)
+    fun `toggleReplyArchive should toggle isArchived and set archivedAt`() = runTest {
+        val dao = FakeReplyDao()
+        val clock = FakeClock(now)
+        val repository = ReplyRepositoryImpl(dao, clock)
 
-            val reply = Reply(
-                id = 2L,
-                name = "Ringo",
-                subject = "Lunch next week",
-                isResolved = true
-            )
+        val reply = Reply(
+            id = 2L,
+            name = "Ringo",
+            subject = "Lunch next week",
+            isResolved = true
+        )
 
-            repository.toggleReplyArchive(reply)
+        repository.toggleReplyArchive(reply)
 
-            val updated = dao.updatedReplies.first()
-            assertEquals(true, updated.isArchived)
-            assertEquals(true, updated.isResolved)
-            assertEquals(now, updated.archivedAt)
-        }
+        val updated = dao.updatedReplies.first()
+        assertEquals(true, updated.isArchived)
+        assertEquals(true, updated.isResolved)
+        assertEquals(now, updated.archivedAt)
+    }
 
     @Test
     fun `deleteReply should call deleteReply on dao`() = runTest {
