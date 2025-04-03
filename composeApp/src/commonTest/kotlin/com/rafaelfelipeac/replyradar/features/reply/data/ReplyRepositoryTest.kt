@@ -59,7 +59,7 @@ class ReplyRepositoryTest {
     }
 
     @Test
-    fun `toggleReplyResolve should toggle isResolved and set resolvedAt also reset isArchived`() =
+    fun `toggleReplyResolve should toggle isResolved and set resolvedAt`() =
         runTest {
             val dao = FakeReplyDao()
             val clock = FakeClock(now)
@@ -76,12 +76,12 @@ class ReplyRepositoryTest {
 
             val updated = dao.updatedReplies.first()
             assertEquals(true, updated.isResolved)
-            assertEquals(false, updated.isArchived)
+            assertEquals(true, updated.isArchived)
             assertEquals(now, updated.resolvedAt)
         }
 
     @Test
-    fun `toggleReplyArchive should toggle isArchived and set archivedAt also reset isResolved`() =
+    fun `toggleReplyArchive should toggle isArchived and set archivedAt`() =
         runTest {
             val dao = FakeReplyDao()
             val clock = FakeClock(now)
@@ -98,7 +98,7 @@ class ReplyRepositoryTest {
 
             val updated = dao.updatedReplies.first()
             assertEquals(true, updated.isArchived)
-            assertEquals(false, updated.isResolved)
+            assertEquals(true, updated.isResolved)
             assertEquals(now, updated.archivedAt)
         }
 
