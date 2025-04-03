@@ -8,7 +8,7 @@
 
     <string name="reply_list_placeholder_on_the_radar">Nothing on the radar for now!&#10;How about adding something?</string>
     <string name="reply_list_placeholder_resolved">No resolved replies yet.&#10;Time to get something done?</string>
-    <string name="reply_list_placeholder_archived">Nothing archived yet!&#10;Got something to stash for later?</string>
+    <string name="reply_list_placeholder_archived">Archive’s looking empty!&#10;Time to clear your radar?</string>
 
     <string name="reply_list_bottom_sheet_name">Name</string>
     <string name="reply_list_bottom_sheet_subject">Subject</string>
@@ -17,7 +17,7 @@
     <string name="reply_list_bottom_sheet_resolve">Resolve</string>
     <string name="reply_list_bottom_sheet_reopen">Reopen</string>
     <string name="reply_list_bottom_sheet_archive">Archive</string>
-    <string name="reply_list_bottom_sheet_restore">Restore</string>
+    <string name="reply_list_bottom_sheet_unarchive">Unarchive</string>
     <string name="reply_list_bottom_sheet_delete">Delete</string>
 
     <string name="reply_list_item_resolve">Resolve</string>

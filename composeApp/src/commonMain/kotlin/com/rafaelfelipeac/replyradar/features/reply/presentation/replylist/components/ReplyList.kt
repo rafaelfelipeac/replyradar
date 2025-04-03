@@ -1,7 +1,9 @@
 package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -42,6 +44,12 @@ fun ReplyList(
                             .padding(paddingMedium),
                         thickness = listDividerThickness,
                         color = Color.LightGray
+                    )
+                }
+                else {
+                    Spacer(
+                        modifier = Modifier
+                            .height(paddingMedium)
                     )
                 }
             }

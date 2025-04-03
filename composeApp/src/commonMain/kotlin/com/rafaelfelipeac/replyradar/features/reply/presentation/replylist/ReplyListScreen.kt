@@ -37,7 +37,6 @@ import com.rafaelfelipeac.replyradar.core.common.ui.GrayBackground
 import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
 import com.rafaelfelipeac.replyradar.core.common.ui.WhiteBackground
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
-import com.rafaelfelipeac.replyradar.core.common.ui.paddingLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.spacerSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
@@ -187,8 +186,7 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                             ) {
                                 Box(
                                     modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(horizontal = paddingLarge),
+                                        .fillMaxSize(),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     when (pageIndex) {

@@ -44,7 +44,7 @@ import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_delete
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_name
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_reopen
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_resolve
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_restore
+import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_unarchive
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_save
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_subject
 
@@ -217,7 +217,7 @@ private fun ArchivedStateButton(
     onDelete: (Reply) -> Unit
 ) {
     ReplyOutlinedButton(
-        text = stringResource(string.reply_list_bottom_sheet_restore),
+        text = stringResource(string.reply_list_bottom_sheet_unarchive),
         icon = drawable.ic_unarchive,
         onClick = { onArchive(reply) }
     )
