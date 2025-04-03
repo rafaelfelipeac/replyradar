@@ -16,10 +16,7 @@ import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.reply_list_placeholder_resolved
 
 @Composable
-fun RepliesResolvedScreen(
-    state: ReplyListState,
-    onIntent: (ReplyListScreenIntent) -> Unit
-) {
+fun RepliesResolvedScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> Unit) {
     if (state.resolvedReplies.isEmpty()) {
         Text(
             modifier = Modifier

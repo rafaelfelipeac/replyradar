@@ -45,8 +45,7 @@ fun ReplyList(
                         thickness = listDividerThickness,
                         color = HorizontalDividerColor
                     )
-                }
-                else {
+                } else {
                     Spacer(
                         modifier = Modifier
                             .height(paddingMedium)

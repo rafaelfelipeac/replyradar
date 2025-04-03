@@ -25,7 +25,7 @@ fun ReplyBottomSheet(
         onDismissRequest = { onIntent(OnDismissBottomSheet) },
         containerColor = Background,
         dragHandle = null,
-        shape = ReplyRoundedCorner(onlyTopCorners = true),
+        shape = ReplyRoundedCorner(onlyTopCorners = true)
     ) {
         when (replyBottomSheetState.replyBottomSheetMode) {
             CREATE -> {

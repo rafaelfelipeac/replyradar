@@ -44,9 +44,9 @@ import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_delete
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_name
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_reopen
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_resolve
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_unarchive
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_save
 import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_subject
+import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_unarchive
 
 private const val WEIGHT = 1f
 

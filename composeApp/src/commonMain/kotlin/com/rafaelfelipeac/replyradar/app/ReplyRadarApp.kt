@@ -8,9 +8,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun ReplyRadarApp(
-    onStatusBarConfig: @Composable (() -> Unit)? = null
-) {
+fun ReplyRadarApp(onStatusBarConfig: @Composable (() -> Unit)? = null) {
     onStatusBarConfig?.invoke()
 
     MaterialTheme {

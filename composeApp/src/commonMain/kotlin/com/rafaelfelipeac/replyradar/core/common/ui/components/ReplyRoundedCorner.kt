@@ -12,5 +12,5 @@ fun ReplyRoundedCorner(cornerRadius: Dp = cardCornerRadius, onlyTopCorners: Bool
         topStart = cornerRadius,
         topEnd = cornerRadius,
         bottomStart = if (onlyTopCorners) empty else cornerRadius,
-        bottomEnd = if (onlyTopCorners) empty else cornerRadius,
+        bottomEnd = if (onlyTopCorners) empty else cornerRadius
     )

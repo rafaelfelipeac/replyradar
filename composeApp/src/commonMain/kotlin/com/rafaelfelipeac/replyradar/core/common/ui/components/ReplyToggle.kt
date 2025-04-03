@@ -35,11 +35,7 @@ import replyradar.composeapp.generated.resources.ic_check
 import replyradar.composeapp.generated.resources.reply_list_item_resolve
 
 @Composable
-fun ReplyToggle(
-    modifier: Modifier = Modifier,
-    isResolved: Boolean,
-    onToggle: () -> Unit
-) {
+fun ReplyToggle(modifier: Modifier = Modifier, isResolved: Boolean, onToggle: () -> Unit) {
     var localIsResolved by remember { mutableStateOf(isResolved) }
     val transition =
         updateTransition(targetState = localIsResolved, label = TOGGLE_TRANSITION_LABEL)

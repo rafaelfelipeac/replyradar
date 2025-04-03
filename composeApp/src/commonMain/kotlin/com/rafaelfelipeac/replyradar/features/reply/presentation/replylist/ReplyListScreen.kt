@@ -32,8 +32,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rafaelfelipeac.replyradar.core.common.ui.AccentColor
-import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
 import com.rafaelfelipeac.replyradar.core.common.ui.Background
+import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
 import com.rafaelfelipeac.replyradar.core.common.ui.components.fontSizeLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
@@ -111,7 +111,7 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 text = stringResource(string.app_name),
-                style = MaterialTheme.typography.titleLarge.copy(fontSize =fontSizeLarge),
+                style = MaterialTheme.typography.titleLarge.copy(fontSize = fontSizeLarge),
                 color = PrimaryColor
             )
 
@@ -172,41 +172,7 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                             .weight(WEIGHT),
                         state = pagerState
                     ) { pageIndex ->
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(Background),
-                                verticalArrangement = Arrangement.Center
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    when (pageIndex) {
-                                        ON_THE_RADAR_INDEX -> RepliesOnTheRadarScreen(
-                                            state = state,
-                                            onIntent = onIntent
-                                        )
-
-                                        RESOLVED_INDEX -> RepliesResolvedScreen(
-                                            state = state,
-                                            onIntent = onIntent
-                                        )
-
-                                        ARCHIVED_INDEX -> RepliesArchivedScreen(
-                                            state = state,
-                                            onIntent = onIntent
-                                        )
-                                    }
-                                }
-                            }
-                        }
+                        RepliesScreen(pageIndex = pageIndex, state = state, onIntent = onIntent)
                     }
                 }
             }
@@ -217,6 +183,49 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                 onIntent = onIntent,
                 replyBottomSheetState = state.replyBottomSheetState
             )
+        }
+    }
+}
+
+@Composable
+private fun RepliesScreen(
+    pageIndex: Int,
+    state: ReplyListState,
+    onIntent: (ReplyListScreenIntent) -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Background),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                when (pageIndex) {
+                    ON_THE_RADAR_INDEX -> RepliesOnTheRadarScreen(
+                        state = state,
+                        onIntent = onIntent
+                    )
+
+                    RESOLVED_INDEX -> RepliesResolvedScreen(
+                        state = state,
+                        onIntent = onIntent
+                    )
+
+                    ARCHIVED_INDEX -> RepliesArchivedScreen(
+                        state = state,
+                        onIntent = onIntent
+                    )
+                }
+            }
         }
     }
 }
