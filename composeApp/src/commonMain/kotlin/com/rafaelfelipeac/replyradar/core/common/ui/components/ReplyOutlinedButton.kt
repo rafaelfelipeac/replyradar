@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import com.rafaelfelipeac.replyradar.core.common.ui.buttonBorderWidth
 import com.rafaelfelipeac.replyradar.core.common.ui.buttonCornerRadius
 import com.rafaelfelipeac.replyradar.core.common.ui.buttonHeight
-import com.rafaelfelipeac.replyradar.core.common.ui.buttonIconSize
+import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingXSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.buttonBorderColor

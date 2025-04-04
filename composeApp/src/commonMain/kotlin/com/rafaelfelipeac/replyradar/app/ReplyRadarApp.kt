@@ -1,15 +1,16 @@
 package com.rafaelfelipeac.replyradar.app
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.compose.rememberNavController
 import com.rafaelfelipeac.replyradar.app.navigation.AppNavHost
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.ReplyRadarTheme
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.LIGHT
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.SYSTEM
+import com.rafaelfelipeac.replyradar.core.common.ui.theme.isDarkTheme
+import com.rafaelfelipeac.replyradar.features.app.settings.AppSettingsViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 @Preview
@@ -18,15 +19,10 @@ fun ReplyRadarApp(onStatusBarConfig: @Composable (() -> Unit)? = null) {
 
     MaterialTheme {
         val navController = rememberNavController()
-        val theme = LIGHT
+        val appSettingsViewModel = koinViewModel<AppSettingsViewModel>()
+        val currentTheme by appSettingsViewModel.theme.collectAsState()
 
-        val isDarkTheme = when (theme) {
-            LIGHT -> false
-            DARK -> true
-            SYSTEM -> isSystemInDarkTheme()
-        }
-
-        ReplyRadarTheme(darkTheme = isDarkTheme) {
+        ReplyRadarTheme(darkTheme = isDarkTheme(currentTheme)) {
             AppNavHost(navController = navController)
         }
     }

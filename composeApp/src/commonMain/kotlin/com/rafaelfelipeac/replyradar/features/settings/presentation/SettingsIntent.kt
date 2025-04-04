@@ -1,0 +1,7 @@
+package com.rafaelfelipeac.replyradar.features.settings.presentation
+
+import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme
+
+sealed interface SettingsIntent {
+    data class OnSelectTheme(val theme: AppTheme) : SettingsIntent
+}

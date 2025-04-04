@@ -9,4 +9,7 @@ sealed interface Route {
 
     @Serializable
     data object ReplyList : Route
+
+    @Serializable
+    data object Settings : Route
 }

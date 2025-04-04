@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -16,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
@@ -33,7 +35,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
-import com.rafaelfelipeac.replyradar.core.common.ui.components.fontSizeLarge
+import com.rafaelfelipeac.replyradar.core.common.ui.fontSizeLarge
+import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.spacerSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
@@ -43,14 +46,18 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.compo
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesOnTheRadarScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesResolvedScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheet
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import replyradar.composeapp.generated.resources.Res.drawable
 import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.app_name
+import replyradar.composeapp.generated.resources.ic_settings
 import replyradar.composeapp.generated.resources.reply_list_fab_content_description
 import replyradar.composeapp.generated.resources.reply_list_tab_archived
 import replyradar.composeapp.generated.resources.reply_list_tab_on_the_radar
 import replyradar.composeapp.generated.resources.reply_list_tab_resolved
+import replyradar.composeapp.generated.resources.settings_title
 
 private const val WEIGHT = 1f
 private const val PAGER_PAGE_COUNT = 3
@@ -59,19 +66,27 @@ private const val RESOLVED_INDEX = 1
 private const val ARCHIVED_INDEX = 2
 
 @Composable
-fun ReplyListScreenRoot(viewModel: ReplyListViewModel = koinViewModel()) {
+fun ReplyListScreenRoot(
+    viewModel: ReplyListViewModel = koinViewModel(),
+    onSettingsClick: () -> Unit
+) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     ReplyListScreen(
         state = state,
         onIntent = { intent ->
             viewModel.onIntent(intent)
-        }
+        },
+        onSettingsClick = onSettingsClick
     )
 }
 
 @Composable
-fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> Unit) {
+fun ReplyListScreen(
+    state: ReplyListState,
+    onIntent: (ReplyListScreenIntent) -> Unit,
+    onSettingsClick: () -> Unit
+) {
     val pagerState = rememberPagerState { PAGER_PAGE_COUNT }
 
     LaunchedEffect(state.selectedTabIndex) {
@@ -103,15 +118,35 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                 .padding(bottom = paddingValues.calculateBottomPadding())
                 .statusBarsPadding()
         ) {
-            Text(
+            Box(
                 modifier = Modifier
-                    .padding(top = paddingMedium)
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                text = stringResource(string.app_name),
-                style = MaterialTheme.typography.titleLarge.copy(fontSize = fontSizeLarge),
-                color = colorScheme.primary
-            )
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(top = paddingMedium)
+                        .align(Alignment.Center),
+                    textAlign = TextAlign.Center,
+                    text = stringResource(string.app_name),
+                    style = MaterialTheme.typography.titleLarge.copy(fontSize = fontSizeLarge),
+                    color = colorScheme.primary
+                )
+
+                IconButton(
+                    onClick = { onSettingsClick() },
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(top = paddingMedium, end = paddingMedium)
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .size(iconSize),
+                        painter = painterResource(drawable.ic_settings),
+                        contentDescription = stringResource(string.settings_title),
+                        tint = colorScheme.primary
+                    )
+                }
+            }
 
             Surface(
                 modifier = Modifier
