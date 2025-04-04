@@ -3,30 +3,23 @@ package com.rafaelfelipeac.replyradar.core.common.ui.theme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.Gray
-import androidx.compose.ui.graphics.Color.Companion.LightGray
-import androidx.compose.ui.graphics.Color.Companion.White
-
-private val PrimaryColor = Color(0xFF464152)
-private val AccentColor = Color(0xFF7180ac)
 
 private const val UnselectedTabAlpha = 0.5f
 
 val LightColorScheme = lightColorScheme(
-    primary = PrimaryColor,
-    secondary = AccentColor,
-    background = White,
-    onBackground = Black,
-    surface = White,
-    onSurface = Black,
+    primary = Color(0xFF464152),
+    secondary = Color(0xFF7180AC),
+    background = Color(0xFFF7F7F7),
+    onBackground = Color(0xFF1E1E1E),
+    surface = Color(0xFFF7F7F7),
+    onSurface = Color(0xFF1E1E1E),
 )
 
 val LightExtraColors = ReplyRadarColors(
-    textFieldPlaceholderColor = Gray,
-    buttonBorderColor = LightGray,
-    horizontalDividerColor = LightGray,
-    unselectedTabColor = Black.copy(alpha = UnselectedTabAlpha)
+    textFieldPlaceholderColor = Color(0xFF888888),
+    buttonBorderColor = Color(0xFFCCCCCC),
+    horizontalDividerColor = Color(0xFFE0E0E0),
+    unselectedTabColor = Color(0xFF1E1E1E).copy(alpha = UnselectedTabAlpha)
 )
 
 val DarkColorScheme = darkColorScheme(
