@@ -1,9 +1,9 @@
 package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet
 
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
-import com.rafaelfelipeac.replyradar.core.common.ui.Background
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnAddReply
@@ -23,7 +23,7 @@ fun ReplyBottomSheet(
 ) {
     ModalBottomSheet(
         onDismissRequest = { onIntent(OnDismissBottomSheet) },
-        containerColor = Background,
+        containerColor = colorScheme.background,
         dragHandle = null,
         shape = ReplyRoundedCorner(onlyTopCorners = true)
     ) {

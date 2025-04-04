@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TabRow
@@ -31,9 +32,6 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rafaelfelipeac.replyradar.core.common.ui.AccentColor
-import com.rafaelfelipeac.replyradar.core.common.ui.Background
-import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
 import com.rafaelfelipeac.replyradar.core.common.ui.components.fontSizeLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
@@ -85,16 +83,16 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
     }
 
     Scaffold(
-        containerColor = Background,
+        containerColor = colorScheme.background,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { onIntent(OnAddReplyClick) },
-                containerColor = AccentColor
+                containerColor = colorScheme.secondary
             ) {
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription = stringResource(string.reply_list_fab_content_description),
-                    tint = Background
+                    tint = colorScheme.background
                 )
             }
         }
@@ -112,14 +110,14 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                 textAlign = TextAlign.Center,
                 text = stringResource(string.app_name),
                 style = MaterialTheme.typography.titleLarge.copy(fontSize = fontSizeLarge),
-                color = PrimaryColor
+                color = colorScheme.primary
             )
 
             Surface(
                 modifier = Modifier
                     .weight(WEIGHT)
                     .fillMaxWidth(),
-                color = Background
+                color = colorScheme.background
             ) {
                 Column(
                     horizontalAlignment = CenterHorizontally
@@ -133,12 +131,12 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                             )
                             .fillMaxWidth(),
                         selectedTabIndex = state.selectedTabIndex,
-                        containerColor = Background,
+                        containerColor = colorScheme.background,
                         indicator = { tabPositions ->
                             TabRowDefaults.SecondaryIndicator(
                                 modifier = Modifier
                                     .tabIndicatorOffset(tabPositions[state.selectedTabIndex]),
-                                color = AccentColor
+                                color = colorScheme.secondary
                             )
                         }
                     ) {
@@ -201,7 +199,7 @@ private fun RepliesScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Background),
+                .background(colorScheme.background),
             verticalArrangement = Arrangement.Center
         ) {
             Box(

@@ -8,12 +8,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import com.rafaelfelipeac.replyradar.core.common.ui.HorizontalDividerColor
 import com.rafaelfelipeac.replyradar.core.common.ui.listDividerThickness
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
+import com.rafaelfelipeac.replyradar.core.common.ui.theme.horizontalDividerColor
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 
 @Composable
@@ -43,7 +44,7 @@ fun ReplyList(
                         modifier = Modifier
                             .padding(paddingMedium),
                         thickness = listDividerThickness,
-                        color = HorizontalDividerColor
+                        color = colorScheme.horizontalDividerColor
                     )
                 } else {
                     Spacer(
