@@ -45,7 +45,7 @@ fun ReplyOutlinedButton(text: String, icon: DrawableResource? = null, onClick: (
         icon?.let { icon ->
             Icon(
                 modifier = Modifier
-                    .size(buttonIconSize),
+                    .size(iconSize),
                 painter = painterResource(icon),
                 tint = colorScheme.primary,
                 contentDescription = text

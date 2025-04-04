@@ -30,17 +30,17 @@ val LightExtraColors = ReplyRadarColors(
 )
 
 val DarkColorScheme = darkColorScheme(
-    primary = Black,
-    secondary = Black,
-    background = Black,
-    onBackground = Black,
-    surface = Black,
-    onSurface = Black,
+    primary = Color(0xFFB3B8EF),
+    secondary = Color(0xFF9FA8DA),
+    background = Color(0xFF1E1E1E),
+    onBackground = Color(0xFFEDEDED),
+    surface = Color(0xFF1E1E1E),
+    onSurface = Color(0xFFEDEDED),
 )
 
 val DarkExtraColors = ReplyRadarColors(
-    textFieldPlaceholderColor = Black,
-    buttonBorderColor = Black,
-    horizontalDividerColor = Black,
-    unselectedTabColor = Black.copy(alpha = UnselectedTabAlpha)
+    textFieldPlaceholderColor = Color(0xFFAAAAAA),
+    buttonBorderColor = Color(0xFF444444),
+    horizontalDividerColor = Color(0xFF333333),
+    unselectedTabColor = Color(0xFFEDEDED).copy(alpha = UnselectedTabAlpha)
 )
