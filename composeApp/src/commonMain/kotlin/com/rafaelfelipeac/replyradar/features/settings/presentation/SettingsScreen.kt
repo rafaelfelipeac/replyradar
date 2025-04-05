@@ -1,5 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.settings.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,9 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -32,6 +36,7 @@ import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingXSmall
+import com.rafaelfelipeac.replyradar.core.common.ui.settingsAppVersionOffset
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.LIGHT
@@ -70,16 +75,23 @@ fun SettingsScreen(
                 .padding(paddingMedium)
                 .fillMaxSize()
         ) {
-            Column {
+            val scrollState = rememberScrollState()
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(scrollState)
+                    .padding(bottom = settingsAppVersionOffset)
+            ) {
                 Theme(state = state, viewModel = viewModel)
                 Spacer(modifier = Modifier.height(paddingMedium))
                 Language(state = state, viewModel = viewModel)
+                HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
             }
 
             AppVersionFooter(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = paddingMedium)
             )
         }
     }
@@ -216,9 +228,19 @@ private fun getLanguageLabel(language: AppLanguage) =
 
 @Composable
 fun AppVersionFooter(modifier: Modifier = Modifier) {
-    Text(
-        modifier = modifier,
-        text = "${LocalReplyRadarStrings.current.settingsAppVersion} ${getAppVersion()}",
-        style = MaterialTheme.typography.bodySmall,
-    )
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        HorizontalDivider(modifier = Modifier.padding(bottom = paddingMedium))
+
+        Text(
+            text = "${LocalReplyRadarStrings.current.settingsAppVersion} ${getAppVersion()}",
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(vertical = paddingSmall)
+        )
+    }
 }

@@ -31,3 +31,5 @@ val listDividerThickness = 0.5.dp
 
 val listItemToggleSize = 24.dp
 val listItemToggleBorderWidth = 1.dp
+
+val settingsAppVersionOffset = 64.dp
