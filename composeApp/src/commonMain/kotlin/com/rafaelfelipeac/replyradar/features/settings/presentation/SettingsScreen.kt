@@ -1,9 +1,11 @@
 package com.rafaelfelipeac.replyradar.features.settings.presentation
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -34,6 +36,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.LIGHT
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.SYSTEM
+import com.rafaelfelipeac.replyradar.core.util.getAppVersion
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectLanguage
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectTheme
 import org.koin.compose.viewmodel.koinViewModel
@@ -61,14 +64,23 @@ fun SettingsScreen(
             )
         }
     ) { paddingValues ->
-        Column(
+        Box(
             modifier = Modifier
                 .padding(paddingValues)
                 .padding(paddingMedium)
+                .fillMaxSize()
         ) {
-            Theme(state = state, viewModel = viewModel)
-            Spacer(modifier = Modifier.height(paddingMedium))
-            Language(state = state, viewModel = viewModel)
+            Column {
+                Theme(state = state, viewModel = viewModel)
+                Spacer(modifier = Modifier.height(paddingMedium))
+                Language(state = state, viewModel = viewModel)
+            }
+
+            AppVersionFooter(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = paddingMedium)
+            )
         }
     }
 }
@@ -201,3 +213,12 @@ private fun getLanguageLabel(language: AppLanguage) =
         PORTUGUESE -> LocalReplyRadarStrings.current.settingsLanguagePortuguese
         AppLanguage.SYSTEM -> LocalReplyRadarStrings.current.settingsLanguageSystem
     }
+
+@Composable
+fun AppVersionFooter(modifier: Modifier = Modifier) {
+    Text(
+        modifier = modifier,
+        text = "${LocalReplyRadarStrings.current.settingsAppVersion} ${getAppVersion()}",
+        style = MaterialTheme.typography.bodySmall,
+    )
+}

@@ -36,4 +36,6 @@ object StringsPt : Strings {
     override val settingsLanguageEnglish = "Inglês"
     override val settingsLanguagePortuguese = "Português"
     override val settingsLanguageSystem = "Usar padrão do sistema"
+
+    override val settingsAppVersion = "Reply Radar - Versão:"
 }

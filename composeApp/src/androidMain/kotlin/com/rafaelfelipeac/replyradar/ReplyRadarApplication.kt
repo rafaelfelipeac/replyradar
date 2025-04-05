@@ -8,9 +8,15 @@ class ReplyRadarApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
 
         initKoin {
             androidContext(this@ReplyRadarApplication)
         }
+    }
+
+    companion object {
+        lateinit var instance: ReplyRadarApplication
+            private set
     }
 }

@@ -30,10 +30,12 @@ object StringsEn : Strings {
     override val settingsTheme = "Theme"
     override val settingsThemeLight = "Light"
     override val settingsThemeDark = "Dark"
-    override val settingsThemeSystem = "System"
+    override val settingsThemeSystem = "Use system default"
 
     override val settingsLanguage = "Language"
     override val settingsLanguageEnglish = "English"
     override val settingsLanguagePortuguese = "Portuguese"
-    override val settingsLanguageSystem = "System"
+    override val settingsLanguageSystem = "Use system default"
+
+    override val settingsAppVersion = "Reply Radar - Version:"
 }

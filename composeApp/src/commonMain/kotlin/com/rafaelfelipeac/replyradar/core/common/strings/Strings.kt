@@ -36,4 +36,6 @@ interface Strings {
     val settingsLanguageEnglish: String
     val settingsLanguagePortuguese: String
     val settingsLanguageSystem: String
+
+    val settingsAppVersion: String
 }
