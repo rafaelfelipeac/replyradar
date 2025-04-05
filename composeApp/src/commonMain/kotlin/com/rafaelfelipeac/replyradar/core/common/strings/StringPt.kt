@@ -30,10 +30,10 @@ object StringsPt : Strings {
     override val settingsTheme = "Tema"
     override val settingsThemeLight = "Claro"
     override val settingsThemeDark = "Escuro"
-    override val settingsThemeSystem = "Sistema"
+    override val settingsThemeSystem = "Usar padrão do sistema"
 
     override val settingsLanguage = "Idioma"
     override val settingsLanguageEnglish = "Inglês"
     override val settingsLanguagePortuguese = "Português"
-    override val settingsLanguageSystem = "Sistema"
+    override val settingsLanguageSystem = "Usar padrão do sistema"
 }

@@ -67,6 +67,7 @@ fun SettingsScreen(
                 .padding(paddingMedium)
         ) {
             Theme(state = state, viewModel = viewModel)
+            Spacer(modifier = Modifier.height(paddingMedium))
             Language(state = state, viewModel = viewModel)
         }
     }
