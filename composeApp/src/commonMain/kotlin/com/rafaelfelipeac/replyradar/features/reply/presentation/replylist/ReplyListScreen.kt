@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
 import com.rafaelfelipeac.replyradar.core.common.ui.fontSizeLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
@@ -47,17 +48,9 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.compo
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesResolvedScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheet
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import replyradar.composeapp.generated.resources.Res.drawable
-import replyradar.composeapp.generated.resources.Res.string
-import replyradar.composeapp.generated.resources.app_name
 import replyradar.composeapp.generated.resources.ic_settings
-import replyradar.composeapp.generated.resources.reply_list_fab_content_description
-import replyradar.composeapp.generated.resources.reply_list_tab_archived
-import replyradar.composeapp.generated.resources.reply_list_tab_on_the_radar
-import replyradar.composeapp.generated.resources.reply_list_tab_resolved
-import replyradar.composeapp.generated.resources.settings_title
 
 private const val WEIGHT = 1f
 private const val PAGER_PAGE_COUNT = 3
@@ -106,7 +99,7 @@ fun ReplyListScreen(
             ) {
                 Icon(
                     imageVector = Icons.Filled.Add,
-                    contentDescription = stringResource(string.reply_list_fab_content_description),
+                    contentDescription = LocalReplyRadarStrings.current.replyListFabContentDescription,
                     tint = colorScheme.background
                 )
             }
@@ -127,7 +120,7 @@ fun ReplyListScreen(
                         .padding(top = paddingMedium)
                         .align(Alignment.Center),
                     textAlign = TextAlign.Center,
-                    text = stringResource(string.app_name),
+                    text = LocalReplyRadarStrings.current.appName,
                     style = MaterialTheme.typography.titleLarge.copy(fontSize = fontSizeLarge),
                     color = colorScheme.primary
                 )
@@ -142,7 +135,7 @@ fun ReplyListScreen(
                         modifier = Modifier
                             .size(iconSize),
                         painter = painterResource(drawable.ic_settings),
-                        contentDescription = stringResource(string.settings_title),
+                        contentDescription = LocalReplyRadarStrings.current.settingsTitle,
                         tint = colorScheme.primary
                     )
                 }
@@ -179,21 +172,21 @@ fun ReplyListScreen(
                             modifier = Modifier.weight(WEIGHT),
                             selected = state.selectedTabIndex == ON_THE_RADAR_INDEX,
                             onClick = { onIntent(OnTabSelected(ON_THE_RADAR_INDEX)) },
-                            text = stringResource(string.reply_list_tab_on_the_radar)
+                            text =LocalReplyRadarStrings.current.replyListTabOnTheRadar
                         )
 
                         ReplyTab(
                             modifier = Modifier.weight(WEIGHT),
                             selected = state.selectedTabIndex == RESOLVED_INDEX,
                             onClick = { onIntent(OnTabSelected(RESOLVED_INDEX)) },
-                            text = stringResource(string.reply_list_tab_resolved)
+                            text = LocalReplyRadarStrings.current.replyListTabResolved
                         )
 
                         ReplyTab(
                             modifier = Modifier.weight(WEIGHT),
                             selected = state.selectedTabIndex == ARCHIVED_INDEX,
                             onClick = { onIntent(OnTabSelected(ARCHIVED_INDEX)) },
-                            text = stringResource(string.reply_list_tab_archived)
+                            text = LocalReplyRadarStrings.current.replyListTabArchived
                         )
                     }
 

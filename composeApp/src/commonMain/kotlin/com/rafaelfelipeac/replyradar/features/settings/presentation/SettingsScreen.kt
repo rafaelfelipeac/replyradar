@@ -23,6 +23,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage
+import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.ENGLISH
+import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.PORTUGUESE
+import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingXSmall
@@ -30,16 +34,9 @@ import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.LIGHT
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.SYSTEM
+import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectLanguage
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectTheme
-import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import replyradar.composeapp.generated.resources.Res.string
-import replyradar.composeapp.generated.resources.settings_back_button
-import replyradar.composeapp.generated.resources.settings_theme
-import replyradar.composeapp.generated.resources.settings_theme_dark
-import replyradar.composeapp.generated.resources.settings_theme_light
-import replyradar.composeapp.generated.resources.settings_theme_system
-import replyradar.composeapp.generated.resources.settings_title
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,12 +49,12 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = stringResource(string.settings_title)) },
+                title = { Text(text = LocalReplyRadarStrings.current.settingsTitle) },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription = stringResource(string.settings_back_button)
+                            contentDescription = LocalReplyRadarStrings.current.settingsBackButton
                         )
                     }
                 }
@@ -69,19 +66,49 @@ fun SettingsScreen(
                 .padding(paddingValues)
                 .padding(paddingMedium)
         ) {
-            Text(
-                text = stringResource(string.settings_theme),
-                style = MaterialTheme.typography.titleMedium
-            )
+            Theme(state, viewModel)
 
-            Spacer(modifier = Modifier.height(paddingXSmall))
-
-            ThemeOptions(
-                state = state,
-                onThemeSelected = { theme -> viewModel.onIntent(OnSelectTheme(theme)) }
-            )
+            Language(state, viewModel)
         }
     }
+}
+
+@Composable
+private fun Theme(
+    state: SettingsState,
+    viewModel: SettingsViewModel
+) {
+    Text(
+        text = LocalReplyRadarStrings.current.settingsTheme,
+        style = MaterialTheme.typography.titleMedium
+    )
+
+    Spacer(modifier = Modifier.height(paddingXSmall))
+
+    ThemeOptions(
+        state = state,
+        onThemeSelected = { theme -> viewModel.onIntent(OnSelectTheme(theme)) }
+    )
+}
+
+@Composable
+private fun Language(
+    state: SettingsState,
+    viewModel: SettingsViewModel
+) {
+    Text(
+        text = LocalReplyRadarStrings.current.settingsLanguage,
+        style = MaterialTheme.typography.titleMedium
+    )
+
+    Spacer(modifier = Modifier.height(paddingXSmall))
+
+    LanguageOptions(
+        state = state,
+        onLanguageSelected = { language ->
+            viewModel.onIntent(OnSelectLanguage(language))
+        }
+    )
 }
 
 @Composable
@@ -129,7 +156,48 @@ private fun ThemeOption(
 @Composable
 private fun getThemeOptionLabel(theme: AppTheme) =
     when (theme) {
-        LIGHT -> stringResource(string.settings_theme_light)
-        DARK -> stringResource(string.settings_theme_dark)
-        SYSTEM -> stringResource(string.settings_theme_system)
+        LIGHT -> LocalReplyRadarStrings.current.settingsThemeLight
+        DARK -> LocalReplyRadarStrings.current.settingsThemeDark
+        SYSTEM -> LocalReplyRadarStrings.current.settingsThemeSystem
+    }
+
+@Composable
+private fun LanguageOptions(
+    state: SettingsState,
+    onLanguageSelected: (AppLanguage) -> Unit
+) {
+    LanguageOption(ENGLISH, state.language, onLanguageSelected)
+    LanguageOption(PORTUGUESE, state.language, onLanguageSelected)
+    LanguageOption(AppLanguage.SYSTEM, state.language, onLanguageSelected)
+}
+
+@Composable
+private fun LanguageOption(
+    language: AppLanguage,
+    selectedLanguage: AppLanguage,
+    onLanguageSelected: (AppLanguage) -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onLanguageSelected(language) }
+    ) {
+        RadioButton(
+            selected = language == selectedLanguage,
+            onClick = { onLanguageSelected(language) }
+        )
+
+        Spacer(modifier = Modifier.width(paddingSmall))
+
+        Text(text = getLanguageLabel(language))
+    }
+}
+
+@Composable
+private fun getLanguageLabel(language: AppLanguage) =
+    when (language) {
+        ENGLISH -> LocalReplyRadarStrings.current.settingsLanguageEnglish
+        PORTUGUESE -> LocalReplyRadarStrings.current.settingsLanguagePortuguese
+        AppLanguage.SYSTEM -> LocalReplyRadarStrings.current.settingsLanguageSystem
     }

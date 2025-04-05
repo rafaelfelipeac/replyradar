@@ -23,16 +23,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType.Companion.LongPress
 import androidx.compose.ui.platform.LocalHapticFeedback
+import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.listItemToggleBorderWidth
 import com.rafaelfelipeac.replyradar.core.common.ui.listItemToggleSize
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import replyradar.composeapp.generated.resources.Res.drawable
-import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.ic_check
-import replyradar.composeapp.generated.resources.reply_list_item_resolve
 
 @Composable
 fun ReplyToggle(modifier: Modifier = Modifier, isResolved: Boolean, onToggle: () -> Unit) {
@@ -75,7 +73,7 @@ fun ReplyToggle(modifier: Modifier = Modifier, isResolved: Boolean, onToggle: ()
     ) {
         Icon(
             painter = painterResource(drawable.ic_check),
-            contentDescription = stringResource(string.reply_list_item_resolve),
+            contentDescription = LocalReplyRadarStrings.current.replyListPlaceholderResolved,
             tint = colorScheme.primary.copy(alpha = checkIconAlpha),
             modifier = Modifier
                 .size(iconSize)

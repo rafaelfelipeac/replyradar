@@ -22,6 +22,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.rafaelfelipeac.replyradar.core.AppConstants.EMPTY
+import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyButton
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyOutlinedButton
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextField
@@ -30,23 +31,12 @@ import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
-import org.jetbrains.compose.resources.stringResource
 import replyradar.composeapp.generated.resources.Res.drawable
-import replyradar.composeapp.generated.resources.Res.string
 import replyradar.composeapp.generated.resources.ic_archive
 import replyradar.composeapp.generated.resources.ic_check
 import replyradar.composeapp.generated.resources.ic_delete
 import replyradar.composeapp.generated.resources.ic_reopen
 import replyradar.composeapp.generated.resources.ic_unarchive
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_add
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_archive
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_delete
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_name
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_reopen
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_resolve
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_save
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_subject
-import replyradar.composeapp.generated.resources.reply_list_bottom_sheet_unarchive
 
 private const val WEIGHT = 1f
 
@@ -82,14 +72,14 @@ fun ReplyBottomSheetContent(
                     .padding(top = paddingSmall)
                     .focusRequester(focusRequester),
                 value = name,
-                placeholder = stringResource(string.reply_list_bottom_sheet_name),
+                placeholder = LocalReplyRadarStrings.current.replyListBottomSheetName,
                 onValueChange = { name = it },
                 textSize = Large
             )
 
             ReplyTextField(
                 value = subject,
-                placeholder = stringResource(string.reply_list_bottom_sheet_subject),
+                placeholder = LocalReplyRadarStrings.current.replyListBottomSheetSubject,
                 onValueChange = { subject = it }
             )
 
@@ -134,18 +124,16 @@ fun ReplyBottomSheetContent(
                         }
                     }
                 }
-
                 ReplyButton(
                     modifier = Modifier
                         .wrapContentWidth()
                         .align(Alignment.CenterVertically),
-                    text = stringResource(
+                    text =
                         if (state.reply == null) {
-                            string.reply_list_bottom_sheet_add
+                            LocalReplyRadarStrings.current.replyListBottomSheetAdd
                         } else {
-                            string.reply_list_bottom_sheet_save
-                        }
-                    ),
+                            LocalReplyRadarStrings.current.replyListBottomSheetSave
+                        },
                     onClick = {
                         if (state.reply != null) {
                             onComplete(
@@ -179,13 +167,13 @@ private fun ActiveStateButtons(
     onResolve: (Reply) -> Unit
 ) {
     ReplyOutlinedButton(
-        text = stringResource(string.reply_list_bottom_sheet_resolve),
+        text = LocalReplyRadarStrings.current.replyListBottomSheetResolve,
         icon = drawable.ic_check,
         onClick = { onResolve(reply) }
     )
 
     ReplyOutlinedButton(
-        text = stringResource(string.reply_list_bottom_sheet_archive),
+        text = LocalReplyRadarStrings.current.replyListBottomSheetArchive,
         icon = drawable.ic_archive,
         onClick = { onArchive(reply) }
     )
@@ -198,13 +186,13 @@ private fun ResolvedStateButtons(
     onResolve: (Reply) -> Unit
 ) {
     ReplyOutlinedButton(
-        text = stringResource(string.reply_list_bottom_sheet_reopen),
+        text = LocalReplyRadarStrings.current.replyListBottomSheetReopen,
         icon = drawable.ic_reopen,
         onClick = { onResolve(reply) }
     )
 
     ReplyOutlinedButton(
-        text = stringResource(string.reply_list_bottom_sheet_archive),
+        text = LocalReplyRadarStrings.current.replyListBottomSheetArchive,
         icon = drawable.ic_archive,
         onClick = { onArchive(reply) }
     )
@@ -217,13 +205,13 @@ private fun ArchivedStateButton(
     onDelete: (Reply) -> Unit
 ) {
     ReplyOutlinedButton(
-        text = stringResource(string.reply_list_bottom_sheet_unarchive),
+        text = LocalReplyRadarStrings.current.replyListBottomSheetUnarchive,
         icon = drawable.ic_unarchive,
         onClick = { onArchive(reply) }
     )
 
     ReplyOutlinedButton(
-        text = stringResource(string.reply_list_bottom_sheet_delete),
+        text = LocalReplyRadarStrings.current.replyListBottomSheetDelete,
         icon = drawable.ic_delete,
         onClick = { onDelete(reply) }
     )
