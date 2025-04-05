@@ -240,7 +240,7 @@ fun AppVersionFooter(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(vertical = paddingSmall)
+                .padding(top = paddingMedium)
         )
     }
 }
