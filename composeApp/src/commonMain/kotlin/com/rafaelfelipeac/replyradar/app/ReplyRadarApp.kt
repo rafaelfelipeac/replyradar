@@ -36,10 +36,7 @@ fun ReplyRadarApp(
         onSystemBarsConfigured?.invoke(isDark, backgroundColor)
     }
 
-    LaunchedEffect(language) {
-        StringsProvider.setLanguage(language)
-    }
-
+    StringsProvider.setLanguage(language)
     val strings = StringsProvider.current
 
     CompositionLocalProvider(

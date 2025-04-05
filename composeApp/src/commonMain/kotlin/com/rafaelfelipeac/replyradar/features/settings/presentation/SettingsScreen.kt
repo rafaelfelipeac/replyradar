@@ -66,9 +66,8 @@ fun SettingsScreen(
                 .padding(paddingValues)
                 .padding(paddingMedium)
         ) {
-            Theme(state, viewModel)
-
-            Language(state, viewModel)
+            Theme(state = state, viewModel = viewModel)
+            Language(state = state, viewModel = viewModel)
         }
     }
 }
