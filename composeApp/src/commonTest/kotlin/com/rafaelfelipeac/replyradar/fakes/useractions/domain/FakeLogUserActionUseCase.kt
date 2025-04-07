@@ -5,13 +5,13 @@ import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActio
 import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCase
 
 class FakeLogUserActionUseCase : LogUserActionUseCase {
-    val loggedActions = mutableListOf<Pair<UserActionType, Long?>>()
+    val loggedActions = mutableListOf<Triple<UserActionType, UserActionTargetType, Long?>>()
 
     override suspend fun logUserAction(
         actionType: UserActionType,
         targetType: UserActionTargetType,
         targetId: Long?
     ) {
-        loggedActions += (actionType to targetId)
+        loggedActions.add(Triple(actionType, targetType, targetId))
     }
 }

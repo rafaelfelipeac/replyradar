@@ -17,11 +17,9 @@ import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActio
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
 import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
@@ -33,12 +31,19 @@ class SettingsViewModel(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SettingsState())
-    val state: StateFlow<SettingsState> = combine(
-        getThemeUseCase.getTheme(),
-        getLanguageUseCase.getLanguage()
-    ) { theme, language ->
-        SettingsState(theme = theme, language = language)
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, _state.value)
+
+    val state: StateFlow<SettingsState> = _state
+
+    init {
+        viewModelScope.launch {
+            val theme = getThemeUseCase.getTheme().first()
+            val language = getLanguageUseCase.getLanguage().first()
+            _state.value = _state.value.copy(
+                theme = theme,
+                language = language
+            )
+        }
+    }
 
     fun onIntent(intent: SettingsIntent) {
         when (intent) {
