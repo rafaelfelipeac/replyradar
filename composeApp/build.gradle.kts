@@ -71,6 +71,7 @@ kotlin {
             api(libs.koin.core)
             implementation(libs.bundles.ktor)
             implementation(libs.bundles.coil)
+            implementation(libs.datetime)
         }
 
         commonTest.dependencies {

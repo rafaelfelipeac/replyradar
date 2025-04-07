@@ -12,6 +12,7 @@ uiAndroid = "1.7.8"
 accompanist = "0.34.0"
 navigationCompose = "2.8.0-alpha10"
 kotlinx-coroutines = "1.9.0"
+kotlinx-datetime = "0.5.0"
 coroutines = "1.7.3"
 koin = "4.0.0"
 ktor = "3.0.0"
@@ -37,6 +38,8 @@ jetbrains-compose-navigation = { group = "org.jetbrains.androidx.navigation", na
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSerialization" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+
+datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime"}
 
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
