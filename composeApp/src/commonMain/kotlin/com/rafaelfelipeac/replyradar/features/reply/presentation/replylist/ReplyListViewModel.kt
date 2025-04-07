@@ -97,7 +97,9 @@ class ReplyListViewModel(
                 }
             }
 
-            is OnReplyToggle -> { onToggleResolveReply(reply = intent.reply) }
+            is OnReplyToggle -> {
+                onToggleResolveReply(reply = intent.reply)
+            }
 
             is OnTabSelected -> {
                 updateState {
@@ -145,19 +147,25 @@ class ReplyListViewModel(
     }
 
     private fun observeResolvedReplies() = viewModelScope.launch {
-        getRepliesUseCase
-            .getReplies(isResolved = true)
-            .collect { resolvedReplies ->
-                updateState { copy(resolvedReplies = resolvedReplies) }
-            }
+        try {
+            getRepliesUseCase
+                .getReplies(isResolved = true)
+                .collect { resolvedReplies ->
+                    updateState { copy(resolvedReplies = resolvedReplies) }
+                }
+        } catch (_: Exception) {
+        }
     }
 
     private fun observeArchivedReplies() = viewModelScope.launch {
-        getRepliesUseCase
-            .getReplies(isArchived = true)
-            .collect { archivedReplies ->
-                updateState { copy(archivedReplies = archivedReplies) }
-            }
+        try {
+            getRepliesUseCase
+                .getReplies(isArchived = true)
+                .collect { archivedReplies ->
+                    updateState { copy(archivedReplies = archivedReplies) }
+                }
+        } catch (_: Exception) {
+        }
     }
 
     private fun onUpsertReply(reply: Reply, actionType: UserActionType) = viewModelScope.launch {

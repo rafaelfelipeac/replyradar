@@ -24,12 +24,9 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyClick
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListViewModel
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListViewModel.Companion.ERROR_GET_REPLIES
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.drop
@@ -37,6 +34,10 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ReplyListViewModelTest {
@@ -192,6 +193,58 @@ class ReplyListViewModelTest {
 
             val updatedState = awaitItem()
             assertEquals(null, updatedState.replyBottomSheetState)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `ViewModel should emit replies resolved-replies and archived-replies on start`() = runTest {
+        val reply = sampleReply
+        val resolved = reply.copy(id = 2L)
+        val archived = reply.copy(id = 3L)
+
+        getRepliesUseCase.replies = listOf(reply)
+        getRepliesUseCase.resolvedReplies = listOf(resolved)
+        getRepliesUseCase.archivedReplies = listOf(archived)
+
+        val viewModel = ReplyListViewModel(
+            upsertReplyUseCase = upsertReplyUseCase,
+            toggleResolveReplyUseCase = toggleResolveReplyUseCase,
+            toggleArchiveReplyUseCase = toggleArchiveReplyUseCase,
+            deleteReplyUseCase = deleteReplyUseCase,
+            getRepliesUseCase = getRepliesUseCase,
+            logUserActionUseCase = logUserActionUseCase,
+            dispatcher = testDispatcher
+        )
+
+        viewModel.state.test {
+            val state = awaitItem()
+
+            assertEquals(listOf(reply), state.replies)
+            assertEquals(listOf(resolved), state.resolvedReplies)
+            assertEquals(listOf(archived), state.archivedReplies)
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `ViewModel should emit error message if getReplies fails`() = runTest {
+        getRepliesUseCase.shouldThrow = true
+
+        val viewModel = ReplyListViewModel(
+            upsertReplyUseCase = upsertReplyUseCase,
+            toggleResolveReplyUseCase = toggleResolveReplyUseCase,
+            toggleArchiveReplyUseCase = toggleArchiveReplyUseCase,
+            deleteReplyUseCase = deleteReplyUseCase,
+            getRepliesUseCase = getRepliesUseCase,
+            logUserActionUseCase = logUserActionUseCase,
+            dispatcher = testDispatcher
+        )
+
+        viewModel.state.test {
+            val state = awaitItem()
+            assertEquals(ERROR_GET_REPLIES, state.errorMessage)
             cancelAndIgnoreRemainingEvents()
         }
     }
