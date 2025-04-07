@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.font.FontWeight.Companion.Normal
@@ -41,6 +42,7 @@ fun ReplyTextField(
         value = value,
         onValueChange = onValueChange,
         singleLine = true,
+        cursorBrush = SolidColor(colorScheme.primary),
         textStyle = TextStyle(
             fontSize = textSize.value,
             color = colorScheme.primary,
