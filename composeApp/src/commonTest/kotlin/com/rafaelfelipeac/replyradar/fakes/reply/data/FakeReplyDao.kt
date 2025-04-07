@@ -38,4 +38,16 @@ class FakeReplyDao(
     override fun getArchivedReplies() = flowOf(archived)
 
     override fun getActiveReplies() = flowOf(active)
+
+    fun setReplyName(id: Long, name: String) {
+        insertedReplies.removeAll { it.id == id }
+        insertedReplies += ReplyEntity(
+            id = id,
+            name = name,
+            subject = "",
+            isResolved = false,
+            isArchived = false,
+            createdAt = 0L
+        )
+    }
 }
