@@ -39,21 +39,6 @@ class SettingsViewModel(
         }
     }
 
-    private fun getTheme() = viewModelScope.launch {
-        updateState { copy(isLoading = true) }
-
-        getThemeUseCase
-            .getTheme()
-            .collect { theme ->
-                updateState {
-                    copy(
-                        isLoading = false,
-                        theme = theme
-                    )
-                }
-            }
-    }
-
     private fun onSelectTheme(theme: AppTheme) = viewModelScope.launch {
         updateState { copy(isLoading = true) }
 

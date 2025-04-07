@@ -16,3 +16,6 @@ val ColorScheme.textFieldPlaceholderColor: Color
 
 val ColorScheme.unselectedTabColor: Color
     @Composable get() = colors.unselectedTabColor
+
+val ColorScheme.toolbarIconsColor: Color
+    @Composable get() = colors.toolbarIconsColor

@@ -1,5 +1,6 @@
 package com.rafaelfelipeac.replyradar.di
 
+import com.rafaelfelipeac.replyradar.features.activitylog.di.activityLogModule
 import com.rafaelfelipeac.replyradar.features.app.di.appModule
 import com.rafaelfelipeac.replyradar.features.reply.di.replyModule
 import com.rafaelfelipeac.replyradar.features.settings.di.settingsModule
@@ -14,9 +15,10 @@ fun initKoin(config: KoinAppDeclaration? = null) {
             sharedModule,
             platformModule,
             appModule,
+            userActionModule,
             replyModule,
             settingsModule,
-            userActionModule
+            activityLogModule
         )
     }
 }

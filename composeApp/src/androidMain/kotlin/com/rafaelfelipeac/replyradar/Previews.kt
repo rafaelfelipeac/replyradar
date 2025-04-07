@@ -23,6 +23,7 @@ private fun ReplyListScreenPreview() {
             replies = replies
         ),
         onIntent = {},
-        onSettingsClick = {}
+        onSettingsClick = {},
+        onActivityLogClick = {}
     )
 }

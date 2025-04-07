@@ -1,6 +1,7 @@
 package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,6 +42,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.spacerSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
+import com.rafaelfelipeac.replyradar.core.common.ui.theme.toolbarIconsColor
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesArchivedScreen
@@ -61,7 +63,8 @@ private const val ARCHIVED_INDEX = 2
 @Composable
 fun ReplyListScreenRoot(
     viewModel: ReplyListViewModel = koinViewModel(),
-    onSettingsClick: () -> Unit
+    onSettingsClick: () -> Unit,
+    onActivityLogClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -70,7 +73,8 @@ fun ReplyListScreenRoot(
         onIntent = { intent ->
             viewModel.onIntent(intent)
         },
-        onSettingsClick = onSettingsClick
+        onSettingsClick = onSettingsClick,
+        onActivityLogClick = onActivityLogClick
     )
 }
 
@@ -78,7 +82,8 @@ fun ReplyListScreenRoot(
 fun ReplyListScreen(
     state: ReplyListState,
     onIntent: (ReplyListScreenIntent) -> Unit,
-    onSettingsClick: () -> Unit
+    onSettingsClick: () -> Unit,
+    onActivityLogClick: () -> Unit
 ) {
     val pagerState = rememberPagerState { PAGER_PAGE_COUNT }
 
@@ -117,12 +122,23 @@ fun ReplyListScreen(
             ) {
                 Text(
                     modifier = Modifier
+                        .padding(top = paddingMedium, start = paddingMedium)
+                        .align(Alignment.CenterStart)
+                        .clickable { onActivityLogClick() },
+                    textAlign = TextAlign.Center,
+                    text = LocalReplyRadarStrings.current.replyListActivityLog,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = colorScheme.toolbarIconsColor
+                )
+
+                Text(
+                    modifier = Modifier
                         .padding(top = paddingMedium)
                         .align(Alignment.Center),
                     textAlign = TextAlign.Center,
                     text = LocalReplyRadarStrings.current.appName,
                     style = MaterialTheme.typography.titleLarge.copy(fontSize = fontSizeLarge),
-                    color = colorScheme.primary
+                    color = colorScheme.onBackground
                 )
 
                 IconButton(
@@ -136,7 +152,7 @@ fun ReplyListScreen(
                             .size(iconSize),
                         painter = painterResource(drawable.ic_settings),
                         contentDescription = LocalReplyRadarStrings.current.settingsTitle,
-                        tint = colorScheme.primary
+                        tint = colorScheme.toolbarIconsColor
                     )
                 }
             }
