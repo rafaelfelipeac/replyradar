@@ -1,12 +1,11 @@
 package com.rafaelfelipeac.replyradar.features.settings.domain
 
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
 import com.rafaelfelipeac.replyradar.fakes.settings.data.FakeSettingsRepository
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.SetThemeUseCaseImpl
-import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlinx.coroutines.test.runTest
 
 class SetThemeUseCaseTest {
 

@@ -8,10 +8,13 @@ object StringsEn : Strings {
     override val replyListTabOnTheRadar = "On the Radar"
     override val replyListTabResolved = "Resolved"
     override val replyListTabArchived = "Archived"
-    override val replyListPlaceholderOnTheRadar = "Nothing on the radar for now!\nHow about adding something?"
+    override val replyListPlaceholderOnTheRadar =
+        "Nothing on the radar for now!\nHow about adding something?"
     override val replyListGetRepliesError = "Failed to load your replies. Please try again."
-    override val replyListPlaceholderResolved = "No resolved replies yet.\nTime to get something done?"
-    override val replyListPlaceholderArchived = "Archive’s looking empty!\nTime to clear your radar?"
+    override val replyListPlaceholderResolved =
+        "No resolved replies yet.\nTime to get something done?"
+    override val replyListPlaceholderArchived =
+        "Archive’s looking empty!\nTime to clear your radar?"
     override val replyListBottomSheetName = "Name"
     override val replyListBottomSheetSubject = "Subject"
     override val replyListBottomSheetAdd = "Add"
@@ -39,8 +42,10 @@ object StringsEn : Strings {
     override val activityLogTitle = "Activity Log"
     override val activityLogBackButton = "Back"
     override val activityLogItemContentDescription = "Activity log item"
-    override val activityLogPlaceholder = "No activity just yet!\nYour radar’s waiting for some action."
-    override val activityLogGetActivityLogsError = "Failed to load your activity log. Please try again."
+    override val activityLogPlaceholder =
+        "No activity just yet!\nYour radar’s waiting for some action."
+    override val activityLogGetActivityLogsError =
+        "Failed to load your activity log. Please try again."
     override val activityLogMessageFormat = "You %1 %2"
     override val activityLogMessageItem = "the item \"%1\"."
     override val activityLogMessageItemRemoved = "an item that no longer exists."

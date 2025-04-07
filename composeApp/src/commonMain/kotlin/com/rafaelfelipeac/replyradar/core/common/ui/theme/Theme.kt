@@ -8,9 +8,8 @@ import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.LIGHT
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.SYSTEM
 
 @Composable
-fun isDarkTheme(currentTheme: AppTheme) =
-    when (currentTheme) {
-        LIGHT -> false
-        DARK -> true
-        SYSTEM -> isSystemInDarkTheme()
-    }
+fun isDarkTheme(currentTheme: AppTheme) = when (currentTheme) {
+    LIGHT -> false
+    DARK -> true
+    SYSTEM -> isSystemInDarkTheme()
+}

@@ -24,7 +24,9 @@ fun RepliesOnTheRadarScreen(state: ReplyListState, onIntent: (ReplyListScreenInt
             }
 
             state.replies.isEmpty() -> {
-                ReplyRadarPlaceholder(message = LocalReplyRadarStrings.current.replyListPlaceholderOnTheRadar)
+                ReplyRadarPlaceholder(
+                    message = LocalReplyRadarStrings.current.replyListPlaceholderOnTheRadar
+                )
             }
 
             else -> {

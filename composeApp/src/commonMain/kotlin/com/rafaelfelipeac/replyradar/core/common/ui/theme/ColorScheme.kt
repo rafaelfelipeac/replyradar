@@ -12,7 +12,7 @@ val LightColorScheme = lightColorScheme(
     background = Color(0xFFF7F7F7),
     onBackground = Color(0xFF1E1E1E),
     surface = Color(0xFFF7F7F7),
-    onSurface = Color(0xFF1E1E1E),
+    onSurface = Color(0xFF1E1E1E)
 )
 
 val LightExtraColors = ReplyRadarColors(
@@ -29,7 +29,7 @@ val DarkColorScheme = darkColorScheme(
     background = Color(0xFF1E1E1E),
     onBackground = Color(0xFFEDEDED),
     surface = Color(0xFF1E1E1E),
-    onSurface = Color(0xFFEDEDED),
+    onSurface = Color(0xFFEDEDED)
 )
 
 val DarkExtraColors = ReplyRadarColors(

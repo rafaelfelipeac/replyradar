@@ -1,22 +1,19 @@
 package com.rafaelfelipeac.replyradar.features.app.settings
 
-import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage
 import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.PORTUGUESE
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
 import com.rafaelfelipeac.replyradar.fakes.settings.domain.FakeGetLanguageUseCase
 import com.rafaelfelipeac.replyradar.fakes.settings.domain.FakeGetThemeUseCase
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
-
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class AppSettingsViewModelTest {

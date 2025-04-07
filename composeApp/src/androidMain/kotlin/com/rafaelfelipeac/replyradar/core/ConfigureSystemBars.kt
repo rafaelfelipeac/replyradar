@@ -9,10 +9,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.rafaelfelipeac.replyradar.core.util.setStatusBarColorCompat
 
 @Composable
-fun ConfigureSystemBars(
-    darkTheme: Boolean,
-    backgroundColor: Color
-) {
+fun ConfigureSystemBars(darkTheme: Boolean, backgroundColor: Color) {
     val activity = LocalContext.current as? Activity
     val systemUiController = rememberSystemUiController()
 

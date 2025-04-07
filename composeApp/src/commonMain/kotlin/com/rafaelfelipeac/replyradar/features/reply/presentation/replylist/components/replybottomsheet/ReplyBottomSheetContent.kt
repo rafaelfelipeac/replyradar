@@ -129,11 +129,11 @@ fun ReplyBottomSheetContent(
                         .wrapContentWidth()
                         .align(Alignment.CenterVertically),
                     text =
-                        if (state.reply == null) {
-                            LocalReplyRadarStrings.current.replyListBottomSheetAdd
-                        } else {
-                            LocalReplyRadarStrings.current.replyListBottomSheetSave
-                        },
+                    if (state.reply == null) {
+                        LocalReplyRadarStrings.current.replyListBottomSheetAdd
+                    } else {
+                        LocalReplyRadarStrings.current.replyListBottomSheetSave
+                    },
                     onClick = {
                         if (state.reply != null) {
                             onComplete(

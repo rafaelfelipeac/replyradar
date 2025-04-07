@@ -32,7 +32,7 @@ fun AppNavHost(navController: NavHostController) {
         ) {
             composable<ReplyList>(
                 enterTransition = { enter() },
-                popEnterTransition = { popEnter() },
+                popEnterTransition = { popEnter() }
             ) {
                 val viewModel = koinViewModel<ReplyListViewModel>()
 

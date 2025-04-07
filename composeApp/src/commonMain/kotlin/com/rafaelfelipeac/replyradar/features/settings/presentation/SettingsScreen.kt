@@ -106,10 +106,7 @@ fun SettingsScreen(
 }
 
 @Composable
-private fun Theme(
-    state: SettingsState,
-    viewModel: SettingsViewModel
-) {
+private fun Theme(state: SettingsState, viewModel: SettingsViewModel) {
     Text(
         text = LocalReplyRadarStrings.current.settingsTheme,
         style = MaterialTheme.typography.titleMedium
@@ -124,10 +121,7 @@ private fun Theme(
 }
 
 @Composable
-private fun Language(
-    state: SettingsState,
-    viewModel: SettingsViewModel
-) {
+private fun Language(state: SettingsState, viewModel: SettingsViewModel) {
     Text(
         text = LocalReplyRadarStrings.current.settingsLanguage,
         style = MaterialTheme.typography.titleMedium
@@ -144,22 +138,22 @@ private fun Language(
 }
 
 @Composable
-private fun ThemeOptions(
-    state: SettingsState,
-    onThemeSelected: (AppTheme) -> Unit
-) {
+private fun ThemeOptions(state: SettingsState, onThemeSelected: (AppTheme) -> Unit) {
     ThemeOption(
         theme = LIGHT,
         selectedTheme = state.theme,
-        onThemeSelected = { onThemeSelected(LIGHT) })
+        onThemeSelected = { onThemeSelected(LIGHT) }
+    )
     ThemeOption(
         theme = DARK,
         selectedTheme = state.theme,
-        onThemeSelected = { onThemeSelected(DARK) })
+        onThemeSelected = { onThemeSelected(DARK) }
+    )
     ThemeOption(
         theme = SYSTEM,
         selectedTheme = state.theme,
-        onThemeSelected = { onThemeSelected(SYSTEM) })
+        onThemeSelected = { onThemeSelected(SYSTEM) }
+    )
 }
 
 @Composable
@@ -186,18 +180,14 @@ private fun ThemeOption(
 }
 
 @Composable
-private fun getThemeOptionLabel(theme: AppTheme) =
-    when (theme) {
-        LIGHT -> LocalReplyRadarStrings.current.settingsThemeLight
-        DARK -> LocalReplyRadarStrings.current.settingsThemeDark
-        SYSTEM -> LocalReplyRadarStrings.current.settingsThemeSystem
-    }
+private fun getThemeOptionLabel(theme: AppTheme) = when (theme) {
+    LIGHT -> LocalReplyRadarStrings.current.settingsThemeLight
+    DARK -> LocalReplyRadarStrings.current.settingsThemeDark
+    SYSTEM -> LocalReplyRadarStrings.current.settingsThemeSystem
+}
 
 @Composable
-private fun LanguageOptions(
-    state: SettingsState,
-    onLanguageSelected: (AppLanguage) -> Unit
-) {
+private fun LanguageOptions(state: SettingsState, onLanguageSelected: (AppLanguage) -> Unit) {
     LanguageOption(ENGLISH, state.language, onLanguageSelected)
     LanguageOption(PORTUGUESE, state.language, onLanguageSelected)
     LanguageOption(AppLanguage.SYSTEM, state.language, onLanguageSelected)
@@ -227,12 +217,11 @@ private fun LanguageOption(
 }
 
 @Composable
-private fun getLanguageLabel(language: AppLanguage) =
-    when (language) {
-        ENGLISH -> LocalReplyRadarStrings.current.settingsLanguageEnglish
-        PORTUGUESE -> LocalReplyRadarStrings.current.settingsLanguagePortuguese
-        AppLanguage.SYSTEM -> LocalReplyRadarStrings.current.settingsLanguageSystem
-    }
+private fun getLanguageLabel(language: AppLanguage) = when (language) {
+    ENGLISH -> LocalReplyRadarStrings.current.settingsLanguageEnglish
+    PORTUGUESE -> LocalReplyRadarStrings.current.settingsLanguagePortuguese
+    AppLanguage.SYSTEM -> LocalReplyRadarStrings.current.settingsLanguageSystem
+}
 
 @Composable
 fun AppVersionFooter(modifier: Modifier = Modifier) {

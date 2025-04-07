@@ -73,10 +73,7 @@ import replyradar.composeapp.generated.resources.ic_unarchive
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ActivityLogScreen(
-    viewModel: ActivityLogViewModel = koinViewModel(),
-    onBackClick: () -> Unit
-) {
+fun ActivityLogScreen(viewModel: ActivityLogViewModel = koinViewModel(), onBackClick: () -> Unit) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Scaffold(
@@ -87,7 +84,8 @@ fun ActivityLogScreen(
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription = LocalReplyRadarStrings.current.activityLogBackButton
+                            contentDescription =
+                            LocalReplyRadarStrings.current.activityLogBackButton
                         )
                     }
                 }
@@ -134,7 +132,8 @@ private fun ActivityLogList(state: ActivityLogState) {
     LazyColumn(horizontalAlignment = CenterHorizontally) {
         itemsIndexed(
             state.activityLogItems,
-            key = { _, item -> item.id }) { index, userAction ->
+            key = { _, item -> item.id }
+        ) { index, userAction ->
             Column(modifier = Modifier.fillMaxWidth()) {
                 ActivityLogListItem(userAction = userAction)
 
@@ -181,7 +180,8 @@ fun ActivityLogListItem(userAction: UserAction) {
                             )
                         ),
                         tint = colorScheme.primary,
-                        contentDescription = LocalReplyRadarStrings.current.activityLogItemContentDescription
+                        contentDescription =
+                        LocalReplyRadarStrings.current.activityLogItemContentDescription
                     )
                 }
 
@@ -196,7 +196,7 @@ fun ActivityLogListItem(userAction: UserAction) {
                     )
                     Text(
                         text = formatTimestamp(createdAt),
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodySmall
                     )
                 }
             }

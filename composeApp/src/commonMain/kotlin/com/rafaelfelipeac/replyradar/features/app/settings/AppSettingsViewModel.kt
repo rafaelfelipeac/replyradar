@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.stateIn
 
 class AppSettingsViewModel(
     getThemeUseCase: GetThemeUseCase,
-    getLanguageUseCase: GetLanguageUseCase,
+    getLanguageUseCase: GetLanguageUseCase
 ) : ViewModel() {
 
     val theme: StateFlow<AppTheme> = getThemeUseCase

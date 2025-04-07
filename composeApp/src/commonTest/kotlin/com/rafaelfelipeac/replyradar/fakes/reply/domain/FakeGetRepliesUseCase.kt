@@ -31,10 +31,7 @@ class FakeGetRepliesUseCase : GetRepliesUseCase {
     private val resolvedRepliesFlow = MutableStateFlow(resolvedReplies)
     private val archivedRepliesFlow = MutableStateFlow(archivedReplies)
 
-    override suspend fun getReplies(
-        isResolved: Boolean,
-        isArchived: Boolean
-    ): Flow<List<Reply>> {
+    override suspend fun getReplies(isResolved: Boolean, isArchived: Boolean): Flow<List<Reply>> {
         if (shouldThrow) throw RuntimeException("Fake error.")
 
         return when {
@@ -44,4 +41,3 @@ class FakeGetRepliesUseCase : GetRepliesUseCase {
         }
     }
 }
-

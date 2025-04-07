@@ -104,7 +104,8 @@ fun ReplyListScreen(
             ) {
                 Icon(
                     imageVector = Icons.Filled.Add,
-                    contentDescription = LocalReplyRadarStrings.current.replyListFabContentDescription,
+                    contentDescription =
+                    LocalReplyRadarStrings.current.replyListFabContentDescription,
                     tint = colorScheme.background
                 )
             }
@@ -188,7 +189,7 @@ fun ReplyListScreen(
                             modifier = Modifier.weight(WEIGHT),
                             selected = state.selectedTabIndex == ON_THE_RADAR_INDEX,
                             onClick = { onIntent(OnTabSelected(ON_THE_RADAR_INDEX)) },
-                            text =LocalReplyRadarStrings.current.replyListTabOnTheRadar
+                            text = LocalReplyRadarStrings.current.replyListTabOnTheRadar
                         )
 
                         ReplyTab(

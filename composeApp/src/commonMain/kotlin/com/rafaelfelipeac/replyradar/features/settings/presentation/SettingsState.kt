@@ -7,5 +7,5 @@ data class SettingsState(
     val theme: AppTheme = AppTheme.SYSTEM,
     val language: AppLanguage = AppLanguage.SYSTEM,
     val isLoading: Boolean = true,
-    val errorMessage: String? = null,
+    val errorMessage: String? = null
 )

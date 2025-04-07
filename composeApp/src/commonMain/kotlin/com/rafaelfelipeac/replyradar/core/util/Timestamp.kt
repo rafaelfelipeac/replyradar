@@ -9,5 +9,5 @@ fun formatTimestamp(timestampMillis: Long): String {
     val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
 
     return "${localDateTime.dayOfMonth}/${localDateTime.monthNumber}/${localDateTime.year} " +
-            "${localDateTime.hour}:${localDateTime.minute.toString().padStart(2, '0')}"
+        "${localDateTime.hour}:${localDateTime.minute.toString().padStart(2, '0')}"
 }
