@@ -7,6 +7,7 @@ import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
+@Suppress("FunctionNaming")
 @OptIn(ExperimentalForeignApi::class)
 fun CreateDataStore(): DataStore<Preferences> {
     return createDataStore {

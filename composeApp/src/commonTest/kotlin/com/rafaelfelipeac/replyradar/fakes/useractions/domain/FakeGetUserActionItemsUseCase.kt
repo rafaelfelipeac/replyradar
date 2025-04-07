@@ -5,6 +5,7 @@ import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.GetUser
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
+@Suppress("TooGenericExceptionThrown")
 class FakeGetUserActionItemsUseCase : GetUserActionItemsUseCase {
 
     var userActions: List<UserAction> = emptyList()

@@ -5,6 +5,7 @@ import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.GetRepliesUse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
+@Suppress("TooGenericExceptionThrown")
 class FakeGetRepliesUseCase : GetRepliesUseCase {
 
     var replies: List<Reply> = emptyList()

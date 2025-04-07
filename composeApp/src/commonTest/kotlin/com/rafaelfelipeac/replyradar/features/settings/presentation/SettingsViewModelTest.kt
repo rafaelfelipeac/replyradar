@@ -1,8 +1,8 @@
 package com.rafaelfelipeac.replyradar.features.settings.presentation
 
 import app.cash.turbine.test
-import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme
+import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.ENGLISH
+import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
 import com.rafaelfelipeac.replyradar.fakes.settings.data.FakeSettingsRepository
 import com.rafaelfelipeac.replyradar.fakes.useractions.domain.FakeLogUserActionUseCase
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.GetLanguageUseCaseImpl
@@ -14,16 +14,16 @@ import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsInte
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Language
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Theme
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SettingsViewModelTest {
@@ -58,11 +58,11 @@ class SettingsViewModelTest {
 
     @Test
     fun `onSelectTheme should update state and log action`() = runTest {
-        viewModel.onIntent(OnSelectTheme(AppTheme.DARK))
+        viewModel.onIntent(OnSelectTheme(DARK))
 
         viewModel.state.test {
             val state = awaitItem()
-            assertEquals(AppTheme.DARK, state.theme)
+            assertEquals(DARK, state.theme)
             assertEquals(Edit, logUserActionUseCase.loggedActions.first().first)
             assertEquals(Theme, logUserActionUseCase.loggedActions.first().second)
             cancelAndIgnoreRemainingEvents()
@@ -71,11 +71,11 @@ class SettingsViewModelTest {
 
     @Test
     fun `onSelectLanguage should update state and log action`() = runTest {
-        viewModel.onIntent(OnSelectLanguage(AppLanguage.ENGLISH))
+        viewModel.onIntent(OnSelectLanguage(ENGLISH))
 
         viewModel.state.test {
             val state = awaitItem()
-            assertEquals(AppLanguage.ENGLISH, state.language)
+            assertEquals(ENGLISH, state.language)
             assertEquals(Edit, logUserActionUseCase.loggedActions.first().first)
             assertEquals(Language, logUserActionUseCase.loggedActions.first().second)
             cancelAndIgnoreRemainingEvents()

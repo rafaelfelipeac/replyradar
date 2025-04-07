@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@Suppress("TooGenericExceptionCaught", "SwallowedException")
 class ActivityLogViewModel(
     private val getUserActionItemsUseCase: GetUserActionItemsUseCase
 ) : ViewModel() {

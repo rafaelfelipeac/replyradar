@@ -44,6 +44,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@Suppress("TooGenericExceptionCaught", "SwallowedException")
 class ReplyListViewModel(
     private val upsertReplyUseCase: UpsertReplyUseCase,
     private val toggleResolveReplyUseCase: ToggleResolveReplyUseCase,

@@ -105,7 +105,7 @@ fun ReplyListScreen(
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription =
-                    LocalReplyRadarStrings.current.replyListFabContentDescription,
+                        LocalReplyRadarStrings.current.replyListFabContentDescription,
                     tint = colorScheme.background
                 )
             }
@@ -117,46 +117,7 @@ fun ReplyListScreen(
                 .padding(bottom = paddingValues.calculateBottomPadding())
                 .statusBarsPadding()
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    modifier = Modifier
-                        .padding(top = paddingMedium, start = paddingMedium)
-                        .align(Alignment.CenterStart)
-                        .clickable { onActivityLogClick() },
-                    textAlign = TextAlign.Center,
-                    text = LocalReplyRadarStrings.current.replyListActivityLog,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = colorScheme.toolbarIconsColor
-                )
-
-                Text(
-                    modifier = Modifier
-                        .padding(top = paddingMedium)
-                        .align(Alignment.Center),
-                    textAlign = TextAlign.Center,
-                    text = LocalReplyRadarStrings.current.appName,
-                    style = MaterialTheme.typography.titleLarge.copy(fontSize = fontSizeLarge),
-                    color = colorScheme.onBackground
-                )
-
-                IconButton(
-                    onClick = { onSettingsClick() },
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(top = paddingMedium, end = paddingMedium)
-                ) {
-                    Icon(
-                        modifier = Modifier
-                            .size(iconSize),
-                        painter = painterResource(drawable.ic_settings),
-                        contentDescription = LocalReplyRadarStrings.current.settingsTitle,
-                        tint = colorScheme.toolbarIconsColor
-                    )
-                }
-            }
+            TopBar(onActivityLogClick = onActivityLogClick, onSettingsClick = onSettingsClick)
 
             Surface(
                 modifier = Modifier
@@ -225,6 +186,50 @@ fun ReplyListScreen(
             ReplyBottomSheet(
                 onIntent = onIntent,
                 replyBottomSheetState = state.replyBottomSheetState
+            )
+        }
+    }
+}
+
+@Composable
+private fun TopBar(onActivityLogClick: () -> Unit, onSettingsClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(top = paddingMedium, start = paddingMedium)
+                .align(Alignment.CenterStart)
+                .clickable { onActivityLogClick() },
+            textAlign = TextAlign.Center,
+            text = LocalReplyRadarStrings.current.replyListActivityLog,
+            style = MaterialTheme.typography.bodySmall,
+            color = colorScheme.toolbarIconsColor
+        )
+
+        Text(
+            modifier = Modifier
+                .padding(top = paddingMedium)
+                .align(Alignment.Center),
+            textAlign = TextAlign.Center,
+            text = LocalReplyRadarStrings.current.appName,
+            style = MaterialTheme.typography.titleLarge.copy(fontSize = fontSizeLarge),
+            color = colorScheme.onBackground
+        )
+
+        IconButton(
+            onClick = { onSettingsClick() },
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .padding(top = paddingMedium, end = paddingMedium)
+        ) {
+            Icon(
+                modifier = Modifier
+                    .size(iconSize),
+                painter = painterResource(drawable.ic_settings),
+                contentDescription = LocalReplyRadarStrings.current.settingsTitle,
+                tint = colorScheme.toolbarIconsColor
             )
         }
     }
