@@ -11,6 +11,8 @@ import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.SetLanguag
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.SetThemeUseCase
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.SetThemeUseCaseImpl
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsViewModel
+import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCase
+import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCaseImpl
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.bind
@@ -22,7 +24,8 @@ var settingsModule = module {
             getThemeUseCase = get(),
             setThemeUseCase = get(),
             getLanguageUseCase = get(),
-            setLanguageUseCase = get()
+            setLanguageUseCase = get(),
+            logUserActionUseCase = get()
         )
     }
 
@@ -30,6 +33,7 @@ var settingsModule = module {
     singleOf(::SetThemeUseCaseImpl).bind<SetThemeUseCase>()
     singleOf(::GetLanguageUseCaseImpl).bind<GetLanguageUseCase>()
     singleOf(::SetLanguageUseCaseImpl).bind<SetLanguageUseCase>()
+    singleOf(::LogUserActionUseCaseImpl).bind<LogUserActionUseCase>()
 
     singleOf(::SettingsRepositoryImpl).bind<SettingsRepository>()
 }

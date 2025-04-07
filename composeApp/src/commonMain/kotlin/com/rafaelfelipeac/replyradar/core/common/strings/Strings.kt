@@ -52,4 +52,6 @@ interface Strings {
     val activityLogUserActionReopenVerb: String
     val activityLogUserActionResolveVerb: String
     val activityLogUserActionUnarchiveVerb: String
+    val activityLogUserActionTheme: String
+    val activityLogUserActionLanguage: String
 }

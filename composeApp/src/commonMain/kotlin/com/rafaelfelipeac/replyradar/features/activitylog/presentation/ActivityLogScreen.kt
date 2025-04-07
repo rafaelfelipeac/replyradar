@@ -46,6 +46,10 @@ import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.core.util.formatTimestamp
 import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogViewModel.Companion.ERROR_GET_ACTIVITY_LOG
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserAction
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Language
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Message
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Theme
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Archive
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Create
@@ -62,7 +66,9 @@ import replyradar.composeapp.generated.resources.ic_archive
 import replyradar.composeapp.generated.resources.ic_check
 import replyradar.composeapp.generated.resources.ic_delete
 import replyradar.composeapp.generated.resources.ic_edit
+import replyradar.composeapp.generated.resources.ic_language
 import replyradar.composeapp.generated.resources.ic_reopen
+import replyradar.composeapp.generated.resources.ic_theme
 import replyradar.composeapp.generated.resources.ic_unarchive
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -163,25 +169,36 @@ fun ActivityLogListItem(userAction: UserAction) {
             verticalAlignment = CenterVertically,
             horizontalArrangement = spacedBy(paddingMedium)
         ) {
-            Column {
-                Icon(
-                    modifier = Modifier
-                        .size(iconSize),
-                    painter = painterResource(getIconByActionType(userAction.actionType)),
-                    tint = colorScheme.primary,
-                    contentDescription = LocalReplyRadarStrings.current.activityLogItemContentDescription
-                )
-            }
+            with(userAction) {
+                Column {
+                    Icon(
+                        modifier = Modifier
+                            .size(iconSize),
+                        painter = painterResource(
+                            getIconByActionType(
+                                actionType = actionType,
+                                targetType = targetType
+                            )
+                        ),
+                        tint = colorScheme.primary,
+                        contentDescription = LocalReplyRadarStrings.current.activityLogItemContentDescription
+                    )
+                }
 
-            Column {
-                Text(
-                    text = formatUserActionLabel(userAction.actionType, userAction.targetName),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Text(
-                    text = formatTimestamp(userAction.createdAt),
-                    style = MaterialTheme.typography.bodySmall,
-                )
+                Column {
+                    Text(
+                        text = formatUserActionLabel(
+                            actionType = actionType,
+                            targetType = targetType,
+                            targetName = targetName
+                        ),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Text(
+                        text = formatTimestamp(createdAt),
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
             }
         }
     }
@@ -193,36 +210,50 @@ private fun getErrorMessage(errorMessage: String?) = when (errorMessage) {
     else -> LocalReplyRadarStrings.current.genericErrorMessage
 }
 
-private fun getIconByActionType(actionType: UserActionType) = when (actionType) {
-    Archive -> drawable.ic_archive
-    Create -> drawable.ic_add
-    Delete -> drawable.ic_delete
-    Edit -> drawable.ic_edit
-    Reopen -> drawable.ic_reopen
-    Resolve -> drawable.ic_check
-    Unarchive -> drawable.ic_unarchive
-}
+private fun getIconByActionType(actionType: UserActionType, targetType: UserActionTargetType) =
+    when (targetType) {
+        Language -> drawable.ic_language
+        Message -> when (actionType) {
+            Archive -> drawable.ic_archive
+            Create -> drawable.ic_add
+            Delete -> drawable.ic_delete
+            Edit -> drawable.ic_edit
+            Reopen -> drawable.ic_reopen
+            Resolve -> drawable.ic_check
+            Unarchive -> drawable.ic_unarchive
+        }
 
-@Composable
-fun formatUserActionLabel(actionType: UserActionType, targetName: String?): String {
-    return format(
-        LocalReplyRadarStrings.current.activityLogMessageFormat,
-        getActionVerb(actionType),
-        formatTargetName(targetName)
-    )
-}
-
-@Composable
-private fun getActionVerb(actionType: UserActionType) =
-    when (actionType) {
-        Archive -> LocalReplyRadarStrings.current.activityLogUserActionArchiveVerb
-        Create -> LocalReplyRadarStrings.current.activityLogUserActionCreateVerb
-        Delete -> LocalReplyRadarStrings.current.activityLogUserActionDeleteVerb
-        Edit -> LocalReplyRadarStrings.current.activityLogUserActionEditVerb
-        Reopen -> LocalReplyRadarStrings.current.activityLogUserActionReopenVerb
-        Resolve -> LocalReplyRadarStrings.current.activityLogUserActionResolveVerb
-        Unarchive -> LocalReplyRadarStrings.current.activityLogUserActionUnarchiveVerb
+        Theme -> drawable.ic_theme
     }
+
+@Composable
+fun formatUserActionLabel(
+    actionType: UserActionType,
+    targetType: UserActionTargetType,
+    targetName: String?
+) = when (targetType) {
+    Language -> LocalReplyRadarStrings.current.activityLogUserActionLanguage
+    Message -> {
+        format(
+            LocalReplyRadarStrings.current.activityLogMessageFormat,
+            getActionVerb(actionType),
+            formatTargetName(targetName)
+        )
+    }
+
+    Theme -> LocalReplyRadarStrings.current.activityLogUserActionTheme
+}
+
+@Composable
+private fun getActionVerb(actionType: UserActionType) = when (actionType) {
+    Archive -> LocalReplyRadarStrings.current.activityLogUserActionArchiveVerb
+    Create -> LocalReplyRadarStrings.current.activityLogUserActionCreateVerb
+    Delete -> LocalReplyRadarStrings.current.activityLogUserActionDeleteVerb
+    Edit -> LocalReplyRadarStrings.current.activityLogUserActionEditVerb
+    Reopen -> LocalReplyRadarStrings.current.activityLogUserActionReopenVerb
+    Resolve -> LocalReplyRadarStrings.current.activityLogUserActionResolveVerb
+    Unarchive -> LocalReplyRadarStrings.current.activityLogUserActionUnarchiveVerb
+}
 
 @Composable
 fun formatTargetName(name: String?): String {

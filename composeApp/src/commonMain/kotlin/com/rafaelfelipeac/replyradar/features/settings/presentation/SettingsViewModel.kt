@@ -10,6 +10,12 @@ import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.SetLanguag
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.SetThemeUseCase
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectLanguage
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectTheme
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Language
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Theme
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
+import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -22,8 +28,10 @@ class SettingsViewModel(
     getThemeUseCase: GetThemeUseCase,
     private val setThemeUseCase: SetThemeUseCase,
     getLanguageUseCase: GetLanguageUseCase,
-    private val setLanguageUseCase: SetLanguageUseCase
+    private val setLanguageUseCase: SetLanguageUseCase,
+    private val logUserActionUseCase: LogUserActionUseCase
 ) : ViewModel() {
+
     private val _state = MutableStateFlow(SettingsState())
     val state: StateFlow<SettingsState> = combine(
         getThemeUseCase.getTheme(),
@@ -43,15 +51,29 @@ class SettingsViewModel(
         setThemeUseCase.setTheme(theme)
 
         updateState { copy(theme = theme) }
+
+        logUserAction(actionType = Edit, targetType = Theme)
     }
 
     private fun onSelectLanguage(language: AppLanguage) = viewModelScope.launch {
         setLanguageUseCase.setLanguage(language)
 
         updateState { copy(language = language) }
+
+        logUserAction(actionType = Edit, targetType = Language)
     }
 
     private fun updateState(update: SettingsState.() -> SettingsState) {
         _state.update { it.update() }
+    }
+
+    private suspend fun logUserAction(
+        actionType: UserActionType,
+        targetType: UserActionTargetType
+    ) {
+        logUserActionUseCase.logUserAction(
+            actionType = actionType,
+            targetType = targetType
+        )
     }
 }

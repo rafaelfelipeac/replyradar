@@ -42,7 +42,7 @@ object StringsPt : Strings {
     override val activityLogPlaceholder = "Nenhuma atividade por enquanto!\nSeu radar está esperando por ação."
     override val activityLogGetActivityLogsError = "Não foi possível carregar seu histórico de atividades. Tente novamente."
     override val activityLogMessageFormat = "Você %1 %2"
-    override val activityLogMessageItem = "o item %1."
+    override val activityLogMessageItem = "o item \"%1\"."
     override val activityLogMessageItemRemoved = "um item que já não existe mais."
     override val activityLogUserActionArchiveVerb = "arquivou"
     override val activityLogUserActionCreateVerb= "criou"
@@ -51,4 +51,6 @@ object StringsPt : Strings {
     override val activityLogUserActionReopenVerb= "reabriu"
     override val activityLogUserActionResolveVerb= "resolveu"
     override val activityLogUserActionUnarchiveVerb= "desarquivou"
+    override val activityLogUserActionTheme = "Você mudou o tema do app."
+    override val activityLogUserActionLanguage = "Você mudou o idioma do app."
 }

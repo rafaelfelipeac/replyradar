@@ -8,7 +8,7 @@ interface LogUserActionUseCase {
     suspend fun logUserAction(
         actionType: UserActionType,
         targetType: UserActionTargetType,
-        targetId: Long?
+        targetId: Long? = null
     )
 }
 
