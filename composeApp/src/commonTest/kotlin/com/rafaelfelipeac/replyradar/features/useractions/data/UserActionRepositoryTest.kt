@@ -1,6 +1,7 @@
 package com.rafaelfelipeac.replyradar.features.useractions.data
 
 import com.rafaelfelipeac.replyradar.fakes.core.util.FakeClock
+import com.rafaelfelipeac.replyradar.fakes.reply.data.FakeReplyDao
 import com.rafaelfelipeac.replyradar.fakes.useractions.data.FakeUserActionDao
 import com.rafaelfelipeac.replyradar.features.useractions.data.repository.UserActionRepositoryImpl
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Message
@@ -16,8 +17,9 @@ class UserActionRepositoryTest {
     @Test
     fun `logUserAction should insert correct entity`() = runTest {
         val dao = FakeUserActionDao()
+        val replyDao = FakeReplyDao()
         val clock = FakeClock(now)
-        val repository = UserActionRepositoryImpl(dao, clock)
+        val repository = UserActionRepositoryImpl(dao, replyDao, clock)
 
         val actionType = Create
         val targetType = Message
