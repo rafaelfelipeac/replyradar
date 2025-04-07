@@ -52,21 +52,6 @@ class SettingsViewModel(
         }
     }
 
-    private fun getLanguage() = viewModelScope.launch {
-        updateState { copy(isLoading = true) }
-
-        getLanguageUseCase
-            .getLanguage()
-            .collect { language ->
-                updateState {
-                    copy(
-                        isLoading = false,
-                        language = language
-                    )
-                }
-            }
-    }
-
     private fun onSelectLanguage(language: AppLanguage) = viewModelScope.launch {
         updateState { copy(isLoading = true) }
 

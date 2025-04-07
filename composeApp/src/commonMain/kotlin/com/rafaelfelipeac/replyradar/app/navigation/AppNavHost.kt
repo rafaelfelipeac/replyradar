@@ -39,7 +39,7 @@ fun AppNavHost(navController: NavHostController) {
                 ReplyListScreenRoot(
                     viewModel = viewModel,
                     onSettingsClick = { navController.navigate(Settings) },
-                    onActivityLogClick = { navController.navigate(ActivityLog)}
+                    onActivityLogClick = { navController.navigate(ActivityLog) }
                 )
             }
 
@@ -53,7 +53,8 @@ fun AppNavHost(navController: NavHostController) {
 
                 SettingsScreen(
                     viewModel = viewModel,
-                    onBackClick = { navController.popBackStack() }
+                    onBackClick = { navController.popBackStack() },
+                    onActivityLogClick = { navController.navigate(ActivityLog) }
                 )
             }
 

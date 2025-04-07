@@ -50,7 +50,8 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun SettingsScreen(
     viewModel: SettingsViewModel = koinViewModel(),
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onActivityLogClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -83,8 +84,15 @@ fun SettingsScreen(
                     .verticalScroll(scrollState)
                     .padding(bottom = settingsAppVersionOffset)
             ) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onActivityLogClick() },
+                    text = LocalReplyRadarStrings.current.activityLogTitle
+                )
+                HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
                 Theme(state = state, viewModel = viewModel)
-                Spacer(modifier = Modifier.height(paddingMedium))
+                HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
                 Language(state = state, viewModel = viewModel)
                 HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
             }

@@ -90,6 +90,7 @@ fun ActivityLogScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(top = paddingMedium)
                 .background(colorScheme.background),
             verticalArrangement = Arrangement.Center
         ) {
