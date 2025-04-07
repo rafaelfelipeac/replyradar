@@ -3,11 +3,14 @@ package com.rafaelfelipeac.replyradar.core.common.strings
 interface Strings {
     val appName: String
 
+    val genericErrorMessage: String
+
     val replyListActivityLog: String
     val replyListTabOnTheRadar: String
     val replyListTabResolved: String
     val replyListTabArchived: String
     val replyListPlaceholderOnTheRadar: String
+    val replyListGetRepliesError: String
     val replyListPlaceholderResolved: String
     val replyListPlaceholderArchived: String
     val replyListBottomSheetName: String
@@ -38,6 +41,7 @@ interface Strings {
     val activityLogBackButton: String
     val activityLogItemContentDescription: String
     val activityLogPlaceholder: String
+    val activityLogGetActivityLogsError: String
     val activityLogMessageFormat: String
     val activityLogMessageItem: String
     val activityLogMessageItemRemoved: String

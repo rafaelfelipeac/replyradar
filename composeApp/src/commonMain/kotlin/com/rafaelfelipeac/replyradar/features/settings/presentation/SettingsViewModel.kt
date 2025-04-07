@@ -19,9 +19,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
-    private val getThemeUseCase: GetThemeUseCase,
+    getThemeUseCase: GetThemeUseCase,
     private val setThemeUseCase: SetThemeUseCase,
-    private val getLanguageUseCase: GetLanguageUseCase,
+    getLanguageUseCase: GetLanguageUseCase,
     private val setLanguageUseCase: SetLanguageUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(SettingsState())
@@ -40,29 +40,15 @@ class SettingsViewModel(
     }
 
     private fun onSelectTheme(theme: AppTheme) = viewModelScope.launch {
-        updateState { copy(isLoading = true) }
-
         setThemeUseCase.setTheme(theme)
 
-        updateState {
-            copy(
-                isLoading = false,
-                theme = theme
-            )
-        }
+        updateState { copy(theme = theme) }
     }
 
     private fun onSelectLanguage(language: AppLanguage) = viewModelScope.launch {
-        updateState { copy(isLoading = true) }
-
         setLanguageUseCase.setLanguage(language)
 
-        updateState {
-            copy(
-                isLoading = false,
-                language = language
-            )
-        }
+        updateState { copy(language = language) }
     }
 
     private fun updateState(update: SettingsState.() -> SettingsState) {

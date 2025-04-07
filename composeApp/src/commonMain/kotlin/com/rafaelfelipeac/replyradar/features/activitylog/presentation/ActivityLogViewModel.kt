@@ -21,19 +21,32 @@ class ActivityLogViewModel(
     private fun getActivityLog() = viewModelScope.launch {
         updateState { copy(isLoading = true) }
 
-        getUserActionItemsUseCase
-            .getUserActions()
-            .collect { userActions ->
-                updateState {
-                    copy(
-                        activityLogItems = userActions,
-                        isLoading = false
-                    )
+        try {
+            getUserActionItemsUseCase
+                .getUserActions()
+                .collect { userActions ->
+                    updateState {
+                        copy(
+                            activityLogItems = userActions,
+                            isLoading = false
+                        )
+                    }
                 }
+        } catch (e: Exception) {
+            updateState {
+                copy(
+                    isLoading = false,
+                    errorMessage = ERROR_GET_ACTIVITY_LOG
+                )
             }
+        }
     }
 
     private fun updateState(update: ActivityLogState.() -> ActivityLogState) {
         _state.update { it.update() }
+    }
+
+    companion object {
+        const val ERROR_GET_ACTIVITY_LOG = "error_get_activity_log"
     }
 }

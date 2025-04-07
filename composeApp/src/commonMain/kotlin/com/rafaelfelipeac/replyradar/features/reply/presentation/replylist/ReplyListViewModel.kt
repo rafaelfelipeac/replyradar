@@ -123,16 +123,25 @@ class ReplyListViewModel(
     private fun getReplies() = viewModelScope.launch {
         updateState { copy(isLoading = true) }
 
-        getRepliesUseCase
-            .getReplies()
-            .collect { replies ->
-                updateState {
-                    copy(
-                        isLoading = false,
-                        replies = replies
-                    )
+        try {
+            getRepliesUseCase
+                .getReplies()
+                .collect { replies ->
+                    updateState {
+                        copy(
+                            isLoading = false,
+                            replies = replies
+                        )
+                    }
                 }
+        } catch (e: Exception) {
+            updateState {
+                copy(
+                    isLoading = false,
+                    errorMessage = ERROR_GET_REPLIES
+                )
             }
+        }
     }
 
     private fun observeResolvedReplies() = viewModelScope.launch {
@@ -193,5 +202,6 @@ class ReplyListViewModel(
 
     companion object {
         private const val STOP_TIMEOUT = 5_000L
+        const val ERROR_GET_REPLIES = "error_get_replies"
     }
 }

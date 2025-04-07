@@ -11,6 +11,7 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyClick
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyToggle
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListViewModel.Companion.ERROR_GET_REPLIES
 
 @Composable
 fun RepliesOnTheRadarScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> Unit) {
@@ -19,7 +20,7 @@ fun RepliesOnTheRadarScreen(state: ReplyListState, onIntent: (ReplyListScreenInt
     } else {
         when {
             state.errorMessage != null -> {
-                ReplyRadarError(errorMessage = state.errorMessage)
+                ReplyRadarError(errorMessage = getErrorMessage(state.errorMessage))
             }
 
             state.replies.isEmpty() -> {
@@ -36,4 +37,10 @@ fun RepliesOnTheRadarScreen(state: ReplyListState, onIntent: (ReplyListScreenInt
             }
         }
     }
+}
+
+@Composable
+private fun getErrorMessage(errorMessage: String?) = when (errorMessage) {
+    ERROR_GET_REPLIES -> LocalReplyRadarStrings.current.replyListGetRepliesError
+    else -> LocalReplyRadarStrings.current.genericErrorMessage
 }

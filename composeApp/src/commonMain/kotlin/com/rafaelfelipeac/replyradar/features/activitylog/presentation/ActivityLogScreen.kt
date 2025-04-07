@@ -44,6 +44,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.horizontalDividerColor
 import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.core.util.formatTimestamp
+import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogViewModel.Companion.ERROR_GET_ACTIVITY_LOG
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserAction
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Archive
@@ -104,7 +105,12 @@ fun ActivityLogScreen(
                     ReplyProgress()
                 } else {
                     when {
-                        state.errorMessage != null -> ReplyRadarError(state.errorMessage)
+                        state.errorMessage != null -> ReplyRadarError(
+                            errorMessage = getErrorMessage(
+                                state.errorMessage
+                            )
+                        )
+
                         state.activityLogItems.isEmpty() -> ReplyRadarPlaceholder(
                             LocalReplyRadarStrings.current.activityLogPlaceholder
                         )
@@ -179,6 +185,12 @@ fun ActivityLogListItem(userAction: UserAction) {
             }
         }
     }
+}
+
+@Composable
+private fun getErrorMessage(errorMessage: String?) = when (errorMessage) {
+    ERROR_GET_ACTIVITY_LOG -> LocalReplyRadarStrings.current.activityLogGetActivityLogsError
+    else -> LocalReplyRadarStrings.current.genericErrorMessage
 }
 
 private fun getIconByActionType(actionType: UserActionType) = when (actionType) {
