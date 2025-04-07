@@ -17,9 +17,8 @@ sealed class UserActionType(val value: String) {
                 RESOLVE -> Resolve
                 REOPEN -> Reopen
                 ARCHIVE -> Archive
-                UNARCHIVE -> Unarchive
                 DELETE -> Delete
-                else -> throw IllegalArgumentException("Unknown UserActionType value: $value")
+                else -> Unarchive
             }
         }
     }

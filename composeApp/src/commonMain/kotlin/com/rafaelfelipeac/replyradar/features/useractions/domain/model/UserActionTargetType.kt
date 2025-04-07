@@ -8,10 +8,9 @@ sealed class UserActionTargetType(val value: String) {
     companion object {
         fun fromValue(value: String?): UserActionTargetType {
             return when (value) {
-                MESSAGE -> Message
                 THEME -> Theme
                 LANGUAGE -> Language
-                else -> throw IllegalArgumentException("Unknown UserActionTargetType value: $value")
+                else -> Message
             }
         }
     }
