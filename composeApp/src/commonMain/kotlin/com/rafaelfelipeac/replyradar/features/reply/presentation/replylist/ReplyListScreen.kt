@@ -105,7 +105,7 @@ fun ReplyListScreen(
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription =
-                        LocalReplyRadarStrings.current.replyListFabContentDescription,
+                    LocalReplyRadarStrings.current.replyListFabContentDescription,
                     tint = colorScheme.background
                 )
             }
