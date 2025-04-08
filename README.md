@@ -24,14 +24,27 @@ A gentle nudge. A little order. A friendlier inbox — on your terms.
 
 ---
 
+## 🤹 Why Kotlin Multiplatform?
+
+Even though I’m an Android developer by trade, I decided to build **Reply Radar** using **Kotlin Multiplatform** as a learning experiment.  
+The idea was to explore modern shared code strategies while keeping things familiar with an Android-first mindset.
+
+This project uses common architectural patterns and tools you’d expect in an Android codebase — like Jetpack Compose, Room, Coroutines and MVI — but wrapped in a multiplatform structure ready to evolve across Android, iOS and even Desktop.
+
+It’s a playground, but also a showcase of how Kotlin can unify experiences across platforms with elegance (and fewer bugs 🤞).
+
+---
+
 ## ✨ What it does (for now)
 
-- Basic **CRUD** for replies/messages
+- Add, edit, resolve, archive, and delete replies/messages
 - Organize replies into three states:
   - **Active** – Messages still pending a reply
   - **Resolved** – Messages you've replied to and marked as done
   - **Archived** – Soft delete feature to hide messages you no longer want to see
 - Clean and focused UI to help you stay on top of conversations
+- Light **gamification** through action history (laying the groundwork for future features)
+- **Offline-first experience** – no account, no server
 
 > ⚠️ **Reminders (and other cool features) aren't here yet** — but they're definitely on the radar. Stay tuned!
 
@@ -39,12 +52,14 @@ A gentle nudge. A little order. A friendlier inbox — on your terms.
 
 ## 🛠️ Tech Stack
 
-- **Kotlin Multiplatform (KMP)** – Shared logic across platforms
-- **Jetpack Compose** – UI with modern declarative components
-- **Room** – Local data persistence
+- **Kotlin Multiplatform (KMP)** – Shared logic across platforms (Android, iOS, Desktop)
+- **Jetpack Compose / Compose Multiplatform** – UI with modern declarative components
+- **Room** – Local database for structured data
+- **DataStore** – Key-value storage for lightweight preferences and settings
 - **Koin** – Lightweight dependency injection
 - **MVI Architecture** – Unidirectional data flow for maintainable state handling
-- **Coroutines + Flow** – For reactive and asynchronous operations
+- **Coroutines + Flow + StateFlow** – Reactive and asynchronous operations
+- **GitHub Actions** – CI for build, lint and releases
 
 ---
 
