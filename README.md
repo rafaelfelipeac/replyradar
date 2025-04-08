@@ -50,6 +50,28 @@ It’s a playground, but also a showcase of how Kotlin can unify experiences acr
 
 ---
 
+## 🖼️ Screenshots
+
+### ☀️ Light Mode
+
+<p float="left">
+  <img src="screenshots/replyradar-light-1.jpeg" width="24%" />
+  <img src="screenshots/replyradar-light-2.jpeg" width="24%" />
+  <img src="screenshots/replyradar-light-3.jpeg" width="24%" />
+  <img src="screenshots/replyradar-light-4.jpeg" width="24%" />
+</p>
+
+### 🌙 Dark Mode
+
+<p float="left">
+  <img src="screenshots/replyradar-dark-1.jpeg" width="24%" />
+  <img src="screenshots/replyradar-dark-2.jpeg" width="24%" />
+  <img src="screenshots/replyradar-dark-3.jpeg" width="24%" />
+  <img src="screenshots/replyradar-dark-4.jpeg" width="24%" />
+</p>
+
+---
+
 ## 🛠️ Tech Stack
 
 - **Kotlin Multiplatform (KMP)** – Shared logic across platforms (Android, iOS, Desktop)
