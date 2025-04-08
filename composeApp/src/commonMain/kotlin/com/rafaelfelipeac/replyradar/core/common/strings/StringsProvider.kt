@@ -1,6 +1,9 @@
 package com.rafaelfelipeac.replyradar.core.common.strings
 
 import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage
+import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.ENGLISH
+import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.PORTUGUESE
+import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.SYSTEM
 
 object StringsProvider {
     private val english = StringsEn
@@ -14,9 +17,9 @@ object StringsProvider {
 
     fun get(language: AppLanguage): Strings {
         return when (language) {
-            AppLanguage.ENGLISH -> english
-            AppLanguage.PORTUGUESE -> portuguese
-            AppLanguage.SYSTEM -> english
+            ENGLISH -> english
+            PORTUGUESE -> portuguese
+            SYSTEM -> english
         }
     }
 }
