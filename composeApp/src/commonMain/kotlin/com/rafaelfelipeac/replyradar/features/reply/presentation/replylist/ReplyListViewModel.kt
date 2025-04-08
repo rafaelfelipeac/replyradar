@@ -44,6 +44,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@Suppress("TooGenericExceptionCaught", "SwallowedException")
 class ReplyListViewModel(
     private val upsertReplyUseCase: UpsertReplyUseCase,
     private val toggleResolveReplyUseCase: ToggleResolveReplyUseCase,
@@ -97,7 +98,9 @@ class ReplyListViewModel(
                 }
             }
 
-            is OnReplyToggle -> { onToggleResolveReply(reply = intent.reply) }
+            is OnReplyToggle -> {
+                onToggleResolveReply(reply = intent.reply)
+            }
 
             is OnTabSelected -> {
                 updateState {
@@ -123,32 +126,47 @@ class ReplyListViewModel(
     private fun getReplies() = viewModelScope.launch {
         updateState { copy(isLoading = true) }
 
-        getRepliesUseCase
-            .getReplies()
-            .collect { replies ->
-                updateState {
-                    copy(
-                        isLoading = false,
-                        replies = replies
-                    )
+        try {
+            getRepliesUseCase
+                .getReplies()
+                .collect { replies ->
+                    updateState {
+                        copy(
+                            isLoading = false,
+                            replies = replies
+                        )
+                    }
                 }
+        } catch (e: Exception) {
+            updateState {
+                copy(
+                    isLoading = false,
+                    errorMessage = ERROR_GET_REPLIES
+                )
             }
+        }
     }
 
     private fun observeResolvedReplies() = viewModelScope.launch {
-        getRepliesUseCase
-            .getReplies(isResolved = true)
-            .collect { resolvedReplies ->
-                updateState { copy(resolvedReplies = resolvedReplies) }
-            }
+        try {
+            getRepliesUseCase
+                .getReplies(isResolved = true)
+                .collect { resolvedReplies ->
+                    updateState { copy(resolvedReplies = resolvedReplies) }
+                }
+        } catch (_: Exception) {
+        }
     }
 
     private fun observeArchivedReplies() = viewModelScope.launch {
-        getRepliesUseCase
-            .getReplies(isArchived = true)
-            .collect { archivedReplies ->
-                updateState { copy(archivedReplies = archivedReplies) }
-            }
+        try {
+            getRepliesUseCase
+                .getReplies(isArchived = true)
+                .collect { archivedReplies ->
+                    updateState { copy(archivedReplies = archivedReplies) }
+                }
+        } catch (_: Exception) {
+        }
     }
 
     private fun onUpsertReply(reply: Reply, actionType: UserActionType) = viewModelScope.launch {
@@ -193,5 +211,6 @@ class ReplyListViewModel(
 
     companion object {
         private const val STOP_TIMEOUT = 5_000L
+        const val ERROR_GET_REPLIES = "error_get_replies"
     }
 }

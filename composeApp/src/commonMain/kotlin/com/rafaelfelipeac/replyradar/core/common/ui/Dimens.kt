@@ -21,13 +21,15 @@ val textSizeSmall = 12.sp
 val textSizeMedium = 16.sp
 val textSizeLarge = 20.sp
 
+val iconSize = 22.dp
+
 val buttonHeight = 34.dp
-val buttonIconSize = 22.dp
 val buttonCornerRadius = 8.dp
 val buttonBorderWidth = 1.dp
 
 val listDividerThickness = 0.5.dp
 
-val listItemResolveSize = 22.dp
 val listItemToggleSize = 24.dp
 val listItemToggleBorderWidth = 1.dp
+
+val settingsAppVersionOffset = 64.dp

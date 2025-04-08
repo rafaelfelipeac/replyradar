@@ -8,19 +8,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.rafaelfelipeac.replyradar.core.common.ui.Background
-import com.rafaelfelipeac.replyradar.core.common.ui.ButtonBorderColor
-import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
 import com.rafaelfelipeac.replyradar.core.common.ui.buttonBorderWidth
 import com.rafaelfelipeac.replyradar.core.common.ui.buttonCornerRadius
 import com.rafaelfelipeac.replyradar.core.common.ui.buttonHeight
-import com.rafaelfelipeac.replyradar.core.common.ui.buttonIconSize
+import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingXSmall
+import com.rafaelfelipeac.replyradar.core.common.ui.theme.buttonBorderColor
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
@@ -32,10 +31,10 @@ fun ReplyOutlinedButton(text: String, icon: DrawableResource? = null, onClick: (
             .padding(horizontal = paddingXSmall),
         onClick = onClick,
         shape = RoundedCornerShape(buttonCornerRadius),
-        border = BorderStroke(buttonBorderWidth, ButtonBorderColor),
+        border = BorderStroke(buttonBorderWidth, colorScheme.buttonBorderColor),
         colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = Background,
-            contentColor = PrimaryColor
+            containerColor = colorScheme.background,
+            contentColor = colorScheme.primary
         ),
         contentPadding = PaddingValues(horizontal = paddingSmall, vertical = paddingXSmall)
     ) {
@@ -46,9 +45,9 @@ fun ReplyOutlinedButton(text: String, icon: DrawableResource? = null, onClick: (
         icon?.let { icon ->
             Icon(
                 modifier = Modifier
-                    .size(buttonIconSize),
+                    .size(iconSize),
                 painter = painterResource(icon),
-                tint = PrimaryColor,
+                tint = colorScheme.primary,
                 contentDescription = text
             )
         }

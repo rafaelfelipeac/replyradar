@@ -8,6 +8,20 @@ sealed class UserActionType(val value: String) {
     data object Archive : UserActionType(ARCHIVE)
     data object Unarchive : UserActionType(UNARCHIVE)
     data object Delete : UserActionType(DELETE)
+
+    companion object {
+        fun fromValue(value: String): UserActionType {
+            return when (value) {
+                CREATE -> Create
+                EDIT -> Edit
+                RESOLVE -> Resolve
+                REOPEN -> Reopen
+                ARCHIVE -> Archive
+                DELETE -> Delete
+                else -> Unarchive
+            }
+        }
+    }
 }
 
 private const val CREATE = "CREATE"

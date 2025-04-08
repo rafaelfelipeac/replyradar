@@ -22,6 +22,8 @@ private fun ReplyListScreenPreview() {
         state = ReplyListState(
             replies = replies
         ),
-        onIntent = {}
+        onIntent = {},
+        onSettingsClick = {},
+        onActivityLogClick = {}
     )
 }

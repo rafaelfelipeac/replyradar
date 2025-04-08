@@ -1,6 +1,7 @@
 package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -16,7 +18,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TabRow
@@ -31,28 +35,24 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rafaelfelipeac.replyradar.core.common.ui.AccentColor
-import com.rafaelfelipeac.replyradar.core.common.ui.Background
-import com.rafaelfelipeac.replyradar.core.common.ui.PrimaryColor
+import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
-import com.rafaelfelipeac.replyradar.core.common.ui.components.fontSizeLarge
+import com.rafaelfelipeac.replyradar.core.common.ui.fontSizeLarge
+import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.spacerSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
+import com.rafaelfelipeac.replyradar.core.common.ui.theme.toolbarIconsColor
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesArchivedScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesOnTheRadarScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesResolvedScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheet
-import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
-import replyradar.composeapp.generated.resources.Res.string
-import replyradar.composeapp.generated.resources.app_name
-import replyradar.composeapp.generated.resources.reply_list_fab_content_description
-import replyradar.composeapp.generated.resources.reply_list_tab_archived
-import replyradar.composeapp.generated.resources.reply_list_tab_on_the_radar
-import replyradar.composeapp.generated.resources.reply_list_tab_resolved
+import replyradar.composeapp.generated.resources.Res.drawable
+import replyradar.composeapp.generated.resources.ic_settings
 
 private const val WEIGHT = 1f
 private const val PAGER_PAGE_COUNT = 3
@@ -61,19 +61,30 @@ private const val RESOLVED_INDEX = 1
 private const val ARCHIVED_INDEX = 2
 
 @Composable
-fun ReplyListScreenRoot(viewModel: ReplyListViewModel = koinViewModel()) {
+fun ReplyListScreenRoot(
+    viewModel: ReplyListViewModel = koinViewModel(),
+    onSettingsClick: () -> Unit,
+    onActivityLogClick: () -> Unit
+) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     ReplyListScreen(
         state = state,
         onIntent = { intent ->
             viewModel.onIntent(intent)
-        }
+        },
+        onSettingsClick = onSettingsClick,
+        onActivityLogClick = onActivityLogClick
     )
 }
 
 @Composable
-fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> Unit) {
+fun ReplyListScreen(
+    state: ReplyListState,
+    onIntent: (ReplyListScreenIntent) -> Unit,
+    onSettingsClick: () -> Unit,
+    onActivityLogClick: () -> Unit
+) {
     val pagerState = rememberPagerState { PAGER_PAGE_COUNT }
 
     LaunchedEffect(state.selectedTabIndex) {
@@ -85,16 +96,17 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
     }
 
     Scaffold(
-        containerColor = Background,
+        containerColor = colorScheme.background,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { onIntent(OnAddReplyClick) },
-                containerColor = AccentColor
+                containerColor = colorScheme.secondary
             ) {
                 Icon(
                     imageVector = Icons.Filled.Add,
-                    contentDescription = stringResource(string.reply_list_fab_content_description),
-                    tint = Background
+                    contentDescription =
+                    LocalReplyRadarStrings.current.replyListFabContentDescription,
+                    tint = colorScheme.background
                 )
             }
         }
@@ -105,21 +117,13 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                 .padding(bottom = paddingValues.calculateBottomPadding())
                 .statusBarsPadding()
         ) {
-            Text(
-                modifier = Modifier
-                    .padding(top = paddingMedium)
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                text = stringResource(string.app_name),
-                style = MaterialTheme.typography.titleLarge.copy(fontSize = fontSizeLarge),
-                color = PrimaryColor
-            )
+            TopBar(onActivityLogClick = onActivityLogClick, onSettingsClick = onSettingsClick)
 
             Surface(
                 modifier = Modifier
                     .weight(WEIGHT)
                     .fillMaxWidth(),
-                color = Background
+                color = colorScheme.background
             ) {
                 Column(
                     horizontalAlignment = CenterHorizontally
@@ -133,12 +137,12 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                             )
                             .fillMaxWidth(),
                         selectedTabIndex = state.selectedTabIndex,
-                        containerColor = Background,
+                        containerColor = colorScheme.background,
                         indicator = { tabPositions ->
                             TabRowDefaults.SecondaryIndicator(
                                 modifier = Modifier
                                     .tabIndicatorOffset(tabPositions[state.selectedTabIndex]),
-                                color = AccentColor
+                                color = colorScheme.secondary
                             )
                         }
                     ) {
@@ -146,21 +150,21 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
                             modifier = Modifier.weight(WEIGHT),
                             selected = state.selectedTabIndex == ON_THE_RADAR_INDEX,
                             onClick = { onIntent(OnTabSelected(ON_THE_RADAR_INDEX)) },
-                            text = stringResource(string.reply_list_tab_on_the_radar)
+                            text = LocalReplyRadarStrings.current.replyListTabOnTheRadar
                         )
 
                         ReplyTab(
                             modifier = Modifier.weight(WEIGHT),
                             selected = state.selectedTabIndex == RESOLVED_INDEX,
                             onClick = { onIntent(OnTabSelected(RESOLVED_INDEX)) },
-                            text = stringResource(string.reply_list_tab_resolved)
+                            text = LocalReplyRadarStrings.current.replyListTabResolved
                         )
 
                         ReplyTab(
                             modifier = Modifier.weight(WEIGHT),
                             selected = state.selectedTabIndex == ARCHIVED_INDEX,
                             onClick = { onIntent(OnTabSelected(ARCHIVED_INDEX)) },
-                            text = stringResource(string.reply_list_tab_archived)
+                            text = LocalReplyRadarStrings.current.replyListTabArchived
                         )
                     }
 
@@ -188,6 +192,50 @@ fun ReplyListScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> 
 }
 
 @Composable
+private fun TopBar(onActivityLogClick: () -> Unit, onSettingsClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(top = paddingMedium, start = paddingMedium)
+                .align(Alignment.CenterStart)
+                .clickable { onActivityLogClick() },
+            textAlign = TextAlign.Center,
+            text = LocalReplyRadarStrings.current.replyListActivityLog,
+            style = MaterialTheme.typography.bodySmall,
+            color = colorScheme.toolbarIconsColor
+        )
+
+        Text(
+            modifier = Modifier
+                .padding(top = paddingMedium)
+                .align(Alignment.Center),
+            textAlign = TextAlign.Center,
+            text = LocalReplyRadarStrings.current.appName,
+            style = MaterialTheme.typography.titleLarge.copy(fontSize = fontSizeLarge),
+            color = colorScheme.onBackground
+        )
+
+        IconButton(
+            onClick = { onSettingsClick() },
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .padding(top = paddingMedium, end = paddingMedium)
+        ) {
+            Icon(
+                modifier = Modifier
+                    .size(iconSize),
+                painter = painterResource(drawable.ic_settings),
+                contentDescription = LocalReplyRadarStrings.current.settingsTitle,
+                tint = colorScheme.toolbarIconsColor
+            )
+        }
+    }
+}
+
+@Composable
 private fun RepliesScreen(
     pageIndex: Int,
     state: ReplyListState,
@@ -201,7 +249,7 @@ private fun RepliesScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Background),
+                .background(colorScheme.background),
             verticalArrangement = Arrangement.Center
         ) {
             Box(
