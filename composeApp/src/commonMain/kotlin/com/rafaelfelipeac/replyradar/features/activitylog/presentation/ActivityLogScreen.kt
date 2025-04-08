@@ -85,7 +85,7 @@ fun ActivityLogScreen(viewModel: ActivityLogViewModel = koinViewModel(), onBackC
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription =
-                            LocalReplyRadarStrings.current.activityLogBackButton
+                                LocalReplyRadarStrings.current.activityLogBackButton
                         )
                     }
                 }
@@ -97,29 +97,47 @@ fun ActivityLogScreen(viewModel: ActivityLogViewModel = koinViewModel(), onBackC
                 .fillMaxSize()
                 .padding(top = paddingMedium)
                 .background(colorScheme.background),
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Top
         ) {
             Box(
                 modifier = Modifier
                     .padding(paddingValues)
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center
+                    .fillMaxSize()
             ) {
-                if (state.isLoading) {
-                    ReplyProgress()
-                } else {
-                    when {
-                        state.errorMessage != null -> ReplyRadarError(
-                            errorMessage = getErrorMessage(
-                                state.errorMessage
+                when {
+                    state.isLoading -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            ReplyProgress()
+                        }
+                    }
+
+                    state.errorMessage != null -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            ReplyRadarError(
+                                errorMessage = getErrorMessage(state.errorMessage)
                             )
-                        )
+                        }
+                    }
 
-                        state.activityLogItems.isEmpty() -> ReplyRadarPlaceholder(
-                            LocalReplyRadarStrings.current.activityLogPlaceholder
-                        )
+                    state.activityLogItems.isEmpty() -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            ReplyRadarPlaceholder(
+                                LocalReplyRadarStrings.current.activityLogPlaceholder
+                            )
+                        }
+                    }
 
-                        else -> ActivityLogList(state)
+                    else -> {
+                        ActivityLogList(state)
                     }
                 }
             }
@@ -181,7 +199,7 @@ fun ActivityLogListItem(userAction: UserAction) {
                         ),
                         tint = colorScheme.primary,
                         contentDescription =
-                        LocalReplyRadarStrings.current.activityLogItemContentDescription
+                            LocalReplyRadarStrings.current.activityLogItemContentDescription
                     )
                 }
 

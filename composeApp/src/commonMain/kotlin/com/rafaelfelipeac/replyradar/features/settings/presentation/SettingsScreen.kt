@@ -94,7 +94,6 @@ fun SettingsScreen(
                 Theme(state = state, viewModel = viewModel)
                 HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
                 Language(state = state, viewModel = viewModel)
-                HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
             }
 
             AppVersionFooter(
