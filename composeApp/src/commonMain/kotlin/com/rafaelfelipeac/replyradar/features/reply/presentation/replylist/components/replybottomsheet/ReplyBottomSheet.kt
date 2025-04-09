@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
+import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnAddReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDeleteReply
@@ -29,29 +30,40 @@ fun ReplyBottomSheet(
     ) {
         when (replyBottomSheetState.replyBottomSheetMode) {
             CREATE -> {
-                ReplyBottomSheetContent(
-                    replyBottomSheetState = ReplyBottomSheetState(CREATE),
+                BottomSheetContent(
+                    state = ReplyBottomSheetState(CREATE),
                     onComplete = { onIntent(OnAddReply(it)) },
-                    onResolve = { onIntent(OnToggleResolve(it)) },
-                    onArchive = { onIntent(OnToggleArchive(it)) },
-                    onDelete = { onIntent(OnDeleteReply(it)) }
+                    onIntent = onIntent
                 )
             }
 
             EDIT -> {
                 if (replyBottomSheetState.reply != null) {
-                    ReplyBottomSheetContent(
-                        replyBottomSheetState = ReplyBottomSheetState(
+                    BottomSheetContent(
+                        state = ReplyBottomSheetState(
                             EDIT,
                             reply = replyBottomSheetState.reply
                         ),
                         onComplete = { onIntent(OnEditReply(it)) },
-                        onResolve = { onIntent(OnToggleResolve(it)) },
-                        onArchive = { onIntent(OnToggleArchive(it)) },
-                        onDelete = { onIntent(OnDeleteReply(it)) }
+                        onIntent = onIntent
                     )
                 }
             }
         }
     }
+}
+
+@Composable
+private fun BottomSheetContent(
+    state: ReplyBottomSheetState,
+    onComplete: (Reply) -> Unit,
+    onIntent: (ReplyListScreenIntent) -> Unit
+) {
+    ReplyBottomSheetContent(
+        replyBottomSheetState = state,
+        onComplete = onComplete,
+        onResolve = { onIntent(OnToggleResolve(it)) },
+        onArchive = { onIntent(OnToggleArchive(it)) },
+        onDelete = { onIntent(OnDeleteReply(it)) }
+    )
 }

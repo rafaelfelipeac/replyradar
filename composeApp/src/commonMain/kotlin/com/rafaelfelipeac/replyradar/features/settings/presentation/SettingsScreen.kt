@@ -20,6 +20,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -105,10 +106,10 @@ fun SettingsScreen(
 }
 
 @Composable
-private fun Theme(state: SettingsState, viewModel: SettingsViewModel) {
+private fun Theme(state: SettingsState, viewModel: SettingsViewModel) { // remove the ViewModel, use just the onIntent
     Text(
         text = LocalReplyRadarStrings.current.settingsTheme,
-        style = MaterialTheme.typography.titleMedium
+        style = typography.titleMedium
     )
 
     Spacer(modifier = Modifier.height(paddingXSmall))
@@ -123,7 +124,7 @@ private fun Theme(state: SettingsState, viewModel: SettingsViewModel) {
 private fun Language(state: SettingsState, viewModel: SettingsViewModel) {
     Text(
         text = LocalReplyRadarStrings.current.settingsLanguage,
-        style = MaterialTheme.typography.titleMedium
+        style = typography.titleMedium
     )
 
     Spacer(modifier = Modifier.height(paddingXSmall))
@@ -233,7 +234,7 @@ fun AppVersionFooter(modifier: Modifier = Modifier) {
 
         Text(
             text = "${LocalReplyRadarStrings.current.settingsAppVersion} ${getAppVersion()}",
-            style = MaterialTheme.typography.bodySmall,
+            style = typography.bodySmall,
             modifier = Modifier
                 .align(Alignment.Center)
                 .padding(top = paddingMedium)

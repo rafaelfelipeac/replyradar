@@ -17,9 +17,7 @@ fun RepliesResolvedScreen(state: ReplyListState, onIntent: (ReplyListScreenInten
         ReplyList(
             modifier = Modifier.fillMaxSize(),
             replies = state.resolvedReplies,
-            onReplyClick = {
-                onIntent(OnReplyClick(it))
-            }
+            onReplyClick = { onIntent(OnReplyClick(it)) }
         )
     }
 }

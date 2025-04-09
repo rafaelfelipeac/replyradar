@@ -128,8 +128,7 @@ fun ReplyBottomSheetContent(
                     modifier = Modifier
                         .wrapContentWidth()
                         .align(Alignment.CenterVertically),
-                    text =
-                    if (state.reply == null) {
+                    text = if (state.reply == null) {
                         LocalReplyRadarStrings.current.replyListBottomSheetAdd
                     } else {
                         LocalReplyRadarStrings.current.replyListBottomSheetSave

@@ -32,7 +32,7 @@ class ReplyRepositoryImpl(
             reply.toReplyEntity().copy(
                 resolvedAt = clock.now(),
                 isResolved = !reply.isResolved,
-                isArchived = reply.isArchived
+//                isArchived = reply.isArchived
             )
         )
     }
@@ -42,7 +42,7 @@ class ReplyRepositoryImpl(
             reply.toReplyEntity().copy(
                 archivedAt = clock.now(),
                 isArchived = !reply.isArchived,
-                isResolved = reply.isResolved
+//                isResolved = reply.isResolved
             )
         )
     }

@@ -38,6 +38,7 @@ class SettingsViewModel(
         viewModelScope.launch {
             val theme = getThemeUseCase.getTheme().first()
             val language = getLanguageUseCase.getLanguage().first()
+
             _state.value = _state.value.copy(
                 theme = theme,
                 language = language
