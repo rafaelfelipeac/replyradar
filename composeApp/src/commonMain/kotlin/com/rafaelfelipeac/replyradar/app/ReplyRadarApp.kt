@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
-import com.rafaelfelipeac.replyradar.app.navigation.AppNavHost
+import com.rafaelfelipeac.replyradar.core.navigation.AppNavHost
 import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.strings.StringsProvider
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.DarkColorScheme
