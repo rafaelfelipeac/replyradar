@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -19,7 +20,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -37,6 +38,7 @@ import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingXSmall
+import com.rafaelfelipeac.replyradar.core.common.ui.radioButtonSize
 import com.rafaelfelipeac.replyradar.core.common.ui.settingsAppVersionOffset
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
@@ -45,7 +47,12 @@ import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.SYSTEM
 import com.rafaelfelipeac.replyradar.core.util.getAppVersion
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectLanguage
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectTheme
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
+import replyradar.composeapp.generated.resources.Res.drawable
+import replyradar.composeapp.generated.resources.ic_email
+import replyradar.composeapp.generated.resources.ic_rate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -85,16 +92,13 @@ fun SettingsScreen(
                     .verticalScroll(scrollState)
                     .padding(bottom = settingsAppVersionOffset)
             ) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onActivityLogClick() },
-                    text = LocalReplyRadarStrings.current.activityLogTitle
-                )
+                ActivityLog(onActivityLogClick = onActivityLogClick)
                 HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
                 Theme(state = state, viewModel = viewModel)
                 HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
                 Language(state = state, viewModel = viewModel)
+                HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
+                App()
             }
 
             AppVersionFooter(
@@ -106,10 +110,45 @@ fun SettingsScreen(
 }
 
 @Composable
+fun App() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        SettingsItem(
+            text = LocalReplyRadarStrings.current.settingsFeedbackTitle,
+            description = LocalReplyRadarStrings.current.settingsFeedbackDescription,
+            icon = drawable.ic_email,
+            onClick = { }
+        )
+
+        Spacer(modifier = Modifier.height(paddingSmall))
+
+        SettingsItem(
+            text = LocalReplyRadarStrings.current.settingsRateTitle,
+            description = LocalReplyRadarStrings.current.settingsRateDescription,
+            icon = drawable.ic_rate,
+            onClick = { }
+        )
+    }
+}
+
+@Composable
+private fun ActivityLog(onActivityLogClick: () -> Unit) {
+    Text(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onActivityLogClick() },
+        text = LocalReplyRadarStrings.current.activityLogTitle
+    )
+}
+
+@Composable
 private fun Theme(state: SettingsState, viewModel: SettingsViewModel) { // remove the ViewModel, use just the onIntent
     Text(
         text = LocalReplyRadarStrings.current.settingsTheme,
-        style = typography.titleMedium
+        style = typography.titleMedium,
+        color = colorScheme.primary
     )
 
     Spacer(modifier = Modifier.height(paddingXSmall))
@@ -124,7 +163,8 @@ private fun Theme(state: SettingsState, viewModel: SettingsViewModel) { // remov
 private fun Language(state: SettingsState, viewModel: SettingsViewModel) {
     Text(
         text = LocalReplyRadarStrings.current.settingsLanguage,
-        style = typography.titleMedium
+        style = typography.titleMedium,
+        color = colorScheme.primary
     )
 
     Spacer(modifier = Modifier.height(paddingXSmall))
@@ -166,9 +206,11 @@ private fun ThemeOption(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(paddingSmall)
             .clickable { onThemeSelected(theme) }
     ) {
         RadioButton(
+            modifier = Modifier.size(radioButtonSize),
             selected = theme == selectedTheme,
             onClick = { onThemeSelected(theme) }
         )
@@ -203,9 +245,11 @@ private fun LanguageOption(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(paddingSmall)
             .clickable { onLanguageSelected(language) }
     ) {
         RadioButton(
+            modifier = Modifier.size(radioButtonSize),
             selected = language == selectedLanguage,
             onClick = { onLanguageSelected(language) }
         )
@@ -224,11 +268,48 @@ private fun getLanguageLabel(language: AppLanguage) = when (language) {
 }
 
 @Composable
+fun SettingsItem(
+    text: String,
+    description: String,
+    icon: DrawableResource,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
+            .padding(vertical = paddingSmall),
+    ) {
+        Icon(
+            modifier = Modifier
+                .padding(end = paddingMedium),
+            painter = painterResource(icon),
+            tint = colorScheme.primary,
+            contentDescription = null
+        )
+
+        Column {
+            Text(
+                modifier = Modifier,
+                text = text,
+                color = colorScheme.primary
+            )
+
+            Text(
+                modifier = Modifier,
+                text = description,
+                style = typography.bodyMedium,
+            )
+        }
+    }
+}
+
+@Composable
 fun AppVersionFooter(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background)
+            .background(colorScheme.background)
     ) {
         HorizontalDivider(modifier = Modifier.padding(bottom = paddingMedium))
 

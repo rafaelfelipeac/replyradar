@@ -33,3 +33,5 @@ val listItemToggleSize = 24.dp
 val listItemToggleBorderWidth = 1.dp
 
 val settingsAppVersionOffset = 64.dp
+
+val radioButtonSize = 24.dp

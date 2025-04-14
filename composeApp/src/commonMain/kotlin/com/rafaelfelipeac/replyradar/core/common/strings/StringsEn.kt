@@ -37,6 +37,10 @@ object StringsEn : Strings {
     override val settingsLanguageEnglish = "English"
     override val settingsLanguagePortuguese = "Portuguese"
     override val settingsLanguageSystem = "Use system default"
+    override val settingsFeedbackTitle = "Feedback"
+    override val settingsFeedbackDescription = "Send us an email with questions, suggestions or to report a bug. Your feedback helps make Reply Radar better!"
+    override val settingsRateTitle = "Rate the app"
+    override val settingsRateDescription = "Enjoying Reply Radar? Leave a review on the Play Store and help others discover the app!"
     override val settingsAppVersion = "Reply Radar - Version:"
 
     override val activityLogTitle = "Activity Log"
