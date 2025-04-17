@@ -31,10 +31,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.rafaelfelipeac.replyradar.core.AppConstants.EMAIL
+import com.rafaelfelipeac.replyradar.core.AppConstants.PACKAGE_NAME
 import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage
 import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.ENGLISH
 import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.PORTUGUESE
 import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.common.ui.iconSizeLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingXSmall
@@ -45,6 +48,8 @@ import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.LIGHT
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.SYSTEM
 import com.rafaelfelipeac.replyradar.core.util.getAppVersion
+import com.rafaelfelipeac.replyradar.core.util.openEmailApp
+import com.rafaelfelipeac.replyradar.core.util.openPlayStoreApp
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectLanguage
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectTheme
 import org.jetbrains.compose.resources.DrawableResource
@@ -111,24 +116,32 @@ fun SettingsScreen(
 
 @Composable
 fun App() {
+    val strings = LocalReplyRadarStrings.current
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
     ) {
         SettingsItem(
-            text = LocalReplyRadarStrings.current.settingsFeedbackTitle,
-            description = LocalReplyRadarStrings.current.settingsFeedbackDescription,
+            text = strings.settingsFeedbackTitle,
+            description = strings.settingsFeedbackDescription,
             icon = drawable.ic_email,
-            onClick = { }
+            onClick = {
+                openEmailApp(
+                    to = EMAIL,
+                    subject = strings.settingsFeedbackEmailSubject,
+                    body = strings.settingsFeedbackEmailBody
+                )
+            }
         )
 
         Spacer(modifier = Modifier.height(paddingSmall))
 
         SettingsItem(
-            text = LocalReplyRadarStrings.current.settingsRateTitle,
-            description = LocalReplyRadarStrings.current.settingsRateDescription,
+            text = strings.settingsRateTitle,
+            description = strings.settingsRateDescription,
             icon = drawable.ic_rate,
-            onClick = { }
+            onClick = { openPlayStoreApp(PACKAGE_NAME) }
         )
     }
 }
@@ -283,7 +296,8 @@ fun SettingsItem(
     ) {
         Icon(
             modifier = Modifier
-                .padding(end = paddingMedium),
+                .padding(end = paddingMedium)
+                .size(iconSizeLarge),
             painter = painterResource(icon),
             tint = colorScheme.primary,
             contentDescription = null
