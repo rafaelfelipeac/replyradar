@@ -31,8 +31,7 @@ class ReplyRepositoryImpl(
         replyDao.update(
             reply.toReplyEntity().copy(
                 resolvedAt = clock.now(),
-                isResolved = !reply.isResolved,
-                isArchived = reply.isArchived
+                isResolved = !reply.isResolved
             )
         )
     }
@@ -41,8 +40,7 @@ class ReplyRepositoryImpl(
         replyDao.update(
             reply.toReplyEntity().copy(
                 archivedAt = clock.now(),
-                isArchived = !reply.isArchived,
-                isResolved = reply.isResolved
+                isArchived = !reply.isArchived
             )
         )
     }

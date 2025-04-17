@@ -19,8 +19,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TabRow
@@ -125,9 +125,7 @@ fun ReplyListScreen(
                     .fillMaxWidth(),
                 color = colorScheme.background
             ) {
-                Column(
-                    horizontalAlignment = CenterHorizontally
-                ) {
+                Column(horizontalAlignment = CenterHorizontally) {
                     TabRow(
                         modifier = Modifier
                             .padding(
@@ -204,7 +202,7 @@ private fun TopBar(onActivityLogClick: () -> Unit, onSettingsClick: () -> Unit) 
                 .clickable { onActivityLogClick() },
             textAlign = TextAlign.Center,
             text = LocalReplyRadarStrings.current.replyListActivityLog,
-            style = MaterialTheme.typography.bodySmall,
+            style = typography.bodySmall,
             color = colorScheme.toolbarIconsColor
         )
 
@@ -214,7 +212,7 @@ private fun TopBar(onActivityLogClick: () -> Unit, onSettingsClick: () -> Unit) 
                 .align(Alignment.Center),
             textAlign = TextAlign.Center,
             text = LocalReplyRadarStrings.current.appName,
-            style = MaterialTheme.typography.titleLarge.copy(fontSize = fontSizeLarge),
+            style = typography.titleLarge.copy(fontSize = fontSizeLarge),
             color = colorScheme.onBackground
         )
 

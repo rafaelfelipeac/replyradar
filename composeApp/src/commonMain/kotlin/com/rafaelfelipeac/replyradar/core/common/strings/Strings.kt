@@ -35,6 +35,12 @@ interface Strings {
     val settingsLanguageEnglish: String
     val settingsLanguagePortuguese: String
     val settingsLanguageSystem: String
+    val settingsFeedbackTitle: String
+    val settingsFeedbackDescription: String
+    val settingsFeedbackEmailSubject: String
+    val settingsFeedbackEmailBody: String
+    val settingsRateTitle: String
+    val settingsRateDescription: String
     val settingsAppVersion: String
 
     val activityLogTitle: String

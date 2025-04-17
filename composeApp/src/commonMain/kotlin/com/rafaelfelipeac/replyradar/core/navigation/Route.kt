@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.replyradar.app.navigation
+package com.rafaelfelipeac.replyradar.core.navigation
 
 import kotlinx.serialization.Serializable
 

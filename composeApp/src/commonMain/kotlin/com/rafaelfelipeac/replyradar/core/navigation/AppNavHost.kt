@@ -1,18 +1,18 @@
-package com.rafaelfelipeac.replyradar.app.navigation
+package com.rafaelfelipeac.replyradar.core.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.rafaelfelipeac.replyradar.app.navigation.NavigationAnimation.enter
-import com.rafaelfelipeac.replyradar.app.navigation.NavigationAnimation.exit
-import com.rafaelfelipeac.replyradar.app.navigation.NavigationAnimation.popEnter
-import com.rafaelfelipeac.replyradar.app.navigation.NavigationAnimation.popExit
-import com.rafaelfelipeac.replyradar.app.navigation.Route.ActivityLog
-import com.rafaelfelipeac.replyradar.app.navigation.Route.ReplyGraph
-import com.rafaelfelipeac.replyradar.app.navigation.Route.ReplyList
-import com.rafaelfelipeac.replyradar.app.navigation.Route.Settings
+import com.rafaelfelipeac.replyradar.core.navigation.NavigationAnimation.enter
+import com.rafaelfelipeac.replyradar.core.navigation.NavigationAnimation.exit
+import com.rafaelfelipeac.replyradar.core.navigation.NavigationAnimation.popEnter
+import com.rafaelfelipeac.replyradar.core.navigation.NavigationAnimation.popExit
+import com.rafaelfelipeac.replyradar.core.navigation.Route.ActivityLog
+import com.rafaelfelipeac.replyradar.core.navigation.Route.ReplyGraph
+import com.rafaelfelipeac.replyradar.core.navigation.Route.ReplyList
+import com.rafaelfelipeac.replyradar.core.navigation.Route.Settings
 import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogScreen
 import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogViewModel
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenRoot

@@ -6,7 +6,7 @@ style:
       - 'Test'
   MaxLineLength:
     active: true
-    maxLineLength: 120
+    maxLineLength: 150
   WildcardImport:
     active: true
   UnusedPrivateMember:
@@ -45,6 +45,7 @@ complexity:
   TooManyFunctions:
     active: true
     thresholdInClasses: 15
+    thresholdInFiles: 15
 
 comments:
   UndocumentedPublicClass:

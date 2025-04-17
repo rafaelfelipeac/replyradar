@@ -21,8 +21,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -105,43 +105,47 @@ fun ActivityLogScreen(viewModel: ActivityLogViewModel = koinViewModel(), onBackC
                     .fillMaxSize()
             ) {
                 when {
-                    state.isLoading -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            ReplyProgress()
-                        }
-                    }
-
-                    state.errorMessage != null -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            ReplyRadarError(
-                                errorMessage = getErrorMessage(state.errorMessage)
-                            )
-                        }
-                    }
-
-                    state.activityLogItems.isEmpty() -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            ReplyRadarPlaceholder(
-                                LocalReplyRadarStrings.current.activityLogPlaceholder
-                            )
-                        }
-                    }
-
-                    else -> {
-                        ActivityLogList(state)
-                    }
+                    state.isLoading -> Loading()
+                    state.errorMessage != null -> Error(state)
+                    state.activityLogItems.isEmpty() -> Placeholder()
+                    else -> ActivityLogList(state)
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun Loading() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        ReplyProgress()
+    }
+}
+
+@Composable
+private fun Error(state: ActivityLogState) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        ReplyRadarError(
+            errorMessage = getErrorMessage(state.errorMessage)
+        )
+    }
+}
+
+@Composable
+private fun Placeholder() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        ReplyRadarPlaceholder(
+            message = LocalReplyRadarStrings.current.activityLogPlaceholder
+        )
     }
 }
 
@@ -210,11 +214,11 @@ fun ActivityLogListItem(userAction: UserAction) {
                             targetType = targetType,
                             targetName = targetName
                         ),
-                        style = MaterialTheme.typography.bodyMedium
+                        style = typography.bodyMedium
                     )
                     Text(
                         text = formatTimestamp(createdAt),
-                        style = MaterialTheme.typography.bodySmall
+                        style = typography.bodySmall
                     )
                 }
             }

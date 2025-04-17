@@ -1,5 +1,7 @@
 package com.rafaelfelipeac.replyradar.core.common.strings
 
+import com.rafaelfelipeac.replyradar.core.util.getAppVersion
+
 object StringsEn : Strings {
     override val appName = "Reply Radar"
     override val genericErrorMessage = "An unexpected error occurred."
@@ -37,6 +39,24 @@ object StringsEn : Strings {
     override val settingsLanguageEnglish = "English"
     override val settingsLanguagePortuguese = "Portuguese"
     override val settingsLanguageSystem = "Use system default"
+    override val settingsFeedbackTitle = "Feedback"
+    override val settingsFeedbackDescription =
+        "Send us an email with questions, suggestions or to report a bug. Your feedback helps make Reply Radar better!"
+    override val settingsFeedbackEmailSubject = "Reply Radar - Feedback & Suggestions"
+    override val settingsFeedbackEmailBody = """
+Hello!
+
+Feel free to share your questions, suggestions or report a bug. 
+
+All feedback is very welcome :)
+
+---
+
+App version: ${getAppVersion()}
+    """.trimIndent()
+    override val settingsRateTitle = "Rate the app"
+    override val settingsRateDescription =
+        "Enjoying Reply Radar? Leave a review on the Play Store and help others discover the app!"
     override val settingsAppVersion = "Reply Radar - Version:"
 
     override val activityLogTitle = "Activity Log"

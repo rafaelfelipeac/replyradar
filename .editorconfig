@@ -5,3 +5,6 @@ ktlint_disabled_rules=trailing-comma
 [**/build/generated/**]
 ktlint_disabled_rules=indent,needless_blank_line,insert_final_newline
 disabled_rules = filename,import-order
+
+[**/core/common/strings/*.kt]
+max_line_length = off

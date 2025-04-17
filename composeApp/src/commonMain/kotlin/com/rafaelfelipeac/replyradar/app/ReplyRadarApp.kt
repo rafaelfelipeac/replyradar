@@ -8,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
-import com.rafaelfelipeac.replyradar.app.navigation.AppNavHost
 import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.strings.StringsProvider
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.DarkColorScheme
@@ -16,6 +15,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.theme.LightColorScheme
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.ReplyRadarTheme
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.SYSTEM
+import com.rafaelfelipeac.replyradar.core.navigation.AppNavHost
 import com.rafaelfelipeac.replyradar.features.app.settings.AppSettingsViewModel
 import org.koin.compose.viewmodel.koinViewModel
 

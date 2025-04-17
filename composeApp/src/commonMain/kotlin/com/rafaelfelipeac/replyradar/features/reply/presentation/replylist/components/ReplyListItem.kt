@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -66,7 +66,7 @@ fun ReplyListItem(
                     if (subject.isNotEmpty()) {
                         ReplyListItemLabel(
                             label = subject,
-                            style = MaterialTheme.typography.bodySmall
+                            style = typography.bodySmall
                         )
                     }
                 }
@@ -76,7 +76,7 @@ fun ReplyListItem(
 }
 
 @Composable
-fun ReplyListItemLabel(label: String, style: TextStyle = MaterialTheme.typography.titleMedium) {
+fun ReplyListItemLabel(label: String, style: TextStyle = typography.titleMedium) {
     Text(
         text = label,
         style = style,

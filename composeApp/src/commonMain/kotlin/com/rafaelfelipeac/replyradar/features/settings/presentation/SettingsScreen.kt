@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -19,7 +20,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -29,22 +31,33 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.rafaelfelipeac.replyradar.core.AppConstants.EMAIL
+import com.rafaelfelipeac.replyradar.core.AppConstants.PACKAGE_NAME
 import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage
 import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.ENGLISH
 import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.PORTUGUESE
 import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.common.ui.iconSizeLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingXSmall
+import com.rafaelfelipeac.replyradar.core.common.ui.radioButtonSize
 import com.rafaelfelipeac.replyradar.core.common.ui.settingsAppVersionOffset
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.LIGHT
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.SYSTEM
 import com.rafaelfelipeac.replyradar.core.util.getAppVersion
+import com.rafaelfelipeac.replyradar.core.util.openEmailApp
+import com.rafaelfelipeac.replyradar.core.util.openPlayStoreApp
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectLanguage
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectTheme
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
+import replyradar.composeapp.generated.resources.Res.drawable
+import replyradar.composeapp.generated.resources.ic_email
+import replyradar.composeapp.generated.resources.ic_rate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -84,16 +97,13 @@ fun SettingsScreen(
                     .verticalScroll(scrollState)
                     .padding(bottom = settingsAppVersionOffset)
             ) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onActivityLogClick() },
-                    text = LocalReplyRadarStrings.current.activityLogTitle
-                )
+                ActivityLog(onActivityLogClick = onActivityLogClick)
                 HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
-                Theme(state = state, viewModel = viewModel)
+                Theme(state = state, onIntent = { viewModel.onIntent(it) })
                 HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
-                Language(state = state, viewModel = viewModel)
+                Language(state = state, onIntent = { viewModel.onIntent(it) })
+                HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
+                App()
             }
 
             AppVersionFooter(
@@ -105,34 +115,76 @@ fun SettingsScreen(
 }
 
 @Composable
-private fun Theme(state: SettingsState, viewModel: SettingsViewModel) {
+fun App() {
+    val strings = LocalReplyRadarStrings.current
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        SettingsItem(
+            text = strings.settingsFeedbackTitle,
+            description = strings.settingsFeedbackDescription,
+            icon = drawable.ic_email,
+            onClick = {
+                openEmailApp(
+                    to = EMAIL,
+                    subject = strings.settingsFeedbackEmailSubject,
+                    body = strings.settingsFeedbackEmailBody
+                )
+            }
+        )
+
+        Spacer(modifier = Modifier.height(paddingSmall))
+
+        SettingsItem(
+            text = strings.settingsRateTitle,
+            description = strings.settingsRateDescription,
+            icon = drawable.ic_rate,
+            onClick = { openPlayStoreApp(PACKAGE_NAME) }
+        )
+    }
+}
+
+@Composable
+private fun ActivityLog(onActivityLogClick: () -> Unit) {
+    Text(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onActivityLogClick() },
+        text = LocalReplyRadarStrings.current.activityLogTitle
+    )
+}
+
+@Composable
+private fun Theme(state: SettingsState, onIntent: (SettingsIntent) -> Unit) {
     Text(
         text = LocalReplyRadarStrings.current.settingsTheme,
-        style = MaterialTheme.typography.titleMedium
+        style = typography.titleMedium,
+        color = colorScheme.primary
     )
 
     Spacer(modifier = Modifier.height(paddingXSmall))
 
     ThemeOptions(
         state = state,
-        onThemeSelected = { theme -> viewModel.onIntent(OnSelectTheme(theme)) }
+        onThemeSelected = { theme -> onIntent(OnSelectTheme(theme)) }
     )
 }
 
 @Composable
-private fun Language(state: SettingsState, viewModel: SettingsViewModel) {
+private fun Language(state: SettingsState, onIntent: (SettingsIntent) -> Unit) {
     Text(
         text = LocalReplyRadarStrings.current.settingsLanguage,
-        style = MaterialTheme.typography.titleMedium
+        style = typography.titleMedium,
+        color = colorScheme.primary
     )
 
     Spacer(modifier = Modifier.height(paddingXSmall))
 
     LanguageOptions(
         state = state,
-        onLanguageSelected = { language ->
-            viewModel.onIntent(OnSelectLanguage(language))
-        }
+        onLanguageSelected = { language -> onIntent(OnSelectLanguage(language)) }
     )
 }
 
@@ -165,9 +217,11 @@ private fun ThemeOption(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(paddingSmall)
             .clickable { onThemeSelected(theme) }
     ) {
         RadioButton(
+            modifier = Modifier.size(radioButtonSize),
             selected = theme == selectedTheme,
             onClick = { onThemeSelected(theme) }
         )
@@ -202,9 +256,11 @@ private fun LanguageOption(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(paddingSmall)
             .clickable { onLanguageSelected(language) }
     ) {
         RadioButton(
+            modifier = Modifier.size(radioButtonSize),
             selected = language == selectedLanguage,
             onClick = { onLanguageSelected(language) }
         )
@@ -223,17 +279,50 @@ private fun getLanguageLabel(language: AppLanguage) = when (language) {
 }
 
 @Composable
+fun SettingsItem(text: String, description: String, icon: DrawableResource, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
+            .padding(vertical = paddingSmall)
+    ) {
+        Icon(
+            modifier = Modifier
+                .padding(end = paddingMedium)
+                .size(iconSizeLarge),
+            painter = painterResource(icon),
+            tint = colorScheme.primary,
+            contentDescription = null
+        )
+
+        Column {
+            Text(
+                modifier = Modifier,
+                text = text,
+                color = colorScheme.primary
+            )
+
+            Text(
+                modifier = Modifier,
+                text = description,
+                style = typography.bodyMedium
+            )
+        }
+    }
+}
+
+@Composable
 fun AppVersionFooter(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background)
+            .background(colorScheme.background)
     ) {
         HorizontalDivider(modifier = Modifier.padding(bottom = paddingMedium))
 
         Text(
             text = "${LocalReplyRadarStrings.current.settingsAppVersion} ${getAppVersion()}",
-            style = MaterialTheme.typography.bodySmall,
+            style = typography.bodySmall,
             modifier = Modifier
                 .align(Alignment.Center)
                 .padding(top = paddingMedium)
