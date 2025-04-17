@@ -12,7 +12,7 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 @Composable
 fun RepliesResolvedScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> Unit) {
     if (state.resolvedReplies.isEmpty()) {
-        ReplyRadarPlaceholder(LocalReplyRadarStrings.current.replyListPlaceholderResolved)
+        ReplyRadarPlaceholder(message = LocalReplyRadarStrings.current.replyListPlaceholderResolved)
     } else {
         ReplyList(
             modifier = Modifier.fillMaxSize(),

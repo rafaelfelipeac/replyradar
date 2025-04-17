@@ -144,7 +144,7 @@ private fun Placeholder() {
         contentAlignment = Alignment.Center
     ) {
         ReplyRadarPlaceholder(
-            LocalReplyRadarStrings.current.activityLogPlaceholder
+            message = LocalReplyRadarStrings.current.activityLogPlaceholder
         )
     }
 }
