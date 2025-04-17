@@ -94,9 +94,9 @@ fun SettingsScreen(
             ) {
                 ActivityLog(onActivityLogClick = onActivityLogClick)
                 HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
-                Theme(state = state, viewModel = viewModel)
+                Theme(state = state, onIntent = { viewModel.onIntent(it) })
                 HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
-                Language(state = state, viewModel = viewModel)
+                Language(state = state, onIntent = { viewModel.onIntent(it) })
                 HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
                 App()
             }
@@ -144,7 +144,10 @@ private fun ActivityLog(onActivityLogClick: () -> Unit) {
 }
 
 @Composable
-private fun Theme(state: SettingsState, viewModel: SettingsViewModel) { // remove the ViewModel, use just the onIntent
+private fun Theme(
+    state: SettingsState,
+    onIntent: (SettingsIntent) -> Unit
+) {
     Text(
         text = LocalReplyRadarStrings.current.settingsTheme,
         style = typography.titleMedium,
@@ -155,12 +158,12 @@ private fun Theme(state: SettingsState, viewModel: SettingsViewModel) { // remov
 
     ThemeOptions(
         state = state,
-        onThemeSelected = { theme -> viewModel.onIntent(OnSelectTheme(theme)) }
+        onThemeSelected = { theme -> onIntent(OnSelectTheme(theme)) }
     )
 }
 
 @Composable
-private fun Language(state: SettingsState, viewModel: SettingsViewModel) {
+private fun Language(state: SettingsState, onIntent: (SettingsIntent) -> Unit) {
     Text(
         text = LocalReplyRadarStrings.current.settingsLanguage,
         style = typography.titleMedium,
@@ -171,9 +174,7 @@ private fun Language(state: SettingsState, viewModel: SettingsViewModel) {
 
     LanguageOptions(
         state = state,
-        onLanguageSelected = { language ->
-            viewModel.onIntent(OnSelectLanguage(language))
-        }
+        onLanguageSelected = { language -> onIntent(OnSelectLanguage(language)) }
     )
 }
 
