@@ -12,6 +12,7 @@ import androidx.core.net.toUri
 import com.rafaelfelipeac.replyradar.R.string.no_email_app_found
 import com.rafaelfelipeac.replyradar.ReplyRadarApplication
 
+@Suppress("TooGenericExceptionCaught", "SwallowedException")
 actual fun openEmailApp(to: String, subject: String, body: String) {
     val context = ReplyRadarApplication.instance.applicationContext
 
