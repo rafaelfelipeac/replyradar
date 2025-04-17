@@ -91,10 +91,6 @@ kotlin {
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)
         }
-
-        dependencies {
-            add("kspAndroid", libs.androidx.room.compiler)
-        }
     }
 }
 
@@ -108,6 +104,8 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 11
         versionName = "1.2.0"
+
+        manifestPlaceholders["appName"] = "@string/app_name"
     }
     packaging {
         resources {
@@ -127,6 +125,8 @@ android {
     }
     buildTypes {
         getByName("release") {
+            manifestPlaceholders["appName"] = "@string/app_name"
+
             if (signingConfigs.getByName("release").storeFile != null) {
                 signingConfig = signingConfigs.getByName("release")
             }
@@ -138,6 +138,8 @@ android {
             )
         }
         getByName("debug") {
+            manifestPlaceholders["appName"] = "@string/app_name_dev"
+
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
         }
@@ -215,6 +217,7 @@ tasks.register<JavaExec>("detektFormat") {
 dependencies {
     implementation(libs.androidx.ui.android)
     debugImplementation(compose.uiTooling)
+    add("kspAndroid", libs.androidx.room.compiler)
 }
 
 compose.desktop {

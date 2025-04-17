@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Reply Radar</string>
+    <string name="app_name_dev">DEV Reply Radar</string>
     <string name="version_unknown">Version unknown.</string>
 </resources>
