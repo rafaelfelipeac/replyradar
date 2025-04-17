@@ -157,10 +157,7 @@ private fun ActivityLog(onActivityLogClick: () -> Unit) {
 }
 
 @Composable
-private fun Theme(
-    state: SettingsState,
-    onIntent: (SettingsIntent) -> Unit
-) {
+private fun Theme(state: SettingsState, onIntent: (SettingsIntent) -> Unit) {
     Text(
         text = LocalReplyRadarStrings.current.settingsTheme,
         style = typography.titleMedium,
@@ -282,17 +279,12 @@ private fun getLanguageLabel(language: AppLanguage) = when (language) {
 }
 
 @Composable
-fun SettingsItem(
-    text: String,
-    description: String,
-    icon: DrawableResource,
-    onClick: () -> Unit,
-) {
+fun SettingsItem(text: String, description: String, icon: DrawableResource, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() }
-            .padding(vertical = paddingSmall),
+            .padding(vertical = paddingSmall)
     ) {
         Icon(
             modifier = Modifier
@@ -313,7 +305,7 @@ fun SettingsItem(
             Text(
                 modifier = Modifier,
                 text = description,
-                style = typography.bodyMedium,
+                style = typography.bodyMedium
             )
         }
     }

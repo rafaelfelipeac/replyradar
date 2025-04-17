@@ -21,7 +21,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Scaffold
@@ -86,7 +85,7 @@ fun ActivityLogScreen(viewModel: ActivityLogViewModel = koinViewModel(), onBackC
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription =
-                                LocalReplyRadarStrings.current.activityLogBackButton
+                            LocalReplyRadarStrings.current.activityLogBackButton
                         )
                     }
                 }
@@ -204,7 +203,7 @@ fun ActivityLogListItem(userAction: UserAction) {
                         ),
                         tint = colorScheme.primary,
                         contentDescription =
-                            LocalReplyRadarStrings.current.activityLogItemContentDescription
+                        LocalReplyRadarStrings.current.activityLogItemContentDescription
                     )
                 }
 

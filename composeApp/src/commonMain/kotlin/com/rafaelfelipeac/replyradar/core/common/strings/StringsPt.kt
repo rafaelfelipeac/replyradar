@@ -53,7 +53,7 @@ Qualquer feedback é muito bem-vindo :)
 ---
 
 Versão do app: ${getAppVersion()}
-""".trimIndent()
+    """.trimIndent()
     override val settingsRateTitle = "Avalie o app"
     override val settingsRateDescription =
         "Curtiu o Reply Radar? Deixe uma avaliação na Play Store e ajude mais pessoas a descobrirem o app!"

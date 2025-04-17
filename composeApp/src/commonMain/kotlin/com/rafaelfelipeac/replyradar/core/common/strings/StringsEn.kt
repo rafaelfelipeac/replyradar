@@ -53,7 +53,7 @@ All feedback is very welcome :)
 ---
 
 App version: ${getAppVersion()}
-""".trimIndent()
+    """.trimIndent()
     override val settingsRateTitle = "Rate the app"
     override val settingsRateDescription =
         "Enjoying Reply Radar? Leave a review on the Play Store and help others discover the app!"
