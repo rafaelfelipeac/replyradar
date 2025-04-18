@@ -238,7 +238,7 @@ private fun ArchivedStateButton(
             title = LocalReplyRadarStrings.current.replyListDeleteDialogTitle,
             description = format(
                 LocalReplyRadarStrings.current.replyListDeleteDialogDescription,
-                reply.name,
+                reply.name
             ),
             confirm = LocalReplyRadarStrings.current.replyListDeleteDialogConfirm,
             dismiss = LocalReplyRadarStrings.current.replyListDeleteDialogDismiss,

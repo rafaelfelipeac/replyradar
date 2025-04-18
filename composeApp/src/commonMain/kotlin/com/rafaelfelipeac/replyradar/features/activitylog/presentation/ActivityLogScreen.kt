@@ -91,7 +91,7 @@ fun ActivityLogScreen(viewModel: ActivityLogViewModel = koinViewModel(), onBackC
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription =
-                                LocalReplyRadarStrings.current.activityLogBackButton
+                            LocalReplyRadarStrings.current.activityLogBackButton
                         )
                     }
                 }
@@ -209,7 +209,7 @@ fun ActivityLogListItem(userAction: UserAction) {
                         ),
                         tint = colorScheme.primary,
                         contentDescription =
-                            LocalReplyRadarStrings.current.activityLogItemContentDescription
+                        LocalReplyRadarStrings.current.activityLogItemContentDescription
                     )
                 }
 

@@ -8,7 +8,7 @@ sealed class UserActionType(val value: String) {
     data object Archive : UserActionType(ARCHIVE)
     data object Unarchive : UserActionType(UNARCHIVE)
     data object Delete : UserActionType(DELETE)
-    data object Open: UserActionType(OPEN)
+    data object Open : UserActionType(OPEN)
 
     companion object {
         fun fromValue(value: String): UserActionType {

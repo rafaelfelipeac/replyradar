@@ -18,8 +18,8 @@ import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActio
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Rate
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Theme
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType
-import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Open
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Open
 import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
