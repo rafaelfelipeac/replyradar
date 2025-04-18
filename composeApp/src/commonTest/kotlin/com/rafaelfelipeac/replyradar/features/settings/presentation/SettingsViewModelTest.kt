@@ -9,21 +9,26 @@ import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.GetLanguag
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.GetThemeUseCaseImpl
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.SetLanguageUseCaseImpl
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.SetThemeUseCaseImpl
+import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectFeedback
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectLanguage
+import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectRate
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectTheme
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Feedback
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Language
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Rate
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Theme
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Open
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SettingsViewModelTest {
@@ -78,6 +83,28 @@ class SettingsViewModelTest {
             assertEquals(ENGLISH, state.language)
             assertEquals(Edit, logUserActionUseCase.loggedActions.first().first)
             assertEquals(Language, logUserActionUseCase.loggedActions.first().second)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onSelectFeedback should log action`() = runTest {
+        viewModel.onIntent(OnSelectFeedback)
+
+        viewModel.state.test {
+            assertEquals(Open, logUserActionUseCase.loggedActions.first().first)
+            assertEquals(Feedback, logUserActionUseCase.loggedActions.first().second)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onSelectRate should log action`() = runTest {
+        viewModel.onIntent(OnSelectRate)
+
+        viewModel.state.test {
+            assertEquals(Open, logUserActionUseCase.loggedActions.first().first)
+            assertEquals(Rate, logUserActionUseCase.loggedActions.first().second)
             cancelAndIgnoreRemainingEvents()
         }
     }
