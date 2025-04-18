@@ -80,6 +80,9 @@ App version: ${getAppVersion()}
     override val activityLogUserActionReopenVerb = "reopened"
     override val activityLogUserActionResolveVerb = "resolved"
     override val activityLogUserActionUnarchiveVerb = "unarchived"
+    override val activityLogUserActionOpenVerb = "opened"
     override val activityLogUserActionTheme = "You switched the app theme."
     override val activityLogUserActionLanguage = "You changed the app language."
+    override val activityLogUserActionFeedback = "You gave feedback about the app."
+    override val activityLogUserActionRate = "You rated the app."
 }

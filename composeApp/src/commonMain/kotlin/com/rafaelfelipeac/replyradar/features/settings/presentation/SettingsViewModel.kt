@@ -8,12 +8,17 @@ import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.GetLanguag
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.GetThemeUseCase
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.SetLanguageUseCase
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.SetThemeUseCase
+import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectFeedback
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectLanguage
+import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectRate
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectTheme
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Feedback
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Language
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Rate
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Theme
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Open
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
 import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,6 +55,8 @@ class SettingsViewModel(
         when (intent) {
             is OnSelectTheme -> onSelectTheme(theme = intent.theme)
             is OnSelectLanguage -> onSelectLanguage(language = intent.language)
+            OnSelectFeedback -> onSelectFeedback()
+            OnSelectRate -> onSelectRate()
         }
     }
 
@@ -67,6 +74,14 @@ class SettingsViewModel(
         updateState { copy(language = language) }
 
         logUserAction(actionType = Edit, targetType = Language)
+    }
+
+    private fun onSelectFeedback() = viewModelScope.launch {
+        logUserAction(actionType = Open, targetType = Feedback)
+    }
+
+    private fun onSelectRate() = viewModelScope.launch {
+        logUserAction(actionType = Open, targetType = Rate)
     }
 
     private fun updateState(update: SettingsState.() -> SettingsState) {

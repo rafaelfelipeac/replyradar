@@ -47,14 +47,17 @@ import com.rafaelfelipeac.replyradar.core.util.formatTimestamp
 import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogViewModel.Companion.ERROR_GET_ACTIVITY_LOG
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserAction
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Feedback
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Language
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Message
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Rate
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType.Theme
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Archive
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Create
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Delete
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Open
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Reopen
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Resolve
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Unarchive
@@ -66,7 +69,10 @@ import replyradar.composeapp.generated.resources.ic_archive
 import replyradar.composeapp.generated.resources.ic_check
 import replyradar.composeapp.generated.resources.ic_delete
 import replyradar.composeapp.generated.resources.ic_edit
+import replyradar.composeapp.generated.resources.ic_email
 import replyradar.composeapp.generated.resources.ic_language
+import replyradar.composeapp.generated.resources.ic_open
+import replyradar.composeapp.generated.resources.ic_rate
 import replyradar.composeapp.generated.resources.ic_reopen
 import replyradar.composeapp.generated.resources.ic_theme
 import replyradar.composeapp.generated.resources.ic_unarchive
@@ -85,7 +91,7 @@ fun ActivityLogScreen(viewModel: ActivityLogViewModel = koinViewModel(), onBackC
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription =
-                            LocalReplyRadarStrings.current.activityLogBackButton
+                                LocalReplyRadarStrings.current.activityLogBackButton
                         )
                     }
                 }
@@ -203,7 +209,7 @@ fun ActivityLogListItem(userAction: UserAction) {
                         ),
                         tint = colorScheme.primary,
                         contentDescription =
-                        LocalReplyRadarStrings.current.activityLogItemContentDescription
+                            LocalReplyRadarStrings.current.activityLogItemContentDescription
                     )
                 }
 
@@ -243,9 +249,12 @@ private fun getIconByActionType(actionType: UserActionType, targetType: UserActi
             Reopen -> drawable.ic_reopen
             Resolve -> drawable.ic_check
             Unarchive -> drawable.ic_unarchive
+            Open -> drawable.ic_open
         }
 
         Theme -> drawable.ic_theme
+        Feedback -> drawable.ic_email
+        Rate -> drawable.ic_rate
     }
 
 @Composable
@@ -264,6 +273,8 @@ fun formatUserActionLabel(
     }
 
     Theme -> LocalReplyRadarStrings.current.activityLogUserActionTheme
+    Feedback -> LocalReplyRadarStrings.current.activityLogUserActionFeedback
+    Rate -> LocalReplyRadarStrings.current.activityLogUserActionRate
 }
 
 @Composable
@@ -275,6 +286,7 @@ private fun getActionVerb(actionType: UserActionType) = when (actionType) {
     Reopen -> LocalReplyRadarStrings.current.activityLogUserActionReopenVerb
     Resolve -> LocalReplyRadarStrings.current.activityLogUserActionResolveVerb
     Unarchive -> LocalReplyRadarStrings.current.activityLogUserActionUnarchiveVerb
+    Open -> LocalReplyRadarStrings.current.activityLogUserActionOpenVerb
 }
 
 @Composable
