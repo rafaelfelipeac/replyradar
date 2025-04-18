@@ -32,6 +32,11 @@ object StringsEn : Strings {
     override val replyListDeleteDialogDescription = "This action will permanently delete \"%1\" and cannot be undone."
     override val replyListDeleteDialogConfirm = "Delete"
     override val replyListDeleteDialogDismiss = "Cancel"
+    override val replyListSnackbarArchived = "Item successfully archived."
+    override val replyListSnackbarRemoved = "Item permanently deleted."
+    override val replyListSnackbarReopened = "Item reopened and back on the radar."
+    override val replyListSnackbarResolved = "Item marked as resolved."
+    override val replyListSnackbarUnarchived = "Item successfully unarchived."
 
     override val settingsTitle = "Settings"
     override val settingsBackButton = "Back"

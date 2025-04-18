@@ -28,6 +28,11 @@ interface Strings {
     val replyListDeleteDialogDescription: String
     val replyListDeleteDialogConfirm: String
     val replyListDeleteDialogDismiss: String
+    val replyListSnackbarArchived: String
+    val replyListSnackbarRemoved: String
+    val replyListSnackbarReopened: String
+    val replyListSnackbarResolved: String
+    val replyListSnackbarUnarchived: String
 
     val settingsTitle: String
     val settingsBackButton: String
