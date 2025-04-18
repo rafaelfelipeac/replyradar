@@ -28,6 +28,10 @@ object StringsEn : Strings {
     override val replyListBottomSheetDelete = "Delete"
     override val replyListItemResolve = "Resolve"
     override val replyListFabContentDescription = "Add a new reply to your radar."
+    override val replyListDeleteDialogTitle = "Are you sure?"
+    override val replyListDeleteDialogDescription = "This action will permanently delete \"%1\" and cannot be undone."
+    override val replyListDeleteDialogConfirm = "Delete"
+    override val replyListDeleteDialogDismiss = "Cancel"
 
     override val settingsTitle = "Settings"
     override val settingsBackButton = "Back"

@@ -12,7 +12,10 @@ val paddingLarge = 24.dp
 
 val cardCornerRadius = 16.dp
 
-val spacerSmall = 4.dp
+val spacerXSmall = 4.dp
+val spacerSmall = 8.dp
+val spacerMedium = 16.dp
+val spacerLarge = 24.dp
 
 val tabVerticalPadding = 12.dp
 val tabRowTopPadding = 8.dp
@@ -36,3 +39,5 @@ val listItemToggleBorderWidth = 1.dp
 val settingsAppVersionOffset = 64.dp
 
 val radioButtonSize = 24.dp
+
+val dialogElevation = 8.dp

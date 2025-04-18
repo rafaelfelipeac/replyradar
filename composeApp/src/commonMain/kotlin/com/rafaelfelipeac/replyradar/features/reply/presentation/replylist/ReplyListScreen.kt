@@ -40,7 +40,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
 import com.rafaelfelipeac.replyradar.core.common.ui.fontSizeLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
-import com.rafaelfelipeac.replyradar.core.common.ui.spacerSmall
+import com.rafaelfelipeac.replyradar.core.common.ui.spacerXSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.toolbarIconsColor
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
@@ -166,7 +166,7 @@ fun ReplyListScreen(
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(spacerSmall))
+                    Spacer(modifier = Modifier.height(spacerXSmall))
 
                     HorizontalPager(
                         modifier = Modifier

@@ -24,11 +24,13 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.rafaelfelipeac.replyradar.core.AppConstants.EMPTY
 import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyButton
+import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyConfirmationDialog
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyOutlinedButton
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextField
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSize.Large
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
+import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import replyradar.composeapp.generated.resources.Res.drawable
@@ -203,6 +205,8 @@ private fun ArchivedStateButton(
     onArchive: (Reply) -> Unit,
     onDelete: (Reply) -> Unit
 ) {
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
     ReplyOutlinedButton(
         text = LocalReplyRadarStrings.current.replyListBottomSheetUnarchive,
         icon = drawable.ic_unarchive,
@@ -212,6 +216,20 @@ private fun ArchivedStateButton(
     ReplyOutlinedButton(
         text = LocalReplyRadarStrings.current.replyListBottomSheetDelete,
         icon = drawable.ic_delete,
-        onClick = { onDelete(reply) }
+        onClick = { showDeleteDialog = true }
     )
+
+    if (showDeleteDialog) {
+        ReplyConfirmationDialog(
+            title = LocalReplyRadarStrings.current.replyListDeleteDialogTitle,
+            description = format(
+                LocalReplyRadarStrings.current.replyListDeleteDialogDescription,
+                reply.name,
+            ),
+            confirm = LocalReplyRadarStrings.current.replyListDeleteDialogConfirm,
+            dismiss = LocalReplyRadarStrings.current.replyListDeleteDialogDismiss,
+            onDismiss = { showDeleteDialog = false },
+            onConfirm = { onDelete(reply) }
+        )
+    }
 }

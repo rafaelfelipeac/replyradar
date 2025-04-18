@@ -24,6 +24,10 @@ interface Strings {
     val replyListBottomSheetDelete: String
     val replyListItemResolve: String
     val replyListFabContentDescription: String
+    val replyListDeleteDialogTitle: String
+    val replyListDeleteDialogDescription: String
+    val replyListDeleteDialogConfirm: String
+    val replyListDeleteDialogDismiss: String
 
     val settingsTitle: String
     val settingsBackButton: String
