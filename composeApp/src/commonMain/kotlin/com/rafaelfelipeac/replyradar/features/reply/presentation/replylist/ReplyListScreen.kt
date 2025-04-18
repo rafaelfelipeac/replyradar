@@ -16,6 +16,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -124,31 +125,8 @@ fun ReplyListScreen(
 
     Scaffold(
         containerColor = colorScheme.background,
-        snackbarHost = {
-            SnackbarHost(
-                hostState = snackbarHostState,
-                snackbar = { snackbarData ->
-                    Snackbar(
-                        snackbarData = snackbarData,
-                        containerColor = colorScheme.snackbarBackgroundColor,
-                        contentColor = colorScheme.onSurface
-                    )
-                }
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { onIntent(OnAddReplyClick) },
-                containerColor = colorScheme.secondary
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription =
-                    LocalReplyRadarStrings.current.replyListFabContentDescription,
-                    tint = colorScheme.background
-                )
-            }
-        }
+        snackbarHost = { Snackbar(snackbarHostState) },
+        floatingActionButton = { FAB(onIntent, colorScheme) }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -226,6 +204,35 @@ fun ReplyListScreen(
             )
         }
     }
+}
+
+@Composable
+private fun FAB(onIntent: (ReplyListScreenIntent) -> Unit, colorScheme: ColorScheme) {
+    FloatingActionButton(
+        onClick = { onIntent(OnAddReplyClick) },
+        containerColor = colorScheme.secondary
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Add,
+            contentDescription =
+            LocalReplyRadarStrings.current.replyListFabContentDescription,
+            tint = colorScheme.background
+        )
+    }
+}
+
+@Composable
+private fun Snackbar(snackbarHostState: SnackbarHostState) {
+    SnackbarHost(
+        hostState = snackbarHostState,
+        snackbar = { snackbarData ->
+            Snackbar(
+                snackbarData = snackbarData,
+                containerColor = colorScheme.snackbarBackgroundColor,
+                contentColor = colorScheme.onSurface
+            )
+        }
+    )
 }
 
 @Composable
