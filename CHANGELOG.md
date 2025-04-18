@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## [v1.4.0] - 2025-04-18
+
+### Added
+- Added delete modal;
+- Added timestamp labels;
+- Added Snackbar for action confirmation;
+
 ## [v1.3.0] - 2025-04-17
 
 ### Added
