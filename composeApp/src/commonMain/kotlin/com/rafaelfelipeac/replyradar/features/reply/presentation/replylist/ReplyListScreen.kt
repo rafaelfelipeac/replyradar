@@ -16,12 +16,16 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -30,21 +34,30 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.common.strings.Strings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
 import com.rafaelfelipeac.replyradar.core.common.ui.fontSizeLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
-import com.rafaelfelipeac.replyradar.core.common.ui.spacerSmall
+import com.rafaelfelipeac.replyradar.core.common.ui.spacerXSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
+import com.rafaelfelipeac.replyradar.core.common.ui.theme.snackbarBackgroundColor
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.toolbarIconsColor
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.ClearSnackbarState
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Archived
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Removed
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Reopened
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Resolved
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Unarchived
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesArchivedScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesOnTheRadarScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesResolvedScreen
@@ -85,31 +98,35 @@ fun ReplyListScreen(
     onSettingsClick: () -> Unit,
     onActivityLogClick: () -> Unit
 ) {
-    val pagerState = rememberPagerState { PAGER_PAGE_COUNT }
+    val strings = LocalReplyRadarStrings.current
 
-    LaunchedEffect(state.selectedTabIndex) {
-        pagerState.animateScrollToPage(state.selectedTabIndex)
-    }
+    val pagerState = rememberPagerState { PAGER_PAGE_COUNT }
+    val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(pagerState.currentPage) {
         onIntent(OnTabSelected(pagerState.currentPage))
     }
 
+    LaunchedEffect(state.selectedTabIndex) {
+        pagerState.animateScrollToPage(state.selectedTabIndex)
+    }
+
+    LaunchedEffect(state.snackbarState) {
+        state.snackbarState?.let {
+            snackbarHostState.showSnackbar(
+                getSnackbarMessage(
+                    snackbarState = state.snackbarState,
+                    strings = strings
+                )
+            )
+            onIntent(ClearSnackbarState)
+        }
+    }
+
     Scaffold(
         containerColor = colorScheme.background,
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { onIntent(OnAddReplyClick) },
-                containerColor = colorScheme.secondary
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription =
-                    LocalReplyRadarStrings.current.replyListFabContentDescription,
-                    tint = colorScheme.background
-                )
-            }
-        }
+        snackbarHost = { Snackbar(snackbarHostState) },
+        floatingActionButton = { FAB(onIntent, colorScheme) }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -166,7 +183,7 @@ fun ReplyListScreen(
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(spacerSmall))
+                    Spacer(modifier = Modifier.height(spacerXSmall))
 
                     HorizontalPager(
                         modifier = Modifier
@@ -187,6 +204,35 @@ fun ReplyListScreen(
             )
         }
     }
+}
+
+@Composable
+private fun FAB(onIntent: (ReplyListScreenIntent) -> Unit, colorScheme: ColorScheme) {
+    FloatingActionButton(
+        onClick = { onIntent(OnAddReplyClick) },
+        containerColor = colorScheme.secondary
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Add,
+            contentDescription =
+            LocalReplyRadarStrings.current.replyListFabContentDescription,
+            tint = colorScheme.background
+        )
+    }
+}
+
+@Composable
+private fun Snackbar(snackbarHostState: SnackbarHostState) {
+    SnackbarHost(
+        hostState = snackbarHostState,
+        snackbar = { snackbarData ->
+            Snackbar(
+                snackbarData = snackbarData,
+                containerColor = colorScheme.snackbarBackgroundColor,
+                contentColor = colorScheme.onSurface
+            )
+        }
+    )
 }
 
 @Composable
@@ -275,3 +321,12 @@ private fun RepliesScreen(
         }
     }
 }
+
+private fun getSnackbarMessage(snackbarState: SnackbarState, strings: Strings) =
+    when (snackbarState) {
+        Archived -> strings.replyListSnackbarArchived
+        Removed -> strings.replyListSnackbarRemoved
+        Reopened -> strings.replyListSnackbarReopened
+        Resolved -> strings.replyListSnackbarResolved
+        Unarchived -> strings.replyListSnackbarUnarchived
+    }

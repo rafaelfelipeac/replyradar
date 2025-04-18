@@ -50,7 +50,9 @@ import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.SYSTEM
 import com.rafaelfelipeac.replyradar.core.util.getAppVersion
 import com.rafaelfelipeac.replyradar.core.util.openEmailApp
 import com.rafaelfelipeac.replyradar.core.util.openPlayStoreApp
+import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectFeedback
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectLanguage
+import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectRate
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectTheme
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -103,7 +105,7 @@ fun SettingsScreen(
                 HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
                 Language(state = state, onIntent = { viewModel.onIntent(it) })
                 HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
-                App()
+                App(onIntent = { viewModel.onIntent(it) })
             }
 
             AppVersionFooter(
@@ -115,7 +117,7 @@ fun SettingsScreen(
 }
 
 @Composable
-fun App() {
+fun App(onIntent: (SettingsIntent) -> Unit) {
     val strings = LocalReplyRadarStrings.current
 
     Column(
@@ -132,6 +134,7 @@ fun App() {
                     subject = strings.settingsFeedbackEmailSubject,
                     body = strings.settingsFeedbackEmailBody
                 )
+                onIntent(OnSelectFeedback)
             }
         )
 
@@ -141,7 +144,10 @@ fun App() {
             text = strings.settingsRateTitle,
             description = strings.settingsRateDescription,
             icon = drawable.ic_rate,
-            onClick = { openPlayStoreApp(PACKAGE_NAME) }
+            onClick = {
+                openPlayStoreApp(PACKAGE_NAME)
+                onIntent(OnSelectRate)
+            }
         )
     }
 }

@@ -8,6 +8,7 @@ sealed class UserActionType(val value: String) {
     data object Archive : UserActionType(ARCHIVE)
     data object Unarchive : UserActionType(UNARCHIVE)
     data object Delete : UserActionType(DELETE)
+    data object Open : UserActionType(OPEN)
 
     companion object {
         fun fromValue(value: String): UserActionType {
@@ -18,6 +19,7 @@ sealed class UserActionType(val value: String) {
                 REOPEN -> Reopen
                 ARCHIVE -> Archive
                 DELETE -> Delete
+                OPEN -> Open
                 else -> Unarchive
             }
         }
@@ -31,3 +33,4 @@ private const val REOPEN = "REOPEN"
 private const val ARCHIVE = "ARCHIVE"
 private const val UNARCHIVE = "UNARCHIVE"
 private const val DELETE = "DELETE"
+private const val OPEN = "OPEN"

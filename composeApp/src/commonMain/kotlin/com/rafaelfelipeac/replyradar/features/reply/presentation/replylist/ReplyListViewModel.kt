@@ -16,10 +16,16 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleArchive
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleResolve
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.ClearSnackbarState
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyClick
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyToggle
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Archived
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Removed
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Reopened
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Resolved
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Unarchived
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
@@ -107,6 +113,12 @@ class ReplyListViewModel(
                     copy(selectedTabIndex = intent.index)
                 }
             }
+
+            ClearSnackbarState -> {
+                updateState {
+                    copy(snackbarState = null)
+                }
+            }
         }
     }
 
@@ -179,18 +191,24 @@ class ReplyListViewModel(
         val isArchived = toggleArchiveReplyUseCase.toggleArchiveReply(reply)
 
         logUserAction(actionType = if (isArchived) Archive else Unarchive, targetId = reply.id)
+
+        updateState { copy(snackbarState = if (isArchived) Archived else Unarchived) }
     }
 
     private fun onToggleResolveReply(reply: Reply) = viewModelScope.launch {
         val isResolved = toggleResolveReplyUseCase.toggleResolveReply(reply)
 
         logUserAction(actionType = if (isResolved) Resolve else Reopen, targetId = reply.id)
+
+        updateState { copy(snackbarState = if (isResolved) Resolved else Reopened) }
     }
 
     private fun deleteReply(reply: Reply) = viewModelScope.launch {
         deleteReplyUseCase.deleteReply(reply)
 
         logUserAction(actionType = Delete, targetId = reply.id)
+
+        updateState { copy(snackbarState = Removed) }
     }
 
     private fun dismissBottomSheet() {

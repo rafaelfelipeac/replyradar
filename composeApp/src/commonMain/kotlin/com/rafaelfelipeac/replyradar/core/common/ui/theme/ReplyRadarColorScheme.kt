@@ -19,3 +19,6 @@ val ColorScheme.unselectedTabColor: Color
 
 val ColorScheme.toolbarIconsColor: Color
     @Composable get() = colors.toolbarIconsColor
+
+val ColorScheme.snackbarBackgroundColor: Color
+    @Composable get() = colors.snackbarBackgroundColor

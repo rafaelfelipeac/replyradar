@@ -23,7 +23,20 @@ interface Strings {
     val replyListBottomSheetUnarchive: String
     val replyListBottomSheetDelete: String
     val replyListItemResolve: String
+    val replyListItemCreatedAt: String
+    val replyListItemUpdatedAt: String
+    val replyListItemResolvedAt: String
+    val replyListItemArchivedAt: String
     val replyListFabContentDescription: String
+    val replyListDeleteDialogTitle: String
+    val replyListDeleteDialogDescription: String
+    val replyListDeleteDialogConfirm: String
+    val replyListDeleteDialogDismiss: String
+    val replyListSnackbarArchived: String
+    val replyListSnackbarRemoved: String
+    val replyListSnackbarReopened: String
+    val replyListSnackbarResolved: String
+    val replyListSnackbarUnarchived: String
 
     val settingsTitle: String
     val settingsBackButton: String
@@ -58,6 +71,9 @@ interface Strings {
     val activityLogUserActionReopenVerb: String
     val activityLogUserActionResolveVerb: String
     val activityLogUserActionUnarchiveVerb: String
+    val activityLogUserActionOpenVerb: String
     val activityLogUserActionTheme: String
     val activityLogUserActionLanguage: String
+    val activityLogUserActionFeedback: String
+    val activityLogUserActionRate: String
 }
