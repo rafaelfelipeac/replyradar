@@ -1,5 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.reply.data.repository
 
+import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE_LONG
 import com.rafaelfelipeac.replyradar.core.util.Clock
 import com.rafaelfelipeac.replyradar.features.reply.data.database.dao.ReplyDao
 import com.rafaelfelipeac.replyradar.features.reply.data.mapper.toReply
@@ -18,7 +19,7 @@ class ReplyRepositoryImpl(
         val now = clock.now()
         val replyEntity = reply.toReplyEntity()
 
-        val entityToSave = if (reply.id == 0L) {
+        val entityToSave = if (reply.id == INITIAL_DATE_LONG) {
             replyEntity.copy(createdAt = now, updatedAt = now)
         } else {
             replyEntity.copy(updatedAt = now)
@@ -30,7 +31,7 @@ class ReplyRepositoryImpl(
     override suspend fun toggleReplyResolve(reply: Reply) {
         replyDao.update(
             reply.toReplyEntity().copy(
-                resolvedAt = clock.now(),
+                resolvedAt = if (!reply.isResolved) clock.now() else INITIAL_DATE_LONG,
                 isResolved = !reply.isResolved
             )
         )
@@ -39,7 +40,7 @@ class ReplyRepositoryImpl(
     override suspend fun toggleReplyArchive(reply: Reply) {
         replyDao.update(
             reply.toReplyEntity().copy(
-                archivedAt = clock.now(),
+                archivedAt = if (!reply.isArchived) clock.now() else INITIAL_DATE_LONG,
                 isArchived = !reply.isArchived
             )
         )

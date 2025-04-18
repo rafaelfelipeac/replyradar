@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,6 +24,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.rafaelfelipeac.replyradar.core.AppConstants.EMPTY
+import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE_LONG
 import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyButton
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyConfirmationDialog
@@ -31,6 +34,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSiz
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.util.format
+import com.rafaelfelipeac.replyradar.core.util.formatTimestamp
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import replyradar.composeapp.generated.resources.Res.drawable
@@ -85,10 +89,20 @@ fun ReplyBottomSheetContent(
                 onValueChange = { subject = it }
             )
 
+            state.reply?.let {
+                Text(
+                    modifier = Modifier
+                        .padding(start = paddingSmall, top = paddingSmall)
+                        .align(Alignment.Start),
+                    text = getTimestamp(state.reply),
+                    style = typography.bodySmall
+                )
+            }
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = paddingMedium),
+                    .padding(top = paddingSmall, bottom = paddingMedium),
                 horizontalArrangement = if (isEditMode(state)) spacedBy(paddingSmall) else End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -231,5 +245,36 @@ private fun ArchivedStateButton(
             onDismiss = { showDeleteDialog = false },
             onConfirm = { onDelete(reply) }
         )
+    }
+}
+
+@Composable
+private fun getTimestamp(reply: Reply): String {
+    with(reply) {
+        return when {
+            archivedAt != INITIAL_DATE_LONG -> format(
+                LocalReplyRadarStrings.current.replyListItemArchivedAt,
+                formatTimestamp(archivedAt)
+            )
+
+            resolvedAt != INITIAL_DATE_LONG -> format(
+                LocalReplyRadarStrings.current.replyListItemResolvedAt,
+                formatTimestamp(resolvedAt)
+            )
+
+            else -> {
+                if (updatedAt != INITIAL_DATE_LONG && updatedAt != createdAt) {
+                    format(
+                        LocalReplyRadarStrings.current.replyListItemUpdatedAt,
+                        formatTimestamp(updatedAt)
+                    )
+                } else {
+                    format(
+                        LocalReplyRadarStrings.current.replyListItemCreatedAt,
+                        formatTimestamp(createdAt)
+                    )
+                }
+            }
+        }
     }
 }

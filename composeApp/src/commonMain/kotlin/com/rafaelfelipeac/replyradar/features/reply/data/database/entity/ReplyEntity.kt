@@ -2,6 +2,7 @@ package com.rafaelfelipeac.replyradar.features.reply.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE_LONG
 
 @Entity(tableName = "replies")
 data class ReplyEntity(
@@ -10,8 +11,8 @@ data class ReplyEntity(
     val subject: String,
     val isResolved: Boolean = false,
     val isArchived: Boolean = false,
-    val createdAt: Long = 0L,
-    val updatedAt: Long = 0L,
-    val resolvedAt: Long = 0L,
-    val archivedAt: Long = 0L
+    val createdAt: Long = INITIAL_DATE_LONG,
+    val updatedAt: Long = INITIAL_DATE_LONG,
+    val resolvedAt: Long = INITIAL_DATE_LONG,
+    val archivedAt: Long = INITIAL_DATE_LONG
 )

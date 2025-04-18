@@ -23,6 +23,10 @@ interface Strings {
     val replyListBottomSheetUnarchive: String
     val replyListBottomSheetDelete: String
     val replyListItemResolve: String
+    val replyListItemCreatedAt: String
+    val replyListItemUpdatedAt: String
+    val replyListItemResolvedAt: String
+    val replyListItemArchivedAt: String
     val replyListFabContentDescription: String
     val replyListDeleteDialogTitle: String
     val replyListDeleteDialogDescription: String
