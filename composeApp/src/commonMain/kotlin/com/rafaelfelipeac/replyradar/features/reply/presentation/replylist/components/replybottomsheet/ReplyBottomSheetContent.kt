@@ -19,12 +19,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.rafaelfelipeac.replyradar.core.AppConstants.EMPTY
 import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE_LONG
+import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_DEFAULT_HOUR
+import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_DEFAULT_MINUTE
+import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_TOMORROW_OFFSET
+import com.rafaelfelipeac.replyradar.core.common.clock.LocalClock
 import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyButton
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyConfirmationDialog
@@ -36,7 +41,17 @@ import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.core.util.formatTimestamp
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.reminder.Reminder
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
+import kotlinx.datetime.DateTimeUnit.Companion.DAY
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.plus
+import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
 import replyradar.composeapp.generated.resources.Res.drawable
 import replyradar.composeapp.generated.resources.ic_archive
 import replyradar.composeapp.generated.resources.ic_check
@@ -57,6 +72,8 @@ fun ReplyBottomSheetContent(
     replyBottomSheetState?.let { state ->
         var name by remember { mutableStateOf(state.reply?.name ?: EMPTY) }
         var subject by remember { mutableStateOf(state.reply?.subject ?: EMPTY) }
+        var selectedTime by remember { mutableStateOf<LocalTime?>(null) }
+        var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
 
         Column(
             modifier = Modifier
@@ -93,16 +110,24 @@ fun ReplyBottomSheetContent(
                 Text(
                     modifier = Modifier
                         .padding(start = paddingSmall, top = paddingSmall)
-                        .align(Alignment.Start),
+                        .align(Start),
                     text = getTimestamp(state.reply),
                     style = typography.bodySmall
                 )
             }
 
+            Reminder(
+                selectedTime = selectedTime,
+                selectedDate = selectedDate,
+                onSelectedTimeChange = { selectedTime = it },
+                onSelectedDateChange = { selectedDate = it },
+                closeKeyboard = { keyboardController?.hide() }
+            )
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = paddingSmall, bottom = paddingMedium),
+                    .padding(top = paddingSmall, bottom = paddingMedium, end = paddingSmall),
                 horizontalArrangement = if (isEditMode(state)) spacedBy(paddingSmall) else End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -140,6 +165,12 @@ fun ReplyBottomSheetContent(
                         }
                     }
                 }
+
+                val reminderAt = getReminderTimestamp(
+                    selectedDate = selectedDate,
+                    selectedTime = selectedTime
+                )
+
                 ReplyButton(
                     modifier = Modifier
                         .wrapContentWidth()
@@ -154,14 +185,16 @@ fun ReplyBottomSheetContent(
                             onComplete(
                                 state.reply.copy(
                                     name = name,
-                                    subject = subject
+                                    subject = subject,
+                                    reminderAt = reminderAt
                                 )
                             )
                         } else {
                             onComplete(
                                 Reply(
                                     name = name,
-                                    subject = subject
+                                    subject = subject,
+                                    reminderAt = reminderAt
                                 )
                             )
                         }
@@ -277,4 +310,41 @@ private fun getTimestamp(reply: Reply): String {
             }
         }
     }
+}
+
+@Composable
+fun getReminderTimestamp(
+    selectedDate: LocalDate?,
+    selectedTime: LocalTime?
+): Long {
+    val timeZone = TimeZone.currentSystemDefault()
+    val nowDateTime =
+        Instant.fromEpochMilliseconds(LocalClock.current.now()).toLocalDateTime(timeZone)
+
+    val finalDate = when {
+        selectedDate != null -> selectedDate
+        selectedTime != null -> {
+            val timeToday = LocalDateTime(
+                date = nowDateTime.date,
+                time = selectedTime
+            )
+
+            if (timeToday > nowDateTime) {
+                nowDateTime.date
+            } else {
+                nowDateTime.date.plus(
+                    REMINDER_TOMORROW_OFFSET,
+                    DAY
+                )
+            }
+        }
+
+        else -> return INITIAL_DATE_LONG
+    }
+
+    val finalTime = selectedTime ?: LocalTime(REMINDER_DEFAULT_HOUR, REMINDER_DEFAULT_MINUTE)
+
+    val finalDateTime = LocalDateTime(finalDate, finalTime)
+
+    return finalDateTime.toInstant(timeZone).toEpochMilliseconds()
 }

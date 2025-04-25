@@ -22,3 +22,6 @@ val ColorScheme.toolbarIconsColor: Color
 
 val ColorScheme.snackbarBackgroundColor: Color
     @Composable get() = colors.snackbarBackgroundColor
+
+val ColorScheme.replyBottomSheetIconColor: Color
+    @Composable get() = colors.replyBottomSheetIconColor

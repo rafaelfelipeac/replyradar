@@ -11,7 +11,8 @@ data class ReplyRadarColors(
     val horizontalDividerColor: Color,
     val unselectedTabColor: Color,
     val toolbarIconsColor: Color,
-    val snackbarBackgroundColor: Color
+    val snackbarBackgroundColor: Color,
+    val replyBottomSheetIconColor: Color
 )
 
 val LocalReplyRadarColors = staticCompositionLocalOf<ReplyRadarColors> {

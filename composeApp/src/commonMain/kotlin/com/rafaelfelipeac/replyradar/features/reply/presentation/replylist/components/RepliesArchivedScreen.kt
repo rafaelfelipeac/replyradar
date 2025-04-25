@@ -16,7 +16,8 @@ fun RepliesArchivedScreen(state: ReplyListState, onIntent: (ReplyListScreenInten
         ReplyRadarPlaceholder(message = LocalReplyRadarStrings.current.replyListPlaceholderArchived)
     } else {
         ReplyList(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize(),
             replies = state.archivedReplies,
             onReplyClick = { onIntent(OnReplyClick(it)) },
             onReplyToggle = { onIntent(OnReplyToggle(it)) }

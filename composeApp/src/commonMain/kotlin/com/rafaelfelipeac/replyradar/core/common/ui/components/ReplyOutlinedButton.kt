@@ -39,7 +39,8 @@ fun ReplyOutlinedButton(text: String, icon: DrawableResource? = null, onClick: (
         contentPadding = PaddingValues(horizontal = paddingSmall, vertical = paddingXSmall)
     ) {
         Text(
-            modifier = Modifier.padding(horizontal = paddingXSmall),
+            modifier = Modifier
+                .padding(horizontal = paddingXSmall),
             text = text
         )
         icon?.let { icon ->

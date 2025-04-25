@@ -9,8 +9,5 @@ fun formatTimestamp(timestampMillis: Long): String {
     val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
 
     return "${localDateTime.dayOfMonth}/${localDateTime.monthNumber}/${localDateTime.year} " +
-        "${localDateTime.hour}:${localDateTime.minute.toString().padStart(LENGTH, PAD_CHAR)}"
+        "${localDateTime.hour}:${localDateTime.minute.toTwoDigitString()}"
 }
-
-private const val LENGTH = 2
-private const val PAD_CHAR = '0'

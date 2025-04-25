@@ -4,7 +4,18 @@ import com.rafaelfelipeac.replyradar.core.util.getAppVersion
 
 object StringsEn : Strings {
     override val appName = "Reply Radar"
+
+    override val weekDaysShort = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+    override val months = listOf(
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    )
+
     override val genericErrorMessage = "An unexpected error occurred."
+
+    override val componentReplyTimeSelectorLabel = "Set the time:"
+
+    override val componentReplyDateSelectorLabel = "Set the day:"
 
     override val replyListActivityLog = "Activity Log"
     override val replyListTabOnTheRadar = "On the Radar"
@@ -41,6 +52,13 @@ object StringsEn : Strings {
     override val replyListSnackbarReopened = "Item reopened and back on the radar."
     override val replyListSnackbarResolved = "Item marked as resolved."
     override val replyListSnackbarUnarchived = "Item successfully unarchived."
+    override val replyListReminder = "Reminder"
+    override val replyListReminderSet = "Reminder set for:"
+    override val replyListReminderToday = "today"
+    override val replyListReminderTomorrow = "tomorrow"
+    override val replyListReminderTimeIconContentDescription = "Time"
+    override val replyListReminderDateIconContentDescription = "Date"
+    override val replyListReminderCloseIconContentDescription = "Close"
 
     override val settingsTitle = "Settings"
     override val settingsBackButton = "Back"

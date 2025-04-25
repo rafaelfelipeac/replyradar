@@ -31,7 +31,8 @@ fun RepliesOnTheRadarScreen(state: ReplyListState, onIntent: (ReplyListScreenInt
 
             else -> {
                 ReplyList(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize(),
                     replies = state.replies,
                     onReplyClick = { onIntent(OnReplyClick(it)) },
                     onReplyToggle = { onIntent(OnReplyToggle(it)) }

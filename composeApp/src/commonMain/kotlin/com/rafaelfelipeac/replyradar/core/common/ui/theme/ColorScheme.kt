@@ -21,7 +21,8 @@ val LightExtraColors = ReplyRadarColors(
     horizontalDividerColor = Color(0xFFE0E0E0),
     unselectedTabColor = Color(0xFF1E1E1E).copy(alpha = UnselectedTabAlpha),
     toolbarIconsColor = Color(0xFF464152),
-    snackbarBackgroundColor = Color(0xFFECECEC)
+    snackbarBackgroundColor = Color(0xFFECECEC),
+    replyBottomSheetIconColor = Color(0xFF888888)
 )
 
 val DarkColorScheme = darkColorScheme(
@@ -39,5 +40,6 @@ val DarkExtraColors = ReplyRadarColors(
     horizontalDividerColor = Color(0xFF333333),
     unselectedTabColor = Color(0xFFEDEDED).copy(alpha = UnselectedTabAlpha),
     toolbarIconsColor = Color(0xFFB3B8EF),
-    snackbarBackgroundColor = Color(0xFF2C2C2C)
+    snackbarBackgroundColor = Color(0xFF2C2C2C),
+    replyBottomSheetIconColor = Color(0xFFAAAAAA)
 )

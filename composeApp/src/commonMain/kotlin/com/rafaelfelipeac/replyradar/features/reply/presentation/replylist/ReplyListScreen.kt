@@ -17,6 +17,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,6 +32,7 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -91,6 +93,7 @@ fun ReplyListScreenRoot(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReplyListScreen(
     state: ReplyListState,
@@ -102,6 +105,9 @@ fun ReplyListScreen(
 
     val pagerState = rememberPagerState { PAGER_PAGE_COUNT }
     val snackbarHostState = remember { SnackbarHostState() }
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
 
     LaunchedEffect(pagerState.currentPage) {
         onIntent(OnTabSelected(pagerState.currentPage))
@@ -162,28 +168,34 @@ fun ReplyListScreen(
                         }
                     ) {
                         ReplyTab(
-                            modifier = Modifier.weight(WEIGHT),
+                            modifier = Modifier
+                                .weight(WEIGHT),
                             selected = state.selectedTabIndex == ON_THE_RADAR_INDEX,
                             onClick = { onIntent(OnTabSelected(ON_THE_RADAR_INDEX)) },
                             text = LocalReplyRadarStrings.current.replyListTabOnTheRadar
                         )
 
                         ReplyTab(
-                            modifier = Modifier.weight(WEIGHT),
+                            modifier = Modifier
+                                .weight(WEIGHT),
                             selected = state.selectedTabIndex == RESOLVED_INDEX,
                             onClick = { onIntent(OnTabSelected(RESOLVED_INDEX)) },
                             text = LocalReplyRadarStrings.current.replyListTabResolved
                         )
 
                         ReplyTab(
-                            modifier = Modifier.weight(WEIGHT),
+                            modifier = Modifier
+                                .weight(WEIGHT),
                             selected = state.selectedTabIndex == ARCHIVED_INDEX,
                             onClick = { onIntent(OnTabSelected(ARCHIVED_INDEX)) },
                             text = LocalReplyRadarStrings.current.replyListTabArchived
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(spacerXSmall))
+                    Spacer(
+                        modifier = Modifier
+                            .height(spacerXSmall)
+                    )
 
                     HorizontalPager(
                         modifier = Modifier
@@ -199,6 +211,7 @@ fun ReplyListScreen(
 
         if (state.replyBottomSheetState != null) {
             ReplyBottomSheet(
+                sheetState = sheetState,
                 onIntent = onIntent,
                 replyBottomSheetState = state.replyBottomSheetState
             )
@@ -215,7 +228,7 @@ private fun FAB(onIntent: (ReplyListScreenIntent) -> Unit, colorScheme: ColorSch
         Icon(
             imageVector = Icons.Filled.Add,
             contentDescription =
-            LocalReplyRadarStrings.current.replyListFabContentDescription,
+                LocalReplyRadarStrings.current.replyListFabContentDescription,
             tint = colorScheme.background
         )
     }

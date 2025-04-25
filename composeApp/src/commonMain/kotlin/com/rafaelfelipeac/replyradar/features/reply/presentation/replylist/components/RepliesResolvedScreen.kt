@@ -15,7 +15,8 @@ fun RepliesResolvedScreen(state: ReplyListState, onIntent: (ReplyListScreenInten
         ReplyRadarPlaceholder(message = LocalReplyRadarStrings.current.replyListPlaceholderResolved)
     } else {
         ReplyList(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize(),
             replies = state.resolvedReplies,
             onReplyClick = { onIntent(OnReplyClick(it)) }
         )

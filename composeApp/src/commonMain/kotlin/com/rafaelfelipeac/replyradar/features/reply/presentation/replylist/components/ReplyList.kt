@@ -29,8 +29,11 @@ fun ReplyList(
             .padding(top = paddingMedium),
         horizontalAlignment = CenterHorizontally
     ) {
-        itemsIndexed(replies, key = { _, item -> item.id }) { index, reply ->
-            Column(modifier = Modifier.fillMaxWidth()) {
+        itemsIndexed(items = replies, key = { _, item -> item.id }) { index, reply ->
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
                 ReplyListItem(
                     modifier = Modifier
                         .fillMaxWidth(),

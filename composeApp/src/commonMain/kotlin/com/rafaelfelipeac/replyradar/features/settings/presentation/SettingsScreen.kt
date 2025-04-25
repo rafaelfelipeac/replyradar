@@ -100,11 +100,20 @@ fun SettingsScreen(
                     .padding(bottom = settingsAppVersionOffset)
             ) {
                 ActivityLog(onActivityLogClick = onActivityLogClick)
-                HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(vertical = paddingMedium)
+                )
                 Theme(state = state, onIntent = { viewModel.onIntent(it) })
-                HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(vertical = paddingMedium)
+                )
                 Language(state = state, onIntent = { viewModel.onIntent(it) })
-                HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(vertical = paddingMedium)
+                )
                 App(onIntent = { viewModel.onIntent(it) })
             }
 
@@ -138,7 +147,10 @@ fun App(onIntent: (SettingsIntent) -> Unit) {
             }
         )
 
-        Spacer(modifier = Modifier.height(paddingSmall))
+        Spacer(
+            modifier = Modifier
+                .height(paddingSmall)
+        )
 
         SettingsItem(
             text = strings.settingsRateTitle,
@@ -170,7 +182,10 @@ private fun Theme(state: SettingsState, onIntent: (SettingsIntent) -> Unit) {
         color = colorScheme.primary
     )
 
-    Spacer(modifier = Modifier.height(paddingXSmall))
+    Spacer(
+        modifier = Modifier
+            .height(paddingXSmall)
+    )
 
     ThemeOptions(
         state = state,
@@ -186,7 +201,10 @@ private fun Language(state: SettingsState, onIntent: (SettingsIntent) -> Unit) {
         color = colorScheme.primary
     )
 
-    Spacer(modifier = Modifier.height(paddingXSmall))
+    Spacer(
+        modifier = Modifier
+            .height(paddingXSmall)
+    )
 
     LanguageOptions(
         state = state,
@@ -227,12 +245,16 @@ private fun ThemeOption(
             .clickable { onThemeSelected(theme) }
     ) {
         RadioButton(
-            modifier = Modifier.size(radioButtonSize),
+            modifier = Modifier
+                .size(radioButtonSize),
             selected = theme == selectedTheme,
             onClick = { onThemeSelected(theme) }
         )
 
-        Spacer(modifier = Modifier.width(paddingSmall))
+        Spacer(
+            modifier = Modifier
+                .width(paddingSmall)
+        )
 
         Text(text = getThemeOptionLabel(theme))
     }
@@ -266,12 +288,16 @@ private fun LanguageOption(
             .clickable { onLanguageSelected(language) }
     ) {
         RadioButton(
-            modifier = Modifier.size(radioButtonSize),
+            modifier = Modifier
+                .size(radioButtonSize),
             selected = language == selectedLanguage,
             onClick = { onLanguageSelected(language) }
         )
 
-        Spacer(modifier = Modifier.width(paddingSmall))
+        Spacer(
+            modifier = Modifier
+                .width(paddingSmall)
+        )
 
         Text(text = getLanguageLabel(language))
     }
@@ -324,7 +350,10 @@ fun AppVersionFooter(modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .background(colorScheme.background)
     ) {
-        HorizontalDivider(modifier = Modifier.padding(bottom = paddingMedium))
+        HorizontalDivider(
+            modifier = Modifier
+                .padding(bottom = paddingMedium)
+        )
 
         Text(
             text = "${LocalReplyRadarStrings.current.settingsAppVersion} ${getAppVersion()}",

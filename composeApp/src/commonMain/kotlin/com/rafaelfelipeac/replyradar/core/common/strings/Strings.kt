@@ -3,7 +3,14 @@ package com.rafaelfelipeac.replyradar.core.common.strings
 interface Strings {
     val appName: String
 
+    val weekDaysShort: List<String>
+    val months: List<String>
+
     val genericErrorMessage: String
+
+    val componentReplyTimeSelectorLabel: String
+
+    val componentReplyDateSelectorLabel: String
 
     val replyListActivityLog: String
     val replyListTabOnTheRadar: String
@@ -37,6 +44,13 @@ interface Strings {
     val replyListSnackbarReopened: String
     val replyListSnackbarResolved: String
     val replyListSnackbarUnarchived: String
+    val replyListReminder: String
+    val replyListReminderSet: String
+    val replyListReminderToday: String
+    val replyListReminderTomorrow: String
+    val replyListReminderTimeIconContentDescription: String
+    val replyListReminderDateIconContentDescription: String
+    val replyListReminderCloseIconContentDescription: String
 
     val settingsTitle: String
     val settingsBackButton: String

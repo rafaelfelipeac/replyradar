@@ -91,7 +91,7 @@ fun ActivityLogScreen(viewModel: ActivityLogViewModel = koinViewModel(), onBackC
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription =
-                            LocalReplyRadarStrings.current.activityLogBackButton
+                                LocalReplyRadarStrings.current.activityLogBackButton
                         )
                     }
                 }
@@ -124,7 +124,8 @@ fun ActivityLogScreen(viewModel: ActivityLogViewModel = koinViewModel(), onBackC
 @Composable
 private fun Loading() {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         ReplyProgress()
@@ -134,7 +135,8 @@ private fun Loading() {
 @Composable
 private fun Error(state: ActivityLogState) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         ReplyRadarError(
@@ -146,7 +148,8 @@ private fun Error(state: ActivityLogState) {
 @Composable
 private fun Placeholder() {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         ReplyRadarPlaceholder(
@@ -162,7 +165,10 @@ private fun ActivityLogList(state: ActivityLogState) {
             state.activityLogItems,
             key = { _, item -> item.id }
         ) { index, userAction ->
-            Column(modifier = Modifier.fillMaxWidth()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
                 ActivityLogListItem(userAction = userAction)
 
                 if (index < state.activityLogItems.lastIndex) {
@@ -209,7 +215,7 @@ fun ActivityLogListItem(userAction: UserAction) {
                         ),
                         tint = colorScheme.primary,
                         contentDescription =
-                        LocalReplyRadarStrings.current.activityLogItemContentDescription
+                            LocalReplyRadarStrings.current.activityLogItemContentDescription
                     )
                 }
 

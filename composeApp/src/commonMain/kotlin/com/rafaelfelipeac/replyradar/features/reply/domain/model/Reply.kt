@@ -9,5 +9,6 @@ data class Reply(
     val createdAt: Long = 0,
     val updatedAt: Long = 0,
     val resolvedAt: Long = 0,
-    val archivedAt: Long = 0
+    val archivedAt: Long = 0,
+    val reminderAt: Long = 0
 )

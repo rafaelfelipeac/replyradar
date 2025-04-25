@@ -48,7 +48,10 @@ fun ReplyConfirmationDialog(
                     style = typography.titleLarge
                 )
 
-                Spacer(modifier = Modifier.height(spacerSmall))
+                Spacer(
+                    modifier = Modifier
+                        .height(spacerSmall)
+                )
 
                 Text(
                     text = description,
@@ -56,10 +59,14 @@ fun ReplyConfirmationDialog(
                     color = colorScheme.onSurfaceVariant
                 )
 
-                Spacer(modifier = Modifier.height(spacerLarge))
+                Spacer(
+                    modifier = Modifier
+                        .height(spacerLarge)
+                )
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     horizontalArrangement = End
                 ) {
                     TextButton(
@@ -68,7 +75,10 @@ fun ReplyConfirmationDialog(
                         Text(dismiss)
                     }
 
-                    Spacer(modifier = Modifier.width(spacerSmall))
+                    Spacer(
+                        modifier = Modifier
+                            .width(spacerSmall)
+                    )
 
                     TextButton(
                         onClick = {
