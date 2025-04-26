@@ -11,12 +11,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.reminder.isTimeValid
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 actual fun PlatformTimePicker(
     selectedTime: LocalTime?,
+    selectedDate: LocalDate?,
     onTimeSelected: (LocalTime) -> Unit
 ) {
     val timePickerState = rememberTimePickerState(
@@ -27,13 +30,21 @@ actual fun PlatformTimePicker(
     var showDialog by remember { mutableStateOf(true) }
 
     if (showDialog) {
+        val pickedTime = LocalTime(timePickerState.hour, timePickerState.minute)
+        val isValid = isTimeValid(selectedDate, pickedTime)
+
         AlertDialog(
             onDismissRequest = { showDialog = false },
             confirmButton = {
-                TextButton(onClick = {
-                    onTimeSelected(LocalTime(timePickerState.hour, timePickerState.minute))
-                    showDialog = false
-                }) {
+                TextButton(
+                    onClick = {
+                        if (isValid) {
+                            onTimeSelected(pickedTime)
+                            showDialog = false
+                        }
+                    },
+                    enabled = isValid
+                ) {
                     Text("OK")
                 }
             },

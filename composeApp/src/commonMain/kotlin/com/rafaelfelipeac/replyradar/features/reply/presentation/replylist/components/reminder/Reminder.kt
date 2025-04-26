@@ -74,42 +74,22 @@ fun Reminder(
         color = colorScheme.horizontalDividerColor
     )
 
-//    if (showTimePicker || showDatePicker) {
-//        Text(
-//            text = LocalReplyRadarStrings.current.replyListReminder,
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(start = paddingSmall, top = paddingSmall),
-//            style = typography.bodyMedium,
-//            color = colorScheme.textFieldPlaceholderColor
-//        )
-//    }
-
     if (showTimePicker) {
-//        ReplyTimeSelector(
-//            modifier = Modifier
-//                .padding(top = paddingSmall),
-//            selectedTime = selectedTime,
-//            onTimeSelected = { onSelectedTimeChange(it) }
-//        )
-
         PlatformTimePicker(
             selectedTime = selectedTime,
+            selectedDate = selectedDate,
             onTimeSelected = { onSelectedTimeChange(it) }
         )
     }
 
     if (showDatePicker) {
-//        ReplyDateSelector(
-//            modifier = Modifier
-//                .padding(top = paddingSmall),
-//            selectedDate = selectedDate,
-//            onDateSelected = { onSelectedDateChange(it) }
-//        )
-
         PlatformDatePicker(
             selectedDate = selectedDate,
-            onDateSelected = { onSelectedDateChange(it) }
+            selectedTime = selectedTime,
+            onDateSelected = { onSelectedDateChange(it) },
+            onTimeInvalidated = {
+                onSelectedTimeChange(null)
+            }
         )
     }
 
@@ -132,7 +112,7 @@ fun Reminder(
                     .size(iconSize),
                 painter = painterResource(drawable.ic_time),
                 contentDescription = LocalReplyRadarStrings.current.replyListReminderTimeIconContentDescription,
-                tint =  colorScheme.primary //if (showTimePicker) colorScheme.primary else colorScheme.replyBottomSheetIconColor
+                tint = colorScheme.primary
             )
         }
 
@@ -149,7 +129,7 @@ fun Reminder(
                     .size(iconSize),
                 painter = painterResource(drawable.ic_date),
                 contentDescription = LocalReplyRadarStrings.current.replyListReminderDateIconContentDescription,
-                tint =  colorScheme.primary //if (showDatePicker) colorScheme.primary else colorScheme.replyBottomSheetIconColor
+                tint = colorScheme.primary
             )
         }
     }
@@ -197,48 +177,4 @@ private fun ReminderText(
             }
         }
     }
-}
-
-@Composable
-fun formatReminder(selectedDate: LocalDate?, selectedTime: LocalTime?): String? {
-    if (selectedDate == null && selectedTime == null) return null
-
-    val timeZone = TimeZone.currentSystemDefault()
-    val now = Instant.fromEpochMilliseconds(LocalClock.current.now()).toLocalDateTime(timeZone)
-    val defaultTime = LocalTime(REMINDER_DEFAULT_HOUR, REMINDER_DEFAULT_MINUTE)
-
-    val datePart = when {
-        selectedDate != null -> {
-            val day = selectedDate.dayOfMonth.toTwoDigitString()
-            val month = selectedDate.monthNumber.toTwoDigitString()
-            val year = selectedDate.year.toString()
-            "$day/$month/$year"
-        }
-
-        selectedTime != null -> {
-            val reminderTimeToday = LocalDateTime(now.date, selectedTime)
-            if (reminderTimeToday > now) {
-                LocalReplyRadarStrings.current.replyListReminderToday
-            } else {
-                LocalReplyRadarStrings.current.replyListReminderTomorrow
-            }
-        }
-
-        else -> null
-    }
-
-    val timePart = when {
-        selectedTime != null -> "${selectedTime.hour.toTwoDigitString()}:${selectedTime.minute.toTwoDigitString()}"
-        selectedDate != null -> "${defaultTime.hour.toTwoDigitString()}:${defaultTime.minute.toTwoDigitString()}"
-        else -> null
-    }
-
-
-    return "${LocalReplyRadarStrings.current.replyListReminderSet} ${
-        when {
-            datePart != null && timePart != null -> "$datePart $timePart"
-            datePart != null -> datePart
-            else -> timePart
-        }
-    }"
 }

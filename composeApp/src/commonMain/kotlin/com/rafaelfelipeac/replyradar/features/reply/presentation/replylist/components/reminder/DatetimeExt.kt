@@ -1,0 +1,117 @@
+package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.reminder
+
+import androidx.compose.runtime.Composable
+import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_DEFAULT_HOUR
+import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_DEFAULT_MINUTE
+import com.rafaelfelipeac.replyradar.core.common.clock.LocalClock
+import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.util.toTwoDigitString
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+
+fun isDateTimeValid(date: LocalDate?, time: LocalTime, now: LocalDateTime): Boolean {
+    return when {
+        date == null -> {
+            val todayTime = LocalDateTime(now.date, time)
+            todayTime > now
+        }
+
+        date == now.date -> {
+            val selectedDateTime = LocalDateTime(date, time)
+            selectedDateTime > now
+        }
+
+        date > now.date -> true
+        else -> false
+    }
+}
+
+@Composable
+fun getDefaultTime(selectedDate: LocalDate?, selectedTime: LocalTime?): LocalTime {
+    val clock = LocalClock.current
+
+    val now = Instant.fromEpochMilliseconds(clock.now())
+        .toLocalDateTime(TimeZone.currentSystemDefault())
+
+    val eightAM = LocalTime(REMINDER_DEFAULT_HOUR, REMINDER_DEFAULT_MINUTE)
+
+    return if (selectedDate != null && isDateTimeValid(
+            date = selectedDate,
+            time = eightAM,
+            now = now
+        )
+    ) {
+        selectedTime ?: eightAM
+    } else {
+        val nextHour = now.hour + if (now.minute > 0) 1 else 0
+        LocalTime(hour = nextHour % 24, minute = 0)
+    }
+}
+
+@Composable
+fun formatReminder(selectedDate: LocalDate?, selectedTime: LocalTime?): String? {
+    if (selectedDate == null && selectedTime == null) return null
+
+    val timeZone = TimeZone.currentSystemDefault()
+    val now = Instant.fromEpochMilliseconds(LocalClock.current.now()).toLocalDateTime(timeZone)
+    val defaultTime = getDefaultTime(selectedDate, selectedTime)
+
+    val datePart = when {
+        selectedDate != null -> {
+            val day = selectedDate.dayOfMonth.toTwoDigitString()
+            val month = selectedDate.monthNumber.toTwoDigitString()
+            val year = selectedDate.year.toString()
+            "$day/$month/$year"
+        }
+
+        selectedTime != null -> {
+            val reminderTimeToday = LocalDateTime(now.date, selectedTime)
+            if (reminderTimeToday > now) {
+                LocalReplyRadarStrings.current.replyListReminderToday
+            } else {
+                LocalReplyRadarStrings.current.replyListReminderTomorrow
+            }
+        }
+
+        else -> null
+    }
+
+    val timePart = when {
+        selectedTime != null -> "${selectedTime.hour.toTwoDigitString()}:${selectedTime.minute.toTwoDigitString()}"
+        selectedDate != null -> "${defaultTime.hour.toTwoDigitString()}:${defaultTime.minute.toTwoDigitString()}"
+        else -> null
+    }
+
+
+    return "${LocalReplyRadarStrings.current.replyListReminderSet} ${
+        when {
+            datePart != null && timePart != null -> "$datePart $timePart"
+            datePart != null -> datePart
+            else -> timePart
+        }
+    }"
+}
+
+fun isTimeValid(date: LocalDate?, time: LocalTime): Boolean {
+    val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+
+    return when {
+        date == null -> {
+            val todayTime = LocalDateTime(now.date, time)
+            todayTime > now
+        }
+
+        date == now.date -> {
+            val selectedDateTime = LocalDateTime(date, time)
+            selectedDateTime > now
+        }
+
+        date > now.date -> true
+        else -> false
+    }
+}
