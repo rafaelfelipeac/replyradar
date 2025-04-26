@@ -41,7 +41,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.core.util.formatTimestamp
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.reminder.Reminder
+import com.rafaelfelipeac.replyradar.core.common.ui.components.Reminder
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import kotlinx.datetime.DateTimeUnit.Companion.DAY
 import kotlinx.datetime.Instant

@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.reminder
+package com.rafaelfelipeac.replyradar.core.common.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
