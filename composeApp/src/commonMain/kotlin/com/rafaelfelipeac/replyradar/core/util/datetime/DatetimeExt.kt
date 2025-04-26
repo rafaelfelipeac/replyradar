@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.reminder
+package com.rafaelfelipeac.replyradar.core.util.datetime
 
 import androidx.compose.runtime.Composable
 import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_DEFAULT_HOUR

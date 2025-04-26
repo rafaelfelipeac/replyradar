@@ -11,7 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.reminder.isTimeValid
+import com.rafaelfelipeac.replyradar.core.util.datetime.isTimeValid
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 

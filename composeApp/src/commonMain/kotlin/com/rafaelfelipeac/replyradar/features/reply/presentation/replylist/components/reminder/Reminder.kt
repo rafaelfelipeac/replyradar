@@ -17,9 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_DEFAULT_HOUR
-import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_DEFAULT_MINUTE
-import com.rafaelfelipeac.replyradar.core.common.clock.LocalClock
 import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.iconButtonSize
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
@@ -32,13 +29,9 @@ import com.rafaelfelipeac.replyradar.core.common.ui.theme.textFieldPlaceholderCo
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.toolbarIconsColor
 import com.rafaelfelipeac.replyradar.core.util.PlatformDatePicker
 import com.rafaelfelipeac.replyradar.core.util.PlatformTimePicker
-import com.rafaelfelipeac.replyradar.core.util.toTwoDigitString
-import kotlinx.datetime.Instant
+import com.rafaelfelipeac.replyradar.core.util.datetime.formatReminder
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
 import replyradar.composeapp.generated.resources.Res.drawable
 import replyradar.composeapp.generated.resources.ic_close
