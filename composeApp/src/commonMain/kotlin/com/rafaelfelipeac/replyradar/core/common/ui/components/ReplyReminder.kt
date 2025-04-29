@@ -71,7 +71,13 @@ fun ReplyReminder(
         PlatformTimePicker(
             selectedTime = selectedTime,
             selectedDate = selectedDate,
-            onTimeSelected = { onSelectedTimeChange(it) }
+            onTimeSelected = {
+                onSelectedTimeChange(it)
+                showTimePicker = false
+            },
+            onDismiss = {
+                showTimePicker = false
+            }
         )
     }
 
@@ -79,9 +85,15 @@ fun ReplyReminder(
         PlatformDatePicker(
             selectedDate = selectedDate,
             selectedTime = selectedTime,
-            onDateSelected = { onSelectedDateChange(it) },
+            onDateSelected = {
+                onSelectedDateChange(it)
+                showDatePicker = false
+            },
             onTimeInvalidated = {
                 onSelectedTimeChange(null)
+            },
+            onDismiss = {
+                showDatePicker = false
             }
         )
     }
@@ -94,7 +106,7 @@ fun ReplyReminder(
     ) {
         IconButton(
             onClick = {
-                showTimePicker = !showTimePicker
+                showTimePicker = true
                 closeKeyboard()
             },
             modifier = Modifier
@@ -111,7 +123,7 @@ fun ReplyReminder(
 
         IconButton(
             onClick = {
-                showDatePicker = !showDatePicker
+                showDatePicker = true
                 closeKeyboard()
             },
             modifier = Modifier

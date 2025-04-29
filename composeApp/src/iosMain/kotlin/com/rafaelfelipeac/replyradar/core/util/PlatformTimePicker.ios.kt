@@ -8,7 +8,8 @@ import kotlinx.datetime.LocalTime
 actual fun PlatformTimePicker(
     selectedTime: LocalTime?,
     selectedDate: LocalDate?,
-    onTimeSelected: (LocalTime) -> Unit
+    onTimeSelected: (LocalTime) -> Unit,
+    onDismiss: () -> Unit
 ) {
     TODO("Not yet implemented for this platform.")
 }

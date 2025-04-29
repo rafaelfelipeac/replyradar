@@ -29,7 +29,8 @@ actual fun PlatformDatePicker(
     selectedDate: LocalDate?,
     selectedTime: LocalTime?,
     onDateSelected: (LocalDate) -> Unit,
-    onTimeInvalidated: () -> Unit
+    onTimeInvalidated: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     val now = Clock.System.now()
         .toLocalDateTime(TimeZone.currentSystemDefault())
@@ -51,7 +52,10 @@ actual fun PlatformDatePicker(
 
     if (showDialog) {
         DatePickerDialog(
-            onDismissRequest = { showDialog = false },
+            onDismissRequest = {
+                onDismiss()
+                showDialog = false
+            },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -72,6 +76,7 @@ actual fun PlatformDatePicker(
                                 }
                             } ?: onTimeInvalidated()
                         }
+                        onDismiss()
                         showDialog = false
                     }
                 ) {
@@ -80,7 +85,10 @@ actual fun PlatformDatePicker(
             },
             dismissButton = {
                 TextButton(
-                    onClick = { showDialog = false }
+                    onClick = {
+                        onDismiss()
+                        showDialog = false
+                    }
                 ) {
                     Text("Cancelar")
                 }

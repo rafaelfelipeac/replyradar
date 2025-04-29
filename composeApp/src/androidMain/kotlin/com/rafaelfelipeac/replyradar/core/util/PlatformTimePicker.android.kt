@@ -20,7 +20,8 @@ import kotlinx.datetime.LocalTime
 actual fun PlatformTimePicker(
     selectedTime: LocalTime?,
     selectedDate: LocalDate?,
-    onTimeSelected: (LocalTime) -> Unit
+    onTimeSelected: (LocalTime) -> Unit,
+    onDismiss: () -> Unit
 ) {
     val timePickerState = rememberTimePickerState(
         initialHour = selectedTime?.hour ?: 12,
@@ -34,12 +35,16 @@ actual fun PlatformTimePicker(
         val isValid = isTimeValid(selectedDate, pickedTime)
 
         AlertDialog(
-            onDismissRequest = { showDialog = false },
+            onDismissRequest = {
+                onDismiss()
+                showDialog = false
+            },
             confirmButton = {
                 TextButton(
                     onClick = {
                         if (isValid) {
                             onTimeSelected(pickedTime)
+                            onDismiss()
                             showDialog = false
                         }
                     },
@@ -49,7 +54,10 @@ actual fun PlatformTimePicker(
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showDialog = false }) {
+                TextButton(onClick = {
+                    onDismiss()
+                    showDialog = false
+                }) {
                     Text("Cancelar")
                 }
             },

@@ -8,5 +8,6 @@ import kotlinx.datetime.LocalTime
 expect fun PlatformTimePicker(
     selectedTime: LocalTime?,
     selectedDate: LocalDate?,
-    onTimeSelected: (LocalTime) -> Unit
+    onTimeSelected: (LocalTime) -> Unit,
+    onDismiss: () -> Unit
 )
