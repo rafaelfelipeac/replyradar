@@ -39,7 +39,7 @@ import replyradar.composeapp.generated.resources.ic_date
 import replyradar.composeapp.generated.resources.ic_time
 
 @Composable
-fun Reminder(
+fun ReplyReminder(
     selectedTime: LocalTime?,
     selectedDate: LocalDate?,
     onSelectedTimeChange: (LocalTime?) -> Unit,
