@@ -72,8 +72,14 @@ fun ReplyBottomSheetContent(
     replyBottomSheetState?.let { state ->
         var name by remember { mutableStateOf(state.reply?.name ?: EMPTY) }
         var subject by remember { mutableStateOf(state.reply?.subject ?: EMPTY) }
-        var selectedTime by remember { mutableStateOf<LocalTime?>(null) }
-        var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
+        val reminderAt = state.reply?.reminderAt
+            ?.takeIf { it != 0L }
+            ?.let { millis ->
+                Instant.fromEpochMilliseconds(millis)
+                    .toLocalDateTime(TimeZone.currentSystemDefault())
+            }
+        var selectedTime by remember(reminderAt) { mutableStateOf(reminderAt?.time) }
+        var selectedDate by remember(reminderAt) { mutableStateOf(reminderAt?.date) }
 
         Column(
             modifier = Modifier
