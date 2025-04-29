@@ -40,26 +40,35 @@ fun getDefaultTime(selectedDate: LocalDate?, selectedTime: LocalTime?): LocalTim
 
     val eightAM = LocalTime(REMINDER_DEFAULT_HOUR, REMINDER_DEFAULT_MINUTE)
 
-    return if (selectedDate != null && isDateTimeValid(
+    if (selectedDate != null && selectedTime != null &&
+        isDateTimeValid(
             date = selectedDate,
-            time = eightAM,
+            time = selectedTime,
             now = now
         )
     ) {
-        selectedTime ?: eightAM
-    } else {
-        val nextHour = now.hour + if (now.minute > 0) 1 else 0
-        LocalTime(hour = nextHour % 24, minute = 0)
+        return selectedTime
     }
+
+    if (selectedDate != null && isDateTimeValid(date = selectedDate, time = eightAM, now = now)) {
+        return eightAM
+    }
+
+    val nextHour = now.hour + if (now.minute > 0) 1 else 0
+    return LocalTime(hour = nextHour % 24, minute = 0)
 }
 
 @Composable
-fun formatReminder(selectedDate: LocalDate?, selectedTime: LocalTime?): String? {
+fun formatReminder(
+    selectedDate: LocalDate?,
+    selectedTime: LocalTime?,
+    onTimeSelected: (LocalTime) -> Unit,
+): String? {
     if (selectedDate == null && selectedTime == null) return null
 
     val timeZone = TimeZone.currentSystemDefault()
     val now = Instant.fromEpochMilliseconds(LocalClock.current.now()).toLocalDateTime(timeZone)
-    val defaultTime = getDefaultTime(selectedDate, selectedTime)
+    val defaultTime = getDefaultTime(selectedDate, selectedTime).also { onTimeSelected(it) }
 
     val datePart = when {
         selectedDate != null -> {
