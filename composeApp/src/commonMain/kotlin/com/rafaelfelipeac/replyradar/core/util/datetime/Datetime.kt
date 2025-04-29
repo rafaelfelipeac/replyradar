@@ -40,8 +40,7 @@ fun getDefaultTime(selectedDate: LocalDate?, selectedTime: LocalTime?): LocalTim
 
     val eightAM = LocalTime(REMINDER_DEFAULT_HOUR, REMINDER_DEFAULT_MINUTE)
 
-    if (selectedDate != null && selectedTime != null &&
-        isDateTimeValid(
+    if (selectedTime != null && isDateTimeValid(
             date = selectedDate,
             time = selectedTime,
             now = now
@@ -50,7 +49,7 @@ fun getDefaultTime(selectedDate: LocalDate?, selectedTime: LocalTime?): LocalTim
         return selectedTime
     }
 
-    if (selectedDate != null && isDateTimeValid(date = selectedDate, time = eightAM, now = now)) {
+    if (isDateTimeValid(date = selectedDate, time = eightAM, now = now)) {
         return eightAM
     }
 
