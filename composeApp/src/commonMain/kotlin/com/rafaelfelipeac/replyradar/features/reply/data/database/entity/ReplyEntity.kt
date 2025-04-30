@@ -14,5 +14,6 @@ data class ReplyEntity(
     val createdAt: Long = INITIAL_DATE_LONG,
     val updatedAt: Long = INITIAL_DATE_LONG,
     val resolvedAt: Long = INITIAL_DATE_LONG,
-    val archivedAt: Long = INITIAL_DATE_LONG
+    val archivedAt: Long = INITIAL_DATE_LONG,
+    val reminderAt: Long = INITIAL_DATE_LONG
 )

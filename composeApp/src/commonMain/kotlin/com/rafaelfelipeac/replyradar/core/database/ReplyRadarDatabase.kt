@@ -15,4 +15,4 @@ abstract class ReplyRadarDatabase : RoomDatabase() {
     abstract val userActionDao: UserActionDao
 }
 
-private const val DATABASE_VERSION = 1
+private const val DATABASE_VERSION = 2
