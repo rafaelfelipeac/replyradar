@@ -80,8 +80,7 @@ private const val ARCHIVED_INDEX = 2
 fun ReplyListScreenRoot(
     viewModel: ReplyListViewModel = koinViewModel(),
     onSettingsClick: () -> Unit,
-    onActivityLogClick: () -> Unit,
-    notificationPermissionManager: NotificationPermissionManager
+    onActivityLogClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -91,8 +90,7 @@ fun ReplyListScreenRoot(
             viewModel.onIntent(intent)
         },
         onSettingsClick = onSettingsClick,
-        onActivityLogClick = onActivityLogClick,
-        notificationPermissionManager = notificationPermissionManager
+        onActivityLogClick = onActivityLogClick
     )
 }
 
@@ -102,8 +100,7 @@ fun ReplyListScreen(
     state: ReplyListState,
     onIntent: (ReplyListScreenIntent) -> Unit,
     onSettingsClick: () -> Unit,
-    onActivityLogClick: () -> Unit,
-    notificationPermissionManager: NotificationPermissionManager
+    onActivityLogClick: () -> Unit
 ) {
     val strings = LocalReplyRadarStrings.current
 
@@ -217,8 +214,7 @@ fun ReplyListScreen(
             ReplyBottomSheet(
                 sheetState = sheetState,
                 onIntent = onIntent,
-                replyBottomSheetState = state.replyBottomSheetState,
-                notificationPermissionManager = notificationPermissionManager
+                replyBottomSheetState = state.replyBottomSheetState
             )
         }
     }

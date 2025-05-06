@@ -13,7 +13,6 @@ import com.rafaelfelipeac.replyradar.core.navigation.Route.ActivityLog
 import com.rafaelfelipeac.replyradar.core.navigation.Route.ReplyGraph
 import com.rafaelfelipeac.replyradar.core.navigation.Route.ReplyList
 import com.rafaelfelipeac.replyradar.core.navigation.Route.Settings
-import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
 import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogScreen
 import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogViewModel
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenRoot
@@ -24,8 +23,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun AppNavHost(
-    navController: NavHostController,
-    notificationPermissionManager: NotificationPermissionManager
+    navController: NavHostController
 ) {
     NavHost(
         navController = navController,
@@ -43,8 +41,7 @@ fun AppNavHost(
                 ReplyListScreenRoot(
                     viewModel = viewModel,
                     onSettingsClick = { navController.navigate(Settings) },
-                    onActivityLogClick = { navController.navigate(ActivityLog) },
-                    notificationPermissionManager = notificationPermissionManager
+                    onActivityLogClick = { navController.navigate(ActivityLog) }
                 )
             }
 

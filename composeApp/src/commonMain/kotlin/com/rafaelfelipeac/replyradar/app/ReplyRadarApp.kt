@@ -17,15 +17,13 @@ import com.rafaelfelipeac.replyradar.core.common.ui.theme.ReplyRadarTheme
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.SYSTEM
 import com.rafaelfelipeac.replyradar.core.navigation.AppNavHost
-import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
 import com.rafaelfelipeac.replyradar.core.util.getClock
 import com.rafaelfelipeac.replyradar.features.app.settings.AppSettingsViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ReplyRadarApp(
-    onSystemBarsConfigured: ((isDark: Boolean, backgroundColor: Color) -> Unit)? = null,
-    notificationPermissionManager: NotificationPermissionManager
+    onSystemBarsConfigured: ((isDark: Boolean, backgroundColor: Color) -> Unit)? = null
 ) {
     val navController = rememberNavController()
     val appSettingsViewModel = koinViewModel<AppSettingsViewModel>()
@@ -49,8 +47,7 @@ fun ReplyRadarApp(
     ) {
         ReplyRadarTheme(darkTheme = isDark) {
             AppNavHost(
-                navController = navController,
-                notificationPermissionManager = notificationPermissionManager
+                navController = navController
             )
         }
     }

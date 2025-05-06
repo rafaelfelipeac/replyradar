@@ -1,6 +1,7 @@
 package com.rafaelfelipeac.replyradar.core.notification
 
 import android.Manifest
+import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -10,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -46,7 +48,6 @@ fun rememberNotificationPermissionManager(): NotificationPermissionManager {
                     return true
                 }
 
-                // Launch and suspend for result
                 return suspendCancellableCoroutine { cont ->
                     permissionResultState.value = null
                     permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
@@ -58,6 +59,21 @@ fun rememberNotificationPermissionManager(): NotificationPermissionManager {
                             .filterNotNull()
                             .first()
                             .let { result ->
+                                if (!result) {
+                                    val activity = context as? Activity
+                                    val shouldShowRationale =
+                                        activity?.let {
+                                            ActivityCompat.shouldShowRequestPermissionRationale(
+                                                it,
+                                                Manifest.permission.POST_NOTIFICATIONS
+                                            )
+                                        } ?: true
+
+                                    if (!shouldShowRationale) {
+
+                                    }
+                                }
+
                                 cont.resume(result)
                             }
                     }
@@ -68,4 +84,3 @@ fun rememberNotificationPermissionManager(): NotificationPermissionManager {
         }
     }
 }
-

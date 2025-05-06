@@ -6,7 +6,6 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.runtime.Composable
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
-import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnAddReply
@@ -23,8 +22,7 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.compo
 fun ReplyBottomSheet(
     sheetState: SheetState,
     onIntent: (ReplyListScreenIntent) -> Unit,
-    replyBottomSheetState: ReplyBottomSheetState,
-    notificationPermissionManager: NotificationPermissionManager
+    replyBottomSheetState: ReplyBottomSheetState
 ) {
     ModalBottomSheet(
         sheetState = sheetState,
@@ -38,8 +36,7 @@ fun ReplyBottomSheet(
                 BottomSheetContent(
                     state = ReplyBottomSheetState(CREATE),
                     onComplete = { onIntent(OnAddReply(it)) },
-                    onIntent = onIntent,
-                    notificationPermissionManager = notificationPermissionManager
+                    onIntent = onIntent
                 )
             }
 
@@ -51,8 +48,7 @@ fun ReplyBottomSheet(
                             reply = replyBottomSheetState.reply
                         ),
                         onComplete = { onIntent(OnEditReply(it)) },
-                        onIntent = onIntent,
-                        notificationPermissionManager = notificationPermissionManager
+                        onIntent = onIntent
                     )
                 }
             }
@@ -64,15 +60,13 @@ fun ReplyBottomSheet(
 private fun BottomSheetContent(
     state: ReplyBottomSheetState,
     onComplete: (Reply) -> Unit,
-    onIntent: (ReplyListScreenIntent) -> Unit,
-    notificationPermissionManager: NotificationPermissionManager
+    onIntent: (ReplyListScreenIntent) -> Unit
 ) {
     ReplyBottomSheetContent(
         replyBottomSheetState = state,
         onComplete = onComplete,
         onResolve = { onIntent(OnToggleResolve(it)) },
         onArchive = { onIntent(OnToggleArchive(it)) },
-        onDelete = { onIntent(OnDeleteReply(it)) },
-        notificationPermissionManager = notificationPermissionManager
+        onDelete = { onIntent(OnDeleteReply(it)) }
     )
 }

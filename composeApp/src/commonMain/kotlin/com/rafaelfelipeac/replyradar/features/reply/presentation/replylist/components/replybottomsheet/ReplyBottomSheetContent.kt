@@ -35,15 +35,15 @@ import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyButton
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyConfirmationDialog
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyOutlinedButton
+import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyReminder
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextField
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSize.Large
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
+import com.rafaelfelipeac.replyradar.core.notification.LocalNotificationPermissionManager
 import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.core.util.formatTimestamp
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
-import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyReminder
-import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import kotlinx.coroutines.launch
 import kotlinx.datetime.DateTimeUnit.Companion.DAY
@@ -70,8 +70,7 @@ fun ReplyBottomSheetContent(
     onComplete: (Reply) -> Unit,
     onResolve: (Reply) -> Unit,
     onArchive: (Reply) -> Unit,
-    onDelete: (Reply) -> Unit,
-    notificationPermissionManager: NotificationPermissionManager
+    onDelete: (Reply) -> Unit
 ) {
     replyBottomSheetState?.let { state ->
         var name by remember { mutableStateOf(state.reply?.name ?: EMPTY) }
@@ -182,6 +181,7 @@ fun ReplyBottomSheetContent(
                 )
 
                 val coroutineScope = rememberCoroutineScope()
+                val notificationPermissionManager = LocalNotificationPermissionManager.current
 
                 ReplyButton(
                     modifier = Modifier
@@ -196,6 +196,8 @@ fun ReplyBottomSheetContent(
                         coroutineScope.launch {
                             val granted = notificationPermissionManager.ensureNotificationPermission()
                             if (granted) {
+                                val x = "Permission Granted"
+
                                 val replyToSave = if (state.reply != null) {
                                     state.reply.copy(
                                         name = name,
@@ -212,7 +214,7 @@ fun ReplyBottomSheetContent(
 
                                 onComplete(replyToSave)
                             } else {
-                                val x = ""
+                                val x = "Permission denied"
                             }
                         }
                     },
