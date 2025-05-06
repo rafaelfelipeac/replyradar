@@ -12,7 +12,7 @@ fun main() {
             onCloseRequest = ::exitApplication,
             title = "Reply Radar"
         ) {
-            ReplyRadarApp()
+            ReplyRadarApp(notificationPermissionManager = notificationPermissionManager)
         }
     }
 }

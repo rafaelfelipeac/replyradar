@@ -16,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -42,7 +43,9 @@ import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.core.util.formatTimestamp
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyReminder
+import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
+import kotlinx.coroutines.launch
 import kotlinx.datetime.DateTimeUnit.Companion.DAY
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -67,7 +70,8 @@ fun ReplyBottomSheetContent(
     onComplete: (Reply) -> Unit,
     onResolve: (Reply) -> Unit,
     onArchive: (Reply) -> Unit,
-    onDelete: (Reply) -> Unit
+    onDelete: (Reply) -> Unit,
+    notificationPermissionManager: NotificationPermissionManager
 ) {
     replyBottomSheetState?.let { state ->
         var name by remember { mutableStateOf(state.reply?.name ?: EMPTY) }
@@ -177,6 +181,8 @@ fun ReplyBottomSheetContent(
                     selectedTime = selectedTime
                 )
 
+                val coroutineScope = rememberCoroutineScope()
+
                 ReplyButton(
                     modifier = Modifier
                         .wrapContentWidth()
@@ -187,22 +193,27 @@ fun ReplyBottomSheetContent(
                         LocalReplyRadarStrings.current.replyListBottomSheetSave
                     },
                     onClick = {
-                        if (state.reply != null) {
-                            onComplete(
-                                state.reply.copy(
-                                    name = name,
-                                    subject = subject,
-                                    reminderAt = reminderAt
-                                )
-                            )
-                        } else {
-                            onComplete(
-                                Reply(
-                                    name = name,
-                                    subject = subject,
-                                    reminderAt = reminderAt
-                                )
-                            )
+                        coroutineScope.launch {
+                            val granted = notificationPermissionManager.ensureNotificationPermission()
+                            if (granted) {
+                                val replyToSave = if (state.reply != null) {
+                                    state.reply.copy(
+                                        name = name,
+                                        subject = subject,
+                                        reminderAt = reminderAt
+                                    )
+                                } else {
+                                    Reply(
+                                        name = name,
+                                        subject = subject,
+                                        reminderAt = reminderAt
+                                    )
+                                }
+
+                                onComplete(replyToSave)
+                            } else {
+                                val x = ""
+                            }
                         }
                     },
                     enabled = name.isNotBlank()

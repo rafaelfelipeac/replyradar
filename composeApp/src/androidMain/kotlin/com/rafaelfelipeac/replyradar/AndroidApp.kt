@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.app.ReplyRadarApp
 import com.rafaelfelipeac.replyradar.core.ConfigureSystemBars
+import rememberNotificationPermissionManager
 
 @Composable
 @Preview
@@ -22,6 +23,7 @@ fun AndroidApp() {
         onSystemBarsConfigured = { dark, bgColor ->
             isDark = dark
             backgroundColor = bgColor
-        }
+        },
+        notificationPermissionManager = rememberNotificationPermissionManager()
     )
 }

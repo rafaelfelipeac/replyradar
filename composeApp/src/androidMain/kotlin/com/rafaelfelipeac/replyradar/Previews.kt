@@ -2,6 +2,7 @@ package com.rafaelfelipeac.replyradar
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState
@@ -24,6 +25,9 @@ private fun ReplyListScreenPreview() {
         ),
         onIntent = {},
         onSettingsClick = {},
-        onActivityLogClick = {}
+        onActivityLogClick = {},
+        notificationPermissionManager = object : NotificationPermissionManager {
+            override suspend fun ensureNotificationPermission() = false
+        }
     )
 }

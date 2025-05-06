@@ -52,6 +52,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.spacerXSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.snackbarBackgroundColor
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.toolbarIconsColor
+import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.ClearSnackbarState
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
@@ -79,7 +80,8 @@ private const val ARCHIVED_INDEX = 2
 fun ReplyListScreenRoot(
     viewModel: ReplyListViewModel = koinViewModel(),
     onSettingsClick: () -> Unit,
-    onActivityLogClick: () -> Unit
+    onActivityLogClick: () -> Unit,
+    notificationPermissionManager: NotificationPermissionManager
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -89,7 +91,8 @@ fun ReplyListScreenRoot(
             viewModel.onIntent(intent)
         },
         onSettingsClick = onSettingsClick,
-        onActivityLogClick = onActivityLogClick
+        onActivityLogClick = onActivityLogClick,
+        notificationPermissionManager = notificationPermissionManager
     )
 }
 
@@ -99,7 +102,8 @@ fun ReplyListScreen(
     state: ReplyListState,
     onIntent: (ReplyListScreenIntent) -> Unit,
     onSettingsClick: () -> Unit,
-    onActivityLogClick: () -> Unit
+    onActivityLogClick: () -> Unit,
+    notificationPermissionManager: NotificationPermissionManager
 ) {
     val strings = LocalReplyRadarStrings.current
 
@@ -213,7 +217,8 @@ fun ReplyListScreen(
             ReplyBottomSheet(
                 sheetState = sheetState,
                 onIntent = onIntent,
-                replyBottomSheetState = state.replyBottomSheetState
+                replyBottomSheetState = state.replyBottomSheetState,
+                notificationPermissionManager = notificationPermissionManager
             )
         }
     }

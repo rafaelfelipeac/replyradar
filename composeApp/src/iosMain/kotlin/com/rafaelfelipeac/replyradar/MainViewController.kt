@@ -9,4 +9,4 @@ fun MainViewController() = ComposeUIViewController(
     configure = {
         initKoin()
     }
-) { ReplyRadarApp() }
+) { ReplyRadarApp(notificationPermissionManager = notificationPermissionManager) }
