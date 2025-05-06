@@ -1,7 +1,6 @@
 package com.rafaelfelipeac.replyradar
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -10,8 +9,7 @@ import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.app.ReplyRadarApp
 import com.rafaelfelipeac.replyradar.core.ConfigureSystemBars
-import com.rafaelfelipeac.replyradar.core.notification.LocalNotificationPermissionManager
-import rememberNotificationPermissionManager
+import com.rafaelfelipeac.replyradar.core.notification.rememberNotificationPermissionManager
 
 @Composable
 @Preview
@@ -21,14 +19,11 @@ fun AndroidApp() {
 
     ConfigureSystemBars(darkTheme = isDark, backgroundColor = backgroundColor)
 
-    CompositionLocalProvider(
-        LocalNotificationPermissionManager provides rememberNotificationPermissionManager()
-    ) {
-        ReplyRadarApp(
-            onSystemBarsConfigured = { dark, bgColor ->
-                isDark = dark
-                backgroundColor = bgColor
-            }
-        )
-    }
+    ReplyRadarApp(
+        onSystemBarsConfigured = { dark, bgColor ->
+            isDark = dark
+            backgroundColor = bgColor
+        },
+        notificationPermissionManager = rememberNotificationPermissionManager()
+    )
 }
