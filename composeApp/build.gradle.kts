@@ -216,6 +216,7 @@ tasks.register<JavaExec>("detektFormat") {
 
 dependencies {
     implementation(libs.androidx.ui.android)
+    implementation(libs.androidx.work.runtime.ktx)
     debugImplementation(compose.uiTooling)
     add("kspAndroid", libs.androidx.room.compiler)
 }

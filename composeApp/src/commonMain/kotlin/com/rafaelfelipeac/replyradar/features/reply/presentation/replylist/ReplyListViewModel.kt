@@ -2,6 +2,7 @@ package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rafaelfelipeac.replyradar.core.util.reminder.ReminderScheduler
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.DeleteReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.GetRepliesUseCase
@@ -58,6 +59,7 @@ class ReplyListViewModel(
     private val deleteReplyUseCase: DeleteReplyUseCase,
     private val getRepliesUseCase: GetRepliesUseCase,
     private val logUserActionUseCase: LogUserActionUseCase,
+    private val reminderScheduler: ReminderScheduler,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : ViewModel() {
 
@@ -185,6 +187,15 @@ class ReplyListViewModel(
         val replyId = upsertReplyUseCase.upsertReply(reply)
 
         logUserAction(actionType = actionType, targetId = replyId)
+
+        if (reply.reminderAt != 0L) {
+            reminderScheduler.scheduleReminder(
+                reminderAtMillis = reply.reminderAt,
+                name = reply.name,
+                subject = reply.subject,
+                replyId = replyId
+            )
+        }
     }
 
     private fun onToggleArchiveReply(reply: Reply) = viewModelScope.launch {
