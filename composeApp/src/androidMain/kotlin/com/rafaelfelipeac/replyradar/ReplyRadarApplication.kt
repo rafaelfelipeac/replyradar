@@ -3,6 +3,7 @@ package com.rafaelfelipeac.replyradar
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.os.Build
 import com.rafaelfelipeac.replyradar.di.initKoin
 import org.koin.android.ext.koin.androidContext
@@ -17,20 +18,20 @@ class ReplyRadarApplication : Application() {
             androidContext(this@ReplyRadarApplication)
         }
 
-        createNotificationChannels()
+        createNotificationChannel()
     }
 
-    private fun createNotificationChannels() {
+    private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "reminder_channel"
-            val name = "Reminder Notifications"
-            val descriptionText = "Notifications for scheduled reminders"
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(channelId, name, importance).apply {
+            val id = getString(R.string.notification_channel_id)
+            val name = getString(R.string.notification_channel_name)
+            val descriptionText = getString(R.string.notifications_channel_description)
+            val importance = IMPORTANCE_HIGH
+            val channel = NotificationChannel(id, name, importance).apply {
                 description = descriptionText
             }
-            val notificationManager: NotificationManager =
-                getSystemService(NotificationManager::class.java)
+            val notificationManager = getSystemService(NotificationManager::class.java)
+
             notificationManager.createNotificationChannel(channel)
         }
     }

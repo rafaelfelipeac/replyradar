@@ -43,7 +43,3 @@ val settingsAppVersionOffset = 64.dp
 val radioButtonSize = 24.dp
 
 val dialogElevation = 8.dp
-
-val replyDateSelectorMinTonalElevation = 1.dp
-val replyDateSelectorMaxTonalElevation = 4.dp
-val replyDateItemWidth = 12.dp

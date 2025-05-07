@@ -5,17 +5,8 @@ import com.rafaelfelipeac.replyradar.core.util.getAppVersion
 object StringsPt : Strings {
     override val appName = "Reply Radar"
 
-    override val weekDaysShort = listOf("Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom")
-    override val months = listOf(
-        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
-    )
 
     override val genericErrorMessage = "Ocorreu um erro inesperado."
-
-    override val componentReplyTimeSelectorLabel = "Definir horário:"
-
-    override val componentReplyDateSelectorLabel = "Definir dia:"
 
     override val replyListActivityLog = "Atividades"
     override val replyListTabOnTheRadar = "No Radar"

@@ -50,9 +50,7 @@ fun ReplyRadarApp(
         LocalNotificationPermissionManager provides notificationPermissionManager
     ) {
         ReplyRadarTheme(darkTheme = isDark) {
-            AppNavHost(
-                navController = navController
-            )
+            AppNavHost(navController = navController)
         }
     }
 }
