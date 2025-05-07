@@ -3,6 +3,8 @@ package com.rafaelfelipeac.replyradar.core.util.reminder
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.rafaelfelipeac.replyradar.R.string.reminder_name
+import com.rafaelfelipeac.replyradar.R.string.reminder_subject
 
 class ReminderWorker(
     appContext: Context,
@@ -10,8 +12,8 @@ class ReminderWorker(
 ) : Worker(appContext, workerParams) {
 
     override fun doWork(): Result {
-        val name = inputData.getString("name") ?: return Result.failure()
-        val subject = inputData.getString("subject") ?: return Result.failure()
+        val name = inputData.getString(applicationContext.getString(reminder_name)) ?: return Result.failure()
+        val subject = inputData.getString(applicationContext.getString(reminder_subject)) ?: return Result.failure()
 
         NotificationUtils.showReminderNotification(applicationContext, name, subject)
 

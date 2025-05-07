@@ -5,7 +5,6 @@ import com.rafaelfelipeac.replyradar.core.util.getAppVersion
 object StringsPt : Strings {
     override val appName = "Reply Radar"
 
-
     override val genericErrorMessage = "Ocorreu um erro inesperado."
 
     override val replyListActivityLog = "Atividades"

@@ -1,16 +1,20 @@
 package com.rafaelfelipeac.replyradar.core.util.reminder
 
-import android.Manifest
+import android.Manifest.permission.POST_NOTIFICATIONS
 import android.content.Context
-import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.rafaelfelipeac.replyradar.R
+import com.rafaelfelipeac.replyradar.R.string.notification_channel_id
 
 object NotificationUtils {
     fun showReminderNotification(context: Context, name: String, subject: String) {
-        val notification = NotificationCompat.Builder(context, "reminder_channel")
+        val notification = NotificationCompat.Builder(
+            context,
+            context.getString(notification_channel_id)
+        )
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setContentTitle("Reminder: $name")
             .setContentText(subject)
@@ -19,11 +23,12 @@ object NotificationUtils {
 
         if (ActivityCompat.checkSelfPermission(
                 context,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED
+                POST_NOTIFICATIONS
+            ) != PERMISSION_GRANTED
         ) {
             return
         }
+
         NotificationManagerCompat.from(context).notify(name.hashCode(), notification)
     }
 }

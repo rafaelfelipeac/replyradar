@@ -4,6 +4,10 @@ import android.content.Context
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.rafaelfelipeac.replyradar.R.string.reminder_name
+import com.rafaelfelipeac.replyradar.R.string.reminder_reply_id
+import com.rafaelfelipeac.replyradar.R.string.reminder_subject
+import com.rafaelfelipeac.replyradar.R.string.reminder_tag
 import java.util.concurrent.TimeUnit
 
 class ReminderSchedulerImpl(
@@ -27,18 +31,20 @@ class ReminderSchedulerImpl(
             .setInitialDelay(delay, TimeUnit.MILLISECONDS)
             .setInputData(
                 workDataOf(
-                    "name" to name,
-                    "subject" to subject,
-                    "replyId" to replyId.toString()
+                    context.getString(reminder_name) to name,
+                    context.getString(reminder_subject) to subject,
+                    context.getString(reminder_reply_id) to replyId.toString()
                 )
             )
-            .addTag("reminder-$replyId")
+            .addTag(getTag(replyId))
             .build()
 
         WorkManager.getInstance(context).enqueue(workRequest)
     }
 
     override fun cancelReminder(replyId: Long) {
-        WorkManager.getInstance(context).cancelAllWorkByTag("reminder-$replyId")
+        WorkManager.getInstance(context).cancelAllWorkByTag(getTag(replyId))
     }
+
+    private fun getTag(replyId: Long) = context.getString(reminder_tag, replyId)
 }

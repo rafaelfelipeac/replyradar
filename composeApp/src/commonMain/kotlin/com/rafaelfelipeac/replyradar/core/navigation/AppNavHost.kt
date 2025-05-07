@@ -22,9 +22,7 @@ import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsView
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun AppNavHost(
-    navController: NavHostController
-) {
+fun AppNavHost(navController: NavHostController) {
     NavHost(
         navController = navController,
         startDestination = ReplyGraph

@@ -5,4 +5,9 @@
     <string name="notification_channel_id">reminder_channel</string>
     <string name="notification_channel_name">Reminder Notifications</string>
     <string name="notifications_channel_description">Notifications for scheduled reminders</string>
+
+    <string name="reminder_name">name</string>
+    <string name="reminder_subject">subject</string>
+    <string name="reminder_reply_id">replyId</string>
+    <string name="reminder_tag">reminder-%1$d</string>
 </resources>
