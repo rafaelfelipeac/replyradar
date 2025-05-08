@@ -10,6 +10,8 @@ import com.rafaelfelipeac.replyradar.R.string.reminder_subject
 import com.rafaelfelipeac.replyradar.R.string.reminder_tag
 import java.util.concurrent.TimeUnit
 
+private const val INVALID_DELAY = 0
+
 class ReminderSchedulerImpl(
     private val context: Context
 ) : ReminderScheduler {
@@ -21,7 +23,7 @@ class ReminderSchedulerImpl(
         replyId: Long
     ) {
         val delay = reminderAtMillis - System.currentTimeMillis()
-        if (delay <= 0) return
+        if (delay <= INVALID_DELAY) return
 
         enqueueReminder(delay, name, subject, replyId)
     }

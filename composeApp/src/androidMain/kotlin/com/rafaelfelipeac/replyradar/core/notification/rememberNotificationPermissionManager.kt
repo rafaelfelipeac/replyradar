@@ -1,8 +1,8 @@
 package com.rafaelfelipeac.replyradar.core.notification
 
-import android.Manifest
+import android.Manifest.permission.POST_NOTIFICATIONS
 import android.app.Activity
-import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,8 +41,8 @@ fun rememberNotificationPermissionManager(): NotificationPermissionManager {
 
                 val granted = ContextCompat.checkSelfPermission(
                     context,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED
+                    POST_NOTIFICATIONS
+                ) == PERMISSION_GRANTED
 
                 if (granted) {
                     return true
@@ -50,7 +50,7 @@ fun rememberNotificationPermissionManager(): NotificationPermissionManager {
 
                 return suspendCancellableCoroutine { cont ->
                     permissionResultState.value = null
-                    permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    permissionLauncher.launch(POST_NOTIFICATIONS)
 
                     val scope = CoroutineScope(Dispatchers.Main.immediate)
 
@@ -65,7 +65,7 @@ fun rememberNotificationPermissionManager(): NotificationPermissionManager {
                                         activity?.let {
                                             ActivityCompat.shouldShowRequestPermissionRationale(
                                                 it,
-                                                Manifest.permission.POST_NOTIFICATIONS
+                                                POST_NOTIFICATIONS
                                             )
                                         } ?: true
 

@@ -14,6 +14,12 @@ import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
+const val LOCAL_TIME_HOUR_DEFAULT = 24
+const val LOCAL_TIME_MINUTE_DEFAULT = 0
+const val HOUR_OFFSET = 1
+const val HOUR_OFFSET_DEFAULT = 0
+const val MINUTE_EMPTY = 0
+
 fun isDateTimeValid(date: LocalDate?, time: LocalTime, now: LocalDateTime): Boolean {
     return when {
         date == null -> {
@@ -53,8 +59,9 @@ fun getDefaultTime(selectedDate: LocalDate?, selectedTime: LocalTime?): LocalTim
         return eightAM
     }
 
-    val nextHour = now.hour + if (now.minute > 0) 1 else 0
-    return LocalTime(hour = nextHour % 24, minute = 0)
+    val nextHour = now.hour + if (now.minute > MINUTE_EMPTY) HOUR_OFFSET else HOUR_OFFSET_DEFAULT
+
+    return LocalTime(hour = nextHour % LOCAL_TIME_HOUR_DEFAULT, minute = LOCAL_TIME_MINUTE_DEFAULT)
 }
 
 @Composable

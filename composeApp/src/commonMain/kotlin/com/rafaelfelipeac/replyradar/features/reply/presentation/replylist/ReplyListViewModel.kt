@@ -2,6 +2,7 @@ package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE
 import com.rafaelfelipeac.replyradar.core.util.reminder.ReminderScheduler
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.DeleteReplyUseCase
@@ -188,7 +189,7 @@ class ReplyListViewModel(
 
         logUserAction(actionType = actionType, targetId = replyId)
 
-        if (reply.reminderAt != 0L) {
+        if (reply.reminderAt != INITIAL_DATE) {
             reminderScheduler.scheduleReminder(
                 reminderAtMillis = reply.reminderAt,
                 name = reply.name,

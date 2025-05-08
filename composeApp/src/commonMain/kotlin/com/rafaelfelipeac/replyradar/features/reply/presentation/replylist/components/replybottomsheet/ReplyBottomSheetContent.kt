@@ -26,7 +26,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.rafaelfelipeac.replyradar.core.AppConstants.EMPTY
-import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE_LONG
+import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE
 import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_DEFAULT_HOUR
 import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_DEFAULT_MINUTE
 import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_TOMORROW_OFFSET
@@ -76,7 +76,7 @@ fun ReplyBottomSheetContent(
         var name by remember { mutableStateOf(state.reply?.name ?: EMPTY) }
         var subject by remember { mutableStateOf(state.reply?.subject ?: EMPTY) }
         val reminderAt = state.reply?.reminderAt
-            ?.takeIf { it != 0L }
+            ?.takeIf { it != INITIAL_DATE }
             ?.let { millis ->
                 Instant.fromEpochMilliseconds(millis)
                     .toLocalDateTime(TimeZone.currentSystemDefault())
@@ -194,7 +194,8 @@ fun ReplyBottomSheetContent(
                     },
                     onClick = {
                         coroutineScope.launch {
-                            val granted = notificationPermissionManager.ensureNotificationPermission()
+                            val granted =
+                                notificationPermissionManager.ensureNotificationPermission()
                             if (granted) {
                                 val x = "Permission Granted"
 
@@ -304,18 +305,18 @@ private fun ArchivedStateButton(
 private fun getTimestamp(reply: Reply): String {
     with(reply) {
         return when {
-            archivedAt != INITIAL_DATE_LONG -> format(
+            archivedAt != INITIAL_DATE -> format(
                 LocalReplyRadarStrings.current.replyListItemArchivedAt,
                 formatTimestamp(archivedAt)
             )
 
-            resolvedAt != INITIAL_DATE_LONG -> format(
+            resolvedAt != INITIAL_DATE -> format(
                 LocalReplyRadarStrings.current.replyListItemResolvedAt,
                 formatTimestamp(resolvedAt)
             )
 
             else -> {
-                if (updatedAt != INITIAL_DATE_LONG && updatedAt != createdAt) {
+                if (updatedAt != INITIAL_DATE && updatedAt != createdAt) {
                     format(
                         LocalReplyRadarStrings.current.replyListItemUpdatedAt,
                         formatTimestamp(updatedAt)
@@ -358,7 +359,7 @@ fun getReminderTimestamp(
             }
         }
 
-        else -> return INITIAL_DATE_LONG
+        else -> return INITIAL_DATE
     }
 
     val finalTime = selectedTime ?: LocalTime(REMINDER_DEFAULT_HOUR, REMINDER_DEFAULT_MINUTE)

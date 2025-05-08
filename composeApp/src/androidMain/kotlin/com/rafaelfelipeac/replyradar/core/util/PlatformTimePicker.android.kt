@@ -15,6 +15,9 @@ import com.rafaelfelipeac.replyradar.core.util.datetime.isTimeValid
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 
+private const val HOUR_DEFAULT_INITIAL_HOUR = 12
+private const val HOUR_DEFAULT_INITIAL_MINUTE = 12
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 actual fun PlatformTimePicker(
@@ -24,8 +27,8 @@ actual fun PlatformTimePicker(
     onDismiss: () -> Unit
 ) {
     val timePickerState = rememberTimePickerState(
-        initialHour = selectedTime?.hour ?: 12,
-        initialMinute = selectedTime?.minute ?: 0
+        initialHour = selectedTime?.hour ?: HOUR_DEFAULT_INITIAL_HOUR,
+        initialMinute = selectedTime?.minute ?: HOUR_DEFAULT_INITIAL_MINUTE
     )
 
     var showDialog by remember { mutableStateOf(true) }
