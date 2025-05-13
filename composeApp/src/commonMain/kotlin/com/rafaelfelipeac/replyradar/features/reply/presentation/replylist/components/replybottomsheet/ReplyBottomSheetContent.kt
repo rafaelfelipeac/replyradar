@@ -32,6 +32,7 @@ import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_DEFAULT_MINUTE
 import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_TOMORROW_OFFSET
 import com.rafaelfelipeac.replyradar.core.common.clock.LocalClock
 import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.common.ui.components.NotificationPermissionDialog
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyButton
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyConfirmationDialog
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyOutlinedButton
@@ -182,6 +183,7 @@ fun ReplyBottomSheetContent(
 
                 val coroutineScope = rememberCoroutineScope()
                 val notificationPermissionManager = LocalNotificationPermissionManager.current
+                var showPermissionDialog by remember { mutableStateOf(false) }
 
                 ReplyButton(
                     modifier = Modifier
@@ -196,9 +198,8 @@ fun ReplyBottomSheetContent(
                         coroutineScope.launch {
                             val granted =
                                 notificationPermissionManager.ensureNotificationPermission()
-                            if (granted) {
-                                val x = "Permission Granted"
 
+                            if (granted) {
                                 val replyToSave = if (state.reply != null) {
                                     state.reply.copy(
                                         name = name,
@@ -215,12 +216,24 @@ fun ReplyBottomSheetContent(
 
                                 onComplete(replyToSave)
                             } else {
-                                val x = "Permission denied"
+                                showPermissionDialog = true
                             }
                         }
                     },
                     enabled = name.isNotBlank()
                 )
+
+                if (showPermissionDialog) {
+                    NotificationPermissionDialog(
+                        onDismiss = { showPermissionDialog = false },
+                        onGoToSettings = {
+                            showPermissionDialog = false
+                            coroutineScope.launch {
+                                notificationPermissionManager.goToAppSettings()
+                            }
+                        }
+                    )
+                }
             }
         }
     }

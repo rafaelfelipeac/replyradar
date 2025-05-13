@@ -88,4 +88,9 @@ interface Strings {
     val activityLogUserActionLanguage: String
     val activityLogUserActionFeedback: String
     val activityLogUserActionRate: String
+
+    val notificationPermissionDialogTitle: String
+    val notificationPermissionDialogDescription: String
+    val notificationPermissionDialogConfirmButton: String
+    val notificationPermissionDialogDismissButton: String
 }

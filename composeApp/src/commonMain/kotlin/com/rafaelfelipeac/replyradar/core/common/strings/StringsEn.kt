@@ -107,4 +107,9 @@ App version: ${getAppVersion()}
     override val activityLogUserActionLanguage = "You changed the app language."
     override val activityLogUserActionFeedback = "You gave feedback about the app."
     override val activityLogUserActionRate = "You rated the app."
+
+    override val notificationPermissionDialogTitle = "Notification Permission"
+    override val notificationPermissionDialogDescription = "To remind you to reply to your messages, we need permission to send notifications. \n\nYou can enable it in the app settings."
+    override val notificationPermissionDialogConfirmButton = "Open Settings"
+    override val notificationPermissionDialogDismissButton = "Got it"
 }

@@ -2,8 +2,11 @@ package com.rafaelfelipeac.replyradar.core.notification
 
 import android.Manifest.permission.POST_NOTIFICATIONS
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
@@ -20,6 +23,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
+
+private const val PACKAGE = "package"
 
 @Composable
 fun rememberNotificationPermissionManager(): NotificationPermissionManager {
@@ -80,6 +85,17 @@ fun rememberNotificationPermissionManager(): NotificationPermissionManager {
 
                     cont.invokeOnCancellation { job.cancel() }
                 }
+            }
+
+            override suspend fun goToAppSettings() {
+                val activity = context as? Activity ?: return
+
+                val intent = Intent(
+                    ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.fromParts(PACKAGE, context.packageName, null)
+                )
+
+                activity.startActivity(intent)
             }
         }
     }
