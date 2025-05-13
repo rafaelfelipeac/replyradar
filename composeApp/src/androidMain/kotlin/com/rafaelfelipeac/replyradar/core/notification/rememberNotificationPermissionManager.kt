@@ -66,17 +66,12 @@ fun rememberNotificationPermissionManager(): NotificationPermissionManager {
                             .let { result ->
                                 if (!result) {
                                     val activity = context as? Activity
-                                    val shouldShowRationale =
-                                        activity?.let {
-                                            ActivityCompat.shouldShowRequestPermissionRationale(
-                                                it,
-                                                POST_NOTIFICATIONS
-                                            )
-                                        } ?: true
-
-                                    if (!shouldShowRationale) {
-
-                                    }
+                                    activity?.let {
+                                        ActivityCompat.shouldShowRequestPermissionRationale(
+                                            it,
+                                            POST_NOTIFICATIONS
+                                        )
+                                    } ?: true
                                 }
 
                                 cont.resume(result)
