@@ -24,7 +24,10 @@ actual fun PlatformTimePicker(
     selectedTime: LocalTime?,
     selectedDate: LocalDate?,
     onTimeSelected: (LocalTime) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    confirmButtonText: String,
+    dismissButtonText: String,
+    pickerTimeTitle: String
 ) {
     val timePickerState = rememberTimePickerState(
         initialHour = selectedTime?.hour ?: HOUR_DEFAULT_INITIAL_HOUR,
@@ -53,7 +56,7 @@ actual fun PlatformTimePicker(
                     },
                     enabled = isValid
                 ) {
-                    Text("OK")
+                    Text(confirmButtonText)
                 }
             },
             dismissButton = {
@@ -61,10 +64,10 @@ actual fun PlatformTimePicker(
                     onDismiss()
                     showDialog = false
                 }) {
-                    Text("Cancelar")
+                    Text(dismissButtonText)
                 }
             },
-            title = { Text("Selecionar horário") },
+            title = { Text(pickerTimeTitle) },
             text = {
                 TimePicker(state = timePickerState)
             }

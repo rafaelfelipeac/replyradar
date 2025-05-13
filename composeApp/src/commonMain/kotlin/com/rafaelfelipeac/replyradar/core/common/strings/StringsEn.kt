@@ -49,6 +49,11 @@ object StringsEn : Strings {
     override val replyListReminderTimeIconContentDescription = "Time"
     override val replyListReminderDateIconContentDescription = "Date"
     override val replyListReminderCloseIconContentDescription = "Close"
+    override val replyListReminderTimePickerTitle = "Select time"
+    override val replyListReminderTimePickerConfirmButton = "OK"
+    override val replyListReminderTimePickerDismissButton = "Cancel"
+    override val replyListReminderDatePickerConfirmButton = "OK"
+    override val replyListReminderDatePickerDismissButton = "Cancel"
 
     override val settingsTitle = "Settings"
     override val settingsBackButton = "Back"

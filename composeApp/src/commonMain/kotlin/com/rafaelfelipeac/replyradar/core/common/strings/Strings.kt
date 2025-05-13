@@ -44,6 +44,11 @@ interface Strings {
     val replyListReminderTimeIconContentDescription: String
     val replyListReminderDateIconContentDescription: String
     val replyListReminderCloseIconContentDescription: String
+    val replyListReminderTimePickerTitle: String
+    val replyListReminderTimePickerConfirmButton: String
+    val replyListReminderTimePickerDismissButton: String
+    val replyListReminderDatePickerConfirmButton: String
+    val replyListReminderDatePickerDismissButton: String
 
     val settingsTitle: String
     val settingsBackButton: String

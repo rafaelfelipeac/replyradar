@@ -81,7 +81,10 @@ fun ReplyReminder(
             },
             onDismiss = {
                 showTimePicker = false
-            }
+            },
+            confirmButtonText = LocalReplyRadarStrings.current.replyListReminderTimePickerConfirmButton,
+            dismissButtonText = LocalReplyRadarStrings.current.replyListReminderTimePickerDismissButton,
+            pickerTimeTitle = LocalReplyRadarStrings.current.replyListReminderTimePickerTitle,
         )
     }
 
@@ -98,7 +101,9 @@ fun ReplyReminder(
             },
             onDismiss = {
                 showDatePicker = false
-            }
+            },
+            confirmButtonText = LocalReplyRadarStrings.current.replyListReminderDatePickerConfirmButton,
+            dismissButtonText = LocalReplyRadarStrings.current.replyListReminderDatePickerDismissButton,
         )
     }
 

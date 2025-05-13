@@ -10,7 +10,9 @@ actual fun PlatformDatePicker(
     selectedTime: LocalTime?,
     onDateSelected: (LocalDate) -> Unit,
     onTimeInvalidated: () -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    confirmButtonText: String,
+    dismissButtonText: String
 ) {
     TODO("Not yet implemented for this platform.")
 }
