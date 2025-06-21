@@ -36,14 +36,16 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
-import com.rafaelfelipeac.replyradar.core.common.strings.Strings
+import com.rafaelfelipeac.replyradar.core.common.ui.components.NotificationPermissionDialog
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
 import com.rafaelfelipeac.replyradar.core.common.ui.fontSizeLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
@@ -52,19 +54,23 @@ import com.rafaelfelipeac.replyradar.core.common.ui.spacerXSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.snackbarBackgroundColor
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.toolbarIconsColor
-import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
+import com.rafaelfelipeac.replyradar.core.notification.LocalNotificationPermissionManager
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.RequestNotificationPermission
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Archived
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Removed
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Reopened
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Resolved
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Unarchived
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnGoToSettings
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.ClearSnackbarState
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Archived
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Removed
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Reopened
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Resolved
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Unarchived
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesArchivedScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesOnTheRadarScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesResolvedScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheet
+import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import replyradar.composeapp.generated.resources.Res.drawable
@@ -83,9 +89,11 @@ fun ReplyListScreenRoot(
     onActivityLogClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val effect = viewModel.effect
 
     ReplyListScreen(
         state = state,
+        effect = effect,
         onIntent = { intent ->
             viewModel.onIntent(intent)
         },
@@ -98,17 +106,20 @@ fun ReplyListScreenRoot(
 @Composable
 fun ReplyListScreen(
     state: ReplyListState,
+    effect: Flow<ReplyListEffect>,
     onIntent: (ReplyListScreenIntent) -> Unit,
     onSettingsClick: () -> Unit,
     onActivityLogClick: () -> Unit
 ) {
     val strings = LocalReplyRadarStrings.current
+    val notificationPermissionManager = LocalNotificationPermissionManager.current
 
     val pagerState = rememberPagerState { PAGER_PAGE_COUNT }
     val snackbarHostState = remember { SnackbarHostState() }
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
+    var showPermissionDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(pagerState.currentPage) {
         onIntent(OnTabSelected(pagerState.currentPage))
@@ -118,16 +129,38 @@ fun ReplyListScreen(
         pagerState.animateScrollToPage(state.selectedTabIndex)
     }
 
-    LaunchedEffect(state.snackbarState) {
-        state.snackbarState?.let {
-            snackbarHostState.showSnackbar(
-                getSnackbarMessage(
-                    snackbarState = state.snackbarState,
-                    strings = strings
-                )
-            )
-            onIntent(ClearSnackbarState)
+    LaunchedEffect(Unit) {
+        effect.collect { effect ->
+            when (effect) {
+                RequestNotificationPermission -> {
+                    showPermissionDialog = true
+                }
+
+                is SnackbarState -> {
+                    snackbarHostState.showSnackbar(
+                        when (effect) {
+                            Archived -> strings.replyListSnackbarArchived
+                            Removed -> strings.replyListSnackbarRemoved
+                            Reopened -> strings.replyListSnackbarReopened
+                            Resolved -> strings.replyListSnackbarResolved
+                            Unarchived -> strings.replyListSnackbarUnarchived
+                        }
+                    )
+
+                    onIntent(ClearSnackbarState)
+                }
+            }
         }
+    }
+
+    if (showPermissionDialog) {
+        NotificationPermissionDialog(
+            onDismiss = { showPermissionDialog = false },
+            onGoToSettings = {
+                showPermissionDialog = false
+                onIntent(OnGoToSettings(notificationPermissionManager = notificationPermissionManager))
+            }
+        )
     }
 
     Scaffold(
@@ -214,7 +247,9 @@ fun ReplyListScreen(
             ReplyBottomSheet(
                 sheetState = sheetState,
                 onIntent = onIntent,
-                replyBottomSheetState = state.replyBottomSheetState
+                replyBottomSheetState = state.replyBottomSheetState,
+                showPermissionDialog = showPermissionDialog,
+                onShowPermissionDialog = { value -> showPermissionDialog = value }
             )
         }
     }
@@ -335,12 +370,3 @@ private fun RepliesScreen(
         }
     }
 }
-
-private fun getSnackbarMessage(snackbarState: SnackbarState, strings: Strings) =
-    when (snackbarState) {
-        Archived -> strings.replyListSnackbarArchived
-        Removed -> strings.replyListSnackbarRemoved
-        Reopened -> strings.replyListSnackbarReopened
-        Resolved -> strings.replyListSnackbarResolved
-        Unarchived -> strings.replyListSnackbarUnarchived
-    }

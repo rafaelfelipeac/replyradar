@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement.End
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -16,7 +17,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -42,11 +42,11 @@ import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSiz
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.notification.LocalNotificationPermissionManager
+import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
 import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.core.util.formatTimestamp
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
-import kotlinx.coroutines.launch
 import kotlinx.datetime.DateTimeUnit.Companion.DAY
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -68,10 +68,13 @@ private const val WEIGHT = 1f
 @Composable
 fun ReplyBottomSheetContent(
     replyBottomSheetState: ReplyBottomSheetState? = null,
-    onComplete: (Reply) -> Unit,
+    onComplete: (Reply, NotificationPermissionManager) -> Unit,
     onResolve: (Reply) -> Unit,
     onArchive: (Reply) -> Unit,
-    onDelete: (Reply) -> Unit
+    onDelete: (Reply) -> Unit,
+    onGoToSettings: (NotificationPermissionManager) -> Unit,
+    showPermissionDialog: Boolean,
+    onShowPermissionDialog: (Boolean) -> Unit
 ) {
     replyBottomSheetState?.let { state ->
         var name by remember { mutableStateOf(state.reply?.name ?: EMPTY) }
@@ -116,12 +119,12 @@ fun ReplyBottomSheetContent(
                 onValueChange = { subject = it }
             )
 
-            state.reply?.let {
+            state.reply?.let { reply ->
                 Text(
                     modifier = Modifier
                         .padding(start = paddingSmall, top = paddingSmall)
                         .align(Start),
-                    text = getTimestamp(state.reply),
+                    text = getTimestamp(reply),
                     style = typography.bodySmall
                 )
             }
@@ -134,105 +137,140 @@ fun ReplyBottomSheetContent(
                 closeKeyboard = { keyboardController?.hide() }
             )
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = paddingSmall, bottom = paddingMedium, end = paddingSmall),
-                horizontalArrangement = if (isEditMode(state)) spacedBy(paddingSmall) else End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                if (state.reply != null && isEditMode(state)) {
-                    Row(
-                        modifier = Modifier
-                            .weight(WEIGHT)
-                    ) {
-                        with(state.reply) {
-                            when {
-                                !isArchived && !isResolved -> {
-                                    ActiveStateButtons(
-                                        reply = state.reply,
-                                        onArchive = onArchive,
-                                        onResolve = onResolve
-                                    )
-                                }
+            Buttons(
+                state = replyBottomSheetState,
+                onArchive = onArchive,
+                onResolve = onResolve,
+                onComplete = onComplete,
+                onDelete = onDelete,
+                onGoToSettings = onGoToSettings,
+                selectedDate = selectedDate,
+                selectedTime = selectedTime,
+                reply = state.reply,
+                name = name,
+                subject = subject,
+                onShowPermissionDialog = onShowPermissionDialog,
+                showPermissionDialog = showPermissionDialog,
+            )
+        }
+    }
+}
 
-                                isResolved && !isArchived -> {
-                                    ResolvedStateButtons(
-                                        reply = state.reply,
-                                        onArchive = onArchive,
-                                        onResolve = onResolve
-                                    )
-                                }
+@Composable
+private fun Buttons(
+    state: ReplyBottomSheetState,
+    onArchive: (Reply) -> Unit,
+    onResolve: (Reply) -> Unit,
+    onDelete: (Reply) -> Unit,
+    onComplete: (Reply, NotificationPermissionManager) -> Unit,
+    onGoToSettings: (NotificationPermissionManager) -> Unit,
+    selectedDate: LocalDate?,
+    selectedTime: LocalTime?,
+    reply: Reply?,
+    name: String,
+    subject: String,
+    showPermissionDialog: Boolean,
+    onShowPermissionDialog: (Boolean) -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = paddingSmall, bottom = paddingMedium, end = paddingSmall),
+        horizontalArrangement = if (isEditMode(state)) spacedBy(paddingSmall) else End,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        StateButtons(
+            state = state,
+            onArchive = onArchive,
+            onResolve = onResolve,
+            onDelete = onDelete
+        )
 
-                                isArchived -> {
-                                    ArchivedStateButton(
-                                        reply = state.reply,
-                                        onArchive = onArchive,
-                                        onDelete = onDelete
-                                    )
-                                }
-                            }
-                        }
-                    }
+        val reminderAtTimestamp = getReminderTimestamp(
+            selectedDate = selectedDate,
+            selectedTime = selectedTime
+        )
+
+        val notificationPermissionManager = LocalNotificationPermissionManager.current
+
+        ReplyButton(
+            modifier = Modifier
+                .wrapContentWidth()
+                .align(Alignment.CenterVertically),
+            text = if (reply == null) {
+                LocalReplyRadarStrings.current.replyListBottomSheetAdd
+            } else {
+                LocalReplyRadarStrings.current.replyListBottomSheetSave
+            },
+            onClick = {
+                val replyToSave = if (state.reply != null) {
+                    state.reply.copy(
+                        name = name,
+                        subject = subject,
+                        reminderAt = reminderAtTimestamp
+                    )
+                } else {
+                    Reply(
+                        name = name,
+                        subject = subject,
+                        reminderAt = reminderAtTimestamp
+                    )
                 }
 
-                val reminderAt = getReminderTimestamp(
-                    selectedDate = selectedDate,
-                    selectedTime = selectedTime
-                )
+                onComplete(replyToSave, notificationPermissionManager)
+            },
+            enabled = name.isNotBlank()
+        )
 
-                val coroutineScope = rememberCoroutineScope()
-                val notificationPermissionManager = LocalNotificationPermissionManager.current
-                var showPermissionDialog by remember { mutableStateOf(false) }
+        if (showPermissionDialog) {
+            NotificationPermissionDialog(
+                onDismiss = { onShowPermissionDialog(false) },
+                onGoToSettings = {
+                    onShowPermissionDialog(false)
+                    onGoToSettings(notificationPermissionManager)
+                }
+            )
+        }
+    }
+}
 
-                ReplyButton(
-                    modifier = Modifier
-                        .wrapContentWidth()
-                        .align(Alignment.CenterVertically),
-                    text = if (state.reply == null) {
-                        LocalReplyRadarStrings.current.replyListBottomSheetAdd
-                    } else {
-                        LocalReplyRadarStrings.current.replyListBottomSheetSave
-                    },
-                    onClick = {
-                        coroutineScope.launch {
-                            val granted =
-                                notificationPermissionManager.ensureNotificationPermission()
+@Composable
+private fun RowScope.StateButtons(
+    state: ReplyBottomSheetState,
+    onArchive: (Reply) -> Unit,
+    onResolve: (Reply) -> Unit,
+    onDelete: (Reply) -> Unit
+) {
+    if (state.reply != null && isEditMode(state)) {
+        Row(
+            modifier = Modifier.Companion
+                .weight(WEIGHT)
+        ) {
+            with(state.reply) {
+                when {
+                    !isArchived && !isResolved -> {
+                        ActiveStateButtons(
+                            reply = state.reply,
+                            onArchive = onArchive,
+                            onResolve = onResolve
+                        )
+                    }
 
-                            if (granted) {
-                                val replyToSave = if (state.reply != null) {
-                                    state.reply.copy(
-                                        name = name,
-                                        subject = subject,
-                                        reminderAt = reminderAt
-                                    )
-                                } else {
-                                    Reply(
-                                        name = name,
-                                        subject = subject,
-                                        reminderAt = reminderAt
-                                    )
-                                }
+                    isResolved && !isArchived -> {
+                        ResolvedStateButtons(
+                            reply = state.reply,
+                            onArchive = onArchive,
+                            onResolve = onResolve
+                        )
+                    }
 
-                                onComplete(replyToSave)
-                            } else {
-                                showPermissionDialog = true
-                            }
-                        }
-                    },
-                    enabled = name.isNotBlank()
-                )
-
-                if (showPermissionDialog) {
-                    NotificationPermissionDialog(
-                        onDismiss = { showPermissionDialog = false },
-                        onGoToSettings = {
-                            showPermissionDialog = false
-                            coroutineScope.launch {
-                                notificationPermissionManager.goToAppSettings()
-                            }
-                        }
-                    )
+                    isArchived -> {
+                        ArchivedStateButton(
+                            reply = state.reply,
+                            onArchive = onArchive,
+                            onDelete = onDelete
+                        )
+                    }
                 }
             }
         }

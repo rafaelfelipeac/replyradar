@@ -3,6 +3,7 @@ package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE
+import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
 import com.rafaelfelipeac.replyradar.core.util.reminder.ReminderScheduler
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.DeleteReplyUseCase
@@ -10,11 +11,17 @@ import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.GetRepliesUse
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleArchiveReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleResolveReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.UpsertReplyUseCase
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.RequestNotificationPermission
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Archived
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Removed
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Reopened
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Resolved
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Unarchived
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnAddReply
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnAddOrEditReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDeleteReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDismissBottomSheet
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnEditReply
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnGoToSettings
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleArchive
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleResolve
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent
@@ -23,11 +30,6 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyClick
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyToggle
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Archived
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Removed
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Reopened
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Resolved
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.SnackbarState.Unarchived
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
@@ -36,7 +38,6 @@ import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActio
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Archive
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Create
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Delete
-import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Reopen
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Resolve
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Unarchive
@@ -45,6 +46,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.onStart
@@ -76,6 +78,9 @@ class ReplyListViewModel(
             WhileSubscribed(STOP_TIMEOUT),
             _state.value
         )
+
+    private val _effect = MutableSharedFlow<ReplyListEffect>()
+    val effect = _effect
 
     fun onIntent(intent: ReplyListScreenIntent) {
         when (intent) {
@@ -127,11 +132,19 @@ class ReplyListViewModel(
 
     private fun handleReplyBottomSheetIntent(intent: ReplyBottomSheetIntent) {
         when (intent) {
-            is OnAddReply -> onUpsertReply(reply = intent.reply, actionType = Create)
-            is OnEditReply -> onUpsertReply(reply = intent.reply, actionType = Edit)
+            is OnAddOrEditReply -> checkForNotificationPermission(
+                reply = intent.reply,
+                notificationPermissionManager = intent.notificationPermissionManager,
+                actionType = Create
+            )
             is OnDeleteReply -> deleteReply(reply = intent.reply)
             is OnToggleArchive -> onToggleArchiveReply(reply = intent.reply)
             is OnToggleResolve -> onToggleResolveReply(reply = intent.reply)
+            is OnGoToSettings -> {
+                viewModelScope.launch {
+                    intent.notificationPermissionManager.goToAppSettings()
+                }
+            }
             OnDismissBottomSheet -> dismissBottomSheet()
         }
 
@@ -196,6 +209,22 @@ class ReplyListViewModel(
                 subject = reply.subject,
                 replyId = replyId
             )
+        }
+    }
+
+    private fun checkForNotificationPermission(
+        reply: Reply,
+        notificationPermissionManager: NotificationPermissionManager,
+        actionType: UserActionType
+    ) = viewModelScope.launch {
+        if (reply.reminderAt != 0L) {
+            if (notificationPermissionManager.ensureNotificationPermission()) {
+                onUpsertReply(reply = reply, actionType = actionType)
+            } else {
+                _effect.emit(RequestNotificationPermission)
+            }
+        } else {
+            onUpsertReply(reply = reply, actionType = actionType)
         }
     }
 
