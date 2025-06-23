@@ -63,11 +63,12 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Reopened
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Resolved
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Unarchived
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.CheckNotificationPermission
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.NotificationPermissionIntent.OnCheckNotificationPermission
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.NotificationPermissionIntent.OnGoToSettings
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.NotificationPermissionIntent.OnRequestNotificationPermission
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnAddOrEditReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDeleteReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDismissBottomSheet
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnGoToSettings
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleArchive
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleResolve
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.ClearSnackbarState
@@ -165,7 +166,7 @@ fun ReplyListScreen(
                     if (notificationPermissionManager.ensureNotificationPermission()) {
                         onIntent(OnAddOrEditReply(effect.reply))
                     } else {
-                        onIntent(ReplyListScreenIntent.ReplyBottomSheetIntent.RequestNotificationPermission)
+                        onIntent(OnRequestNotificationPermission)
                     }
                 }
             }
@@ -270,7 +271,7 @@ fun ReplyListScreen(
                 onDelete = { onIntent(OnDeleteReply(it)) },
                 onComplete = { reply ->
                     if (reply.reminderAt != 0L) {
-                        onIntent(CheckNotificationPermission(reply))
+                        onIntent(OnCheckNotificationPermission(reply))
                     } else {
                         onIntent(OnAddOrEditReply(reply))
                     }

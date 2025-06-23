@@ -17,12 +17,14 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Reopened
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Resolved
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Unarchived
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.NotificationPermissionIntent
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.NotificationPermissionIntent.OnCheckNotificationPermission
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.NotificationPermissionIntent.OnGoToSettings
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.NotificationPermissionIntent.OnRequestNotificationPermission
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.CheckNotificationPermission
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnAddOrEditReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDeleteReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDismissBottomSheet
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnGoToSettings
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleArchive
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleResolve
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent
@@ -88,6 +90,7 @@ class ReplyListViewModel(
         when (intent) {
             is ReplyListIntent -> handleReplyListIntent(intent)
             is ReplyBottomSheetIntent -> handleReplyBottomSheetIntent(intent)
+            is NotificationPermissionIntent -> handleNotificationPermissionIntent(intent)
         }
     }
 
@@ -138,13 +141,18 @@ class ReplyListViewModel(
             is OnDeleteReply -> deleteReply(reply = intent.reply)
             is OnToggleArchive -> onToggleArchiveReply(reply = intent.reply)
             is OnToggleResolve -> onToggleResolveReply(reply = intent.reply)
-            is OnGoToSettings -> goToSettings()
-            is CheckNotificationPermission -> checkNotificationPermission(intent.reply)
             OnDismissBottomSheet -> dismissBottomSheet()
-            ReplyBottomSheetIntent.RequestNotificationPermission -> requestNotificationPermission()
         }
 
         dismissBottomSheet()
+    }
+
+    private fun handleNotificationPermissionIntent(intent: NotificationPermissionIntent) {
+        when (intent) {
+            is OnCheckNotificationPermission -> checkNotificationPermission(intent.reply)
+            OnGoToSettings -> goToSettings()
+            OnRequestNotificationPermission -> requestNotificationPermission()
+        }
     }
 
     private fun getReplies() = viewModelScope.launch {

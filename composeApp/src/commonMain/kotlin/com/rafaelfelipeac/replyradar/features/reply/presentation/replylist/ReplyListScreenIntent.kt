@@ -1,6 +1,5 @@
 package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist
 
-import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 
 sealed interface ReplyListScreenIntent {
@@ -19,8 +18,11 @@ sealed interface ReplyListScreenIntent {
         data class OnToggleArchive(val reply: Reply) : ReplyBottomSheetIntent
         data class OnToggleResolve(val reply: Reply) : ReplyBottomSheetIntent
         data object OnDismissBottomSheet : ReplyBottomSheetIntent
-        data object RequestNotificationPermission : ReplyBottomSheetIntent
-        data class CheckNotificationPermission(val reply: Reply) : ReplyBottomSheetIntent
-        data object OnGoToSettings : ReplyBottomSheetIntent
+    }
+
+    sealed interface NotificationPermissionIntent : ReplyListScreenIntent {
+        data object OnRequestNotificationPermission : NotificationPermissionIntent
+        data class OnCheckNotificationPermission(val reply: Reply) : NotificationPermissionIntent
+        data object OnGoToSettings : NotificationPermissionIntent
     }
 }
