@@ -14,7 +14,7 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.compo
 @Composable
 fun ReplyBottomSheet(
     sheetState: SheetState,
-    onComplete: (Reply) -> Unit,
+    onSave: (Reply) -> Unit,
     onResolve: (Reply) -> Unit,
     onArchive: (Reply) -> Unit,
     onDelete: (Reply) -> Unit,
@@ -35,7 +35,7 @@ fun ReplyBottomSheet(
             CREATE -> {
                 BottomSheetContent(
                     state = ReplyBottomSheetState(CREATE),
-                    onComplete = onComplete,
+                    onSave = onSave,
                     onResolve = onResolve,
                     onArchive = onArchive,
                     onDelete = onDelete,
@@ -52,7 +52,7 @@ fun ReplyBottomSheet(
                             EDIT,
                             reply = replyBottomSheetState.reply
                         ),
-                        onComplete = onComplete,
+                        onSave = onSave,
                         onResolve = onResolve,
                         onArchive = onArchive,
                         onDelete = onDelete,
@@ -69,7 +69,7 @@ fun ReplyBottomSheet(
 @Composable
 private fun BottomSheetContent(
     state: ReplyBottomSheetState,
-    onComplete: (Reply) -> Unit,
+    onSave: (Reply) -> Unit,
     onResolve: (Reply) -> Unit,
     onArchive: (Reply) -> Unit,
     onDelete: (Reply) -> Unit,
@@ -82,7 +82,7 @@ private fun BottomSheetContent(
         onResolve = onResolve,
         onArchive = onArchive,
         onDelete = onDelete,
-        onComplete = onComplete,
+        onSave = onSave,
         onGoToSettings = onGoToSettings,
         showPermissionDialog = showPermissionDialog,
         onShowPermissionDialog = onShowPermissionDialog,

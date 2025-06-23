@@ -269,7 +269,7 @@ fun ReplyListScreen(
                 onResolve = { onIntent(OnToggleResolve(it)) },
                 onArchive = { onIntent(OnToggleArchive(it)) },
                 onDelete = { onIntent(OnDeleteReply(it)) },
-                onComplete = { reply ->
+                onSave = { reply ->
                     if (reply.reminderAt != 0L) {
                         onIntent(OnCheckNotificationPermission(reply))
                     } else {

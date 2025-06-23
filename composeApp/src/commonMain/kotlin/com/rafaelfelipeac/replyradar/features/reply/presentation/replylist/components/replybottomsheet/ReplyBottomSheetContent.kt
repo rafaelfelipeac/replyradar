@@ -41,8 +41,6 @@ import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextField
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSize.Large
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
-import com.rafaelfelipeac.replyradar.core.notification.LocalNotificationPermissionManager
-import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
 import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.core.util.formatTimestamp
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
@@ -68,7 +66,7 @@ private const val WEIGHT = 1f
 @Composable
 fun ReplyBottomSheetContent(
     replyBottomSheetState: ReplyBottomSheetState? = null,
-    onComplete: (Reply) -> Unit,
+    onSave: (Reply) -> Unit,
     onResolve: (Reply) -> Unit,
     onArchive: (Reply) -> Unit,
     onDelete: (Reply) -> Unit,
@@ -141,7 +139,7 @@ fun ReplyBottomSheetContent(
                 state = replyBottomSheetState,
                 onArchive = onArchive,
                 onResolve = onResolve,
-                onComplete = onComplete,
+                onSave = onSave,
                 onDelete = onDelete,
                 onGoToSettings = onGoToSettings,
                 selectedDate = selectedDate,
@@ -162,7 +160,7 @@ private fun Buttons(
     onArchive: (Reply) -> Unit,
     onResolve: (Reply) -> Unit,
     onDelete: (Reply) -> Unit,
-    onComplete: (Reply) -> Unit,
+    onSave: (Reply) -> Unit,
     onGoToSettings: () -> Unit,
     selectedDate: LocalDate?,
     selectedTime: LocalTime?,
@@ -201,21 +199,14 @@ private fun Buttons(
                 LocalReplyRadarStrings.current.replyListBottomSheetSave
             },
             onClick = {
-                val replyToSave = if (state.reply != null) {
-                    state.reply.copy(
+                onSave(
+                    getReplyToSave(
+                        stateReply = state.reply,
                         name = name,
                         subject = subject,
-                        reminderAt = reminderAtTimestamp
+                        reminderAtTimestamp = reminderAtTimestamp
                     )
-                } else {
-                    Reply(
-                        name = name,
-                        subject = subject,
-                        reminderAt = reminderAtTimestamp
-                    )
-                }
-
-                onComplete(replyToSave)
+                )
             },
             enabled = name.isNotBlank()
         )
@@ -231,6 +222,21 @@ private fun Buttons(
         }
     }
 }
+
+private fun getReplyToSave(
+    stateReply: Reply?,
+    name: String,
+    subject: String,
+    reminderAtTimestamp: Long
+) = stateReply?.copy(
+    name = name,
+    subject = subject,
+    reminderAt = reminderAtTimestamp
+) ?: Reply(
+    name = name,
+    subject = subject,
+    reminderAt = reminderAtTimestamp
+)
 
 @Composable
 private fun RowScope.StateButtons(
