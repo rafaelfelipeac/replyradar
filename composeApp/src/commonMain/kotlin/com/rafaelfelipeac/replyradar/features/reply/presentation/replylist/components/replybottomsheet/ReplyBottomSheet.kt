@@ -6,13 +6,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.runtime.Composable
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnAddOrEditReply
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDeleteReply
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDismissBottomSheet
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnGoToSettings
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleArchive
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleResolve
+import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 
@@ -20,14 +14,19 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.compo
 @Composable
 fun ReplyBottomSheet(
     sheetState: SheetState,
-    onIntent: (ReplyListScreenIntent) -> Unit,
+    onComplete: (Reply) -> Unit,
+    onResolve: (Reply) -> Unit,
+    onArchive: (Reply) -> Unit,
+    onDelete: (Reply) -> Unit,
+    onGoToSettings: () -> Unit,
+    onDismiss: () -> Unit,
     replyBottomSheetState: ReplyBottomSheetState,
     showPermissionDialog: Boolean,
     onShowPermissionDialog: (Boolean) -> Unit
 ) {
     ModalBottomSheet(
         sheetState = sheetState,
-        onDismissRequest = { onIntent(OnDismissBottomSheet) },
+        onDismissRequest = onDismiss,
         containerColor = colorScheme.background,
         dragHandle = null,
         shape = ReplyRoundedCorner(onlyTopCorners = true)
@@ -36,7 +35,11 @@ fun ReplyBottomSheet(
             CREATE -> {
                 BottomSheetContent(
                     state = ReplyBottomSheetState(CREATE),
-                    onIntent = onIntent,
+                    onComplete = onComplete,
+                    onResolve = onResolve,
+                    onArchive = onArchive,
+                    onDelete = onDelete,
+                    onGoToSettings = onGoToSettings,
                     showPermissionDialog = showPermissionDialog,
                     onShowPermissionDialog = onShowPermissionDialog
                 )
@@ -49,7 +52,11 @@ fun ReplyBottomSheet(
                             EDIT,
                             reply = replyBottomSheetState.reply
                         ),
-                        onIntent = onIntent,
+                        onComplete = onComplete,
+                        onResolve = onResolve,
+                        onArchive = onArchive,
+                        onDelete = onDelete,
+                        onGoToSettings = onGoToSettings,
                         showPermissionDialog = showPermissionDialog,
                         onShowPermissionDialog = onShowPermissionDialog,
                     )
@@ -62,21 +69,21 @@ fun ReplyBottomSheet(
 @Composable
 private fun BottomSheetContent(
     state: ReplyBottomSheetState,
-    onIntent: (ReplyListScreenIntent) -> Unit,
+    onComplete: (Reply) -> Unit,
+    onResolve: (Reply) -> Unit,
+    onArchive: (Reply) -> Unit,
+    onDelete: (Reply) -> Unit,
+    onGoToSettings: () -> Unit,
     showPermissionDialog: Boolean,
     onShowPermissionDialog: (Boolean) -> Unit
 ) {
     ReplyBottomSheetContent(
         replyBottomSheetState = state,
-        onResolve = { onIntent(OnToggleResolve(it)) },
-        onArchive = { onIntent(OnToggleArchive(it)) },
-        onDelete = { onIntent(OnDeleteReply(it)) },
-        onComplete = { reply, notificationPermissionManager ->
-            onIntent(OnAddOrEditReply(reply, notificationPermissionManager))
-        },
-        onGoToSettings = { notificationPermissionManager ->
-            onIntent(OnGoToSettings(notificationPermissionManager))
-        },
+        onResolve = onResolve,
+        onArchive = onArchive,
+        onDelete = onDelete,
+        onComplete = onComplete,
+        onGoToSettings = onGoToSettings,
         showPermissionDialog = showPermissionDialog,
         onShowPermissionDialog = onShowPermissionDialog,
     )

@@ -68,11 +68,11 @@ private const val WEIGHT = 1f
 @Composable
 fun ReplyBottomSheetContent(
     replyBottomSheetState: ReplyBottomSheetState? = null,
-    onComplete: (Reply, NotificationPermissionManager) -> Unit,
+    onComplete: (Reply) -> Unit,
     onResolve: (Reply) -> Unit,
     onArchive: (Reply) -> Unit,
     onDelete: (Reply) -> Unit,
-    onGoToSettings: (NotificationPermissionManager) -> Unit,
+    onGoToSettings: () -> Unit,
     showPermissionDialog: Boolean,
     onShowPermissionDialog: (Boolean) -> Unit
 ) {
@@ -162,8 +162,8 @@ private fun Buttons(
     onArchive: (Reply) -> Unit,
     onResolve: (Reply) -> Unit,
     onDelete: (Reply) -> Unit,
-    onComplete: (Reply, NotificationPermissionManager) -> Unit,
-    onGoToSettings: (NotificationPermissionManager) -> Unit,
+    onComplete: (Reply) -> Unit,
+    onGoToSettings: () -> Unit,
     selectedDate: LocalDate?,
     selectedTime: LocalTime?,
     reply: Reply?,
@@ -191,8 +191,6 @@ private fun Buttons(
             selectedTime = selectedTime
         )
 
-        val notificationPermissionManager = LocalNotificationPermissionManager.current
-
         ReplyButton(
             modifier = Modifier
                 .wrapContentWidth()
@@ -217,7 +215,7 @@ private fun Buttons(
                     )
                 }
 
-                onComplete(replyToSave, notificationPermissionManager)
+                onComplete(replyToSave)
             },
             enabled = name.isNotBlank()
         )
@@ -227,7 +225,7 @@ private fun Buttons(
                 onDismiss = { onShowPermissionDialog(false) },
                 onGoToSettings = {
                     onShowPermissionDialog(false)
-                    onGoToSettings(notificationPermissionManager)
+                    onGoToSettings()
                 }
             )
         }

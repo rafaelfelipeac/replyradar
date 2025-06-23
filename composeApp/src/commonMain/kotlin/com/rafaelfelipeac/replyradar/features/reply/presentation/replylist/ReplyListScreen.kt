@@ -55,6 +55,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.snackbarBackgroundColor
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.toolbarIconsColor
 import com.rafaelfelipeac.replyradar.core.notification.LocalNotificationPermissionManager
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.GoToSettings
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.RequestNotificationPermission
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Archived
@@ -62,7 +63,13 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Reopened
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Resolved
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Unarchived
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.CheckNotificationPermission
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnAddOrEditReply
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDeleteReply
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDismissBottomSheet
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnGoToSettings
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleArchive
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleResolve
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.ClearSnackbarState
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
@@ -149,6 +156,18 @@ fun ReplyListScreen(
 
                     onIntent(ClearSnackbarState)
                 }
+
+                GoToSettings -> {
+                    notificationPermissionManager.goToAppSettings()
+                }
+
+                is ReplyListEffect.CheckNotificationPermission -> {
+                    if (notificationPermissionManager.ensureNotificationPermission()) {
+                        onIntent(OnAddOrEditReply(effect.reply))
+                    } else {
+                        onIntent(ReplyListScreenIntent.ReplyBottomSheetIntent.RequestNotificationPermission)
+                    }
+                }
             }
         }
     }
@@ -158,7 +177,7 @@ fun ReplyListScreen(
             onDismiss = { showPermissionDialog = false },
             onGoToSettings = {
                 showPermissionDialog = false
-                onIntent(OnGoToSettings(notificationPermissionManager = notificationPermissionManager))
+                onIntent(OnGoToSettings)
             }
         )
     }
@@ -246,7 +265,18 @@ fun ReplyListScreen(
         if (state.replyBottomSheetState != null) {
             ReplyBottomSheet(
                 sheetState = sheetState,
-                onIntent = onIntent,
+                onResolve = { onIntent(OnToggleResolve(it)) },
+                onArchive = { onIntent(OnToggleArchive(it)) },
+                onDelete = { onIntent(OnDeleteReply(it)) },
+                onComplete = { reply ->
+                    if (reply.reminderAt != 0L) {
+                        onIntent(CheckNotificationPermission(reply))
+                    } else {
+                        onIntent(OnAddOrEditReply(reply))
+                    }
+                },
+                onGoToSettings = { onIntent(OnGoToSettings) },
+                onDismiss = { onIntent(OnDismissBottomSheet) },
                 replyBottomSheetState = state.replyBottomSheetState,
                 showPermissionDialog = showPermissionDialog,
                 onShowPermissionDialog = { value -> showPermissionDialog = value }
