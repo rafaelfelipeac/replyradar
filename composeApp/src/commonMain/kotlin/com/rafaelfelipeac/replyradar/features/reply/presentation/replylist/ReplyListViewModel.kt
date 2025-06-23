@@ -222,7 +222,7 @@ class ReplyListViewModel(
 
         logUserAction(actionType = if (isArchived) Archive else Unarchive, targetId = reply.id)
 
-        updateState { copy(snackbarState = if (isArchived) Archived else Unarchived) }
+        _effect.emit(if (isArchived) Archived else Unarchived)
     }
 
     private fun onToggleResolveReply(reply: Reply) = viewModelScope.launch {
@@ -230,7 +230,7 @@ class ReplyListViewModel(
 
         logUserAction(actionType = if (isResolved) Resolve else Reopen, targetId = reply.id)
 
-        updateState { copy(snackbarState = if (isResolved) Resolved else Reopened) }
+        _effect.emit(if (isResolved) Resolved else Reopened)
     }
 
     private fun deleteReply(reply: Reply) = viewModelScope.launch {
@@ -238,7 +238,7 @@ class ReplyListViewModel(
 
         logUserAction(actionType = Delete, targetId = reply.id)
 
-        updateState { copy(snackbarState = Removed) }
+        _effect.emit(Removed)
     }
 
     private fun dismissBottomSheet() {

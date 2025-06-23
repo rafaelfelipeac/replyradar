@@ -1,7 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist
 
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
 
 data class ReplyListState(
@@ -11,6 +10,5 @@ data class ReplyListState(
     val isLoading: Boolean = true,
     val errorMessage: String? = null,
     val selectedTabIndex: Int = 0,
-    val replyBottomSheetState: ReplyBottomSheetState? = null,
-    val snackbarState: SnackbarState? = null
+    val replyBottomSheetState: ReplyBottomSheetState? = null
 )

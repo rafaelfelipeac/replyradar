@@ -1,37 +1,22 @@
 package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,22 +24,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE
 import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.common.strings.Strings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.NotificationPermissionDialog
+import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplySnackbar
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
-import com.rafaelfelipeac.replyradar.core.common.ui.fontSizeLarge
-import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.spacerXSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.snackbarBackgroundColor
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.toolbarIconsColor
 import com.rafaelfelipeac.replyradar.core.notification.LocalNotificationPermissionManager
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.CheckNotificationPermission
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.GoToSettings
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.RequestNotificationPermission
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState
@@ -72,23 +55,19 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleArchive
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleResolve
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.ClearSnackbarState
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesArchivedScreen
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesOnTheRadarScreen
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesResolvedScreen
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.FAB
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesScreen
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.TopBar
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheet
 import kotlinx.coroutines.flow.Flow
-import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
-import replyradar.composeapp.generated.resources.Res.drawable
-import replyradar.composeapp.generated.resources.ic_settings
 
 private const val WEIGHT = 1f
 private const val PAGER_PAGE_COUNT = 3
-private const val ON_THE_RADAR_INDEX = 0
-private const val RESOLVED_INDEX = 1
-private const val ARCHIVED_INDEX = 2
+const val ON_THE_RADAR_INDEX = 0
+const val RESOLVED_INDEX = 1
+const val ARCHIVED_INDEX = 2
 
 @Composable
 fun ReplyListScreenRoot(
@@ -137,36 +116,28 @@ fun ReplyListScreen(
         pagerState.animateScrollToPage(state.selectedTabIndex)
     }
 
+//    onIntent(ClearSnackbarState) // necessary?
+
     LaunchedEffect(Unit) {
         effect.collect { effect ->
             when (effect) {
-                RequestNotificationPermission -> {
-                    showPermissionDialog = true
-                }
-
                 is SnackbarState -> {
-                    snackbarHostState.showSnackbar(
-                        when (effect) {
-                            Archived -> strings.replyListSnackbarArchived
-                            Removed -> strings.replyListSnackbarRemoved
-                            Reopened -> strings.replyListSnackbarReopened
-                            Resolved -> strings.replyListSnackbarResolved
-                            Unarchived -> strings.replyListSnackbarUnarchived
-                        }
-                    )
-
+                    snackbarHostState.showSnackbar(getSnackbarMessage(effect, strings))
                     onIntent(ClearSnackbarState)
                 }
 
-                GoToSettings -> {
-                    notificationPermissionManager.goToAppSettings()
-                }
+                RequestNotificationPermission -> showPermissionDialog = true
 
-                is ReplyListEffect.CheckNotificationPermission -> {
-                    if (notificationPermissionManager.ensureNotificationPermission()) {
-                        onIntent(OnAddOrEditReply(effect.reply))
-                    } else {
-                        onIntent(OnRequestNotificationPermission)
+
+                GoToSettings -> notificationPermissionManager.goToAppSettings()
+
+                is CheckNotificationPermission -> {
+                    when {
+                        notificationPermissionManager.ensureNotificationPermission() -> {
+                            onIntent(OnAddOrEditReply(effect.reply))
+                        }
+
+                        else -> onIntent(OnRequestNotificationPermission)
                     }
                 }
             }
@@ -185,7 +156,7 @@ fun ReplyListScreen(
 
     Scaffold(
         containerColor = colorScheme.background,
-        snackbarHost = { Snackbar(snackbarHostState) },
+        snackbarHost = { ReplySnackbar(snackbarHostState) },
         floatingActionButton = { FAB(onIntent, colorScheme) }
     ) { paddingValues ->
         Column(
@@ -270,93 +241,30 @@ fun ReplyListScreen(
                 onArchive = { onIntent(OnToggleArchive(it)) },
                 onDelete = { onIntent(OnDeleteReply(it)) },
                 onSave = { reply ->
-                    if (reply.reminderAt != 0L) {
-                        onIntent(OnCheckNotificationPermission(reply))
-                    } else {
-                        onIntent(OnAddOrEditReply(reply))
+                    when {
+                        reply.reminderAt != INITIAL_DATE -> {
+                            onIntent(OnCheckNotificationPermission(reply))
+                        }
+
+                        else -> onIntent(OnAddOrEditReply(reply))
                     }
                 },
-                onGoToSettings = { onIntent(OnGoToSettings) },
                 onDismiss = { onIntent(OnDismissBottomSheet) },
                 replyBottomSheetState = state.replyBottomSheetState,
-                showPermissionDialog = showPermissionDialog,
-                onShowPermissionDialog = { value -> showPermissionDialog = value }
             )
         }
     }
 }
 
-@Composable
-private fun FAB(onIntent: (ReplyListScreenIntent) -> Unit, colorScheme: ColorScheme) {
-    FloatingActionButton(
-        onClick = { onIntent(OnAddReplyClick) },
-        containerColor = colorScheme.secondary
-    ) {
-        Icon(
-            imageVector = Icons.Filled.Add,
-            contentDescription =
-                LocalReplyRadarStrings.current.replyListFabContentDescription,
-            tint = colorScheme.background
-        )
-    }
-}
-
-@Composable
-private fun Snackbar(snackbarHostState: SnackbarHostState) {
-    SnackbarHost(
-        hostState = snackbarHostState,
-        snackbar = { snackbarData ->
-            Snackbar(
-                snackbarData = snackbarData,
-                containerColor = colorScheme.snackbarBackgroundColor,
-                contentColor = colorScheme.onSurface
-            )
-        }
-    )
-}
-
-@Composable
-private fun TopBar(onActivityLogClick: () -> Unit, onSettingsClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        Text(
-            modifier = Modifier
-                .padding(top = paddingMedium, start = paddingMedium)
-                .align(Alignment.CenterStart)
-                .clickable { onActivityLogClick() },
-            textAlign = TextAlign.Center,
-            text = LocalReplyRadarStrings.current.replyListActivityLog,
-            style = typography.bodySmall,
-            color = colorScheme.toolbarIconsColor
-        )
-
-        Text(
-            modifier = Modifier
-                .padding(top = paddingMedium)
-                .align(Alignment.Center),
-            textAlign = TextAlign.Center,
-            text = LocalReplyRadarStrings.current.appName,
-            style = typography.titleLarge.copy(fontSize = fontSizeLarge),
-            color = colorScheme.onBackground
-        )
-
-        IconButton(
-            onClick = { onSettingsClick() },
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .padding(top = paddingMedium, end = paddingMedium)
-        ) {
-            Icon(
-                modifier = Modifier
-                    .size(iconSize),
-                painter = painterResource(drawable.ic_settings),
-                contentDescription = LocalReplyRadarStrings.current.settingsTitle,
-                tint = colorScheme.toolbarIconsColor
-            )
-        }
-    }
+private fun getSnackbarMessage(
+    effect: SnackbarState,
+    strings: Strings
+) = when (effect) {
+    Archived -> strings.replyListSnackbarArchived
+    Removed -> strings.replyListSnackbarRemoved
+    Reopened -> strings.replyListSnackbarReopened
+    Resolved -> strings.replyListSnackbarResolved
+    Unarchived -> strings.replyListSnackbarUnarchived
 }
 
 @Composable

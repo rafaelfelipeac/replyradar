@@ -18,11 +18,8 @@ fun ReplyBottomSheet(
     onResolve: (Reply) -> Unit,
     onArchive: (Reply) -> Unit,
     onDelete: (Reply) -> Unit,
-    onGoToSettings: () -> Unit,
     onDismiss: () -> Unit,
-    replyBottomSheetState: ReplyBottomSheetState,
-    showPermissionDialog: Boolean,
-    onShowPermissionDialog: (Boolean) -> Unit
+    replyBottomSheetState: ReplyBottomSheetState
 ) {
     ModalBottomSheet(
         sheetState = sheetState,
@@ -38,10 +35,7 @@ fun ReplyBottomSheet(
                     onSave = onSave,
                     onResolve = onResolve,
                     onArchive = onArchive,
-                    onDelete = onDelete,
-                    onGoToSettings = onGoToSettings,
-                    showPermissionDialog = showPermissionDialog,
-                    onShowPermissionDialog = onShowPermissionDialog
+                    onDelete = onDelete
                 )
             }
 
@@ -55,10 +49,7 @@ fun ReplyBottomSheet(
                         onSave = onSave,
                         onResolve = onResolve,
                         onArchive = onArchive,
-                        onDelete = onDelete,
-                        onGoToSettings = onGoToSettings,
-                        showPermissionDialog = showPermissionDialog,
-                        onShowPermissionDialog = onShowPermissionDialog,
+                        onDelete = onDelete
                     )
                 }
             }
@@ -72,19 +63,13 @@ private fun BottomSheetContent(
     onSave: (Reply) -> Unit,
     onResolve: (Reply) -> Unit,
     onArchive: (Reply) -> Unit,
-    onDelete: (Reply) -> Unit,
-    onGoToSettings: () -> Unit,
-    showPermissionDialog: Boolean,
-    onShowPermissionDialog: (Boolean) -> Unit
+    onDelete: (Reply) -> Unit
 ) {
     ReplyBottomSheetContent(
         replyBottomSheetState = state,
         onResolve = onResolve,
         onArchive = onArchive,
         onDelete = onDelete,
-        onSave = onSave,
-        onGoToSettings = onGoToSettings,
-        showPermissionDialog = showPermissionDialog,
-        onShowPermissionDialog = onShowPermissionDialog,
+        onSave = onSave
     )
 }
