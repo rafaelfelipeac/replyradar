@@ -126,12 +126,6 @@ class ReplyListViewModel(
                     copy(selectedTabIndex = intent.index)
                 }
             }
-
-            ClearSnackbarState -> {
-                updateState {
-                    copy(snackbarState = null)
-                }
-            }
         }
     }
 

@@ -116,15 +116,15 @@ fun ReplyListScreen(
         pagerState.animateScrollToPage(state.selectedTabIndex)
     }
 
-//    onIntent(ClearSnackbarState) // necessary?
-
     LaunchedEffect(Unit) {
         effect.collect { effect ->
             when (effect) {
-                is SnackbarState -> {
-                    snackbarHostState.showSnackbar(getSnackbarMessage(effect, strings))
-                    onIntent(ClearSnackbarState)
-                }
+                is SnackbarState -> snackbarHostState.showSnackbar(
+                    getSnackbarMessage(
+                        effect,
+                        strings
+                    )
+                )
 
                 RequestNotificationPermission -> showPermissionDialog = true
 
