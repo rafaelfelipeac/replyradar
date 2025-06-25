@@ -9,8 +9,8 @@ expect fun PlatformDatePicker(
     selectedDate: LocalDate?,
     selectedTime: LocalTime?,
     onDateSelected: (LocalDate) -> Unit,
-    onTimeInvalidated: () -> Unit,
-    onDismiss: () -> Unit,
     confirmButtonText: String,
-    dismissButtonText: String
+    dismissButtonText: String,
+    onTimeInvalidated: () -> Unit,
+    onDismiss: () -> Unit
 )

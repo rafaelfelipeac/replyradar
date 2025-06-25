@@ -171,8 +171,7 @@ private fun ReminderText(
                 text = reminderText,
                 modifier = Modifier
                     .padding(start = paddingSmall, top = paddingSmall),
-                style = typography.bodyMedium,
-                color = colorScheme.textFieldPlaceholderColor
+                style = typography.bodySmall
             )
 
             IconButton(

@@ -61,15 +61,17 @@ actual fun PlatformDatePicker(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        val millis = datePickerState.selectedDateMillis
-                        if (millis != null) {
-                            val pickedDate = millis.toLocalDate()
+                        val dateInMillis = datePickerState.selectedDateMillis
+
+                        if (dateInMillis != null) {
+                            val pickedDate = dateInMillis.toLocalDate()
 
                             onDateSelected(pickedDate)
-                            selectedTime?.let {
+
+                            selectedTime?.let { selectedTime ->
                                 val isStillValid = isDateTimeValid(
                                     date = pickedDate,
-                                    time = it,
+                                    time = selectedTime,
                                     now = now
                                 )
 
@@ -78,6 +80,7 @@ actual fun PlatformDatePicker(
                                 }
                             } ?: onTimeInvalidated()
                         }
+
                         onDismiss()
                         showDialog = false
                     }

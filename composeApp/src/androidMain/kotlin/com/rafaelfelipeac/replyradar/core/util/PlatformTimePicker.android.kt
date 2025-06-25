@@ -60,10 +60,12 @@ actual fun PlatformTimePicker(
                 }
             },
             dismissButton = {
-                TextButton(onClick = {
-                    onDismiss()
-                    showDialog = false
-                }) {
+                TextButton(
+                    onClick = {
+                        onDismiss()
+                        showDialog = false
+                    }
+                ) {
                     Text(dismissButtonText)
                 }
             },
