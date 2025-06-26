@@ -72,11 +72,11 @@ fun ReplyToggle(modifier: Modifier = Modifier, isResolved: Boolean, onToggle: ()
         contentAlignment = Alignment.Center
     ) {
         Icon(
+            modifier = Modifier
+                .size(iconSize),
             painter = painterResource(drawable.ic_check),
             contentDescription = LocalReplyRadarStrings.current.replyListPlaceholderResolved,
-            tint = colorScheme.primary.copy(alpha = checkIconAlpha),
-            modifier = Modifier
-                .size(iconSize)
+            tint = colorScheme.primary.copy(alpha = checkIconAlpha)
         )
     }
 

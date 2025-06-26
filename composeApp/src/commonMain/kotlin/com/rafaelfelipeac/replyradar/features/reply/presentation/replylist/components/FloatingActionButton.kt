@@ -11,7 +11,7 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
 
 @Composable
-fun FAB(onIntent: (ReplyListScreenIntent) -> Unit, colorScheme: ColorScheme) {
+fun FloatingActionButton(onIntent: (ReplyListScreenIntent) -> Unit, colorScheme: ColorScheme) {
     FloatingActionButton(
         onClick = { onIntent(OnAddReplyClick) },
         containerColor = colorScheme.secondary

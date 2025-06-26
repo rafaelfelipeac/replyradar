@@ -43,7 +43,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.listDividerThickness
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.horizontalDividerColor
 import com.rafaelfelipeac.replyradar.core.util.format
-import com.rafaelfelipeac.replyradar.core.util.formatTimestamp
+import com.rafaelfelipeac.replyradar.core.util.datetime.formatTimestamp
 import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogViewModel.Companion.ERROR_GET_ACTIVITY_LOG
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserAction
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType

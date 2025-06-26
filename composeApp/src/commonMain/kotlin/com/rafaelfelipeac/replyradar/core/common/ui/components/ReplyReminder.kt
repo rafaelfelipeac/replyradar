@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.common.ui.components.util.formatReminderText
 import com.rafaelfelipeac.replyradar.core.common.ui.iconButtonSize
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.listDividerThickness
@@ -25,11 +26,9 @@ import com.rafaelfelipeac.replyradar.core.common.ui.paddingLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingXSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.horizontalDividerColor
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.textFieldPlaceholderColor
 import com.rafaelfelipeac.replyradar.core.common.ui.theme.toolbarIconsColor
-import com.rafaelfelipeac.replyradar.core.util.PlatformDatePicker
-import com.rafaelfelipeac.replyradar.core.util.PlatformTimePicker
-import com.rafaelfelipeac.replyradar.core.util.datetime.formatReminder
+import com.rafaelfelipeac.replyradar.core.util.datetime.PlatformDatePicker
+import com.rafaelfelipeac.replyradar.core.util.datetime.PlatformTimePicker
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 import org.jetbrains.compose.resources.painterResource
@@ -48,7 +47,7 @@ fun ReplyReminder(
 ) {
     var showTimePicker by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
-    val reminderText = formatReminder(
+    val reminderText = formatReminderText(
         selectedDate = selectedDate,
         selectedTime = selectedTime,
         onTimeSelected = { onSelectedTimeChange(it) }
@@ -75,16 +74,16 @@ fun ReplyReminder(
         PlatformTimePicker(
             selectedTime = selectedTime,
             selectedDate = selectedDate,
+            confirmButtonText = LocalReplyRadarStrings.current.replyListReminderTimePickerConfirmButton,
+            dismissButtonText = LocalReplyRadarStrings.current.replyListReminderTimePickerDismissButton,
+            pickerTimeTitle = LocalReplyRadarStrings.current.replyListReminderTimePickerTitle,
             onTimeSelected = {
                 onSelectedTimeChange(it)
                 showTimePicker = false
             },
             onDismiss = {
                 showTimePicker = false
-            },
-            confirmButtonText = LocalReplyRadarStrings.current.replyListReminderTimePickerConfirmButton,
-            dismissButtonText = LocalReplyRadarStrings.current.replyListReminderTimePickerDismissButton,
-            pickerTimeTitle = LocalReplyRadarStrings.current.replyListReminderTimePickerTitle,
+            }
         )
     }
 
@@ -92,6 +91,8 @@ fun ReplyReminder(
         PlatformDatePicker(
             selectedDate = selectedDate,
             selectedTime = selectedTime,
+            confirmButtonText = LocalReplyRadarStrings.current.replyListReminderDatePickerConfirmButton,
+            dismissButtonText = LocalReplyRadarStrings.current.replyListReminderDatePickerDismissButton,
             onDateSelected = {
                 onSelectedDateChange(it)
                 showDatePicker = false
@@ -101,9 +102,7 @@ fun ReplyReminder(
             },
             onDismiss = {
                 showDatePicker = false
-            },
-            confirmButtonText = LocalReplyRadarStrings.current.replyListReminderDatePickerConfirmButton,
-            dismissButtonText = LocalReplyRadarStrings.current.replyListReminderDatePickerDismissButton,
+            }
         )
     }
 
@@ -114,12 +113,12 @@ fun ReplyReminder(
         horizontalArrangement = Arrangement.Start
     ) {
         IconButton(
+            modifier = Modifier
+                .size(iconButtonSize),
             onClick = {
                 showTimePicker = true
                 closeKeyboard()
-            },
-            modifier = Modifier
-                .size(iconButtonSize)
+            }
         ) {
             Icon(
                 modifier = Modifier
@@ -131,12 +130,12 @@ fun ReplyReminder(
         }
 
         IconButton(
+            modifier = Modifier
+                .size(iconButtonSize),
             onClick = {
                 showDatePicker = true
                 closeKeyboard()
-            },
-            modifier = Modifier
-                .size(iconButtonSize)
+            }
         ) {
             Icon(
                 modifier = Modifier
@@ -168,9 +167,9 @@ private fun ReminderText(
             horizontalArrangement = Arrangement.Start
         ) {
             Text(
-                text = reminderText,
                 modifier = Modifier
                     .padding(start = paddingSmall, top = paddingSmall),
+                text = reminderText,
                 style = typography.bodySmall
             )
 

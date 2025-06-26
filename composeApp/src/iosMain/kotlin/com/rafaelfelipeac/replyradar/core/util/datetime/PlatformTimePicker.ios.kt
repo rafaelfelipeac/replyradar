@@ -1,18 +1,18 @@
-package com.rafaelfelipeac.replyradar.core.util
+package com.rafaelfelipeac.replyradar.core.util.datetime
 
 import androidx.compose.runtime.Composable
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 
 @Composable
-actual fun PlatformDatePicker(
-    selectedDate: LocalDate?,
+actual fun PlatformTimePicker(
     selectedTime: LocalTime?,
-    onDateSelected: (LocalDate) -> Unit,
+    selectedDate: LocalDate?,
+    onTimeSelected: (LocalTime) -> Unit,
+    onDismiss: () -> Unit,
     confirmButtonText: String,
     dismissButtonText: String,
-    onTimeInvalidated: () -> Unit,
-    onDismiss: () -> Unit
+    pickerTimeTitle: String
 ) {
     TODO("Not yet implemented for this platform.")
 }

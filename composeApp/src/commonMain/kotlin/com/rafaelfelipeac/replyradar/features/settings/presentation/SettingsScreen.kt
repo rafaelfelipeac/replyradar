@@ -238,11 +238,11 @@ private fun ThemeOption(
     onThemeSelected: (AppTheme) -> Unit
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .padding(paddingSmall)
-            .clickable { onThemeSelected(theme) }
+            .clickable { onThemeSelected(theme) },
+        verticalAlignment = Alignment.CenterVertically
     ) {
         RadioButton(
             modifier = Modifier
@@ -281,11 +281,11 @@ private fun LanguageOption(
     onLanguageSelected: (AppLanguage) -> Unit
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .padding(paddingSmall)
-            .clickable { onLanguageSelected(language) }
+            .clickable { onLanguageSelected(language) },
+        verticalAlignment = Alignment.CenterVertically
     ) {
         RadioButton(
             modifier = Modifier

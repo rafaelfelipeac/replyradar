@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.replyradar.core.util
+package com.rafaelfelipeac.replyradar.core.util.datetime
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,7 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.rafaelfelipeac.replyradar.core.util.datetime.isTimeValid
+import com.rafaelfelipeac.replyradar.core.common.clock.LocalClock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 
@@ -38,7 +38,11 @@ actual fun PlatformTimePicker(
 
     if (showDialog) {
         val pickedTime = LocalTime(timePickerState.hour, timePickerState.minute)
-        val isValid = isTimeValid(selectedDate, pickedTime)
+        val isValid = isTimeValid(
+            dateTime = LocalClock.current.now().dateTime(),
+            date = selectedDate,
+            time = pickedTime
+        )
 
         AlertDialog(
             onDismissRequest = {

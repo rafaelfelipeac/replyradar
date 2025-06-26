@@ -21,8 +21,9 @@ import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyConfirmation
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyOutlinedButton
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
+import com.rafaelfelipeac.replyradar.core.util.datetime.dateTime
 import com.rafaelfelipeac.replyradar.core.util.format
-import com.rafaelfelipeac.replyradar.core.util.getReminderTimestamp
+import com.rafaelfelipeac.replyradar.core.util.datetime.getReminderTimestamp
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import kotlinx.datetime.LocalDate
@@ -64,7 +65,7 @@ fun ReplyBottomSheetActions(
         )
 
         val reminderAtTimestamp = getReminderTimestamp(
-            now = LocalClock.current.now(),
+            dateTime = LocalClock.current.now().dateTime(),
             selectedDate = selectedDate,
             selectedTime = selectedTime
         )

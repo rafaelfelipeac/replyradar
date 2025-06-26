@@ -51,10 +51,10 @@ fun TopBar(onActivityLogClick: () -> Unit, onSettingsClick: () -> Unit) {
         )
 
         IconButton(
-            onClick = { onSettingsClick() },
             modifier = Modifier
                 .align(Alignment.CenterEnd)
-                .padding(top = paddingMedium, end = paddingMedium)
+                .padding(top = paddingMedium, end = paddingMedium),
+            onClick = { onSettingsClick() }
         ) {
             Icon(
                 modifier = Modifier

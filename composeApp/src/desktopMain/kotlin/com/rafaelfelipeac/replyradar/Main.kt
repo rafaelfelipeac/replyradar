@@ -18,6 +18,10 @@ fun main() {
                     override suspend fun ensureNotificationPermission(): Boolean {
                         TODO("Not yet implemented for this platform.")
                     }
+
+                    override suspend fun goToAppSettings() {
+                        TODO("Not yet implemented for this platform.")
+                    }
                 }
             )
         }

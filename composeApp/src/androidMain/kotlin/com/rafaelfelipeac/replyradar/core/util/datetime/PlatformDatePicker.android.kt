@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.replyradar.core.util
+package com.rafaelfelipeac.replyradar.core.util.datetime
 
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -12,16 +12,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.rafaelfelipeac.replyradar.core.util.datetime.isDateTimeValid
-import com.rafaelfelipeac.replyradar.core.util.datetime.toEpochMillis
-import com.rafaelfelipeac.replyradar.core.util.datetime.toLocalDate
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import com.rafaelfelipeac.replyradar.core.common.clock.LocalClock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
-import kotlinx.datetime.TimeZone
 import kotlinx.datetime.TimeZone.Companion.UTC
-import kotlinx.datetime.toLocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,23 +23,20 @@ actual fun PlatformDatePicker(
     selectedDate: LocalDate?,
     selectedTime: LocalTime?,
     onDateSelected: (LocalDate) -> Unit,
-    onTimeInvalidated: () -> Unit,
-    onDismiss: () -> Unit,
     confirmButtonText: String,
-    dismissButtonText: String
+    dismissButtonText: String,
+    onTimeInvalidated: () -> Unit,
+    onDismiss: () -> Unit
 ) {
-    val now = Clock.System.now()
-        .toLocalDateTime(TimeZone.currentSystemDefault())
+    val dateTime = LocalClock.current.now().dateTime()
 
     val datePickerState = rememberDatePickerState(
         initialSelectedDateMillis = selectedDate?.toEpochMillis(),
         selectableDates = object : SelectableDates {
             override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                val candidateDate = Instant.fromEpochMilliseconds(utcTimeMillis)
-                    .toLocalDateTime(UTC)
-                    .date
+                val candidateDate = utcTimeMillis.toLocalDate(UTC)
 
-                return candidateDate >= now.date
+                return candidateDate >= dateTime.date
             }
         }
     )
@@ -64,7 +55,7 @@ actual fun PlatformDatePicker(
                         val dateInMillis = datePickerState.selectedDateMillis
 
                         if (dateInMillis != null) {
-                            val pickedDate = dateInMillis.toLocalDate()
+                            val pickedDate = dateInMillis.toLocalDate(UTC)
 
                             onDateSelected(pickedDate)
 
@@ -72,7 +63,7 @@ actual fun PlatformDatePicker(
                                 val isStillValid = isDateTimeValid(
                                     date = pickedDate,
                                     time = selectedTime,
-                                    now = now
+                                    dateTime = dateTime
                                 )
 
                                 if (!isStillValid) {

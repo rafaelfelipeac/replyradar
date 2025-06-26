@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.replyradar.core.util
+package com.rafaelfelipeac.replyradar.core.util.datetime
 
 import platform.Foundation.NSDate
 import platform.Foundation.timeIntervalSince1970

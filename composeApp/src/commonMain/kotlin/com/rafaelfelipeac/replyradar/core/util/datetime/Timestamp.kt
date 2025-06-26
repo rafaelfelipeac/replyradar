@@ -1,48 +1,44 @@
-package com.rafaelfelipeac.replyradar.core.util
+package com.rafaelfelipeac.replyradar.core.util.datetime
 
 import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE
 import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_DEFAULT_HOUR
 import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_DEFAULT_MINUTE
 import com.rafaelfelipeac.replyradar.core.AppConstants.REMINDER_TOMORROW_OFFSET
+import com.rafaelfelipeac.replyradar.core.util.toTwoDigitString
 import kotlinx.datetime.DateTimeUnit.Companion.DAY
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
-import kotlinx.datetime.toLocalDateTime
 
 fun formatTimestamp(timestampMillis: Long): String {
-    val instant = Instant.fromEpochMilliseconds(timestampMillis)
-    val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+    val localDateTime = timestampMillis.dateTime()
 
     return "${localDateTime.dayOfMonth}/${localDateTime.monthNumber}/${localDateTime.year} " +
-        "${localDateTime.hour}:${localDateTime.minute.toTwoDigitString()}"
+            "${localDateTime.hour}:${localDateTime.minute.toTwoDigitString()}"
 }
 
 fun getReminderTimestamp(
-    now: Long,
+    dateTime: LocalDateTime,
     selectedDate: LocalDate?,
     selectedTime: LocalTime?
 ): Long {
     val timeZone = TimeZone.currentSystemDefault()
-    val nowDateTime =
-        Instant.fromEpochMilliseconds(now).toLocalDateTime(timeZone)
 
     val finalDate = when {
         selectedDate != null -> selectedDate
         selectedTime != null -> {
             val timeToday = LocalDateTime(
-                date = nowDateTime.date,
+                date = dateTime.date,
                 time = selectedTime
             )
 
-            if (timeToday > nowDateTime) {
-                nowDateTime.date
+            if (timeToday > dateTime) {
+                dateTime.date
             } else {
-                nowDateTime.date.plus(
+                dateTime.date.plus(
                     REMINDER_TOMORROW_OFFSET,
                     DAY
                 )

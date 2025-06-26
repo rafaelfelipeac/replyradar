@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.replyradar.core.util
+package com.rafaelfelipeac.replyradar.core.util.datetime
 
 import androidx.compose.runtime.Composable
 import kotlinx.datetime.LocalDate

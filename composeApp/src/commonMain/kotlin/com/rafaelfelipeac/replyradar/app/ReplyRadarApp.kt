@@ -19,7 +19,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.SYSTEM
 import com.rafaelfelipeac.replyradar.core.navigation.AppNavHost
 import com.rafaelfelipeac.replyradar.core.notification.LocalNotificationPermissionManager
 import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
-import com.rafaelfelipeac.replyradar.core.util.getClock
+import com.rafaelfelipeac.replyradar.core.util.datetime.getClock
 import com.rafaelfelipeac.replyradar.features.app.settings.AppSettingsViewModel
 import org.koin.compose.viewmodel.koinViewModel
 

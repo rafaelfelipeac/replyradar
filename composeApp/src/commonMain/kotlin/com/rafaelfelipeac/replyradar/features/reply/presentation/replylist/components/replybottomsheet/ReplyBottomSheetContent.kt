@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,11 +24,9 @@ import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextField
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSize.Large
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
+import com.rafaelfelipeac.replyradar.core.util.datetime.dateTime
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.ReplyTimestampInfo
-import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 
 @Composable
 fun ReplyBottomSheetContent(
@@ -42,12 +39,7 @@ fun ReplyBottomSheetContent(
     replyBottomSheetState?.let { state ->
         var name by remember { mutableStateOf(state.reply?.name ?: EMPTY) }
         var subject by remember { mutableStateOf(state.reply?.subject ?: EMPTY) }
-        val reminderAt = state.reply?.reminderAt
-            ?.takeIf { it != INITIAL_DATE }
-            ?.let { millis ->
-                Instant.fromEpochMilliseconds(millis)
-                    .toLocalDateTime(TimeZone.currentSystemDefault())
-            }
+        val reminderAt = state.reply?.reminderAt?.takeIf { it != INITIAL_DATE }?.dateTime()
         var selectedTime by remember(reminderAt) { mutableStateOf(reminderAt?.time) }
         var selectedDate by remember(reminderAt) { mutableStateOf(reminderAt?.date) }
 

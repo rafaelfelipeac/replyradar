@@ -11,7 +11,7 @@ import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE
 import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.util.format
-import com.rafaelfelipeac.replyradar.core.util.formatTimestamp
+import com.rafaelfelipeac.replyradar.core.util.datetime.formatTimestamp
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
 
