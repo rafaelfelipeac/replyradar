@@ -1,6 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.reply.data
 
-import com.rafaelfelipeac.replyradar.core.AppConstants.EMPTY
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.EMPTY
 import com.rafaelfelipeac.replyradar.fakes.core.util.FakeClock
 import com.rafaelfelipeac.replyradar.fakes.reply.data.FakeReplyDao
 import com.rafaelfelipeac.replyradar.features.reply.data.database.entity.ReplyEntity

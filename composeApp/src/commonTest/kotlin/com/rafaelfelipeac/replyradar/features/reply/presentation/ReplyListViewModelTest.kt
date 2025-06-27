@@ -14,7 +14,7 @@ import com.rafaelfelipeac.replyradar.fakes.reply.domain.FakeToggleResolveReplyUs
 import com.rafaelfelipeac.replyradar.fakes.reply.domain.FakeUpsertReplyUseCase
 import com.rafaelfelipeac.replyradar.fakes.useractions.domain.FakeLogUserActionUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnAddReply
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnAddOrEditReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDeleteReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDismissBottomSheet
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnEditReply

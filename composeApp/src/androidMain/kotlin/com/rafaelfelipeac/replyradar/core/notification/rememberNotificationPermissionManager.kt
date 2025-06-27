@@ -40,14 +40,12 @@ fun rememberNotificationPermissionManager(): NotificationPermissionManager {
     return remember {
         object : NotificationPermissionManager {
             override suspend fun ensureNotificationPermission(): Boolean {
+                // double check everything
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                     return true
                 }
 
-                val granted = ContextCompat.checkSelfPermission(
-                    context,
-                    POST_NOTIFICATIONS
-                ) == PERMISSION_GRANTED
+                val granted = checkSelfPermission(context, POST_NOTIFICATIONS) == PERMISSION_GRANTED
 
                 if (granted) {
                     return true

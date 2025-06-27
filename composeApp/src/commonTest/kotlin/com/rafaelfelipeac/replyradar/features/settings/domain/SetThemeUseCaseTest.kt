@@ -1,6 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.settings.domain
 
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
+import com.rafaelfelipeac.replyradar.core.theme.model.AppTheme.DARK
 import com.rafaelfelipeac.replyradar.fakes.settings.data.FakeSettingsRepository
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.SetThemeUseCaseImpl
 import kotlin.test.Test

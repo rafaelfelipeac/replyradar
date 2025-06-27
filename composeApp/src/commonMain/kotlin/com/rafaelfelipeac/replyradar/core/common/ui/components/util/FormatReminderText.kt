@@ -1,10 +1,10 @@
 package com.rafaelfelipeac.replyradar.core.common.ui.components.util
 
 import androidx.compose.runtime.Composable
-import com.rafaelfelipeac.replyradar.core.common.clock.LocalClock
-import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
-import com.rafaelfelipeac.replyradar.core.util.datetime.dateTime
-import com.rafaelfelipeac.replyradar.core.util.datetime.getDefaultTime
+import com.rafaelfelipeac.replyradar.core.clock.LocalClock
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.datetime.dateTime
+import com.rafaelfelipeac.replyradar.core.datetime.getDefaultTime
 import com.rafaelfelipeac.replyradar.core.util.toTwoDigitString
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime

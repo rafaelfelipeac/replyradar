@@ -6,7 +6,7 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
 

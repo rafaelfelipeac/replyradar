@@ -2,7 +2,7 @@ package com.rafaelfelipeac.replyradar.features.reply.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
 
 @Entity(tableName = "replies")
 data class ReplyEntity(

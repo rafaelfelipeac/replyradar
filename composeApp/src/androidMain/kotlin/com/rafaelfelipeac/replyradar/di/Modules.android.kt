@@ -5,8 +5,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.rafaelfelipeac.replyradar.core.database.DatabaseFactory
 import com.rafaelfelipeac.replyradar.core.preferences.CreateDataStore
-import com.rafaelfelipeac.replyradar.core.util.reminder.ReminderScheduler
-import com.rafaelfelipeac.replyradar.core.util.reminder.ReminderSchedulerImpl
+import com.rafaelfelipeac.replyradar.core.reminder.ReminderScheduler
+import com.rafaelfelipeac.replyradar.core.reminder.ReminderSchedulerImpl
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
 import org.koin.android.ext.koin.androidApplication

@@ -1,7 +1,7 @@
 package com.rafaelfelipeac.replyradar.fakes.settings.data
 
-import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage
+import com.rafaelfelipeac.replyradar.core.theme.model.AppTheme
 import com.rafaelfelipeac.replyradar.features.settings.domain.repository.SettingsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf

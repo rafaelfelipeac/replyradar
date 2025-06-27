@@ -1,6 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.settings.domain
 
-import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.PORTUGUESE
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage.PORTUGUESE
 import com.rafaelfelipeac.replyradar.fakes.settings.data.FakeSettingsRepository
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.SetLanguageUseCaseImpl
 import kotlin.test.Test

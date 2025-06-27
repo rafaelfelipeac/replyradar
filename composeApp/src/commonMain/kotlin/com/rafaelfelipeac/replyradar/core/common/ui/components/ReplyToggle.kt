@@ -23,7 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType.Companion.LongPress
 import androidx.compose.ui.platform.LocalHapticFeedback
-import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.listItemToggleBorderWidth
 import com.rafaelfelipeac.replyradar.core.common.ui.listItemToggleSize

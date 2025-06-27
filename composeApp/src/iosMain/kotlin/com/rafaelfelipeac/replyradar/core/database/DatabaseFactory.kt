@@ -2,7 +2,7 @@ package com.rafaelfelipeac.replyradar.core.database
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.rafaelfelipeac.replyradar.core.AppConstants.DB_NAME
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.DB_NAME
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager

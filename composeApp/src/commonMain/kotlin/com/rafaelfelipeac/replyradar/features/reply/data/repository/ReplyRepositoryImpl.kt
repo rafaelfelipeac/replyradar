@@ -1,7 +1,7 @@
 package com.rafaelfelipeac.replyradar.features.reply.data.repository
 
-import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE
-import com.rafaelfelipeac.replyradar.core.util.datetime.Clock
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
+import com.rafaelfelipeac.replyradar.core.datetime.Clock
 import com.rafaelfelipeac.replyradar.features.reply.data.database.dao.ReplyDao
 import com.rafaelfelipeac.replyradar.features.reply.data.mapper.toReply
 import com.rafaelfelipeac.replyradar.features.reply.data.mapper.toReplyEntity

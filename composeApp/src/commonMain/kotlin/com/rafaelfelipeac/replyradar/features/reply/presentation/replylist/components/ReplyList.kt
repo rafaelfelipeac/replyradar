@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import com.rafaelfelipeac.replyradar.core.common.ui.listDividerThickness
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.horizontalDividerColor
+import com.rafaelfelipeac.replyradar.core.theme.horizontalDividerColor
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 
 @Composable

@@ -3,7 +3,7 @@ package com.rafaelfelipeac.replyradar.core.database
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.rafaelfelipeac.replyradar.core.AppConstants.DB_NAME
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.DB_NAME
 import com.rafaelfelipeac.replyradar.core.database.ReplyRadarMigrations.ALL_MIGRATIONS
 
 actual class DatabaseFactory(

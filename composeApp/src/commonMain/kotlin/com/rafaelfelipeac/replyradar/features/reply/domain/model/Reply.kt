@@ -1,6 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.reply.domain.model
 
-import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
 
 data class Reply(
     val id: Long = 0,

@@ -2,8 +2,8 @@ package com.rafaelfelipeac.replyradar.features.settings.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage
+import com.rafaelfelipeac.replyradar.core.theme.model.AppTheme
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.GetLanguageUseCase
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.GetThemeUseCase
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.SetLanguageUseCase

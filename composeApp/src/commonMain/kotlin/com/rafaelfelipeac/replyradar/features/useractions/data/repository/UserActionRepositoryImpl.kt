@@ -1,6 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.useractions.data.repository
 
-import com.rafaelfelipeac.replyradar.core.util.datetime.Clock
+import com.rafaelfelipeac.replyradar.core.datetime.Clock
 import com.rafaelfelipeac.replyradar.features.reply.data.database.dao.ReplyDao
 import com.rafaelfelipeac.replyradar.features.useractions.data.database.dao.UserActionDao
 import com.rafaelfelipeac.replyradar.features.useractions.data.database.entity.UserActionEntity

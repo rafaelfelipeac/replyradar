@@ -27,9 +27,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE
-import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
-import com.rafaelfelipeac.replyradar.core.common.strings.Strings
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.strings.Strings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.NotificationPermissionDialog
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplySnackbar
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
@@ -119,7 +119,7 @@ fun ReplyListScreen(
         effect.collect { effect ->
             when (effect) {
                 is SnackbarState -> snackbarHostState.showSnackbar(
-                    getSnackbarMessage(
+                    getSnackbarMessage( // esses valores estao aparecendo com o idioma trocado? checar.
                         effect,
                         strings
                     )

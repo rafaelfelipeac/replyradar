@@ -1,6 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.settings.domain.usecase
 
-import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage
 import com.rafaelfelipeac.replyradar.features.settings.domain.repository.SettingsRepository
 import kotlinx.coroutines.flow.Flow
 

@@ -4,8 +4,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage
+import com.rafaelfelipeac.replyradar.core.theme.model.AppTheme
 import com.rafaelfelipeac.replyradar.features.settings.data.repository.SettingsRepositoryImpl.Keys.LANGUAGE
 import com.rafaelfelipeac.replyradar.features.settings.data.repository.SettingsRepositoryImpl.Keys.THEME
 import com.rafaelfelipeac.replyradar.features.settings.domain.repository.SettingsRepository

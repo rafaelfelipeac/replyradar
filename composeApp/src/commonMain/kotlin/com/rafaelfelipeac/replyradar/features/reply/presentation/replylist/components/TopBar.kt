@@ -14,11 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.fontSizeLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.toolbarIconsColor
+import com.rafaelfelipeac.replyradar.core.theme.toolbarIconsColor
 import org.jetbrains.compose.resources.painterResource
 import replyradar.composeapp.generated.resources.Res.drawable
 import replyradar.composeapp.generated.resources.ic_settings

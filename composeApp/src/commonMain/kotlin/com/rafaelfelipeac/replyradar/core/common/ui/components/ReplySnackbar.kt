@@ -5,7 +5,7 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.snackbarBackgroundColor
+import com.rafaelfelipeac.replyradar.core.theme.snackbarBackgroundColor
 
 @Composable
 fun ReplySnackbar(snackbarHostState: SnackbarHostState) {
