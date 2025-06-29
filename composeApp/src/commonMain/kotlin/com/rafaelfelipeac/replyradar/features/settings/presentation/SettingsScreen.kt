@@ -100,20 +100,26 @@ fun SettingsScreen(
                     .padding(bottom = settingsAppVersionOffset)
             ) {
                 ActivityLog(onActivityLogClick = onActivityLogClick)
+
                 HorizontalDivider(
                     modifier = Modifier
                         .padding(vertical = paddingMedium)
                 )
+
                 Theme(state = state, onIntent = { viewModel.onIntent(it) })
+
                 HorizontalDivider(
                     modifier = Modifier
                         .padding(vertical = paddingMedium)
                 )
+
                 Language(state = state, onIntent = { viewModel.onIntent(it) })
+
                 HorizontalDivider(
                     modifier = Modifier
                         .padding(vertical = paddingMedium)
                 )
+
                 App(onIntent = { viewModel.onIntent(it) })
             }
 
@@ -219,11 +225,13 @@ private fun ThemeOptions(state: SettingsState, onThemeSelected: (AppTheme) -> Un
         selectedTheme = state.theme,
         onThemeSelected = { onThemeSelected(LIGHT) }
     )
+
     ThemeOption(
         theme = DARK,
         selectedTheme = state.theme,
         onThemeSelected = { onThemeSelected(DARK) }
     )
+
     ThemeOption(
         theme = SYSTEM,
         selectedTheme = state.theme,
@@ -270,7 +278,9 @@ private fun getThemeOptionLabel(theme: AppTheme) = when (theme) {
 @Composable
 private fun LanguageOptions(state: SettingsState, onLanguageSelected: (AppLanguage) -> Unit) {
     LanguageOption(ENGLISH, state.language, onLanguageSelected)
+
     LanguageOption(PORTUGUESE, state.language, onLanguageSelected)
+
     LanguageOption(AppLanguage.SYSTEM, state.language, onLanguageSelected)
 }
 

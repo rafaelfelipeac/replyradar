@@ -74,8 +74,6 @@ fun ReplyBottomSheetContent(
                 onValueChange = { subject = it }
             )
 
-            ReplyTimestampInfo(state)
-
             ReplyReminder(
                 selectedTime = selectedTime,
                 selectedDate = selectedDate,
@@ -83,6 +81,8 @@ fun ReplyBottomSheetContent(
                 onSelectedDateChange = { selectedDate = it },
                 closeKeyboard = { keyboardController?.hide() }
             )
+
+            ReplyTimestampInfo(state)
 
             ReplyBottomSheetActions(
                 state = replyBottomSheetState,
