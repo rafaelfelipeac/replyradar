@@ -9,6 +9,7 @@ object AppConstants {
     const val PENDING_REPLY_ID_KEY = "PENDING_REPLY_ID"
 
     const val INITIAL_DATE = 0L
+    const val INITIAL_ID = 0L
     const val INVALID_ID = -1L
     const val REMINDER_DEFAULT_HOUR = 8
     const val REMINDER_DEFAULT_MINUTE = 0

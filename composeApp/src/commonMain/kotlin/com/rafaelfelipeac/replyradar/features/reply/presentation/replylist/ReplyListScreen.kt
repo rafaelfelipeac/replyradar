@@ -40,6 +40,7 @@ import com.rafaelfelipeac.replyradar.core.notification.LocalNotificationPermissi
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.ARCHIVED_INDEX
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.ON_THE_RADAR_INDEX
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.RESOLVED_INDEX
+import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.CheckNotificationPermission
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.GoToSettings
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.RequestNotificationPermission
@@ -248,19 +249,28 @@ fun ReplyListScreen(
                 onArchive = { onIntent(OnToggleArchive(it)) },
                 onDelete = { onIntent(OnDeleteReply(it)) },
                 onSave = { reply ->
-                    when {
-                        reply.reminderAt != INITIAL_DATE -> {
+                    onSaveReply(
+                        reply = reply,
+                        onCheckNotificationPermission = {
                             onIntent(OnCheckNotificationPermission(reply))
-                        }
-
-                        else -> onIntent(OnAddOrEditReply(reply))
-                    }
+                        },
+                        onAddOrEditReply = { onIntent(OnAddOrEditReply(reply)) }
+                    )
                 },
                 onDismiss = { onIntent(OnDismissBottomSheet) },
                 replyBottomSheetState = state.replyBottomSheetState,
             )
         }
     }
+}
+
+private fun onSaveReply(
+    reply: Reply,
+    onCheckNotificationPermission: (Reply) -> Unit,
+    onAddOrEditReply: (Reply) -> Unit
+) = when {
+    reply.reminderAt != INITIAL_DATE -> onCheckNotificationPermission(reply)
+    else -> onAddOrEditReply(reply)
 }
 
 private fun getSnackbarMessage(

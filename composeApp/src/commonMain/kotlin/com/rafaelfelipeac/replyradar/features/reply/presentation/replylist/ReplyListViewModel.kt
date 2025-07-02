@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.rafaelfelipeac.replyradar.core.reminder.ReminderScheduler
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.ARCHIVED_INDEX
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_ID
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.INVALID_ID
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.ON_THE_RADAR_INDEX
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.RESOLVED_INDEX
@@ -219,7 +220,7 @@ class ReplyListViewModel(
     }
 
     private fun onUpsertReply(reply: Reply) = viewModelScope.launch {
-        val actionType = if (reply.id == 0L) Create else Edit
+        val actionType = if (reply.id == INITIAL_ID) Create else Edit
         val replyId = upsertReplyUseCase.upsertReply(reply)
 
         logUserAction(actionType = actionType, targetId = replyId)
