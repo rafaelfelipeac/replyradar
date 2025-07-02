@@ -6,14 +6,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.app.ReplyRadarApp
 import com.rafaelfelipeac.replyradar.core.ConfigureSystemBars
 import com.rafaelfelipeac.replyradar.core.notification.rememberNotificationPermissionManager
 
 @Composable
-@Preview
-fun AndroidApp() {
+fun AndroidApp(pendingReplyId: Long?) {
     var isDark by remember { mutableStateOf(false) }
     var backgroundColor by remember { mutableStateOf(Black) }
 
@@ -24,6 +22,7 @@ fun AndroidApp() {
             isDark = dark
             backgroundColor = bgColor
         },
-        notificationPermissionManager = rememberNotificationPermissionManager()
+        notificationPermissionManager = rememberNotificationPermissionManager(),
+        pendingReplyId = pendingReplyId
     )
 }

@@ -2,8 +2,12 @@ package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
 import com.rafaelfelipeac.replyradar.core.reminder.ReminderScheduler
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.ARCHIVED_INDEX
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.INVALID_ID
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.ON_THE_RADAR_INDEX
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.RESOLVED_INDEX
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.DeleteReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.GetRepliesUseCase
@@ -29,7 +33,8 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleResolve
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyClick
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnOpenReply
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnPendingReplyId
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyToggle
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
@@ -85,6 +90,8 @@ class ReplyListViewModel(
     private val _effect = MutableSharedFlow<ReplyListEffect>()
     val effect = _effect
 
+    private var pendingReplyId: Long? = INVALID_ID
+
     fun onIntent(intent: ReplyListScreenIntent) {
         when (intent) {
             is ReplyListIntent -> handleReplyListIntent(intent)
@@ -95,6 +102,10 @@ class ReplyListViewModel(
 
     private fun handleReplyListIntent(intent: ReplyListIntent) {
         when (intent) {
+            is OnPendingReplyId -> {
+                pendingReplyId = intent.pendingReplyId
+            }
+
             OnAddReplyClick -> {
                 updateState {
                     copy(
@@ -105,26 +116,13 @@ class ReplyListViewModel(
                 }
             }
 
-            is OnReplyClick -> {
-                updateState {
-                    copy(
-                        replyBottomSheetState = ReplyBottomSheetState(
-                            replyBottomSheetMode = EDIT,
-                            reply = intent.reply
-                        )
-                    )
-                }
-            }
+            is OnOpenReply -> onOpenReply(intent.reply)
 
             is OnReplyToggle -> {
                 onToggleResolveReply(reply = intent.reply)
             }
 
-            is OnTabSelected -> {
-                updateState {
-                    copy(selectedTabIndex = intent.index)
-                }
-            }
+            is OnTabSelected -> onTabSelected(intent.index)
         }
     }
 
@@ -148,6 +146,17 @@ class ReplyListViewModel(
         }
     }
 
+    private fun onOpenReply(reply: Reply) {
+        updateState {
+            copy(
+                replyBottomSheetState = ReplyBottomSheetState(
+                    replyBottomSheetMode = EDIT,
+                    reply = reply
+                )
+            )
+        }
+    }
+
     private fun getReplies() = viewModelScope.launch {
         updateState { copy(isLoading = true) }
 
@@ -161,6 +170,11 @@ class ReplyListViewModel(
                             replies = replies
                         )
                     }
+
+                    checkPendingReplyId(
+                        replies = replies,
+                        onTabSelection = { onTabSelected(ON_THE_RADAR_INDEX) }
+                    )
                 }
         } catch (e: Exception) {
             updateState {
@@ -178,6 +192,11 @@ class ReplyListViewModel(
                 .getReplies(isResolved = true)
                 .collect { resolvedReplies ->
                     updateState { copy(resolvedReplies = resolvedReplies) }
+
+                    checkPendingReplyId(
+                        replies = resolvedReplies,
+                        onTabSelection = { onTabSelected(RESOLVED_INDEX) }
+                    )
                 }
         } catch (_: Exception) {
         }
@@ -189,6 +208,11 @@ class ReplyListViewModel(
                 .getReplies(isArchived = true)
                 .collect { archivedReplies ->
                     updateState { copy(archivedReplies = archivedReplies) }
+
+                    checkPendingReplyId(
+                        replies = archivedReplies,
+                        onTabSelection = { onTabSelected(ARCHIVED_INDEX) }
+                    )
                 }
         } catch (_: Exception) {
         }
@@ -260,6 +284,24 @@ class ReplyListViewModel(
             targetType = Message,
             targetId = targetId
         )
+    }
+
+    private fun checkPendingReplyId(replies: List<Reply>, onTabSelection: () -> Unit) {
+        if (pendingReplyId != INVALID_ID) {
+            val reply = replies.find { it.id == pendingReplyId }
+
+            if (reply != null) {
+                onTabSelection()
+                onOpenReply(reply)
+                pendingReplyId = null
+            }
+        }
+    }
+
+    private fun onTabSelected(index: Int) {
+        updateState {
+            copy(selectedTabIndex = index)
+        }
     }
 
     companion object {

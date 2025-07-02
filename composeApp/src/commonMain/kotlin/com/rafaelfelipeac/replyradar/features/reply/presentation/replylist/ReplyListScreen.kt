@@ -37,6 +37,9 @@ import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.spacerXSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
 import com.rafaelfelipeac.replyradar.core.notification.LocalNotificationPermissionManager
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.ARCHIVED_INDEX
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.ON_THE_RADAR_INDEX
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.RESOLVED_INDEX
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.CheckNotificationPermission
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.GoToSettings
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.RequestNotificationPermission
@@ -54,6 +57,7 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDismissBottomSheet
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleArchive
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleResolve
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnPendingReplyId
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.FloatingActionButton
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesScreen
@@ -64,18 +68,22 @@ import org.koin.compose.viewmodel.koinViewModel
 
 private const val WEIGHT = 1f
 private const val PAGER_PAGE_COUNT = 3
-const val ON_THE_RADAR_INDEX = 0
-const val RESOLVED_INDEX = 1
-const val ARCHIVED_INDEX = 2
 
 @Composable
 fun ReplyListScreenRoot(
     viewModel: ReplyListViewModel = koinViewModel(),
+    pendingReplyId: Long?,
     onSettingsClick: () -> Unit,
     onActivityLogClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val effect = viewModel.effect
+
+    LaunchedEffect(pendingReplyId) {
+        pendingReplyId?.let {
+            viewModel.onIntent(OnPendingReplyId(pendingReplyId))
+        }
+    }
 
     ReplyListScreen(
         state = state,

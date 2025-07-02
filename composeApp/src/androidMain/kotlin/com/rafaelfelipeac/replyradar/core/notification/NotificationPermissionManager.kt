@@ -5,7 +5,8 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.Uri
-import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.TIRAMISU
 import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,7 +15,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,9 +39,9 @@ fun rememberNotificationPermissionManager(): NotificationPermissionManager {
 
     return remember {
         object : NotificationPermissionManager {
+
             override suspend fun ensureNotificationPermission(): Boolean {
-                // double check everything
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                if (SDK_INT < TIRAMISU) {
                     return true
                 }
 
@@ -51,32 +51,20 @@ fun rememberNotificationPermissionManager(): NotificationPermissionManager {
                     return true
                 }
 
-                return suspendCancellableCoroutine { cont ->
+                return suspendCancellableCoroutine { permissionContinuation ->
                     permissionResultState.value = null
                     permissionLauncher.launch(POST_NOTIFICATIONS)
 
-                    val scope = CoroutineScope(Dispatchers.Main.immediate)
-
-                    val job = scope.launch {
+                    val job = CoroutineScope(Dispatchers.Main.immediate).launch {
                         snapshotFlow { permissionResultState.value }
                             .filterNotNull()
                             .first()
                             .let { result ->
-                                if (!result) {
-                                    val activity = context as? Activity
-                                    activity?.let {
-                                        ActivityCompat.shouldShowRequestPermissionRationale(
-                                            it,
-                                            POST_NOTIFICATIONS
-                                        )
-                                    } ?: true
-                                }
-
-                                cont.resume(result)
+                                permissionContinuation.resume(result)
                             }
                     }
 
-                    cont.invokeOnCancellation { job.cancel() }
+                    permissionContinuation.invokeOnCancellation { job.cancel() }
                 }
             }
 

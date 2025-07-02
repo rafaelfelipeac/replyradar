@@ -5,9 +5,10 @@ import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 sealed interface ReplyListScreenIntent {
 
     sealed interface ReplyListIntent : ReplyListScreenIntent {
+        data class OnPendingReplyId(val pendingReplyId: Long?) : ReplyListIntent
         data object OnAddReplyClick : ReplyListIntent
         data class OnTabSelected(val index: Int) : ReplyListIntent
-        data class OnReplyClick(val reply: Reply) : ReplyListIntent
+        data class OnOpenReply(val reply: Reply) : ReplyListIntent
         data class OnReplyToggle(val reply: Reply) : ReplyListIntent
     }
 

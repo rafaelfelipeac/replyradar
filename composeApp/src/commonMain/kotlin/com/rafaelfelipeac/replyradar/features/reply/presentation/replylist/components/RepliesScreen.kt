@@ -9,9 +9,9 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ARCHIVED_INDEX
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ON_THE_RADAR_INDEX
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.RESOLVED_INDEX
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.ARCHIVED_INDEX
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.ON_THE_RADAR_INDEX
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.RESOLVED_INDEX
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState
 

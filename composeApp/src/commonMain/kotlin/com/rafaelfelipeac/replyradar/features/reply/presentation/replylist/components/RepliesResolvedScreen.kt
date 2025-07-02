@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRadarPlaceholder
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyClick
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnOpenReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState
 
 @Composable
@@ -18,7 +18,7 @@ fun RepliesResolvedScreen(state: ReplyListState, onIntent: (ReplyListScreenInten
             modifier = Modifier
                 .fillMaxSize(),
             replies = state.resolvedReplies,
-            onReplyClick = { onIntent(OnReplyClick(it)) }
+            onReplyClick = { onIntent(OnOpenReply(it)) }
         )
     }
 }

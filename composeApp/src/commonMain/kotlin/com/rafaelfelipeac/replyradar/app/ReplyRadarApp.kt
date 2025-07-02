@@ -26,7 +26,8 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun ReplyRadarApp(
     onSystemBarsConfigured: ((isDark: Boolean, backgroundColor: Color) -> Unit)? = null,
-    notificationPermissionManager: NotificationPermissionManager
+    notificationPermissionManager: NotificationPermissionManager,
+    pendingReplyId: Long?
 ) {
     val navController = rememberNavController()
     val appSettingsViewModel = koinViewModel<AppSettingsViewModel>()
@@ -50,7 +51,7 @@ fun ReplyRadarApp(
         LocalNotificationPermissionManager provides notificationPermissionManager
     ) {
         ReplyRadarTheme(darkTheme = isDark) {
-            AppNavHost(navController = navController)
+            AppNavHost(navController = navController, pendingReplyId = pendingReplyId)
         }
     }
 }

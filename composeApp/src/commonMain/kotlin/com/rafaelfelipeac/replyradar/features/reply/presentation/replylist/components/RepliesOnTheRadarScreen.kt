@@ -8,7 +8,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyProgress
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRadarError
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRadarPlaceholder
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyClick
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnOpenReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyToggle
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListViewModel.Companion.ERROR_GET_REPLIES
@@ -34,7 +34,7 @@ fun RepliesOnTheRadarScreen(state: ReplyListState, onIntent: (ReplyListScreenInt
                     modifier = Modifier
                         .fillMaxSize(),
                     replies = state.replies,
-                    onReplyClick = { onIntent(OnReplyClick(it)) },
+                    onReplyClick = { onIntent(OnOpenReply(it)) },
                     onReplyToggle = { onIntent(OnReplyToggle(it)) }
                 )
             }

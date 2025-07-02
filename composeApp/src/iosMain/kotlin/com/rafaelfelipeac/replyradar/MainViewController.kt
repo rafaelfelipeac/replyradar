@@ -20,6 +20,7 @@ fun MainViewController() = ComposeUIViewController(
             override suspend fun goToAppSettings() {
                 TODO("Not yet implemented for this platform.")
             }
-        }
+        },
+        pendingReplyId = -1
     )
 }
