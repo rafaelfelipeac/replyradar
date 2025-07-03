@@ -131,10 +131,7 @@ fun ReplyListScreen(
         effect.collect { effect ->
             when (effect) {
                 is SnackbarState -> snackbarHostState.showSnackbar(
-                    getSnackbarMessage( // esses valores estao aparecendo com o idioma trocado? checar.
-                        effect,
-                        strings
-                    )
+                    getSnackbarMessage(effect, strings)
                 )
 
                 RequestNotificationPermission -> showPermissionDialog = true
