@@ -30,7 +30,7 @@ object NotificationUtils {
             context,
             context.getString(notification_channel_id)
         )
-            .setSmallIcon(R.drawable.ic_launcher_background)
+            .setSmallIcon(R.mipmap.ic_launcher_round)
             .setContentTitle(notificationTitle)
             .setContentText(notificationContent)
             .setPriority(PRIORITY_HIGH)
