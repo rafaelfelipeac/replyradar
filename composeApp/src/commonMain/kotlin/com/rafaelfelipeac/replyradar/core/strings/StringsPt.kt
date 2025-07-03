@@ -112,4 +112,7 @@ Versão do app: ${getAppVersion()}
     override val notificationPermissionDialogDescription = "Para que possamos te lembrar de responder às suas mensagens, precisamos que você permita o envio de notificações. \n\nVocê pode ativar isso nas configurações do app."
     override val notificationPermissionDialogConfirmButton = "Abrir Configurações"
     override val notificationPermissionDialogDismissButton = "Entendido"
+    override val notificationTitle = "Hey, que tal responder %1?"
+    override val notificationContent = "%1 está esperando sua resposta sobre \"%2\"."
+    override val notificationContentWithoutSubject = "%1 está esperando sua resposta."
 }

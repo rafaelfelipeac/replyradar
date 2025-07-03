@@ -3,6 +3,7 @@ package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rafaelfelipeac.replyradar.core.reminder.ReminderScheduler
+import com.rafaelfelipeac.replyradar.core.reminder.model.NotificationReminderParams
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.ARCHIVED_INDEX
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_ID
@@ -17,6 +18,7 @@ import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleResolve
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.UpsertReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.GoToSettings
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.RequestNotificationPermission
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.ScheduleReminder
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Archived
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Removed
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Reopened
@@ -26,6 +28,7 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.NotificationPermissionIntent.OnCheckNotificationPermission
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.NotificationPermissionIntent.OnGoToSettings
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.NotificationPermissionIntent.OnRequestNotificationPermission
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.NotificationPermissionIntent.OnScheduleReminder
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnAddOrEditReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDeleteReply
@@ -144,6 +147,7 @@ class ReplyListViewModel(
             is OnCheckNotificationPermission -> checkNotificationPermission(intent.reply)
             OnGoToSettings -> goToSettings()
             OnRequestNotificationPermission -> requestNotificationPermission()
+            is OnScheduleReminder -> onScheduleReminder(intent)
         }
     }
 
@@ -226,12 +230,7 @@ class ReplyListViewModel(
         logUserAction(actionType = actionType, targetId = replyId)
 
         if (reply.reminderAt != INITIAL_DATE) {
-            reminderScheduler.scheduleReminder(
-                reminderAtMillis = reply.reminderAt,
-                name = reply.name,
-                subject = reply.subject,
-                replyId = replyId
-            )
+            _effect.emit(ScheduleReminder(reply))
         }
     }
 
@@ -285,6 +284,19 @@ class ReplyListViewModel(
             targetType = Message,
             targetId = targetId
         )
+    }
+
+    private fun onScheduleReminder(intent: OnScheduleReminder) {
+        with(intent.reply) {
+            reminderScheduler.scheduleReminder(
+                reminderAtMillis = reminderAt,
+                notificationReminderParams = NotificationReminderParams(
+                    replyId = id,
+                    notificationTitle = intent.notificationTitle,
+                    notificationContent = intent.notificationContent
+                )
+            )
+        }
     }
 
     private fun checkPendingReplyId(replies: List<Reply>, onTabSelection: () -> Unit) {

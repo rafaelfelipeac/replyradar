@@ -17,4 +17,6 @@ sealed interface ReplyListEffect {
         data object Archived : SnackbarState
         data object Unarchived : SnackbarState
     }
+
+    data class ScheduleReminder(val reply: Reply) : ReplyListEffect
 }

@@ -93,4 +93,7 @@ interface Strings {
     val notificationPermissionDialogDescription: String
     val notificationPermissionDialogConfirmButton: String
     val notificationPermissionDialogDismissButton: String
+    val notificationTitle: String
+    val notificationContent: String
+    val notificationContentWithoutSubject: String
 }

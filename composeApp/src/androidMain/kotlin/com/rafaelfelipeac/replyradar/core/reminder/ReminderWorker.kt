@@ -3,9 +3,10 @@ package com.rafaelfelipeac.replyradar.core.reminder
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.rafaelfelipeac.replyradar.R.string.reminder_name
-import com.rafaelfelipeac.replyradar.R.string.reminder_reply_id
-import com.rafaelfelipeac.replyradar.R.string.reminder_subject
+import com.rafaelfelipeac.replyradar.R.string.notification_reminder_content
+import com.rafaelfelipeac.replyradar.R.string.notification_reminder_reply_id
+import com.rafaelfelipeac.replyradar.R.string.notification_reminder_title
+import com.rafaelfelipeac.replyradar.core.reminder.NotificationUtils.showReminderNotification
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.INVALID_ID
 
 class ReminderWorker(
@@ -14,15 +15,22 @@ class ReminderWorker(
 ) : Worker(appContext, workerParams) {
 
     override fun doWork(): Result {
-        val replyId = inputData.getLong(applicationContext.getString(reminder_reply_id), INVALID_ID)
-        val name = inputData.getString(applicationContext.getString(reminder_name)) ?: return Result.failure()
-        val subject = inputData.getString(applicationContext.getString(reminder_subject)) ?: return Result.failure()
+        val replyId = inputData.getLong(
+            applicationContext.getString(notification_reminder_reply_id),
+            INVALID_ID
+        )
+        val notificationTitle =
+            inputData.getString(applicationContext.getString(notification_reminder_title))
+                ?: return Result.failure()
+        val notificationContent =
+            inputData.getString(applicationContext.getString(notification_reminder_content))
+                ?: return Result.failure()
 
-        NotificationUtils.showReminderNotification(
+        showReminderNotification(
             context = applicationContext,
             replyId = replyId,
-            name = name,
-            subject = subject
+            notificationTitle = notificationTitle,
+            notificationContent = notificationContent
         )
 
         return Result.success()

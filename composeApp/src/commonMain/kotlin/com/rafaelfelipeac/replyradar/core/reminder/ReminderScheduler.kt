@@ -1,12 +1,12 @@
 package com.rafaelfelipeac.replyradar.core.reminder
 
+import com.rafaelfelipeac.replyradar.core.reminder.model.NotificationReminderParams
+
 interface ReminderScheduler {
 
     fun scheduleReminder(
         reminderAtMillis: Long,
-        name: String,
-        subject: String,
-        replyId: Long
+        notificationReminderParams: NotificationReminderParams
     )
 
     fun cancelReminder(replyId: Long)

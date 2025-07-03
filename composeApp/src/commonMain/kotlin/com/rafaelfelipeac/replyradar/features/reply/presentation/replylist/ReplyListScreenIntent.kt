@@ -24,5 +24,10 @@ sealed interface ReplyListScreenIntent {
         data object OnRequestNotificationPermission : NotificationPermissionIntent
         data class OnCheckNotificationPermission(val reply: Reply) : NotificationPermissionIntent
         data object OnGoToSettings : NotificationPermissionIntent
+        data class OnScheduleReminder(
+            val reply: Reply,
+            val notificationTitle: String,
+            val notificationContent: String
+        ) : NotificationPermissionIntent
     }
 }

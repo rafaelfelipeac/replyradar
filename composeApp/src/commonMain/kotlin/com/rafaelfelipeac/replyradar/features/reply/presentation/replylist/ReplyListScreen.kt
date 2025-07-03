@@ -40,10 +40,12 @@ import com.rafaelfelipeac.replyradar.core.notification.LocalNotificationPermissi
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.ARCHIVED_INDEX
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.ON_THE_RADAR_INDEX
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.RESOLVED_INDEX
+import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.CheckNotificationPermission
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.GoToSettings
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.RequestNotificationPermission
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.ScheduleReminder
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Archived
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.SnackbarState.Removed
@@ -53,6 +55,7 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.NotificationPermissionIntent.OnCheckNotificationPermission
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.NotificationPermissionIntent.OnGoToSettings
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.NotificationPermissionIntent.OnRequestNotificationPermission
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.NotificationPermissionIntent.OnScheduleReminder
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnAddOrEditReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDeleteReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDismissBottomSheet
@@ -147,6 +150,16 @@ fun ReplyListScreen(
 
                         else -> onIntent(OnRequestNotificationPermission)
                     }
+                }
+
+                is ScheduleReminder -> {
+                    onIntent(
+                        OnScheduleReminder(
+                            reply = effect.reply,
+                            notificationTitle = getNotificationTitle(strings, effect),
+                            notificationContent = getNotificationContent(strings, effect)
+                        )
+                    )
                 }
             }
         }
@@ -282,4 +295,28 @@ private fun getSnackbarMessage(
     Reopened -> strings.replyListSnackbarReopened
     Resolved -> strings.replyListSnackbarResolved
     Unarchived -> strings.replyListSnackbarUnarchived
+}
+
+private fun getNotificationTitle(
+    strings: Strings,
+    effect: ScheduleReminder
+) = format(
+    strings.notificationTitle,
+    effect.reply.name
+)
+
+private fun getNotificationContent(
+    strings: Strings,
+    effect: ScheduleReminder
+) = if (effect.reply.subject.isNotBlank()) {
+    format(
+        strings.notificationContent,
+        effect.reply.name,
+        effect.reply.subject
+    )
+} else {
+    format(
+        strings.notificationContentWithoutSubject,
+        effect.reply.name
+    )
 }

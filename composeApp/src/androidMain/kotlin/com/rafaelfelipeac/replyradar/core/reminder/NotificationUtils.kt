@@ -16,21 +16,25 @@ import androidx.core.app.NotificationManagerCompat
 import com.rafaelfelipeac.replyradar.MainActivity
 import com.rafaelfelipeac.replyradar.R
 import com.rafaelfelipeac.replyradar.R.string.notification_channel_id
-import com.rafaelfelipeac.replyradar.R.string.notification_content_reminder_title
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.PENDING_REPLY_ID_KEY
 
 object NotificationUtils {
 
-    fun showReminderNotification(context: Context, replyId: Long, name: String, subject: String) {
+    fun showReminderNotification(
+        context: Context,
+        replyId: Long,
+        notificationTitle: String,
+        notificationContent: String
+    ) {
         val notification = NotificationCompat.Builder(
             context,
             context.getString(notification_channel_id)
         )
             .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle(context.getString(notification_content_reminder_title, name))
-            .setContentText(subject)
+            .setContentTitle(notificationTitle)
+            .setContentText(notificationContent)
             .setPriority(PRIORITY_HIGH)
-            .setContentIntent(getPendingIntent(context = context, replyId = replyId, name = name))
+            .setContentIntent(getPendingIntent(context = context, replyId = replyId))
             .setAutoCancel(true)
             .build()
 
@@ -38,13 +42,12 @@ object NotificationUtils {
             return
         }
 
-        NotificationManagerCompat.from(context).notify(name.hashCode(), notification)
+        NotificationManagerCompat.from(context).notify(replyId.hashCode(), notification)
     }
 
     private fun getPendingIntent(
         context: Context,
-        replyId: Long,
-        name: String,
+        replyId: Long
     ): PendingIntent? {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
@@ -53,7 +56,7 @@ object NotificationUtils {
 
         return PendingIntent.getActivity(
             context,
-            name.hashCode(),
+            replyId.hashCode(),
             intent,
             FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
         )
