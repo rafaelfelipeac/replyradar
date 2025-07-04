@@ -8,6 +8,8 @@ sealed class UserActionType(val value: String) {
     data object Archive : UserActionType(ARCHIVE)
     data object Unarchive : UserActionType(UNARCHIVE)
     data object Delete : UserActionType(DELETE)
+    data object Scheduled : UserActionType(SCHEDULED)
+    data object OpenedNotification : UserActionType(OPENED_NOTIFICATION)
     data object Open : UserActionType(OPEN)
 
     companion object {
@@ -20,6 +22,8 @@ sealed class UserActionType(val value: String) {
                 ARCHIVE -> Archive
                 DELETE -> Delete
                 OPEN -> Open
+                SCHEDULED -> Scheduled
+                OPENED_NOTIFICATION -> OpenedNotification
                 else -> Unarchive
             }
         }
@@ -34,3 +38,5 @@ private const val ARCHIVE = "ARCHIVE"
 private const val UNARCHIVE = "UNARCHIVE"
 private const val DELETE = "DELETE"
 private const val OPEN = "OPEN"
+private const val SCHEDULED = "SCHEDULED"
+private const val OPENED_NOTIFICATION = "OPENED_NOTIFICATION"

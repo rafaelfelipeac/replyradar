@@ -50,8 +50,10 @@ import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActio
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Create
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Delete
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.OpenedNotification
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Reopen
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Resolve
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Scheduled
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Unarchive
 import com.rafaelfelipeac.replyradar.features.useractions.domain.usecase.LogUserActionUseCase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -230,7 +232,7 @@ class ReplyListViewModel(
         logUserAction(actionType = actionType, targetId = replyId)
 
         if (reply.reminderAt != INITIAL_DATE) {
-            _effect.emit(ScheduleReminder(reply))
+            _effect.emit(ScheduleReminder(reply, replyId))
         }
     }
 
@@ -278,15 +280,7 @@ class ReplyListViewModel(
         _state.update { it.update() }
     }
 
-    private suspend fun logUserAction(actionType: UserActionType, targetId: Long) {
-        logUserActionUseCase.logUserAction(
-            actionType = actionType,
-            targetType = Message,
-            targetId = targetId
-        )
-    }
-
-    private fun onScheduleReminder(intent: OnScheduleReminder) {
+    private fun onScheduleReminder(intent: OnScheduleReminder) = viewModelScope.launch {
         with(intent.reply) {
             reminderScheduler.scheduleReminder(
                 reminderAtMillis = reminderAt,
@@ -297,15 +291,36 @@ class ReplyListViewModel(
                 )
             )
         }
+
+        logUserAction(
+            actionType = Scheduled,
+            targetId = intent.replyId
+        )
     }
 
-    private fun checkPendingReplyId(replies: List<Reply>, onTabSelection: () -> Unit) {
+    private suspend fun logUserAction(actionType: UserActionType, targetId: Long) {
+        logUserActionUseCase.logUserAction(
+            actionType = actionType,
+            targetType = Message,
+            targetId = targetId
+        )
+    }
+
+    private fun checkPendingReplyId(replies: List<Reply>, onTabSelection: () -> Unit) = viewModelScope.launch {
         if (pendingReplyId != INVALID_ID) {
             val reply = replies.find { it.id == pendingReplyId }
 
             if (reply != null) {
                 onTabSelection()
                 onOpenReply(reply)
+
+                pendingReplyId?.let { replyId ->
+                    logUserAction(
+                        actionType = OpenedNotification,
+                        targetId = replyId
+                    )
+                }
+
                 pendingReplyId = null
             }
         }

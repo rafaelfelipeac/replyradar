@@ -84,6 +84,8 @@ interface Strings {
     val activityLogUserActionResolveVerb: String
     val activityLogUserActionUnarchiveVerb: String
     val activityLogUserActionOpenVerb: String
+    val activityLogUserActionScheduledVerb: String
+    val activityLogUserActionOpenedNotificationVerb: String
     val activityLogUserActionTheme: String
     val activityLogUserActionLanguage: String
     val activityLogUserActionFeedback: String

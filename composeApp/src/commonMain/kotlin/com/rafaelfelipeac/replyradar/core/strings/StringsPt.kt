@@ -103,6 +103,8 @@ Versão do app: ${getAppVersion()}
     override val activityLogUserActionResolveVerb = "resolveu"
     override val activityLogUserActionUnarchiveVerb = "desarquivou"
     override val activityLogUserActionOpenVerb = "abriu"
+    override val activityLogUserActionScheduledVerb = "agendou um lembrete para"
+    override val activityLogUserActionOpenedNotificationVerb = "abriu uma notificação para"
     override val activityLogUserActionTheme = "Você mudou o tema do app."
     override val activityLogUserActionLanguage = "Você mudou o idioma do app."
     override val activityLogUserActionFeedback = "Você enviou um feedback sobre o app."

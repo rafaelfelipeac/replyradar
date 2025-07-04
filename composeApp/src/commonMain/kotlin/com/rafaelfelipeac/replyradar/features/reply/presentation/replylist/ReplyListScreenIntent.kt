@@ -26,6 +26,7 @@ sealed interface ReplyListScreenIntent {
         data object OnGoToSettings : NotificationPermissionIntent
         data class OnScheduleReminder(
             val reply: Reply,
+            val replyId: Long,
             val notificationTitle: String,
             val notificationContent: String
         ) : NotificationPermissionIntent

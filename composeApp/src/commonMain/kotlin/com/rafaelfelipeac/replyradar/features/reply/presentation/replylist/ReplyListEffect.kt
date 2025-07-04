@@ -18,5 +18,5 @@ sealed interface ReplyListEffect {
         data object Unarchived : SnackbarState
     }
 
-    data class ScheduleReminder(val reply: Reply) : ReplyListEffect
+    data class ScheduleReminder(val reply: Reply, val replyId: Long) : ReplyListEffect
 }

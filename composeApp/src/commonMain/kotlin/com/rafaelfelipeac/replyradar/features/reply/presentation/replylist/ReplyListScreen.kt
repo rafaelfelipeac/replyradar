@@ -136,7 +136,6 @@ fun ReplyListScreen(
 
                 RequestNotificationPermission -> showPermissionDialog = true
 
-
                 GoToSettings -> notificationPermissionManager.goToAppSettings()
 
                 is CheckNotificationPermission -> {
@@ -153,6 +152,7 @@ fun ReplyListScreen(
                     onIntent(
                         OnScheduleReminder(
                             reply = effect.reply,
+                            replyId = effect.replyId,
                             notificationTitle = getNotificationTitle(strings, effect),
                             notificationContent = getNotificationContent(strings, effect)
                         )

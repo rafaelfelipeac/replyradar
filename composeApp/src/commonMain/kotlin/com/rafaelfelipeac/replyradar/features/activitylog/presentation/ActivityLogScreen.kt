@@ -58,8 +58,10 @@ import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActio
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Delete
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Open
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.OpenedNotification
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Reopen
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Resolve
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Scheduled
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Unarchive
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -76,6 +78,8 @@ import replyradar.composeapp.generated.resources.ic_rate
 import replyradar.composeapp.generated.resources.ic_reopen
 import replyradar.composeapp.generated.resources.ic_theme
 import replyradar.composeapp.generated.resources.ic_unarchive
+import replyradar.composeapp.generated.resources.ic_time
+import replyradar.composeapp.generated.resources.ic_notification
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -256,6 +260,8 @@ private fun getIconByActionType(actionType: UserActionType, targetType: UserActi
             Resolve -> drawable.ic_check
             Unarchive -> drawable.ic_unarchive
             Open -> drawable.ic_open
+            Scheduled -> drawable.ic_time
+            OpenedNotification -> drawable.ic_notification
         }
 
         Theme -> drawable.ic_theme
@@ -293,6 +299,8 @@ private fun getActionVerb(actionType: UserActionType) = when (actionType) {
     Resolve -> LocalReplyRadarStrings.current.activityLogUserActionResolveVerb
     Unarchive -> LocalReplyRadarStrings.current.activityLogUserActionUnarchiveVerb
     Open -> LocalReplyRadarStrings.current.activityLogUserActionOpenVerb
+    Scheduled -> LocalReplyRadarStrings.current.activityLogUserActionScheduledVerb
+    OpenedNotification -> LocalReplyRadarStrings.current.activityLogUserActionOpenedNotificationVerb
 }
 
 @Composable
