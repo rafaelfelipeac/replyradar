@@ -2,11 +2,12 @@ package com.rafaelfelipeac.replyradar.features.reply.presentation
 
 import app.cash.turbine.test
 import com.rafaelfelipeac.replyradar.ARCHIVE
-import com.rafaelfelipeac.replyradar.CREATE
 import com.rafaelfelipeac.replyradar.DELETE
 import com.rafaelfelipeac.replyradar.EDIT
 import com.rafaelfelipeac.replyradar.RESOLVE
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_ID
 import com.rafaelfelipeac.replyradar.dropFirst
+import com.rafaelfelipeac.replyradar.fakes.core.util.FakeReminderScheduler
 import com.rafaelfelipeac.replyradar.fakes.reply.domain.FakeDeleteReplyUseCase
 import com.rafaelfelipeac.replyradar.fakes.reply.domain.FakeGetRepliesUseCase
 import com.rafaelfelipeac.replyradar.fakes.reply.domain.FakeToggleArchiveReplyUseCase
@@ -14,23 +15,19 @@ import com.rafaelfelipeac.replyradar.fakes.reply.domain.FakeToggleResolveReplyUs
 import com.rafaelfelipeac.replyradar.fakes.reply.domain.FakeUpsertReplyUseCase
 import com.rafaelfelipeac.replyradar.fakes.useractions.domain.FakeLogUserActionUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.ScheduleReminder
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnAddOrEditReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDeleteReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDismissBottomSheet
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnEditReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleArchive
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleResolve
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnAddReplyClick
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyClick
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnOpenReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnTabSelected
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListViewModel
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListViewModel.Companion.ERROR_GET_REPLIES
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.drop
@@ -38,6 +35,10 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ReplyListViewModelTest {
@@ -60,6 +61,7 @@ class ReplyListViewModelTest {
     private val deleteReplyUseCase = FakeDeleteReplyUseCase()
     private val getRepliesUseCase = FakeGetRepliesUseCase()
     private val logUserActionUseCase = FakeLogUserActionUseCase()
+    private val reminderScheduler = FakeReminderScheduler()
 
     private val viewModel = ReplyListViewModel(
         upsertReplyUseCase = upsertReplyUseCase,
@@ -68,6 +70,7 @@ class ReplyListViewModelTest {
         deleteReplyUseCase = deleteReplyUseCase,
         getRepliesUseCase = getRepliesUseCase,
         logUserActionUseCase = logUserActionUseCase,
+        reminderScheduler = reminderScheduler,
         dispatcher = testDispatcher
     )
 
@@ -95,7 +98,7 @@ class ReplyListViewModelTest {
     @Test
     fun `OnReplyClick should open bottom sheet in EDIT mode with reply`() = runTest {
         viewModel.state.drop(dropFirst).test {
-            viewModel.onIntent(OnReplyClick(sampleReply))
+            viewModel.onIntent(OnOpenReply(sampleReply))
 
             val updatedState = awaitItem()
             val expectedState = ReplyBottomSheetState(
@@ -120,14 +123,30 @@ class ReplyListViewModelTest {
     }
 
     @Test
-    fun `OnAddReply should upsert reply log action and dismiss bottom sheet`() = runTest {
+    fun `OnAddReply should upsert reply log action and dismiss bottom sheet with no reminder scheduled if reminderAt is INITIAL_DATE`() = runTest {
         viewModel.state.test {
-            viewModel.onIntent(OnAddReply(sampleReply))
+            viewModel.onIntent(OnAddOrEditReply(sampleReply))
 
             val updatedState = awaitItem()
             assertEquals(null, updatedState.replyBottomSheetState)
             assertEquals(sampleReply, upsertReplyUseCase.insertedReplies.first())
-            assertEquals(CREATE, logUserActionUseCase.loggedActions.first().first.value)
+            assertEquals(EDIT, logUserActionUseCase.loggedActions.first().first.value)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `OnAddReply should emit ScheduleReminder effect when reminderAt is valid`() = runTest {
+        val fixedReminderAt = 1735689600000L
+        val replyWithReminder = sampleReply.copy(id = INITIAL_ID, reminderAt = fixedReminderAt)
+
+        viewModel.effect.test {
+            viewModel.onIntent(OnAddOrEditReply(replyWithReminder))
+
+            val effect = awaitItem()
+            assertEquals(effect is ScheduleReminder, true)
+            assertEquals(replyWithReminder, (effect as ScheduleReminder).reply)
+
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -135,7 +154,7 @@ class ReplyListViewModelTest {
     @Test
     fun `OnEditReply should upsert reply log action and dismiss bottom sheet`() = runTest {
         viewModel.state.test {
-            viewModel.onIntent(OnEditReply(sampleReply))
+            viewModel.onIntent(OnAddOrEditReply(sampleReply))
 
             val updatedState = awaitItem()
             assertEquals(null, updatedState.replyBottomSheetState)
@@ -159,32 +178,30 @@ class ReplyListViewModelTest {
     }
 
     @Test
-    fun `OnToggleArchive should toggle archive log correct action and dismiss bottom sheet`() =
-        runTest {
-            viewModel.state.test {
-                viewModel.onIntent(OnToggleArchive(sampleReply))
+    fun `OnToggleArchive should toggle archive log correct action and dismiss bottom sheet`() = runTest {
+        viewModel.state.test {
+            viewModel.onIntent(OnToggleArchive(sampleReply))
 
-                val updatedState = awaitItem()
-                assertEquals(null, updatedState.replyBottomSheetState)
-                assertEquals(sampleReply, toggleArchiveReplyUseCase.toggledReplies.first())
-                assertEquals(ARCHIVE, logUserActionUseCase.loggedActions.first().first.value)
-                cancelAndIgnoreRemainingEvents()
-            }
+            val updatedState = awaitItem()
+            assertEquals(null, updatedState.replyBottomSheetState)
+            assertEquals(sampleReply, toggleArchiveReplyUseCase.toggledReplies.first())
+            assertEquals(ARCHIVE, logUserActionUseCase.loggedActions.first().first.value)
+            cancelAndIgnoreRemainingEvents()
         }
+    }
 
     @Test
-    fun `OnToggleResolve should toggle resolve log correct action and dismiss bottom sheet`() =
-        runTest {
-            viewModel.state.test {
-                viewModel.onIntent(OnToggleResolve(sampleReply))
+    fun `OnToggleResolve should toggle resolve log correct action and dismiss bottom sheet`() = runTest {
+        viewModel.state.test {
+            viewModel.onIntent(OnToggleResolve(sampleReply))
 
-                val updatedState = awaitItem()
-                assertEquals(null, updatedState.replyBottomSheetState)
-                assertEquals(sampleReply, toggleResolveReplyUseCase.toggledReplies.first())
-                assertEquals(RESOLVE, logUserActionUseCase.loggedActions.first().first.value)
-                cancelAndIgnoreRemainingEvents()
-            }
+            val updatedState = awaitItem()
+            assertEquals(null, updatedState.replyBottomSheetState)
+            assertEquals(sampleReply, toggleResolveReplyUseCase.toggledReplies.first())
+            assertEquals(RESOLVE, logUserActionUseCase.loggedActions.first().first.value)
+            cancelAndIgnoreRemainingEvents()
         }
+    }
 
     @Test
     fun `OnDismissBottomSheet should clear bottom sheet state`() = runTest {
@@ -214,6 +231,7 @@ class ReplyListViewModelTest {
             deleteReplyUseCase = deleteReplyUseCase,
             getRepliesUseCase = getRepliesUseCase,
             logUserActionUseCase = logUserActionUseCase,
+            reminderScheduler = reminderScheduler,
             dispatcher = testDispatcher
         )
 
@@ -239,6 +257,7 @@ class ReplyListViewModelTest {
             deleteReplyUseCase = deleteReplyUseCase,
             getRepliesUseCase = getRepliesUseCase,
             logUserActionUseCase = logUserActionUseCase,
+            reminderScheduler = reminderScheduler,
             dispatcher = testDispatcher
         )
 
