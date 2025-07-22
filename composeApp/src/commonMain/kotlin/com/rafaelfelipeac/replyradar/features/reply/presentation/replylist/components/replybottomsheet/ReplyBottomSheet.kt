@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplySnackbar
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
@@ -31,9 +32,11 @@ fun ReplyBottomSheet(
     val snackbarHostState = remember { SnackbarHostState() }
     var invalidReminderValue by remember { mutableStateOf(false) }
 
+    val localStrings = LocalReplyRadarStrings.current
+
     LaunchedEffect(invalidReminderValue) {
         if (invalidReminderValue) {
-            snackbarHostState.showSnackbar("A data e hora selecionadas já passaram.")
+            snackbarHostState.showSnackbar(localStrings.replyListReminderInvalidDateTime)
             invalidReminderValue = false
         }
     }

@@ -49,6 +49,7 @@ object StringsPt : Strings {
     override val replyListReminderTimeIconContentDescription = "Horário"
     override val replyListReminderDateIconContentDescription = "Data"
     override val replyListReminderCloseIconContentDescription = "Remover"
+    override val replyListReminderInvalidDateTime = "A data e hora selecionadas já passaram."
     override val replyListReminderTimePickerTitle = "Selecionar horário"
     override val replyListReminderTimePickerConfirmButton = "OK"
     override val replyListReminderTimePickerDismissButton = "Cancelar"
