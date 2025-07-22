@@ -27,17 +27,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
-import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
-import com.rafaelfelipeac.replyradar.core.strings.Strings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.NotificationPermissionDialog
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplySnackbar
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.spacerXSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.tabRowTopPadding
+import com.rafaelfelipeac.replyradar.core.datetime.dateTime
+import com.rafaelfelipeac.replyradar.core.datetime.getCurrentDateTime
+import com.rafaelfelipeac.replyradar.core.datetime.isDateTimeValid
 import com.rafaelfelipeac.replyradar.core.notification.LocalNotificationPermissionManager
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.strings.Strings
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.ARCHIVED_INDEX
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.ON_THE_RADAR_INDEX
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.RESOLVED_INDEX
 import com.rafaelfelipeac.replyradar.core.util.format
@@ -278,9 +281,23 @@ private fun onSaveReply(
     reply: Reply,
     onCheckNotificationPermission: (Reply) -> Unit,
     onAddOrEditReply: (Reply) -> Unit
-) = when {
-    reply.reminderAt != INITIAL_DATE -> onCheckNotificationPermission(reply)
-    else -> onAddOrEditReply(reply)
+) {
+    val dateTime = getCurrentDateTime()
+    val reminderAt = reply.reminderAt.takeIf { it != INITIAL_DATE }?.dateTime()
+    val selectedTime = reminderAt?.time
+    val selectedDate = reminderAt?.date
+
+    return when {
+        selectedTime?.let { time ->
+            isDateTimeValid(
+                date = selectedDate,
+                time = time,
+                dateTime = dateTime
+            )
+        } == true -> onCheckNotificationPermission(reply)
+
+        else -> onAddOrEditReply(reply)
+    }
 }
 
 private fun getSnackbarMessage(

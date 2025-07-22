@@ -14,16 +14,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.rafaelfelipeac.replyradar.core.clock.LocalClock
-import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyButton
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyConfirmationDialog
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyOutlinedButton
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
-import com.rafaelfelipeac.replyradar.core.datetime.dateTime
-import com.rafaelfelipeac.replyradar.core.util.format
+import com.rafaelfelipeac.replyradar.core.datetime.getCurrentDateTime
 import com.rafaelfelipeac.replyradar.core.datetime.getReminderTimestamp
+import com.rafaelfelipeac.replyradar.core.datetime.isDateTimeValid
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 import kotlinx.datetime.LocalDate
@@ -44,6 +44,7 @@ fun ReplyBottomSheetActions(
     onResolve: (Reply) -> Unit,
     onDelete: (Reply) -> Unit,
     onSave: (Reply) -> Unit,
+    onInvalidReminderValue: () -> Unit,
     selectedDate: LocalDate?,
     selectedTime: LocalTime?,
     reply: Reply?,
@@ -64,12 +65,6 @@ fun ReplyBottomSheetActions(
             onDelete = onDelete
         )
 
-        val reminderAtTimestamp = getReminderTimestamp(
-            dateTime = LocalClock.current.now().dateTime(),
-            selectedDate = selectedDate,
-            selectedTime = selectedTime
-        )
-
         ReplyButton(
             modifier = Modifier
                 .wrapContentWidth()
@@ -80,6 +75,19 @@ fun ReplyBottomSheetActions(
                 LocalReplyRadarStrings.current.replyListBottomSheetSave
             },
             onClick = {
+                val reminderIsValid = selectedTime != null && isDateTimeValid(selectedDate, selectedTime, getCurrentDateTime())
+
+                if ((selectedDate != null || selectedTime != null) && !reminderIsValid) {
+                    onInvalidReminderValue()
+                    return@ReplyButton
+                }
+
+                val reminderAtTimestamp = getReminderTimestamp(
+                    dateTime = getCurrentDateTime(),
+                    selectedDate = selectedDate,
+                    selectedTime = selectedTime
+                )
+
                 onSave(
                     getReplyToSave(
                         stateReply = state.reply,

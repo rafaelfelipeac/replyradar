@@ -12,7 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.rafaelfelipeac.replyradar.core.clock.LocalClock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone.Companion.UTC
@@ -28,7 +27,7 @@ actual fun PlatformDatePicker(
     onTimeInvalidated: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val dateTime = LocalClock.current.now().dateTime()
+    val dateTime = getCurrentDateTime()
 
     val datePickerState = rememberDatePickerState(
         initialSelectedDateMillis = selectedDate?.toEpochMillis(),

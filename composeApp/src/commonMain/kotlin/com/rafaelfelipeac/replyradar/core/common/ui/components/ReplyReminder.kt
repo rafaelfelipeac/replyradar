@@ -49,8 +49,7 @@ fun ReplyReminder(
     var showDatePicker by remember { mutableStateOf(false) }
     val reminderText = formatReminderText(
         selectedDate = selectedDate,
-        selectedTime = selectedTime,
-        onTimeSelected = { onSelectedTimeChange(it) }
+        selectedTime = selectedTime
     )
 
     ReminderText(

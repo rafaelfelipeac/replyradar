@@ -1,10 +1,9 @@
 package com.rafaelfelipeac.replyradar.core.common.ui.components.util
 
 import androidx.compose.runtime.Composable
-import com.rafaelfelipeac.replyradar.core.clock.LocalClock
-import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
-import com.rafaelfelipeac.replyradar.core.datetime.dateTime
+import com.rafaelfelipeac.replyradar.core.datetime.getCurrentDateTime
 import com.rafaelfelipeac.replyradar.core.datetime.getDefaultTime
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.util.toTwoDigitString
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
@@ -13,14 +12,13 @@ import kotlinx.datetime.LocalTime
 @Composable
 fun formatReminderText(
     selectedDate: LocalDate?,
-    selectedTime: LocalTime?,
-    onTimeSelected: (LocalTime) -> Unit,
+    selectedTime: LocalTime?
 ): String? {
     if (selectedDate == null && selectedTime == null) return null
 
-    val datetime = LocalClock.current.now().dateTime()
+    val datetime = getCurrentDateTime()
     val defaultTime =
-        getDefaultTime(datetime, selectedDate, selectedTime).also { onTimeSelected(it) }
+        getDefaultTime(datetime, selectedDate, selectedTime)
 
     val datePart = getDatePart(selectedDate, selectedTime, datetime)
     val timePart = getTimePart(selectedTime, selectedDate, defaultTime)

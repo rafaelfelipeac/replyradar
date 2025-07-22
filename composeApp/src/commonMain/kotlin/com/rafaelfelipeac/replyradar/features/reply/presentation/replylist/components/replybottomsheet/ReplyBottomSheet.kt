@@ -4,8 +4,15 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
+import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplySnackbar
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
@@ -21,6 +28,16 @@ fun ReplyBottomSheet(
     onDismiss: () -> Unit,
     replyBottomSheetState: ReplyBottomSheetState
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    var invalidReminderValue by remember { mutableStateOf(false) }
+
+    LaunchedEffect(invalidReminderValue) {
+        if (invalidReminderValue) {
+            snackbarHostState.showSnackbar("A data e hora selecionadas já passaram.")
+            invalidReminderValue = false
+        }
+    }
+
     ModalBottomSheet(
         sheetState = sheetState,
         onDismissRequest = onDismiss,
@@ -35,7 +52,8 @@ fun ReplyBottomSheet(
                     onSave = onSave,
                     onResolve = onResolve,
                     onArchive = onArchive,
-                    onDelete = onDelete
+                    onDelete = onDelete,
+                    onInvalidReminderValue = { invalidReminderValue = true }
                 )
             }
 
@@ -49,11 +67,14 @@ fun ReplyBottomSheet(
                         onSave = onSave,
                         onResolve = onResolve,
                         onArchive = onArchive,
-                        onDelete = onDelete
+                        onDelete = onDelete,
+                        onInvalidReminderValue = { invalidReminderValue = true }
                     )
                 }
             }
         }
+
+        ReplySnackbar(snackbarHostState)
     }
 }
 
@@ -63,13 +84,15 @@ private fun BottomSheetContent(
     onSave: (Reply) -> Unit,
     onResolve: (Reply) -> Unit,
     onArchive: (Reply) -> Unit,
-    onDelete: (Reply) -> Unit
+    onDelete: (Reply) -> Unit,
+    onInvalidReminderValue: () -> Unit
 ) {
     ReplyBottomSheetContent(
         replyBottomSheetState = state,
         onResolve = onResolve,
         onArchive = onArchive,
         onDelete = onDelete,
-        onSave = onSave
+        onSave = onSave,
+        onInvalidReminderValue = onInvalidReminderValue
     )
 }

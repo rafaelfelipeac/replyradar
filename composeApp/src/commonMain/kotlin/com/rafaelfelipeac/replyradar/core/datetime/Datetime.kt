@@ -8,12 +8,23 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlinx.datetime.Clock
 
 const val LOCAL_TIME_HOUR_DEFAULT = 24
 const val LOCAL_TIME_MINUTE_DEFAULT = 0
 const val HOUR_OFFSET = 1
 const val HOUR_OFFSET_DEFAULT = 0
 const val MINUTE_EMPTY = 0
+
+fun now() = Clock.System.now()
+
+fun getCurrentDateTime(): LocalDateTime {
+    return now().toLocalDateTime(TimeZone.currentSystemDefault())
+}
+
+fun getCurrentTimeMillis(): Long {
+    return now().toEpochMilliseconds()
+}
 
 fun Long.dateTime(timeZone: TimeZone = TimeZone.currentSystemDefault()): LocalDateTime {
     return Instant.fromEpochMilliseconds(this)

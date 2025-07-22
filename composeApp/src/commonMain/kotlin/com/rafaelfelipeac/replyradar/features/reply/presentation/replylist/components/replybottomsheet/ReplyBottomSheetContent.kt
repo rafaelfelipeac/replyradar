@@ -34,7 +34,8 @@ fun ReplyBottomSheetContent(
     onSave: (Reply) -> Unit,
     onResolve: (Reply) -> Unit,
     onArchive: (Reply) -> Unit,
-    onDelete: (Reply) -> Unit
+    onDelete: (Reply) -> Unit,
+    onInvalidReminderValue: () -> Unit,
 ) {
     replyBottomSheetState?.let { state ->
         var name by remember { mutableStateOf(state.reply?.name ?: EMPTY) }
@@ -90,6 +91,7 @@ fun ReplyBottomSheetContent(
                 onResolve = onResolve,
                 onDelete = onDelete,
                 onSave = onSave,
+                onInvalidReminderValue = { onInvalidReminderValue() },
                 selectedDate = selectedDate,
                 selectedTime = selectedTime,
                 reply = state.reply,
