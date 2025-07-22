@@ -39,6 +39,7 @@ interface Strings {
     val replyListSnackbarUnarchived: String
     val replyListReminder: String
     val replyListReminderSet: String
+    val replyListReminderSetSeparator: String
     val replyListReminderToday: String
     val replyListReminderTomorrow: String
     val replyListReminderTimeIconContentDescription: String

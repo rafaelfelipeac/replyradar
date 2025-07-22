@@ -44,6 +44,7 @@ object StringsEn : Strings {
     override val replyListSnackbarUnarchived = "Item successfully unarchived."
     override val replyListReminder = "Reminder"
     override val replyListReminderSet = "Reminder set for:"
+    override val replyListReminderSetSeparator = "%1 at %2"
     override val replyListReminderToday = "today"
     override val replyListReminderTomorrow = "tomorrow"
     override val replyListReminderTimeIconContentDescription = "Time"

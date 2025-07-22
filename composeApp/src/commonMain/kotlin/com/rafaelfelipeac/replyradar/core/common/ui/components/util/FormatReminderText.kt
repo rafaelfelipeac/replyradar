@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import com.rafaelfelipeac.replyradar.core.datetime.getCurrentDateTime
 import com.rafaelfelipeac.replyradar.core.datetime.getDefaultTime
 import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.core.util.toTwoDigitString
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
@@ -25,7 +26,7 @@ fun formatReminderText(
 
     return "${LocalReplyRadarStrings.current.replyListReminderSet} ${
         when {
-            datePart != null && timePart != null -> "$datePart $timePart"
+            datePart != null && timePart != null -> format(LocalReplyRadarStrings.current.replyListReminderSetSeparator, datePart, timePart)
             datePart != null -> datePart
             else -> timePart
         }
