@@ -133,9 +133,7 @@ fun ReplyListScreen(
     LaunchedEffect(Unit) {
         effect.collect { effect ->
             when (effect) {
-                is SnackbarState -> snackbarHostState.showSnackbar(
-                    getSnackbarMessage(effect, strings)
-                )
+                is SnackbarState -> snackbarHostState.showSnackbar(getSnackbarMessage(effect, strings))
 
                 RequestNotificationPermission -> showPermissionDialog = true
 
