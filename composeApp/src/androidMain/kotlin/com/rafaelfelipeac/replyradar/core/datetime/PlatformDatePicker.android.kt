@@ -54,13 +54,13 @@ actual fun PlatformDatePicker(
                         val dateInMillis = datePickerState.selectedDateMillis
 
                         if (dateInMillis != null) {
-                            val pickedDate = dateInMillis.toLocalDate(UTC)
+                            val selectedDate = dateInMillis.toLocalDate(UTC)
 
-                            onDateSelected(pickedDate)
+                            onDateSelected(selectedDate)
 
                             selectedTime?.let { selectedTime ->
                                 val isStillValid = isDateTimeValid(
-                                    date = pickedDate,
+                                    date = selectedDate,
                                     time = selectedTime,
                                     dateTime = dateTime
                                 )

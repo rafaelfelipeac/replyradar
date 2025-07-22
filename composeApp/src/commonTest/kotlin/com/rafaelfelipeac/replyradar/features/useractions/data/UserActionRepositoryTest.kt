@@ -1,7 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.useractions.data
 
 import app.cash.turbine.test
-import com.rafaelfelipeac.replyradar.fakes.core.util.FakeClock
 import com.rafaelfelipeac.replyradar.fakes.reply.data.FakeReplyDao
 import com.rafaelfelipeac.replyradar.fakes.useractions.data.FakeUserActionDao
 import com.rafaelfelipeac.replyradar.features.useractions.data.database.entity.UserActionEntity
@@ -18,12 +17,10 @@ class UserActionRepositoryTest {
 
     private val userActionDao = FakeUserActionDao()
     private val replyDao = FakeReplyDao()
-    private val clock = FakeClock(now)
 
     private val repository = UserActionRepositoryImpl(
         userActionDao = userActionDao,
-        replyDao = replyDao,
-        clock = clock
+        replyDao = replyDao
     )
 
     @Test
@@ -39,7 +36,6 @@ class UserActionRepositoryTest {
         assertEquals(actionType.value, entity.actionType)
         assertEquals(targetType.value, entity.targetType)
         assertEquals(targetId, entity.targetId)
-        assertEquals(now, entity.createdAt)
     }
 
     @Test
@@ -66,7 +62,6 @@ class UserActionRepositoryTest {
             assertEquals(Create, action.actionType)
             assertEquals(Message, action.targetType)
             assertEquals(replyName, action.targetName)
-            assertEquals(now, action.createdAt)
 
             cancelAndIgnoreRemainingEvents()
         }

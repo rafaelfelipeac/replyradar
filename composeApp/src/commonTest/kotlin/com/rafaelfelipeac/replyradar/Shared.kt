@@ -22,5 +22,5 @@ val sampleUserAction = UserAction(
     actionType = UserActionType.Create,
     targetType = UserActionTargetType.Message,
     targetName = "TargetName",
-    createdAt = 123456789L
+    createdAt = now
 )
