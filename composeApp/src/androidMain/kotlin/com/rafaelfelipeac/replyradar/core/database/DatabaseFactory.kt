@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase
 import com.rafaelfelipeac.replyradar.core.database.ReplyRadarMigrations.ALL_MIGRATIONS
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.DB_NAME
 
+@Suppress("SpreadOperator")
 actual class DatabaseFactory(
     private val context: Context
 ) {

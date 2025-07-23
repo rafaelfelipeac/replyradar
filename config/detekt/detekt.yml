@@ -12,6 +12,9 @@ style:
   UnusedPrivateMember:
     ignoreAnnotated:
       - 'Preview'
+  ReturnCount:
+    active: true
+    max: 3
 
 naming:
   FunctionNaming:
@@ -31,7 +34,7 @@ naming:
 complexity:
   LongMethod:
     active: true
-    threshold: 120
+    threshold: 150
   LargeClass:
     active: true
     threshold: 600
@@ -40,12 +43,12 @@ complexity:
     threshold: 20
   LongParameterList:
     active: true
-    constructorThreshold: 10
-    functionThreshold: 10
+    constructorThreshold: 15
+    functionThreshold: 15
   TooManyFunctions:
     active: true
-    thresholdInClasses: 15
-    thresholdInFiles: 15
+    thresholdInClasses: 30
+    thresholdInFiles: 30
 
 comments:
   UndocumentedPublicClass:

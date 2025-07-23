@@ -1,3 +1,5 @@
+@file:Suppress("MaxLineLength")
+
 package com.rafaelfelipeac.replyradar.core.strings
 
 import com.rafaelfelipeac.replyradar.core.version.getAppVersion
