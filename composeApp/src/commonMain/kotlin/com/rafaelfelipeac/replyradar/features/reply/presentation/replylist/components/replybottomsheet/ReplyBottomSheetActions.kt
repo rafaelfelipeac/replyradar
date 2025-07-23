@@ -49,7 +49,7 @@ fun ReplyBottomSheetActions(
     selectedTime: LocalTime?,
     reply: Reply?,
     name: String,
-    subject: String,
+    subject: String
 ) {
     Row(
         modifier = Modifier
@@ -75,7 +75,11 @@ fun ReplyBottomSheetActions(
                 LocalReplyRadarStrings.current.replyListBottomSheetSave
             },
             onClick = {
-                val reminderIsValid = selectedTime != null && isDateTimeValid(selectedDate, selectedTime, getCurrentDateTime())
+                val reminderIsValid = selectedTime != null && isDateTimeValid(
+                    selectedDate,
+                    selectedTime,
+                    getCurrentDateTime()
+                )
 
                 if ((selectedDate != null || selectedTime != null) && !reminderIsValid) {
                     onInvalidReminderValue()

@@ -17,7 +17,7 @@ fun formatTimestamp(timestampMillis: Long): String {
     val localDateTime = timestampMillis.dateTime()
 
     return "${localDateTime.dayOfMonth}/${localDateTime.monthNumber}/${localDateTime.year} " +
-            "${localDateTime.hour}:${localDateTime.minute.toTwoDigitString()}"
+        "${localDateTime.hour}:${localDateTime.minute.toTwoDigitString()}"
 }
 
 fun getReminderTimestamp(

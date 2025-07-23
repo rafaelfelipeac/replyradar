@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class ReplyRepositoryImpl(
-    private val replyDao: ReplyDao,
+    private val replyDao: ReplyDao
 ) : ReplyRepository {
 
     override suspend fun upsertReply(reply: Reply): Long {

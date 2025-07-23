@@ -34,16 +34,16 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyProgress
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRadarError
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRadarPlaceholder
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.listDividerThickness
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
+import com.rafaelfelipeac.replyradar.core.datetime.formatTimestamp
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.theme.horizontalDividerColor
 import com.rafaelfelipeac.replyradar.core.util.format
-import com.rafaelfelipeac.replyradar.core.datetime.formatTimestamp
 import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogViewModel.Companion.ERROR_GET_ACTIVITY_LOG
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserAction
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType
@@ -73,13 +73,13 @@ import replyradar.composeapp.generated.resources.ic_delete
 import replyradar.composeapp.generated.resources.ic_edit
 import replyradar.composeapp.generated.resources.ic_email
 import replyradar.composeapp.generated.resources.ic_language
+import replyradar.composeapp.generated.resources.ic_notification
 import replyradar.composeapp.generated.resources.ic_open
 import replyradar.composeapp.generated.resources.ic_rate
 import replyradar.composeapp.generated.resources.ic_reopen
 import replyradar.composeapp.generated.resources.ic_theme
-import replyradar.composeapp.generated.resources.ic_unarchive
 import replyradar.composeapp.generated.resources.ic_time
-import replyradar.composeapp.generated.resources.ic_notification
+import replyradar.composeapp.generated.resources.ic_unarchive
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -94,8 +94,8 @@ fun ActivityLogScreen(viewModel: ActivityLogViewModel = koinViewModel(), onBackC
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription =
-                                LocalReplyRadarStrings.current.activityLogBackButton
+                            contentDescription = LocalReplyRadarStrings.current
+                                .activityLogBackButton
                         )
                     }
                 }
@@ -218,8 +218,8 @@ fun ActivityLogListItem(userAction: UserAction) {
                             )
                         ),
                         tint = colorScheme.primary,
-                        contentDescription =
-                            LocalReplyRadarStrings.current.activityLogItemContentDescription
+                        contentDescription = LocalReplyRadarStrings.current
+                            .activityLogItemContentDescription
                     )
                 }
 

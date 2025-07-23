@@ -16,15 +16,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import com.rafaelfelipeac.replyradar.core.util.AppConstants.EMPTY
-import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
-import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyReminder
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextField
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSize.Large
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.datetime.dateTime
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.EMPTY
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.ReplyTimestampInfo
 
@@ -35,7 +35,7 @@ fun ReplyBottomSheetContent(
     onResolve: (Reply) -> Unit,
     onArchive: (Reply) -> Unit,
     onDelete: (Reply) -> Unit,
-    onInvalidReminderValue: () -> Unit,
+    onInvalidReminderValue: () -> Unit
 ) {
     replyBottomSheetState?.let { state ->
         var name by remember { mutableStateOf(state.reply?.name ?: EMPTY) }
@@ -96,7 +96,7 @@ fun ReplyBottomSheetContent(
                 selectedTime = selectedTime,
                 reply = state.reply,
                 name = name,
-                subject = subject,
+                subject = subject
             )
         }
     }

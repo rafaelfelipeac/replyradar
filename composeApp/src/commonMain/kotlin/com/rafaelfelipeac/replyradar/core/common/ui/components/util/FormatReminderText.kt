@@ -11,10 +11,7 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 
 @Composable
-fun formatReminderText(
-    selectedDate: LocalDate?,
-    selectedTime: LocalTime?
-): String? {
+fun formatReminderText(selectedDate: LocalDate?, selectedTime: LocalTime?): String? {
     if (selectedDate == null && selectedTime == null) return null
 
     val datetime = getCurrentDateTime()
@@ -25,11 +22,15 @@ fun formatReminderText(
     val timePart = getTimePart(selectedTime, selectedDate, defaultTime)
 
     return "${LocalReplyRadarStrings.current.replyListReminderSet} ${
-        when {
-            datePart != null && timePart != null -> format(LocalReplyRadarStrings.current.replyListReminderSetSeparator, datePart, timePart)
-            datePart != null -> datePart
-            else -> timePart
-        }
+    when {
+        datePart != null && timePart != null -> format(
+            LocalReplyRadarStrings.current.replyListReminderSetSeparator,
+            datePart,
+            timePart
+        )
+        datePart != null -> datePart
+        else -> timePart
+    }
     }"
 }
 

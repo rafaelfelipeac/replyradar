@@ -1,8 +1,8 @@
 package com.rafaelfelipeac.replyradar.core.database
 
 import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.sqlite.SQLiteConnection
+import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.sqlite.execSQL
 
 object ReplyRadarMigrations {
@@ -18,4 +18,3 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
         connection.execSQL("ALTER TABLE replies ADD COLUMN reminderAt INTEGER NOT NULL DEFAULT 0")
     }
 }
-

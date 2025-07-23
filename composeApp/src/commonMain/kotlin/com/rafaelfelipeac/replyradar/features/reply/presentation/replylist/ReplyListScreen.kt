@@ -133,7 +133,9 @@ fun ReplyListScreen(
     LaunchedEffect(Unit) {
         effect.collect { effect ->
             when (effect) {
-                is SnackbarState -> snackbarHostState.showSnackbar(getSnackbarMessage(effect, strings))
+                is SnackbarState -> snackbarHostState.showSnackbar(
+                    getSnackbarMessage(effect, strings)
+                )
 
                 RequestNotificationPermission -> showPermissionDialog = true
 
@@ -269,7 +271,7 @@ fun ReplyListScreen(
                     )
                 },
                 onDismiss = { onIntent(OnDismissBottomSheet) },
-                replyBottomSheetState = state.replyBottomSheetState,
+                replyBottomSheetState = state.replyBottomSheetState
             )
         }
     }
@@ -298,10 +300,7 @@ private fun onSaveReply(
     }
 }
 
-private fun getSnackbarMessage(
-    effect: SnackbarState,
-    strings: Strings
-) = when (effect) {
+private fun getSnackbarMessage(effect: SnackbarState, strings: Strings) = when (effect) {
     Archived -> strings.replyListSnackbarArchived
     Removed -> strings.replyListSnackbarRemoved
     Reopened -> strings.replyListSnackbarReopened
@@ -309,26 +308,21 @@ private fun getSnackbarMessage(
     Unarchived -> strings.replyListSnackbarUnarchived
 }
 
-private fun getNotificationTitle(
-    strings: Strings,
-    effect: ScheduleReminder
-) = format(
+private fun getNotificationTitle(strings: Strings, effect: ScheduleReminder) = format(
     strings.notificationTitle,
     effect.reply.name
 )
 
-private fun getNotificationContent(
-    strings: Strings,
-    effect: ScheduleReminder
-) = if (effect.reply.subject.isNotBlank()) {
-    format(
-        strings.notificationContent,
-        effect.reply.name,
-        effect.reply.subject
-    )
-} else {
-    format(
-        strings.notificationContentWithoutSubject,
-        effect.reply.name
-    )
-}
+private fun getNotificationContent(strings: Strings, effect: ScheduleReminder) =
+    if (effect.reply.subject.isNotBlank()) {
+        format(
+            strings.notificationContent,
+            effect.reply.name,
+            effect.reply.subject
+        )
+    } else {
+        format(
+            strings.notificationContentWithoutSubject,
+            effect.reply.name
+        )
+    }

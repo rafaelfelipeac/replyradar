@@ -7,10 +7,7 @@ import androidx.compose.runtime.Composable
 import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 
 @Composable
-fun NotificationPermissionDialog(
-    onDismiss: () -> Unit,
-    onGoToSettings: () -> Unit
-) {
+fun NotificationPermissionDialog(onDismiss: () -> Unit, onGoToSettings: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {

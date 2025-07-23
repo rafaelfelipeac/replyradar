@@ -18,8 +18,8 @@ fun FloatingActionButton(onIntent: (ReplyListScreenIntent) -> Unit, colorScheme:
     ) {
         Icon(
             imageVector = Icons.Filled.Add,
-            contentDescription =
-                LocalReplyRadarStrings.current.replyListFabContentDescription,
+            contentDescription = LocalReplyRadarStrings.current
+                .replyListFabContentDescription,
             tint = colorScheme.background
         )
     }

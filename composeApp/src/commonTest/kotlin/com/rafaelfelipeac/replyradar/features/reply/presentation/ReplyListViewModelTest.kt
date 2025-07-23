@@ -28,6 +28,10 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListViewModel.Companion.ERROR_GET_REPLIES
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.drop
@@ -35,10 +39,6 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ReplyListViewModelTest {
@@ -122,6 +122,7 @@ class ReplyListViewModelTest {
         }
     }
 
+    // ktlint-disable max-line-length
     @Test
     fun `OnAddReply should upsert reply log action and dismiss bottom sheet with no reminder scheduled if reminderAt is INITIAL_DATE`() = runTest {
         viewModel.state.test {
@@ -134,6 +135,7 @@ class ReplyListViewModelTest {
             cancelAndIgnoreRemainingEvents()
         }
     }
+    // ktlint-enable max-line-length
 
     @Test
     fun `OnAddReply should emit ScheduleReminder effect when reminderAt is valid`() = runTest {
@@ -178,30 +180,32 @@ class ReplyListViewModelTest {
     }
 
     @Test
-    fun `OnToggleArchive should toggle archive log correct action and dismiss bottom sheet`() = runTest {
-        viewModel.state.test {
-            viewModel.onIntent(OnToggleArchive(sampleReply))
+    fun `OnToggleArchive should toggle archive log correct action and dismiss bottom sheet`() =
+        runTest {
+            viewModel.state.test {
+                viewModel.onIntent(OnToggleArchive(sampleReply))
 
-            val updatedState = awaitItem()
-            assertEquals(null, updatedState.replyBottomSheetState)
-            assertEquals(sampleReply, toggleArchiveReplyUseCase.toggledReplies.first())
-            assertEquals(ARCHIVE, logUserActionUseCase.loggedActions.first().first.value)
-            cancelAndIgnoreRemainingEvents()
+                val updatedState = awaitItem()
+                assertEquals(null, updatedState.replyBottomSheetState)
+                assertEquals(sampleReply, toggleArchiveReplyUseCase.toggledReplies.first())
+                assertEquals(ARCHIVE, logUserActionUseCase.loggedActions.first().first.value)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `OnToggleResolve should toggle resolve log correct action and dismiss bottom sheet`() = runTest {
-        viewModel.state.test {
-            viewModel.onIntent(OnToggleResolve(sampleReply))
+    fun `OnToggleResolve should toggle resolve log correct action and dismiss bottom sheet`() =
+        runTest {
+            viewModel.state.test {
+                viewModel.onIntent(OnToggleResolve(sampleReply))
 
-            val updatedState = awaitItem()
-            assertEquals(null, updatedState.replyBottomSheetState)
-            assertEquals(sampleReply, toggleResolveReplyUseCase.toggledReplies.first())
-            assertEquals(RESOLVE, logUserActionUseCase.loggedActions.first().first.value)
-            cancelAndIgnoreRemainingEvents()
+                val updatedState = awaitItem()
+                assertEquals(null, updatedState.replyBottomSheetState)
+                assertEquals(sampleReply, toggleResolveReplyUseCase.toggledReplies.first())
+                assertEquals(RESOLVE, logUserActionUseCase.loggedActions.first().first.value)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
     fun `OnDismissBottomSheet should clear bottom sheet state`() = runTest {

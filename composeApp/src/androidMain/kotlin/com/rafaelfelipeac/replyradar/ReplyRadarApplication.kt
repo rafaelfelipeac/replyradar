@@ -5,9 +5,9 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.os.Build
+import com.rafaelfelipeac.replyradar.R.string.notification_channel_description
 import com.rafaelfelipeac.replyradar.R.string.notification_channel_id
 import com.rafaelfelipeac.replyradar.R.string.notification_channel_name
-import com.rafaelfelipeac.replyradar.R.string.notification_channel_description
 import com.rafaelfelipeac.replyradar.di.initKoin
 import org.koin.android.ext.koin.androidContext
 

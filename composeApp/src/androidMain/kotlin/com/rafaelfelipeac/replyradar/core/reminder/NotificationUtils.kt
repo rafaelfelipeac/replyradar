@@ -45,10 +45,7 @@ object NotificationUtils {
         NotificationManagerCompat.from(context).notify(replyId.hashCode(), notification)
     }
 
-    private fun getPendingIntent(
-        context: Context,
-        replyId: Long
-    ): PendingIntent? {
+    private fun getPendingIntent(context: Context, replyId: Long): PendingIntent? {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
             putExtra(PENDING_REPLY_ID_KEY, replyId)

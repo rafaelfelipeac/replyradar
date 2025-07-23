@@ -6,9 +6,9 @@ import com.rafaelfelipeac.replyradar.features.reply.data.database.entity.ReplyEn
 import com.rafaelfelipeac.replyradar.features.reply.data.repository.ReplyRepositoryImpl
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.util.valueOrEmpty
-import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlinx.coroutines.test.runTest
 
 class ReplyRepositoryTest {
 
@@ -67,7 +67,7 @@ class ReplyRepositoryTest {
         val updated = dao.updatedReplies.first()
         assertEquals(true, updated.isResolved)
         assertEquals(true, updated.isArchived)
-     }
+    }
 
     @Test
     fun `toggleReplyArchive should toggle isArchived and set archivedAt`() = runTest {

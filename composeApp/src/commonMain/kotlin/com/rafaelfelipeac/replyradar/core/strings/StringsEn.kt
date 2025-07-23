@@ -2,6 +2,7 @@ package com.rafaelfelipeac.replyradar.core.strings
 
 import com.rafaelfelipeac.replyradar.core.version.getAppVersion
 
+// ktlint-disable max-line-length
 object StringsEn : Strings {
     override val appName = "Reply Radar"
 
@@ -120,3 +121,4 @@ App version: ${getAppVersion()}
     override val notificationContent = "%1 is waiting for your reply about \"%2\"."
     override val notificationContentWithoutSubject = "%1 is waiting for your reply."
 }
+// ktlint-enable max-line-length

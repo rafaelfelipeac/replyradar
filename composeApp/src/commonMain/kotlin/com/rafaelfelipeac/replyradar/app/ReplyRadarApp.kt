@@ -8,6 +8,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
+import com.rafaelfelipeac.replyradar.core.navigation.AppNavHost
+import com.rafaelfelipeac.replyradar.core.notification.LocalNotificationPermissionManager
+import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
 import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.strings.StringsProvider
 import com.rafaelfelipeac.replyradar.core.theme.DarkColorScheme
@@ -15,9 +18,6 @@ import com.rafaelfelipeac.replyradar.core.theme.LightColorScheme
 import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
 import com.rafaelfelipeac.replyradar.core.theme.model.AppTheme.DARK
 import com.rafaelfelipeac.replyradar.core.theme.model.AppTheme.SYSTEM
-import com.rafaelfelipeac.replyradar.core.navigation.AppNavHost
-import com.rafaelfelipeac.replyradar.core.notification.LocalNotificationPermissionManager
-import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
 import com.rafaelfelipeac.replyradar.features.app.settings.AppSettingsViewModel
 import org.koin.compose.viewmodel.koinViewModel
 

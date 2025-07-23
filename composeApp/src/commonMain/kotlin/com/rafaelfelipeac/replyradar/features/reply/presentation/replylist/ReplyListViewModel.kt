@@ -307,25 +307,26 @@ class ReplyListViewModel(
         )
     }
 
-    private fun checkPendingReplyId(replies: List<Reply>, onTabSelection: () -> Unit) = viewModelScope.launch {
-        if (pendingReplyId != INVALID_ID) {
-            val reply = replies.find { it.id == pendingReplyId }
+    private fun checkPendingReplyId(replies: List<Reply>, onTabSelection: () -> Unit) =
+        viewModelScope.launch {
+            if (pendingReplyId != INVALID_ID) {
+                val reply = replies.find { it.id == pendingReplyId }
 
-            if (reply != null) {
-                onTabSelection()
-                onOpenReply(reply)
+                if (reply != null) {
+                    onTabSelection()
+                    onOpenReply(reply)
 
-                pendingReplyId?.let { replyId ->
-                    logUserAction(
-                        actionType = OpenedNotification,
-                        targetId = replyId
-                    )
+                    pendingReplyId?.let { replyId ->
+                        logUserAction(
+                            actionType = OpenedNotification,
+                            targetId = replyId
+                        )
+                    }
+
+                    pendingReplyId = null
                 }
-
-                pendingReplyId = null
             }
         }
-    }
 
     private fun onTabSelected(index: Int) {
         updateState {

@@ -7,19 +7,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
-import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
-import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
-import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.core.datetime.formatTimestamp
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
+import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
 
-
 @Composable
-fun ColumnScope.ReplyTimestampInfo(
-    state: ReplyBottomSheetState
-) {
+fun ColumnScope.ReplyTimestampInfo(state: ReplyBottomSheetState) {
     state.reply?.let { reply ->
         Text(
             modifier = Modifier
