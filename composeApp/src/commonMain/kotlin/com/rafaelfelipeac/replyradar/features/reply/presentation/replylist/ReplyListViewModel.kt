@@ -16,6 +16,7 @@ import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.GetRepliesUse
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleArchiveReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.ToggleResolveReplyUseCase
 import com.rafaelfelipeac.replyradar.features.reply.domain.usecase.UpsertReplyUseCase
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.CheckNotificationPermission
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.GoToSettings
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.RequestNotificationPermission
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListEffect.ScheduleReminder
@@ -269,7 +270,7 @@ class ReplyListViewModel(
     }
 
     private fun checkNotificationPermission(reply: Reply) = viewModelScope.launch {
-        _effect.emit(ReplyListEffect.CheckNotificationPermission(reply))
+        _effect.emit(CheckNotificationPermission(reply))
     }
 
     private fun goToSettings() = viewModelScope.launch {
