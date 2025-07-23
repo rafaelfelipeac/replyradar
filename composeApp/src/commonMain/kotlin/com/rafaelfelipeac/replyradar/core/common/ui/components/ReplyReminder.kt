@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.util.formatReminderText
@@ -163,7 +164,8 @@ private fun ReminderText(
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 modifier = Modifier
@@ -174,7 +176,7 @@ private fun ReminderText(
 
             IconButton(
                 modifier = Modifier
-                    .padding(start = paddingLarge)
+                    .padding(start = paddingLarge, top = paddingSmall)
                     .size(iconButtonSize),
                 onClick = { onDeleteClick() },
             ) {
