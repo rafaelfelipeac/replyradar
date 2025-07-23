@@ -64,7 +64,9 @@ private fun getTimePart(
     selectedDate: LocalDate?,
     defaultTime: LocalTime
 ) = when {
-    selectedTime != null -> "${selectedTime.hour.toTwoDigitString()}:${selectedTime.minute.toTwoDigitString()}"
-    selectedDate != null -> "${defaultTime.hour.toTwoDigitString()}:${defaultTime.minute.toTwoDigitString()}"
+    selectedTime != null ->
+        "${selectedTime.hour.toTwoDigitString()}:${selectedTime.minute.toTwoDigitString()}"
+    selectedDate != null ->
+        "${defaultTime.hour.toTwoDigitString()}:${defaultTime.minute.toTwoDigitString()}"
     else -> null
 }
