@@ -12,7 +12,6 @@ This app exists for anyone who's ever said, “Oops, I meant to reply to that!�
 With Reply Radar, your forgotten replies are finally on the radar.  
 A gentle nudge. A little order. A friendlier inbox — on your terms.
 
-
 <a href="https://play.google.com/store/apps/details?id=com.rafaelfelipeac.replyradar">
     <img 
         alt="Get it on Google Play" 
@@ -42,11 +41,12 @@ It’s a playground, but also a showcase of how Kotlin can unify experiences acr
   - **Active** – Messages still pending a reply
   - **Resolved** – Messages you've replied to and marked as done
   - **Archived** – Soft delete feature to hide messages you no longer want to see
+- Set **reminders** to follow up on specific replies and get notified at the right time
 - Clean and focused UI to help you stay on top of conversations
 - Light **gamification** through action history (laying the groundwork for future features)
 - **Offline-first experience** – no account, no server
 
-> ⚠️ **Reminders (and other cool features) aren't here yet** — but they're definitely on the radar. Stay tuned!
+> ⚠️ Some features are still brewing — but they're definitely on the radar. Stay tuned!
 
 ---
 
@@ -88,6 +88,12 @@ It’s a playground, but also a showcase of how Kotlin can unify experiences acr
 ## 🧪 Current Status
 
 This is still a work-in-progress — a personal playground to explore architecture patterns, Kotlin Multiplatform and UI ideas. It’s not production-ready, but it’s growing feature by feature.
+
+---
+
+## 🧠 A playground for Android, KMP, and AI-enhanced development
+
+Besides being a way to dive deeper into Android and Kotlin Multiplatform, Reply Radar is also a personal sandbox to explore how **AI-assisted workflows** can support development — from ideation and architecture to automation and iteration. The goal is to build better, faster and with curiosity at the center of the process.
 
 ---
 
