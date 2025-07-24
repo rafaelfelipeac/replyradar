@@ -2,6 +2,7 @@ package com.rafaelfelipeac.replyradar.features.reply.data.repository
 
 import com.rafaelfelipeac.replyradar.core.datetime.getCurrentTimeMillis
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_ID
 import com.rafaelfelipeac.replyradar.features.reply.data.database.dao.ReplyDao
 import com.rafaelfelipeac.replyradar.features.reply.data.mapper.toReply
 import com.rafaelfelipeac.replyradar.features.reply.data.mapper.toReplyEntity
@@ -18,7 +19,7 @@ class ReplyRepositoryImpl(
         val now = getCurrentTimeMillis()
         val replyEntity = reply.toReplyEntity()
 
-        val entityToSave = if (reply.id == INITIAL_DATE) {
+        val entityToSave = if (reply.id == INITIAL_ID) {
             replyEntity.copy(createdAt = now, updatedAt = now)
         } else {
             replyEntity.copy(updatedAt = now)

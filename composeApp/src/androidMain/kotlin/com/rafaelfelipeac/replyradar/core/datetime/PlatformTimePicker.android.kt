@@ -37,7 +37,7 @@ actual fun PlatformTimePicker(
 
     if (showDialog) {
         val pickedTime = LocalTime(timePickerState.hour, timePickerState.minute)
-        val isValid = isTimeValid(
+        val isValid = isDateTimeValid(
             dateTime = getCurrentDateTime(),
             date = selectedDate,
             time = pickedTime

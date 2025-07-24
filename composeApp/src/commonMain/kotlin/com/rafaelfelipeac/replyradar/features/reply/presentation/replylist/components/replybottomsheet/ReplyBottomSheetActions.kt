@@ -75,7 +75,7 @@ fun ReplyBottomSheetActions(
                 LocalReplyRadarStrings.current.replyListBottomSheetSave
             },
             onClick = {
-                val reminderIsValid = selectedTime != null && isDateTimeValid(
+                val reminderIsValid = isDateTimeValid(
                     selectedDate,
                     selectedTime,
                     getCurrentDateTime()

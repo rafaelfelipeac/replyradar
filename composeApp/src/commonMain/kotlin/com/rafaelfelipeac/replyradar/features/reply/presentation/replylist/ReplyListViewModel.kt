@@ -97,7 +97,8 @@ class ReplyListViewModel(
     private val _effect = MutableSharedFlow<ReplyListEffect>()
     val effect = _effect
 
-    private var pendingReplyId: Long? = INVALID_ID
+    private var pendingReplyId: Long? = null
+    private var isPendingReplyHandled = false
 
     fun onIntent(intent: ReplyListScreenIntent) {
         when (intent) {
@@ -109,9 +110,7 @@ class ReplyListViewModel(
 
     private fun handleReplyListIntent(intent: ReplyListIntent) {
         when (intent) {
-            is OnPendingReplyId -> {
-                pendingReplyId = intent.pendingReplyId
-            }
+            is OnPendingReplyId -> handlePendingReplyIdOnce(intent.pendingReplyId)
 
             OnAddReplyClick -> {
                 updateState {
@@ -151,6 +150,18 @@ class ReplyListViewModel(
             OnGoToSettings -> goToSettings()
             OnRequestNotificationPermission -> requestNotificationPermission()
             is OnScheduleReminder -> onScheduleReminder(intent)
+        }
+    }
+
+    private fun handlePendingReplyIdOnce(pendingReplyIdParam: Long?) {
+        if (!isPendingReplyHandled && pendingReplyIdParam != null) {
+            isPendingReplyHandled = true
+            pendingReplyId = pendingReplyIdParam
+
+            checkPendingReplyId(
+                replies = _state.value.replies,
+                onTabSelection = { onTabSelected(ON_THE_RADAR_INDEX) }
+            )
         }
     }
 

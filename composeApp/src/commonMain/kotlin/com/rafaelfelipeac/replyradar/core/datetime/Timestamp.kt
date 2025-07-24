@@ -20,6 +20,20 @@ fun formatTimestamp(timestampMillis: Long): String {
         "${localDateTime.hour}:${localDateTime.minute.toTwoDigitString()}"
 }
 
+/**
+ * Calculates a reminder timestamp based on the current date-time and optional selections.
+ *
+ * Logic:
+ * - If selectedDate is provided, use it as the final date
+ * - If only selectedTime is provided, use today if the time is in the future, otherwise tomorrow
+ * - If neither is provided, return INITIAL_DATE constant
+ * - Final time defaults to REMINDER_DEFAULT_HOUR:REMINDER_DEFAULT_MINUTE if not provided
+ *
+ * @param dateTime Current date-time for comparison
+ * @param selectedDate Optional specific date for the reminder
+ * @param selectedTime Optional specific time for the reminder
+ * @return Timestamp in milliseconds for the calculated reminder date-time
+ */
 fun getReminderTimestamp(
     dateTime: LocalDateTime,
     selectedDate: LocalDate?,

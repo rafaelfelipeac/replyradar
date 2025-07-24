@@ -31,21 +31,26 @@ fun Long.dateTime(timeZone: TimeZone = TimeZone.currentSystemDefault()): LocalDa
         .toLocalDateTime(timeZone)
 }
 
-fun isDateTimeValid(date: LocalDate?, time: LocalTime, dateTime: LocalDateTime): Boolean {
+fun isDateTimeValid(date: LocalDate?, time: LocalTime?, dateTime: LocalDateTime): Boolean {
     return when {
-        date == null -> {
+        date == null && time == null -> true
+
+        date != null && time == null -> {
+            date >= dateTime.date
+        }
+
+        date == null && time != null -> {
             val todayTime = LocalDateTime(dateTime.date, time)
 
             todayTime > dateTime
         }
 
-        date == dateTime.date -> {
+        date != null && time != null -> {
             val selectedDateTime = LocalDateTime(date, time)
 
             selectedDateTime > dateTime
         }
 
-        date > dateTime.date -> true
         else -> false
     }
 }
@@ -74,21 +79,4 @@ fun getDefaultTime(
         dateTime.hour + if (dateTime.minute > MINUTE_EMPTY) HOUR_OFFSET else HOUR_OFFSET_DEFAULT
 
     return LocalTime(hour = nextHour % LOCAL_TIME_HOUR_DEFAULT, minute = LOCAL_TIME_MINUTE_DEFAULT)
-}
-
-fun isTimeValid(dateTime: LocalDateTime, date: LocalDate?, time: LocalTime): Boolean {
-    return when {
-        date == null -> {
-            val todayTime = LocalDateTime(dateTime.date, time)
-            todayTime > dateTime
-        }
-
-        date == dateTime.date -> {
-            val selectedDateTime = LocalDateTime(date, time)
-            selectedDateTime > dateTime
-        }
-
-        date > dateTime.date -> true
-        else -> false
-    }
 }

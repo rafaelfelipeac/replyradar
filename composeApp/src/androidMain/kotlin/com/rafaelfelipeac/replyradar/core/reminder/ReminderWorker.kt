@@ -19,6 +19,11 @@ class ReminderWorker(
             applicationContext.getString(notification_reminder_reply_id),
             INVALID_ID
         )
+
+        if (replyId == INVALID_ID) {
+            return Result.failure()
+        }
+
         val notificationTitle =
             inputData.getString(applicationContext.getString(notification_reminder_title))
                 ?: return Result.failure()
