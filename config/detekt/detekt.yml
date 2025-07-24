@@ -14,7 +14,7 @@ style:
       - 'Preview'
   ReturnCount:
     active: true
-    max: 3
+    max: 5
 
 naming:
   FunctionNaming:
