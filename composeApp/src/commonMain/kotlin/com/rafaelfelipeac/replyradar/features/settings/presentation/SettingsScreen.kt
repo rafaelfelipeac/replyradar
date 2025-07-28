@@ -31,25 +31,25 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rafaelfelipeac.replyradar.core.AppConstants.EMAIL
-import com.rafaelfelipeac.replyradar.core.AppConstants.PACKAGE_NAME
-import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage
-import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.ENGLISH
-import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.PORTUGUESE
-import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSizeLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingXSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.radioButtonSize
 import com.rafaelfelipeac.replyradar.core.common.ui.settingsAppVersionOffset
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.LIGHT
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.SYSTEM
-import com.rafaelfelipeac.replyradar.core.util.getAppVersion
-import com.rafaelfelipeac.replyradar.core.util.openEmailApp
-import com.rafaelfelipeac.replyradar.core.util.openPlayStoreApp
+import com.rafaelfelipeac.replyradar.core.external.openEmailApp
+import com.rafaelfelipeac.replyradar.core.external.openPlayStoreApp
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage.ENGLISH
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage.PORTUGUESE
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.theme.model.AppTheme
+import com.rafaelfelipeac.replyradar.core.theme.model.AppTheme.DARK
+import com.rafaelfelipeac.replyradar.core.theme.model.AppTheme.LIGHT
+import com.rafaelfelipeac.replyradar.core.theme.model.AppTheme.SYSTEM
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.EMAIL
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.PACKAGE_NAME
+import com.rafaelfelipeac.replyradar.core.version.getAppVersion
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectFeedback
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectLanguage
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectRate
@@ -100,11 +100,26 @@ fun SettingsScreen(
                     .padding(bottom = settingsAppVersionOffset)
             ) {
                 ActivityLog(onActivityLogClick = onActivityLogClick)
-                HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
+
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(vertical = paddingMedium)
+                )
+
                 Theme(state = state, onIntent = { viewModel.onIntent(it) })
-                HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
+
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(vertical = paddingMedium)
+                )
+
                 Language(state = state, onIntent = { viewModel.onIntent(it) })
-                HorizontalDivider(modifier = Modifier.padding(vertical = paddingMedium))
+
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(vertical = paddingMedium)
+                )
+
                 App(onIntent = { viewModel.onIntent(it) })
             }
 
@@ -138,7 +153,10 @@ fun App(onIntent: (SettingsIntent) -> Unit) {
             }
         )
 
-        Spacer(modifier = Modifier.height(paddingSmall))
+        Spacer(
+            modifier = Modifier
+                .height(paddingSmall)
+        )
 
         SettingsItem(
             text = strings.settingsRateTitle,
@@ -170,7 +188,10 @@ private fun Theme(state: SettingsState, onIntent: (SettingsIntent) -> Unit) {
         color = colorScheme.primary
     )
 
-    Spacer(modifier = Modifier.height(paddingXSmall))
+    Spacer(
+        modifier = Modifier
+            .height(paddingXSmall)
+    )
 
     ThemeOptions(
         state = state,
@@ -186,7 +207,10 @@ private fun Language(state: SettingsState, onIntent: (SettingsIntent) -> Unit) {
         color = colorScheme.primary
     )
 
-    Spacer(modifier = Modifier.height(paddingXSmall))
+    Spacer(
+        modifier = Modifier
+            .height(paddingXSmall)
+    )
 
     LanguageOptions(
         state = state,
@@ -201,11 +225,13 @@ private fun ThemeOptions(state: SettingsState, onThemeSelected: (AppTheme) -> Un
         selectedTheme = state.theme,
         onThemeSelected = { onThemeSelected(LIGHT) }
     )
+
     ThemeOption(
         theme = DARK,
         selectedTheme = state.theme,
         onThemeSelected = { onThemeSelected(DARK) }
     )
+
     ThemeOption(
         theme = SYSTEM,
         selectedTheme = state.theme,
@@ -220,19 +246,23 @@ private fun ThemeOption(
     onThemeSelected: (AppTheme) -> Unit
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .padding(paddingSmall)
-            .clickable { onThemeSelected(theme) }
+            .clickable { onThemeSelected(theme) },
+        verticalAlignment = Alignment.CenterVertically
     ) {
         RadioButton(
-            modifier = Modifier.size(radioButtonSize),
+            modifier = Modifier
+                .size(radioButtonSize),
             selected = theme == selectedTheme,
             onClick = { onThemeSelected(theme) }
         )
 
-        Spacer(modifier = Modifier.width(paddingSmall))
+        Spacer(
+            modifier = Modifier
+                .width(paddingSmall)
+        )
 
         Text(text = getThemeOptionLabel(theme))
     }
@@ -248,7 +278,9 @@ private fun getThemeOptionLabel(theme: AppTheme) = when (theme) {
 @Composable
 private fun LanguageOptions(state: SettingsState, onLanguageSelected: (AppLanguage) -> Unit) {
     LanguageOption(ENGLISH, state.language, onLanguageSelected)
+
     LanguageOption(PORTUGUESE, state.language, onLanguageSelected)
+
     LanguageOption(AppLanguage.SYSTEM, state.language, onLanguageSelected)
 }
 
@@ -259,19 +291,23 @@ private fun LanguageOption(
     onLanguageSelected: (AppLanguage) -> Unit
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .padding(paddingSmall)
-            .clickable { onLanguageSelected(language) }
+            .clickable { onLanguageSelected(language) },
+        verticalAlignment = Alignment.CenterVertically
     ) {
         RadioButton(
-            modifier = Modifier.size(radioButtonSize),
+            modifier = Modifier
+                .size(radioButtonSize),
             selected = language == selectedLanguage,
             onClick = { onLanguageSelected(language) }
         )
 
-        Spacer(modifier = Modifier.width(paddingSmall))
+        Spacer(
+            modifier = Modifier
+                .width(paddingSmall)
+        )
 
         Text(text = getLanguageLabel(language))
     }
@@ -324,7 +360,10 @@ fun AppVersionFooter(modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .background(colorScheme.background)
     ) {
-        HorizontalDivider(modifier = Modifier.padding(bottom = paddingMedium))
+        HorizontalDivider(
+            modifier = Modifier
+                .padding(bottom = paddingMedium)
+        )
 
         Text(
             text = "${LocalReplyRadarStrings.current.settingsAppVersion} ${getAppVersion()}",

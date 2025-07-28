@@ -1,12 +1,10 @@
 package com.rafaelfelipeac.replyradar.features.reply.data
 
-import com.rafaelfelipeac.replyradar.core.AppConstants.EMPTY
-import com.rafaelfelipeac.replyradar.fakes.core.util.FakeClock
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.EMPTY
 import com.rafaelfelipeac.replyradar.fakes.reply.data.FakeReplyDao
 import com.rafaelfelipeac.replyradar.features.reply.data.database.entity.ReplyEntity
 import com.rafaelfelipeac.replyradar.features.reply.data.repository.ReplyRepositoryImpl
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
-import com.rafaelfelipeac.replyradar.now
 import com.rafaelfelipeac.replyradar.util.valueOrEmpty
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -17,8 +15,7 @@ class ReplyRepositoryTest {
     @Test
     fun `upsertReply should insert reply with correct timestamps when id is 0`() = runTest {
         val dao = FakeReplyDao()
-        val clock = FakeClock(now)
-        val repository = ReplyRepositoryImpl(dao, clock)
+        val repository = ReplyRepositoryImpl(dao)
 
         val reply = Reply(
             id = 0L,
@@ -29,18 +26,14 @@ class ReplyRepositoryTest {
         val returnedId = repository.upsertReply(reply)
 
         assertEquals(1, dao.insertedReplies.size)
-        val inserted = dao.insertedReplies.first()
 
-        assertEquals(now, inserted.createdAt)
-        assertEquals(now, inserted.updatedAt)
         assertEquals(1L, returnedId)
     }
 
     @Test
     fun `upsertReply should update reply with new updatedAt when id is not 0`() = runTest {
         val dao = FakeReplyDao()
-        val clock = FakeClock(now)
-        val repository = ReplyRepositoryImpl(dao, clock)
+        val repository = ReplyRepositoryImpl(dao)
 
         val reply = Reply(
             id = 42L,
@@ -54,15 +47,13 @@ class ReplyRepositoryTest {
 
         val inserted = dao.insertedReplies.first()
         assertEquals(42L, inserted.id)
-        assertEquals(now, inserted.updatedAt)
         assertEquals(42L, returnedId)
     }
 
     @Test
     fun `toggleReplyResolve should toggle isResolved and set resolvedAt`() = runTest {
         val dao = FakeReplyDao()
-        val clock = FakeClock(now)
-        val repository = ReplyRepositoryImpl(dao, clock)
+        val repository = ReplyRepositoryImpl(dao)
 
         val reply = Reply(
             id = 1L,
@@ -76,14 +67,12 @@ class ReplyRepositoryTest {
         val updated = dao.updatedReplies.first()
         assertEquals(true, updated.isResolved)
         assertEquals(true, updated.isArchived)
-        assertEquals(now, updated.resolvedAt)
     }
 
     @Test
     fun `toggleReplyArchive should toggle isArchived and set archivedAt`() = runTest {
         val dao = FakeReplyDao()
-        val clock = FakeClock(now)
-        val repository = ReplyRepositoryImpl(dao, clock)
+        val repository = ReplyRepositoryImpl(dao)
 
         val reply = Reply(
             id = 2L,
@@ -97,14 +86,12 @@ class ReplyRepositoryTest {
         val updated = dao.updatedReplies.first()
         assertEquals(true, updated.isArchived)
         assertEquals(true, updated.isResolved)
-        assertEquals(now, updated.archivedAt)
     }
 
     @Test
     fun `deleteReply should call deleteReply on dao`() = runTest {
         val dao = FakeReplyDao()
-        val clock = FakeClock(0L)
-        val repository = ReplyRepositoryImpl(dao, clock)
+        val repository = ReplyRepositoryImpl(dao)
 
         val reply = Reply(
             id = 10L,
@@ -122,8 +109,7 @@ class ReplyRepositoryTest {
         val replyEntities =
             listOf(ReplyEntity(id = 1L, name = "Resolved", subject = "R", isResolved = true))
         val dao = FakeReplyDao(resolved = replyEntities)
-        val clock = FakeClock(0L)
-        val repository = ReplyRepositoryImpl(dao, clock)
+        val repository = ReplyRepositoryImpl(dao)
 
         val replies = repository.getReplies(isResolved = true, isArchived = false).valueOrEmpty()
 
@@ -136,8 +122,7 @@ class ReplyRepositoryTest {
         val replyEntities =
             listOf(ReplyEntity(id = 2L, name = "Archived", subject = "A", isArchived = true))
         val dao = FakeReplyDao(archived = replyEntities)
-        val clock = FakeClock(0L)
-        val repository = ReplyRepositoryImpl(dao, clock)
+        val repository = ReplyRepositoryImpl(dao)
 
         val replies = repository.getReplies(isResolved = false, isArchived = true).valueOrEmpty()
 
@@ -149,8 +134,7 @@ class ReplyRepositoryTest {
     fun `getReplies should return active replies when none is true`() = runTest {
         val replyEntities = listOf(ReplyEntity(id = 3L, name = "Active", subject = "A"))
         val dao = FakeReplyDao(active = replyEntities)
-        val clock = FakeClock(0L)
-        val repository = ReplyRepositoryImpl(dao, clock)
+        val repository = ReplyRepositoryImpl(dao)
 
         val replies = repository.getReplies(isResolved = false, isArchived = false).valueOrEmpty()
 

@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="no_email_app_found">No email app found.</string>
+
+    <string name="notification_channel_id">reminder_channel</string>
+    <string name="notification_channel_name">Reminder Notifications</string>
+    <string name="notification_channel_description">Notifications for scheduled reminders</string>
+    <string name="notification_content_reminder_title">Reminder: %1$s</string>
+
+    <string name="notification_reminder_reply_id">notification-reminder-reply-id</string>
+    <string name="notification_reminder_tag">notification-reminder-%1$d</string>
+    <string name="notification_reminder_title">notification-reminder-title</string>
+    <string name="notification_reminder_content">notification-reminder-content</string>
 </resources>

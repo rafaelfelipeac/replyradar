@@ -34,16 +34,17 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyProgress
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRadarError
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRadarPlaceholder
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.listDividerThickness
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.horizontalDividerColor
+import com.rafaelfelipeac.replyradar.core.datetime.formatTimestamp
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.theme.horizontalDividerColor
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.EMPTY
 import com.rafaelfelipeac.replyradar.core.util.format
-import com.rafaelfelipeac.replyradar.core.util.formatTimestamp
 import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogViewModel.Companion.ERROR_GET_ACTIVITY_LOG
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserAction
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType
@@ -58,9 +59,12 @@ import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActio
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Delete
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Edit
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Open
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.OpenedNotification
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Reopen
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Resolve
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Scheduled
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Unarchive
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Unknown
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import replyradar.composeapp.generated.resources.Res.drawable
@@ -71,10 +75,12 @@ import replyradar.composeapp.generated.resources.ic_delete
 import replyradar.composeapp.generated.resources.ic_edit
 import replyradar.composeapp.generated.resources.ic_email
 import replyradar.composeapp.generated.resources.ic_language
+import replyradar.composeapp.generated.resources.ic_notification
 import replyradar.composeapp.generated.resources.ic_open
 import replyradar.composeapp.generated.resources.ic_rate
 import replyradar.composeapp.generated.resources.ic_reopen
 import replyradar.composeapp.generated.resources.ic_theme
+import replyradar.composeapp.generated.resources.ic_time
 import replyradar.composeapp.generated.resources.ic_unarchive
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -90,8 +96,8 @@ fun ActivityLogScreen(viewModel: ActivityLogViewModel = koinViewModel(), onBackC
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription =
-                            LocalReplyRadarStrings.current.activityLogBackButton
+                            contentDescription = LocalReplyRadarStrings.current
+                                .activityLogBackButton
                         )
                     }
                 }
@@ -124,7 +130,8 @@ fun ActivityLogScreen(viewModel: ActivityLogViewModel = koinViewModel(), onBackC
 @Composable
 private fun Loading() {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         ReplyProgress()
@@ -134,7 +141,8 @@ private fun Loading() {
 @Composable
 private fun Error(state: ActivityLogState) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         ReplyRadarError(
@@ -146,7 +154,8 @@ private fun Error(state: ActivityLogState) {
 @Composable
 private fun Placeholder() {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         ReplyRadarPlaceholder(
@@ -162,7 +171,10 @@ private fun ActivityLogList(state: ActivityLogState) {
             state.activityLogItems,
             key = { _, item -> item.id }
         ) { index, userAction ->
-            Column(modifier = Modifier.fillMaxWidth()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
                 ActivityLogListItem(userAction = userAction)
 
                 if (index < state.activityLogItems.lastIndex) {
@@ -197,35 +209,37 @@ fun ActivityLogListItem(userAction: UserAction) {
             horizontalArrangement = spacedBy(paddingMedium)
         ) {
             with(userAction) {
-                Column {
-                    Icon(
-                        modifier = Modifier
-                            .size(iconSize),
-                        painter = painterResource(
-                            getIconByActionType(
-                                actionType = actionType,
-                                targetType = targetType
-                            )
-                        ),
-                        tint = colorScheme.primary,
-                        contentDescription =
-                        LocalReplyRadarStrings.current.activityLogItemContentDescription
-                    )
-                }
+                if (actionType != Unknown) {
+                    Column {
+                        Icon(
+                            modifier = Modifier
+                                .size(iconSize),
+                            painter = painterResource(
+                                getIconByActionType(
+                                    actionType = actionType,
+                                    targetType = targetType
+                                )
+                            ),
+                            tint = colorScheme.primary,
+                            contentDescription = LocalReplyRadarStrings.current
+                                .activityLogItemContentDescription
+                        )
+                    }
 
-                Column {
-                    Text(
-                        text = formatUserActionLabel(
-                            actionType = actionType,
-                            targetType = targetType,
-                            targetName = targetName
-                        ),
-                        style = typography.bodyMedium
-                    )
-                    Text(
-                        text = formatTimestamp(createdAt),
-                        style = typography.bodySmall
-                    )
+                    Column {
+                        Text(
+                            text = formatUserActionLabel(
+                                actionType = actionType,
+                                targetType = targetType,
+                                targetName = targetName
+                            ),
+                            style = typography.bodyMedium
+                        )
+                        Text(
+                            text = formatTimestamp(createdAt),
+                            style = typography.bodySmall
+                        )
+                    }
                 }
             }
         }
@@ -250,6 +264,13 @@ private fun getIconByActionType(actionType: UserActionType, targetType: UserActi
             Resolve -> drawable.ic_check
             Unarchive -> drawable.ic_unarchive
             Open -> drawable.ic_open
+            Scheduled -> drawable.ic_time
+            OpenedNotification -> drawable.ic_notification
+            Unknown -> {
+                // no-op, this is just a icon placeholder for unknown actions
+
+                drawable.ic_add
+            }
         }
 
         Theme -> drawable.ic_theme
@@ -287,6 +308,9 @@ private fun getActionVerb(actionType: UserActionType) = when (actionType) {
     Resolve -> LocalReplyRadarStrings.current.activityLogUserActionResolveVerb
     Unarchive -> LocalReplyRadarStrings.current.activityLogUserActionUnarchiveVerb
     Open -> LocalReplyRadarStrings.current.activityLogUserActionOpenVerb
+    Scheduled -> LocalReplyRadarStrings.current.activityLogUserActionScheduledVerb
+    OpenedNotification -> LocalReplyRadarStrings.current.activityLogUserActionOpenedNotificationVerb
+    Unknown -> EMPTY
 }
 
 @Composable

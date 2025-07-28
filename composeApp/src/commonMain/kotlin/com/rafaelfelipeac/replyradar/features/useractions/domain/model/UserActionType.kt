@@ -8,7 +8,10 @@ sealed class UserActionType(val value: String) {
     data object Archive : UserActionType(ARCHIVE)
     data object Unarchive : UserActionType(UNARCHIVE)
     data object Delete : UserActionType(DELETE)
+    data object Scheduled : UserActionType(SCHEDULED)
+    data object OpenedNotification : UserActionType(OPENED_NOTIFICATION)
     data object Open : UserActionType(OPEN)
+    data object Unknown : UserActionType(UNKNOWN)
 
     companion object {
         fun fromValue(value: String): UserActionType {
@@ -18,9 +21,12 @@ sealed class UserActionType(val value: String) {
                 RESOLVE -> Resolve
                 REOPEN -> Reopen
                 ARCHIVE -> Archive
+                UNARCHIVE -> Unarchive
                 DELETE -> Delete
                 OPEN -> Open
-                else -> Unarchive
+                SCHEDULED -> Scheduled
+                OPENED_NOTIFICATION -> OpenedNotification
+                else -> Unknown
             }
         }
     }
@@ -34,3 +40,6 @@ private const val ARCHIVE = "ARCHIVE"
 private const val UNARCHIVE = "UNARCHIVE"
 private const val DELETE = "DELETE"
 private const val OPEN = "OPEN"
+private const val SCHEDULED = "SCHEDULED"
+private const val OPENED_NOTIFICATION = "OPENED_NOTIFICATION"
+private const val UNKNOWN = "UNKNOWN"

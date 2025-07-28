@@ -12,7 +12,8 @@ fun Reply.toReplyEntity() = ReplyEntity(
     createdAt = createdAt,
     updatedAt = updatedAt,
     resolvedAt = resolvedAt,
-    archivedAt = archivedAt
+    archivedAt = archivedAt,
+    reminderAt = reminderAt
 )
 
 fun ReplyEntity.toReply() = Reply(
@@ -24,5 +25,6 @@ fun ReplyEntity.toReply() = Reply(
     createdAt = createdAt,
     updatedAt = updatedAt,
     resolvedAt = resolvedAt,
-    archivedAt = archivedAt
+    archivedAt = archivedAt,
+    reminderAt = reminderAt
 )

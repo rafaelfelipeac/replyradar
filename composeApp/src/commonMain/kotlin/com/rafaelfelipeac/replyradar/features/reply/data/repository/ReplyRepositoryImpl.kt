@@ -1,7 +1,8 @@
 package com.rafaelfelipeac.replyradar.features.reply.data.repository
 
-import com.rafaelfelipeac.replyradar.core.AppConstants.INITIAL_DATE_LONG
-import com.rafaelfelipeac.replyradar.core.util.Clock
+import com.rafaelfelipeac.replyradar.core.datetime.getCurrentTimeMillis
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_ID
 import com.rafaelfelipeac.replyradar.features.reply.data.database.dao.ReplyDao
 import com.rafaelfelipeac.replyradar.features.reply.data.mapper.toReply
 import com.rafaelfelipeac.replyradar.features.reply.data.mapper.toReplyEntity
@@ -11,15 +12,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class ReplyRepositoryImpl(
-    private val replyDao: ReplyDao,
-    private val clock: Clock
+    private val replyDao: ReplyDao
 ) : ReplyRepository {
 
     override suspend fun upsertReply(reply: Reply): Long {
-        val now = clock.now()
+        val now = getCurrentTimeMillis()
         val replyEntity = reply.toReplyEntity()
 
-        val entityToSave = if (reply.id == INITIAL_DATE_LONG) {
+        val entityToSave = if (reply.id == INITIAL_ID) {
             replyEntity.copy(createdAt = now, updatedAt = now)
         } else {
             replyEntity.copy(updatedAt = now)
@@ -31,7 +31,7 @@ class ReplyRepositoryImpl(
     override suspend fun toggleReplyResolve(reply: Reply) {
         replyDao.update(
             reply.toReplyEntity().copy(
-                resolvedAt = if (!reply.isResolved) clock.now() else INITIAL_DATE_LONG,
+                resolvedAt = if (!reply.isResolved) getCurrentTimeMillis() else INITIAL_DATE,
                 isResolved = !reply.isResolved
             )
         )
@@ -40,7 +40,7 @@ class ReplyRepositoryImpl(
     override suspend fun toggleReplyArchive(reply: Reply) {
         replyDao.update(
             reply.toReplyEntity().copy(
-                archivedAt = if (!reply.isArchived) clock.now() else INITIAL_DATE_LONG,
+                archivedAt = if (!reply.isArchived) getCurrentTimeMillis() else INITIAL_DATE,
                 isArchived = !reply.isArchived
             )
         )

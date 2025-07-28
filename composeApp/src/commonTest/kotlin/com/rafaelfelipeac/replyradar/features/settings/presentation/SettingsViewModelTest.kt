@@ -1,8 +1,8 @@
 package com.rafaelfelipeac.replyradar.features.settings.presentation
 
 import app.cash.turbine.test
-import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.ENGLISH
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage.ENGLISH
+import com.rafaelfelipeac.replyradar.core.theme.model.AppTheme.DARK
 import com.rafaelfelipeac.replyradar.fakes.settings.data.FakeSettingsRepository
 import com.rafaelfelipeac.replyradar.fakes.useractions.domain.FakeLogUserActionUseCase
 import com.rafaelfelipeac.replyradar.features.settings.domain.usecase.GetLanguageUseCaseImpl

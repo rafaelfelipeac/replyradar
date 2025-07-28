@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import com.rafaelfelipeac.replyradar.core.common.ui.listDividerThickness
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.horizontalDividerColor
+import com.rafaelfelipeac.replyradar.core.theme.horizontalDividerColor
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 
 @Composable
@@ -29,8 +29,11 @@ fun ReplyList(
             .padding(top = paddingMedium),
         horizontalAlignment = CenterHorizontally
     ) {
-        itemsIndexed(replies, key = { _, item -> item.id }) { index, reply ->
-            Column(modifier = Modifier.fillMaxWidth()) {
+        itemsIndexed(items = replies, key = { _, item -> item.id }) { index, reply ->
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
                 ReplyListItem(
                     modifier = Modifier
                         .fillMaxWidth(),

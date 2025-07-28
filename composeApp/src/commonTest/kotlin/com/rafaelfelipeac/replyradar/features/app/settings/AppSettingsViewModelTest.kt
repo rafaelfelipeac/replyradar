@@ -1,7 +1,7 @@
 package com.rafaelfelipeac.replyradar.features.app.settings
 
-import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage.PORTUGUESE
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme.DARK
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage.PORTUGUESE
+import com.rafaelfelipeac.replyradar.core.theme.model.AppTheme.DARK
 import com.rafaelfelipeac.replyradar.fakes.settings.domain.FakeGetLanguageUseCase
 import com.rafaelfelipeac.replyradar.fakes.settings.domain.FakeGetThemeUseCase
 import kotlin.test.AfterTest

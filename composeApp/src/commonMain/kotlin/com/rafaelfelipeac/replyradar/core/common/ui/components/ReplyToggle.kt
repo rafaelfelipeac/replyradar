@@ -23,10 +23,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType.Companion.LongPress
 import androidx.compose.ui.platform.LocalHapticFeedback
-import com.rafaelfelipeac.replyradar.core.common.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.listItemToggleBorderWidth
 import com.rafaelfelipeac.replyradar.core.common.ui.listItemToggleSize
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import replyradar.composeapp.generated.resources.Res.drawable
@@ -72,11 +72,11 @@ fun ReplyToggle(modifier: Modifier = Modifier, isResolved: Boolean, onToggle: ()
         contentAlignment = Alignment.Center
     ) {
         Icon(
+            modifier = Modifier
+                .size(iconSize),
             painter = painterResource(drawable.ic_check),
             contentDescription = LocalReplyRadarStrings.current.replyListPlaceholderResolved,
-            tint = colorScheme.primary.copy(alpha = checkIconAlpha),
-            modifier = Modifier
-                .size(iconSize)
+            tint = colorScheme.primary.copy(alpha = checkIconAlpha)
         )
     }
 

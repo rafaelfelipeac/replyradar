@@ -102,8 +102,8 @@ android {
         applicationId = "com.rafaelfelipeac.replyradar"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 14
-        versionName = "1.4.0"
+        versionCode = 15
+        versionName = "1.5.0"
 
         manifestPlaceholders["appName"] = "@string/app_name"
     }
@@ -216,6 +216,7 @@ tasks.register<JavaExec>("detektFormat") {
 
 dependencies {
     implementation(libs.androidx.ui.android)
+    implementation(libs.androidx.work.runtime.ktx)
     debugImplementation(compose.uiTooling)
     add("kspAndroid", libs.androidx.room.compiler)
 }

@@ -3,6 +3,7 @@ package com.rafaelfelipeac.replyradar
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.rafaelfelipeac.replyradar.app.ReplyRadarApp
+import com.rafaelfelipeac.replyradar.core.notification.NotificationPermissionManager
 import com.rafaelfelipeac.replyradar.di.initKoin
 
 fun main() {
@@ -12,7 +13,18 @@ fun main() {
             onCloseRequest = ::exitApplication,
             title = "Reply Radar"
         ) {
-            ReplyRadarApp()
+            ReplyRadarApp(
+                notificationPermissionManager = object : NotificationPermissionManager {
+                    override suspend fun ensureNotificationPermission(): Boolean {
+                        TODO("Not yet implemented for this platform.")
+                    }
+
+                    override suspend fun goToAppSettings() {
+                        TODO("Not yet implemented for this platform.")
+                    }
+                },
+                pendingReplyId = -1
+            )
         }
     }
 }

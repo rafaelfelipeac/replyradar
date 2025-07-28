@@ -1,7 +1,7 @@
 package com.rafaelfelipeac.replyradar.features.settings.presentation
 
-import com.rafaelfelipeac.replyradar.core.common.language.AppLanguage
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.model.AppTheme
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage
+import com.rafaelfelipeac.replyradar.core.theme.model.AppTheme
 
 data class SettingsState(
     val theme: AppTheme = AppTheme.SYSTEM,

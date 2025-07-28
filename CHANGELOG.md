@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## [v1.5.0] - 2025-07-24
+
+### Added
+- Reminders with custom date and time.
+- Notifications for reminders, with permission handling.
+- Reminder UI components (picker, chips, dialogs).
+- Delete confirmation modal.
+- Timestamps on replies.
+- Snackbar for actions.
+
+### Changed
+- Improved UI and navigation from notifications.
+
+### Fixed
+- Timestamp defaults and date/time validation.
+
+### Refactored
+- Simplified state and intent handling.
+- Code cleanup and test updates.
+
 ## [v1.4.0] - 2025-04-18
 
 ### Added

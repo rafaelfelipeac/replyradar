@@ -24,7 +24,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.paddingXSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.textSizeLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.textSizeMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.textSizeSmall
-import com.rafaelfelipeac.replyradar.core.common.ui.theme.textFieldPlaceholderColor
+import com.rafaelfelipeac.replyradar.core.theme.textFieldPlaceholderColor
 
 @Composable
 fun ReplyTextField(

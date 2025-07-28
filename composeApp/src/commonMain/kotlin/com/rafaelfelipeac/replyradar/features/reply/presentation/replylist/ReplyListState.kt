@@ -10,6 +10,5 @@ data class ReplyListState(
     val isLoading: Boolean = true,
     val errorMessage: String? = null,
     val selectedTabIndex: Int = 0,
-    val replyBottomSheetState: ReplyBottomSheetState? = null,
-    val snackbarState: SnackbarState? = null
+    val replyBottomSheetState: ReplyBottomSheetState? = null
 )

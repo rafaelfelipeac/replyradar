@@ -1,6 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.useractions.data.repository
 
-import com.rafaelfelipeac.replyradar.core.util.Clock
+import com.rafaelfelipeac.replyradar.core.datetime.getCurrentTimeMillis
 import com.rafaelfelipeac.replyradar.features.reply.data.database.dao.ReplyDao
 import com.rafaelfelipeac.replyradar.features.useractions.data.database.dao.UserActionDao
 import com.rafaelfelipeac.replyradar.features.useractions.data.database.entity.UserActionEntity
@@ -17,8 +17,7 @@ import kotlinx.coroutines.withContext
 
 class UserActionRepositoryImpl(
     private val userActionDao: UserActionDao,
-    private val replyDao: ReplyDao,
-    private val clock: Clock
+    private val replyDao: ReplyDao
 ) : UserActionRepository {
 
     override suspend fun logUserAction(
@@ -31,7 +30,7 @@ class UserActionRepositoryImpl(
                 actionType = actionType.value,
                 targetType = targetType.value,
                 targetId = targetId,
-                createdAt = clock.now()
+                createdAt = getCurrentTimeMillis()
             )
         )
     }

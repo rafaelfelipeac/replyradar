@@ -3,27 +3,47 @@ package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.comp
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
+import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplySnackbar
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnAddReply
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDeleteReply
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnDismissBottomSheet
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnEditReply
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleArchive
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyBottomSheetIntent.OnToggleResolve
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReplyBottomSheet(
-    onIntent: (ReplyListScreenIntent) -> Unit,
+    sheetState: SheetState,
+    onSave: (Reply) -> Unit,
+    onResolve: (Reply) -> Unit,
+    onArchive: (Reply) -> Unit,
+    onDelete: (Reply) -> Unit,
+    onDismiss: () -> Unit,
     replyBottomSheetState: ReplyBottomSheetState
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    var invalidReminderValue by remember { mutableStateOf(false) }
+
+    val localStrings = LocalReplyRadarStrings.current
+
+    LaunchedEffect(invalidReminderValue) {
+        if (invalidReminderValue) {
+            snackbarHostState.showSnackbar(localStrings.replyListReminderInvalidDateTime)
+            invalidReminderValue = false
+        }
+    }
+
     ModalBottomSheet(
-        onDismissRequest = { onIntent(OnDismissBottomSheet) },
+        sheetState = sheetState,
+        onDismissRequest = onDismiss,
         containerColor = colorScheme.background,
         dragHandle = null,
         shape = ReplyRoundedCorner(onlyTopCorners = true)
@@ -32,8 +52,11 @@ fun ReplyBottomSheet(
             CREATE -> {
                 BottomSheetContent(
                     state = ReplyBottomSheetState(CREATE),
-                    onComplete = { onIntent(OnAddReply(it)) },
-                    onIntent = onIntent
+                    onSave = onSave,
+                    onResolve = onResolve,
+                    onArchive = onArchive,
+                    onDelete = onDelete,
+                    onInvalidReminderValue = { invalidReminderValue = true }
                 )
             }
 
@@ -44,26 +67,35 @@ fun ReplyBottomSheet(
                             EDIT,
                             reply = replyBottomSheetState.reply
                         ),
-                        onComplete = { onIntent(OnEditReply(it)) },
-                        onIntent = onIntent
+                        onSave = onSave,
+                        onResolve = onResolve,
+                        onArchive = onArchive,
+                        onDelete = onDelete,
+                        onInvalidReminderValue = { invalidReminderValue = true }
                     )
                 }
             }
         }
+
+        ReplySnackbar(snackbarHostState)
     }
 }
 
 @Composable
 private fun BottomSheetContent(
     state: ReplyBottomSheetState,
-    onComplete: (Reply) -> Unit,
-    onIntent: (ReplyListScreenIntent) -> Unit
+    onSave: (Reply) -> Unit,
+    onResolve: (Reply) -> Unit,
+    onArchive: (Reply) -> Unit,
+    onDelete: (Reply) -> Unit,
+    onInvalidReminderValue: () -> Unit
 ) {
     ReplyBottomSheetContent(
         replyBottomSheetState = state,
-        onComplete = onComplete,
-        onResolve = { onIntent(OnToggleResolve(it)) },
-        onArchive = { onIntent(OnToggleArchive(it)) },
-        onDelete = { onIntent(OnDeleteReply(it)) }
+        onResolve = onResolve,
+        onArchive = onArchive,
+        onDelete = onDelete,
+        onSave = onSave,
+        onInvalidReminderValue = onInvalidReminderValue
     )
 }

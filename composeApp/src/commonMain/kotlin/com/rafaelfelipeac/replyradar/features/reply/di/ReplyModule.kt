@@ -31,7 +31,8 @@ val replyModule = module {
             deleteReplyUseCase = get(),
             getRepliesUseCase = get(),
             logUserActionUseCase = get(),
-            dispatcher = get()
+            dispatcher = get(),
+            reminderScheduler = get()
         )
     }
 

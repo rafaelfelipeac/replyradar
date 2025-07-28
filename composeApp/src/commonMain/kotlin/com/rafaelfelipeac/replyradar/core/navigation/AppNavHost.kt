@@ -22,7 +22,7 @@ import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsView
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun AppNavHost(navController: NavHostController) {
+fun AppNavHost(navController: NavHostController, pendingReplyId: Long?) {
     NavHost(
         navController = navController,
         startDestination = ReplyGraph
@@ -38,6 +38,7 @@ fun AppNavHost(navController: NavHostController) {
 
                 ReplyListScreenRoot(
                     viewModel = viewModel,
+                    pendingReplyId = pendingReplyId,
                     onSettingsClick = { navController.navigate(Settings) },
                     onActivityLogClick = { navController.navigate(ActivityLog) }
                 )

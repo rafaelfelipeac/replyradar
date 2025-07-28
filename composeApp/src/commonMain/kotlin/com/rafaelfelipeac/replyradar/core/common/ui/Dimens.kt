@@ -27,6 +27,8 @@ val textSizeLarge = 20.sp
 val iconSize = 22.dp
 val iconSizeLarge = 28.dp
 
+val iconButtonSize = 36.dp
+
 val buttonHeight = 34.dp
 val buttonCornerRadius = 8.dp
 val buttonBorderWidth = 1.dp
