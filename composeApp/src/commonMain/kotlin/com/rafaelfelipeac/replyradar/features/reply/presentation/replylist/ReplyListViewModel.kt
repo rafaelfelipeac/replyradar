@@ -7,7 +7,6 @@ import com.rafaelfelipeac.replyradar.core.reminder.model.NotificationReminderPar
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.ARCHIVED_INDEX
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_ID
-import com.rafaelfelipeac.replyradar.core.util.AppConstants.INVALID_ID
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.ON_THE_RADAR_INDEX
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.RESOLVED_INDEX
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
