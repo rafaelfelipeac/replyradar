@@ -69,6 +69,9 @@ object StringsPt : Strings {
     override val settingsLanguage = "Idioma"
     override val settingsLanguageEnglish = "Inglês"
     override val settingsLanguagePortuguese = "Português"
+    override val settingsLanguageGerman = "Alemão"
+    override val settingsLanguageFrench = "Francês"
+    override val settingsLanguageSpanish = "Espanhol"
     override val settingsLanguageSystem = "Usar padrão do sistema"
     override val settingsFeedbackTitle = "Feedback"
     override val settingsFeedbackDescription =
