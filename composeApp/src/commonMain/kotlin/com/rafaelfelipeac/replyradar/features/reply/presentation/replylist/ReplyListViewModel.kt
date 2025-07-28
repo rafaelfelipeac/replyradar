@@ -320,7 +320,7 @@ class ReplyListViewModel(
 
     private fun checkPendingReplyId(replies: List<Reply>, onTabSelection: () -> Unit) =
         viewModelScope.launch {
-            if (pendingReplyId != INVALID_ID) {
+            pendingReplyId?.let {
                 val reply = replies.find { it.id == pendingReplyId }
 
                 if (reply != null) {
