@@ -2,9 +2,9 @@ package com.rafaelfelipeac.replyradar.core.strings
 
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage.ENGLISH
-import com.rafaelfelipeac.replyradar.core.language.AppLanguage.PORTUGUESE
-import com.rafaelfelipeac.replyradar.core.language.AppLanguage.GERMAN
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage.FRENCH
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage.GERMAN
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage.PORTUGUESE
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage.SPANISH
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage.SYSTEM
 
