@@ -61,6 +61,9 @@ interface Strings {
     val settingsLanguage: String
     val settingsLanguageEnglish: String
     val settingsLanguagePortuguese: String
+    val settingsLanguageGerman: String
+    val settingsLanguageFrench: String
+    val settingsLanguageSpanish: String
     val settingsLanguageSystem: String
     val settingsFeedbackTitle: String
     val settingsFeedbackDescription: String

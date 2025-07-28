@@ -3,6 +3,9 @@ package com.rafaelfelipeac.replyradar.core.language
 enum class AppLanguage {
     ENGLISH,
     PORTUGUESE,
+    GERMAN,
+    FRENCH,
+    SPANISH,
     SYSTEM;
 
     companion object {
