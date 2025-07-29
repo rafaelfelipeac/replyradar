@@ -23,12 +23,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType.Companion.LongPress
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
 import com.rafaelfelipeac.replyradar.core.common.ui.listItemToggleBorderWidth
 import com.rafaelfelipeac.replyradar.core.common.ui.listItemToggleSize
 import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import replyradar.composeapp.generated.resources.Res.drawable
@@ -97,14 +95,3 @@ private const val TOGGLE_ANIMATION_DELAY_MS = 400
 private const val CHECK_ICON_ALPHA_LABEL = "checkIconAlpha"
 private const val TOGGLE_BORDER_ALPHA_LABEL = "toggleBorderAlpha"
 private const val TOGGLE_TRANSITION_LABEL = "toggleTransition"
-
-@Preview(showBackground = true)
-@Composable
-fun ReplyTogglePreview() {
-    ReplyRadarTheme {
-        ReplyToggle(
-            isResolved = false,
-            onToggle = {}
-        )
-    }
-}

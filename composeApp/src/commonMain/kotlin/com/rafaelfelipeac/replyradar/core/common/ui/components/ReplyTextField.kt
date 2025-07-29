@@ -16,7 +16,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.font.FontWeight.Companion.Normal
 import androidx.compose.ui.text.input.KeyboardCapitalization.Companion.Sentences
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSize.Large
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSize.Medium
@@ -25,7 +24,6 @@ import com.rafaelfelipeac.replyradar.core.common.ui.paddingXSmall
 import com.rafaelfelipeac.replyradar.core.common.ui.textSizeLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.textSizeMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.textSizeSmall
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
 import com.rafaelfelipeac.replyradar.core.theme.textFieldPlaceholderColor
 
 @Composable
@@ -80,16 +78,4 @@ sealed class ReplyTextFieldSize(val value: TextUnit) {
     data object Small : ReplyTextFieldSize(textSizeSmall)
     data object Medium : ReplyTextFieldSize(textSizeMedium)
     data object Large : ReplyTextFieldSize(textSizeLarge)
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ReplyTextFieldPreview() {
-    ReplyRadarTheme {
-        ReplyTextField(
-            value = "Value",
-            placeholder = "Placeholder",
-            onValueChange = {}
-        )
-    }
 }

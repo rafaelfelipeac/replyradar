@@ -7,9 +7,7 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.buttonHeight
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
 
 @Composable
 fun ReplyButton(modifier: Modifier, text: String, onClick: () -> Unit, enabled: Boolean = true) {
@@ -23,17 +21,5 @@ fun ReplyButton(modifier: Modifier, text: String, onClick: () -> Unit, enabled: 
         enabled = enabled
     ) {
         Text(text)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ReplyButtonPreview() {
-    ReplyRadarTheme {
-        ReplyButton(
-            modifier = Modifier,
-            text = "Button",
-            onClick = {}
-        )
     }
 }
