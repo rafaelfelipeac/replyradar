@@ -177,19 +177,19 @@ fun ReplyListScreen(
         )
     }
 
-@Preview(showBackground = true)
-@Composable
-fun ReplyListScreenPreview() {
-    ReplyRadarTheme {
-        ReplyListScreen(
-            state = ReplyListState(),
-            effect = emptyFlow(),
-            onIntent = {},
-            onSettingsClick = {},
-            onActivityLogClick = {}
-        )
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ReplyListScreenPreview() {
+//    ReplyRadarTheme {
+//        ReplyListScreen(
+//            state = ReplyListState(),
+//            effect = emptyFlow(),
+//            onIntent = {},
+//            onSettingsClick = {},
+//            onActivityLogClick = {}
+//        )
+//    }
+//}
 
     Scaffold(
         containerColor = colorScheme.background,

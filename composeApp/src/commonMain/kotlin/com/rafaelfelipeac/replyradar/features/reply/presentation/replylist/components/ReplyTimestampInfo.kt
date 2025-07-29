@@ -61,18 +61,18 @@ private fun getTimestampInfo(reply: Reply): String {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ReplyTimestampInfoPreview() {
-    ReplyRadarTheme {
-        ReplyTimestampInfo(
-            state = ReplyBottomSheetState(
-                reply = Reply(
-                    id = 1,
-                    message = "Message",
-                    isResolved = false
-                )
-            )
-        )
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ReplyTimestampInfoPreview() {
+//    ReplyRadarTheme {
+//        ReplyTimestampInfo(
+//            state = ReplyBottomSheetState(
+//                reply = Reply(
+//                    id = 1,
+//                    message = "Message",
+//                    isResolved = false
+//                )
+//            )
+//        )
+//    }
+//}

@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.replyradar.core.common.ui.components.previews
+package com.rafaelfelipeac.replyradar.previews.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

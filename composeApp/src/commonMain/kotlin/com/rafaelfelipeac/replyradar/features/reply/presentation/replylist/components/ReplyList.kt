@@ -62,24 +62,24 @@ fun ReplyList(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ReplyListPreview() {
-    ReplyRadarTheme {
-        ReplyList(
-            replies = listOf(
-                Reply(
-                    id = 1,
-                    message = "Message 1",
-                    isResolved = false
-                ),
-                Reply(
-                    id = 2,
-                    message = "Message 2",
-                    isResolved = false
-                )
-            ),
-            onReplyClick = {}
-        )
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ReplyListPreview() {
+//    ReplyRadarTheme {
+//        ReplyList(
+//            replies = listOf(
+//                Reply(
+//                    id = 1,
+//                    message = "Message 1",
+//                    isResolved = false
+//                ),
+//                Reply(
+//                    id = 2,
+//                    message = "Message 2",
+//                    isResolved = false
+//                )
+//            ),
+//            onReplyClick = {}
+//        )
+//    }
+//}

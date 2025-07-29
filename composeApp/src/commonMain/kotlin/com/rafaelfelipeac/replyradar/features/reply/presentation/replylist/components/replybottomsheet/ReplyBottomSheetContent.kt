@@ -104,24 +104,24 @@ fun ReplyBottomSheetContent(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ReplyBottomSheetContentPreview() {
-    ReplyRadarTheme {
-        ReplyBottomSheetContent(
-            replyBottomSheetState = ReplyBottomSheetState(
-                replyBottomSheetMode = ReplyBottomSheetMode.CREATE,
-                reply = Reply(
-                    id = 1,
-                    message = "Message",
-                    isResolved = false
-                )
-            ),
-            onSave = {},
-            onResolve = {},
-            onArchive = {},
-            onDelete = {},
-            onInvalidReminderValue = {}
-        )
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ReplyBottomSheetContentPreview() {
+//    ReplyRadarTheme {
+//        ReplyBottomSheetContent(
+//            replyBottomSheetState = ReplyBottomSheetState(
+//                replyBottomSheetMode = ReplyBottomSheetMode.CREATE,
+//                reply = Reply(
+//                    id = 1,
+//                    message = "Message",
+//                    isResolved = false
+//                )
+//            ),
+//            onSave = {},
+//            onResolve = {},
+//            onArchive = {},
+//            onDelete = {},
+//            onInvalidReminderValue = {}
+//        )
+//    }
+//}

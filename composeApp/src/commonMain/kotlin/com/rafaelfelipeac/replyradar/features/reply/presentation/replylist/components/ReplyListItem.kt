@@ -87,7 +87,7 @@ fun ReplyListItemLabel(label: String, style: TextStyle = typography.titleMedium)
     )
 }
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun ReplyListItemPreview() {
     ReplyRadarTheme {
@@ -103,4 +103,4 @@ fun ReplyListItemPreview() {
             onToggle = {}
         )
     }
-}
+}*/
