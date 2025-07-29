@@ -15,7 +15,6 @@ fun ReplyListItemPreview() {
         ReplyListItem(
             reply = Reply(
                 id = 1,
-                message = "Message",
                 isResolved = false,
                 name = "Name",
                 subject = "Subject"
@@ -35,7 +34,6 @@ fun ReplyListItemDarkPreview() {
         ReplyListItem(
             reply = Reply(
                 id = 1,
-                message = "Message",
                 isResolved = false,
                 name = "Name",
                 subject = "Subject"

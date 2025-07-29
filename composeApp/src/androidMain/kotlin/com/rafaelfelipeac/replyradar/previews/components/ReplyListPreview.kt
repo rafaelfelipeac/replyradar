@@ -16,12 +16,14 @@ fun ReplyListPreview() {
             replies = listOf(
                 Reply(
                     id = 1,
-                    message = "Message 1",
+                    name = "Contact 1",
+                    subject = "Message 1",
                     isResolved = false
                 ),
                 Reply(
                     id = 2,
-                    message = "Message 2",
+                    name = "Contact 2",
+                    subject = "Message 2",
                     isResolved = false
                 )
             ),
@@ -40,12 +42,14 @@ fun ReplyListDarkPreview() {
             replies = listOf(
                 Reply(
                     id = 1,
-                    message = "Message 1",
+                    name = "Contact 1",
+                    subject = "Message 1",
                     isResolved = false
                 ),
                 Reply(
                     id = 2,
-                    message = "Message 2",
+                    name = "Contact 2",
+                    subject = "Message 2",
                     isResolved = false
                 )
             ),

@@ -19,7 +19,8 @@ fun ReplyBottomSheetActionsPreview() {
                 replyBottomSheetMode = ReplyBottomSheetMode.EDIT,
                 reply = Reply(
                     id = 1,
-                    message = "Message",
+                    subject = "Message",
+                    name = "Contact",
                     isResolved = false
                 )
             ),
@@ -48,7 +49,8 @@ fun ReplyBottomSheetActionsDarkPreview() {
                 replyBottomSheetMode = ReplyBottomSheetMode.EDIT,
                 reply = Reply(
                     id = 1,
-                    message = "Message",
+                    subject = "Message",
+                    name = "Contact",
                     isResolved = false
                 )
             ),
