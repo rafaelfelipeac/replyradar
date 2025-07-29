@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.ARCHIVED_INDEX
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.ON_THE_RADAR_INDEX
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.RESOLVED_INDEX
@@ -56,4 +57,14 @@ fun RepliesScreen(
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RepliesScreenPreview() {
+    RepliesScreen(
+        pageIndex = ON_THE_RADAR_INDEX,
+        state = ReplyListState(),
+        onIntent = {}
+    )
 }

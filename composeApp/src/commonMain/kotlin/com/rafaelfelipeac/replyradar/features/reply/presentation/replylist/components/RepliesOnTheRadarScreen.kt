@@ -3,10 +3,12 @@ package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.comp
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyProgress
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRadarError
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRadarPlaceholder
 import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnOpenReply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenIntent.ReplyListIntent.OnReplyToggle
@@ -14,7 +16,10 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListViewModel.Companion.ERROR_GET_REPLIES
 
 @Composable
-fun RepliesOnTheRadarScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> Unit) {
+fun RepliesOnTheRadarScreen(
+    state: ReplyListState,
+    onIntent: (ReplyListScreenIntent) -> Unit
+) {
     if (state.isLoading) {
         ReplyProgress()
     } else {
@@ -46,4 +51,15 @@ fun RepliesOnTheRadarScreen(state: ReplyListState, onIntent: (ReplyListScreenInt
 private fun getErrorMessage(errorMessage: String?) = when (errorMessage) {
     ERROR_GET_REPLIES -> LocalReplyRadarStrings.current.replyListGetRepliesError
     else -> LocalReplyRadarStrings.current.genericErrorMessage
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RepliesOnTheRadarScreenPreview() {
+    ReplyRadarTheme {
+        RepliesOnTheRadarScreen(
+            state = ReplyListState(),
+            onIntent = {}
+        )
+    }
 }

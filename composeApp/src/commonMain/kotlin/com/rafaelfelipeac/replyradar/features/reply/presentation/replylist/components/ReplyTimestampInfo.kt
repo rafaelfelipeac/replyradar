@@ -7,9 +7,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.datetime.formatTimestamp
 import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
 import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
@@ -56,5 +58,21 @@ private fun getTimestampInfo(reply: Reply): String {
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyTimestampInfoPreview() {
+    ReplyRadarTheme {
+        ReplyTimestampInfo(
+            state = ReplyBottomSheetState(
+                reply = Reply(
+                    id = 1,
+                    message = "Message",
+                    isResolved = false
+                )
+            )
+        )
     }
 }

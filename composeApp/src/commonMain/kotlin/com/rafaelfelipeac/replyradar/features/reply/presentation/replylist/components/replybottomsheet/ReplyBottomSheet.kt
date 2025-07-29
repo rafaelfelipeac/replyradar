@@ -11,9 +11,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRoundedCorner
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplySnackbar
 import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.CREATE
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
@@ -98,4 +100,30 @@ private fun BottomSheetContent(
         onSave = onSave,
         onInvalidReminderValue = onInvalidReminderValue
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
+@Composable
+fun ReplyBottomSheetPreview() {
+    ReplyRadarTheme {
+        ReplyBottomSheet(
+            sheetState = SheetState(
+                skipPartiallyExpanded = true,
+            ),
+            replyBottomSheetState = ReplyBottomSheetState(
+                replyBottomSheetMode = CREATE,
+                reply = Reply(
+                    id = 1,
+                    message = "Message",
+                    isResolved = false
+                )
+            ),
+            onSave = {},
+            onResolve = {},
+            onArchive = {},
+            onDelete = {},
+            onDismiss = {}
+        )
+    }
 }

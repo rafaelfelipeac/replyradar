@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSizeLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
@@ -53,6 +54,7 @@ import com.rafaelfelipeac.replyradar.core.theme.model.AppTheme.SYSTEM
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.EMAIL
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.PACKAGE_NAME
 import com.rafaelfelipeac.replyradar.core.version.getAppVersion
+import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectFeedback
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectLanguage
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsIntent.OnSelectRate
@@ -169,6 +171,17 @@ fun App(onIntent: (SettingsIntent) -> Unit) {
                 openPlayStoreApp(PACKAGE_NAME)
                 onIntent(OnSelectRate)
             }
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SettingsScreenPreview() {
+    ReplyRadarTheme {
+        SettingsScreen(
+            onBackClick = {},
+            onActivityLogClick = {}
         )
     }
 }

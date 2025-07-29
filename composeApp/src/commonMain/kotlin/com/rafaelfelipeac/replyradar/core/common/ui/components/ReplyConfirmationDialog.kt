@@ -16,12 +16,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import com.rafaelfelipeac.replyradar.core.common.ui.cardCornerRadius
 import com.rafaelfelipeac.replyradar.core.common.ui.dialogElevation
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.spacerLarge
 import com.rafaelfelipeac.replyradar.core.common.ui.spacerSmall
+import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
 
 @Composable
 fun ReplyConfirmationDialog(
@@ -91,5 +93,20 @@ fun ReplyConfirmationDialog(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun ReplyConfirmationDialogPreview() {
+    ReplyRadarTheme {
+        ReplyConfirmationDialog(
+            title = "Title",
+            description = "Description",
+            confirm = "Confirm",
+            dismiss = "Dismiss",
+            onDismiss = {},
+            onConfirm = {}
+        )
     }
 }

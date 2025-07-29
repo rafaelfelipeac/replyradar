@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.util.formatReminderText
 import com.rafaelfelipeac.replyradar.core.common.ui.iconButtonSize
 import com.rafaelfelipeac.replyradar.core.common.ui.iconSize
@@ -28,10 +29,14 @@ import com.rafaelfelipeac.replyradar.core.common.ui.paddingXSmall
 import com.rafaelfelipeac.replyradar.core.datetime.PlatformDatePicker
 import com.rafaelfelipeac.replyradar.core.datetime.PlatformTimePicker
 import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
 import com.rafaelfelipeac.replyradar.core.theme.horizontalDividerColor
 import com.rafaelfelipeac.replyradar.core.theme.toolbarIconsColor
+import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
 import replyradar.composeapp.generated.resources.Res.drawable
 import replyradar.composeapp.generated.resources.ic_close
@@ -194,5 +199,21 @@ private fun ReminderText(reminderText: String?, onDeleteClick: () -> Unit) {
                 )
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyReminderPreview() {
+    val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+
+    ReplyRadarTheme {
+        ReplyReminder(
+            selectedTime = now.time,
+            selectedDate = now.date,
+            onSelectedTimeChange = {},
+            onSelectedDateChange = {},
+            closeKeyboard = { null }
+        )
     }
 }

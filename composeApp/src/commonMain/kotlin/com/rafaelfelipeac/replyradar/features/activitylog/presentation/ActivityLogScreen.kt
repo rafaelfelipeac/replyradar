@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyProgress
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRadarError
@@ -42,6 +43,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.listDividerThickness
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.datetime.formatTimestamp
 import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
+import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
 import com.rafaelfelipeac.replyradar.core.theme.horizontalDividerColor
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.EMPTY
 import com.rafaelfelipeac.replyradar.core.util.format
@@ -65,6 +67,7 @@ import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActio
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Scheduled
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Unarchive
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Unknown
+import kotlinx.datetime.Clock
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import replyradar.composeapp.generated.resources.Res.drawable
@@ -317,4 +320,30 @@ private fun getActionVerb(actionType: UserActionType) = when (actionType) {
 fun formatTargetName(name: String?): String {
     return name?.let { format(LocalReplyRadarStrings.current.activityLogMessageItem, it) }
         ?: LocalReplyRadarStrings.current.activityLogMessageItemRemoved
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ActivityLogScreenPreview() {
+    ReplyRadarTheme {
+        ActivityLogScreen(
+            onBackClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ActivityLogListItemPreview() {
+    ReplyRadarTheme {
+        ActivityLogListItem(
+            userAction = UserAction(
+                id = 1,
+                actionType = Create,
+                targetType = Message,
+                targetName = "User Action 1",
+                createdAt = Clock.System.now().toEpochMilliseconds()
+            )
+        )
+    }
 }

@@ -20,8 +20,10 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyToggle
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
+import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 
 private const val WEIGHT = 1f
@@ -83,4 +85,22 @@ fun ReplyListItemLabel(label: String, style: TextStyle = typography.titleMedium)
         maxLines = MAX_LINES,
         overflow = TextOverflow.Ellipsis
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyListItemPreview() {
+    ReplyRadarTheme {
+        ReplyListItem(
+            reply = Reply(
+                id = 1,
+                message = "Message",
+                isResolved = false,
+                name = "Name",
+                subject = "Subject"
+            ),
+            onClick = {},
+            onToggle = {}
+        )
+    }
 }
