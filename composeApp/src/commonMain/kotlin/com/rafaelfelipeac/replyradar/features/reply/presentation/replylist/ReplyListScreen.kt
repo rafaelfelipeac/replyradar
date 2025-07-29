@@ -26,7 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rafaelfelipeac.replyradar.core.common.ui.components.NotificationPermissionDialog
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplySnackbar
@@ -72,7 +71,6 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.compo
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.TopBar
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheet
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import org.koin.compose.viewmodel.koinViewModel
 
 private const val WEIGHT = 1f
@@ -176,20 +174,6 @@ fun ReplyListScreen(
             }
         )
     }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun ReplyListScreenPreview() {
-//    ReplyRadarTheme {
-//        ReplyListScreen(
-//            state = ReplyListState(),
-//            effect = emptyFlow(),
-//            onIntent = {},
-//            onSettingsClick = {},
-//            onActivityLogClick = {}
-//        )
-//    }
-//}
 
     Scaffold(
         containerColor = colorScheme.background,

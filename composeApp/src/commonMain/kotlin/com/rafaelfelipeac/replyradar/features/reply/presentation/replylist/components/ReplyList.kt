@@ -12,10 +12,8 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.listDividerThickness
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
 import com.rafaelfelipeac.replyradar.core.theme.horizontalDividerColor
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 
@@ -61,25 +59,3 @@ fun ReplyList(
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun ReplyListPreview() {
-//    ReplyRadarTheme {
-//        ReplyList(
-//            replies = listOf(
-//                Reply(
-//                    id = 1,
-//                    message = "Message 1",
-//                    isResolved = false
-//                ),
-//                Reply(
-//                    id = 2,
-//                    message = "Message 2",
-//                    isResolved = false
-//                )
-//            ),
-//            onReplyClick = {}
-//        )
-//    }
-//}

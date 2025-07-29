@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyReminder
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextField
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextFieldSize.Large
@@ -24,7 +23,6 @@ import com.rafaelfelipeac.replyradar.core.common.ui.paddingMedium
 import com.rafaelfelipeac.replyradar.core.common.ui.paddingSmall
 import com.rafaelfelipeac.replyradar.core.datetime.dateTime
 import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.EMPTY
 import com.rafaelfelipeac.replyradar.core.util.AppConstants.INITIAL_DATE
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
@@ -103,25 +101,3 @@ fun ReplyBottomSheetContent(
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun ReplyBottomSheetContentPreview() {
-//    ReplyRadarTheme {
-//        ReplyBottomSheetContent(
-//            replyBottomSheetState = ReplyBottomSheetState(
-//                replyBottomSheetMode = ReplyBottomSheetMode.CREATE,
-//                reply = Reply(
-//                    id = 1,
-//                    message = "Message",
-//                    isResolved = false
-//                )
-//            ),
-//            onSave = {},
-//            onResolve = {},
-//            onArchive = {},
-//            onDelete = {},
-//            onInvalidReminderValue = {}
-//        )
-//    }
-//}

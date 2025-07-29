@@ -14,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyButton
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyConfirmationDialog
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyOutlinedButton
@@ -24,7 +23,6 @@ import com.rafaelfelipeac.replyradar.core.datetime.getCurrentDateTime
 import com.rafaelfelipeac.replyradar.core.datetime.getReminderTimestamp
 import com.rafaelfelipeac.replyradar.core.datetime.isDateTimeValid
 import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
 import com.rafaelfelipeac.replyradar.core.util.format
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode.EDIT
@@ -240,30 +238,3 @@ private fun getReplyToSave(
     subject = subject,
     reminderAt = reminderAtTimestamp
 )
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun ReplyBottomSheetActionsPreview() {
-//    ReplyRadarTheme {
-//        ReplyBottomSheetActions(
-//            state = ReplyBottomSheetState(
-//                replyBottomSheetMode = EDIT,
-//                reply = Reply(
-//                    id = 1,
-//                    message = "Message",
-//                    isResolved = false
-//                )
-//            ),
-//            onArchive = {},
-//            onResolve = {},
-//            onDelete = {},
-//            onSave = {},
-//            onInvalidReminderValue = {},
-//            selectedDate = null,
-//            selectedTime = null,
-//            reply = null,
-//            name = "",
-//            subject = ""
-//        )
-//    }
-//}
