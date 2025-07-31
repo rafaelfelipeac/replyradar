@@ -10,6 +10,26 @@ import kotlinx.coroutines.flow.emptyFlow
 
 @Preview(showBackground = true)
 @Composable
+fun ReplyListScreenOnTheRadarEmptyPreview() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = false
+    ) {
+        ReplyListScreen(
+            state = ReplyListState(
+                selectedTabIndex = 0,
+                isLoading = false,
+                replies = emptyList()
+            ),
+            effect = emptyFlow(),
+            onIntent = {},
+            onSettingsClick = {},
+            onActivityLogClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
 fun ReplyListScreenOnTheRadarPreview() {
     ReplyRadarPreviewWrapper(
         darkTheme = false
@@ -19,6 +39,26 @@ fun ReplyListScreenOnTheRadarPreview() {
                 selectedTabIndex = 0,
                 isLoading = false,
                 replies = Replies.OnTheRadar.replies
+            ),
+            effect = emptyFlow(),
+            onIntent = {},
+            onSettingsClick = {},
+            onActivityLogClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyListScreenResolvedEmptyPreview() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = false
+    ) {
+        ReplyListScreen(
+            state = ReplyListState(
+                selectedTabIndex = 1,
+                isLoading = false,
+                replies = emptyList()
             ),
             effect = emptyFlow(),
             onIntent = {},
@@ -50,6 +90,26 @@ fun ReplyListScreenResolvedPreview() {
 
 @Preview(showBackground = true)
 @Composable
+fun ReplyListScreenArchivedEmptyPreview() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = false
+    ) {
+        ReplyListScreen(
+            state = ReplyListState(
+                selectedTabIndex = 2,
+                isLoading = false,
+                replies = emptyList()
+            ),
+            effect = emptyFlow(),
+            onIntent = {},
+            onSettingsClick = {},
+            onActivityLogClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
 fun ReplyListScreenArchivedPreview() {
     ReplyRadarPreviewWrapper(
         darkTheme = false
@@ -59,6 +119,26 @@ fun ReplyListScreenArchivedPreview() {
                 selectedTabIndex = 2,
                 isLoading = false,
                 replies = Replies.Archived.replies
+            ),
+            effect = emptyFlow(),
+            onIntent = {},
+            onSettingsClick = {},
+            onActivityLogClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyListScreenOnTheRadarEmptyDarkPreview() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = true
+    ) {
+        ReplyListScreen(
+            state = ReplyListState(
+                selectedTabIndex = 0,
+                isLoading = false,
+                replies = emptyList()
             ),
             effect = emptyFlow(),
             onIntent = {},
@@ -90,6 +170,26 @@ fun ReplyListScreenOnTheRadarDarkPreview() {
 
 @Preview(showBackground = true)
 @Composable
+fun ReplyListScreenResolvedEmptyDarkPreview() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = true
+    ) {
+        ReplyListScreen(
+            state = ReplyListState(
+                selectedTabIndex = 1,
+                isLoading = false,
+                replies = emptyList()
+            ),
+            effect = emptyFlow(),
+            onIntent = {},
+            onSettingsClick = {},
+            onActivityLogClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
 fun ReplyListScreenResolvedDarkPreview() {
     ReplyRadarPreviewWrapper(
         darkTheme = true
@@ -99,6 +199,26 @@ fun ReplyListScreenResolvedDarkPreview() {
                 selectedTabIndex = 1,
                 isLoading = false,
                 replies = Replies.Resolved.replies
+            ),
+            effect = emptyFlow(),
+            onIntent = {},
+            onSettingsClick = {},
+            onActivityLogClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyListScreenArchivedEmptyDarkPreview() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = true
+    ) {
+        ReplyListScreen(
+            state = ReplyListState(
+                selectedTabIndex = 2,
+                isLoading = false,
+                replies = emptyList()
             ),
             effect = emptyFlow(),
             onIntent = {},
