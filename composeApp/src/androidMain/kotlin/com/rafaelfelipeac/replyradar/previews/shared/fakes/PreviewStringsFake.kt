@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.replyradar.previews
+package com.rafaelfelipeac.replyradar.previews.shared.fakes
 
 import com.rafaelfelipeac.replyradar.core.strings.Strings
 

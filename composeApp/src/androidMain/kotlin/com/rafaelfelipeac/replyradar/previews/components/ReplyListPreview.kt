@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.ReplyList
-import com.rafaelfelipeac.replyradar.previews.Replies
-import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
+import com.rafaelfelipeac.replyradar.previews.shared.Replies
+import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
 
 @Preview(showBackground = true)
 @Composable

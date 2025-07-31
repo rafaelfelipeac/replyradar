@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTab
-import com.rafaelfelipeac.replyradar.previews.PreviewStringsFake
-import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
+import com.rafaelfelipeac.replyradar.previews.shared.fakes.PreviewStringsFake
+import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
 
 @Preview(showBackground = true)
 @Composable

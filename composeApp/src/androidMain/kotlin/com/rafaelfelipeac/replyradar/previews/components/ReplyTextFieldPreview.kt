@@ -3,9 +3,9 @@ package com.rafaelfelipeac.replyradar.previews.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextField
-import com.rafaelfelipeac.replyradar.previews.PreviewStringsFake
-import com.rafaelfelipeac.replyradar.previews.Replies
-import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
+import com.rafaelfelipeac.replyradar.previews.shared.fakes.PreviewStringsFake
+import com.rafaelfelipeac.replyradar.previews.shared.Replies
+import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
 
 @Preview(showBackground = true)
 @Composable

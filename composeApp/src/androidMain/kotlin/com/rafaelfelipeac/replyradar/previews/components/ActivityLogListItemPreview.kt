@@ -6,8 +6,8 @@ import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityL
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserAction
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType
-import com.rafaelfelipeac.replyradar.previews.Replies
-import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
+import com.rafaelfelipeac.replyradar.previews.shared.Replies
+import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
 import kotlinx.datetime.Clock
 
 @Preview(showBackground = true)

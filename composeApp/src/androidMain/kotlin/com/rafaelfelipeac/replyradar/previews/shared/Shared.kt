@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.replyradar.previews
+package com.rafaelfelipeac.replyradar.previews.shared
 
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 

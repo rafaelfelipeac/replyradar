@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.FloatingActionButton
-import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
+import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
 
 @Preview(showBackground = true)
 @Composable

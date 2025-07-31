@@ -3,7 +3,7 @@ package com.rafaelfelipeac.replyradar.previews.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.NotificationPermissionDialog
-import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
+import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
 
 @Preview
 @Composable
