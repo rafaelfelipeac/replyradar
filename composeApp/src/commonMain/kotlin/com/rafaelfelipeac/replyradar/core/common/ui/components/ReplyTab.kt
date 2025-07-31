@@ -10,7 +10,7 @@ import com.rafaelfelipeac.replyradar.core.common.ui.tabVerticalPadding
 import com.rafaelfelipeac.replyradar.core.theme.unselectedTabColor
 
 @Composable
-fun ReplyTab(modifier: Modifier, selected: Boolean, onClick: () -> Unit, text: String) {
+fun ReplyTab(modifier: Modifier = Modifier, selected: Boolean, onClick: () -> Unit, text: String) {
     Tab(
         modifier = modifier,
         selected = selected,

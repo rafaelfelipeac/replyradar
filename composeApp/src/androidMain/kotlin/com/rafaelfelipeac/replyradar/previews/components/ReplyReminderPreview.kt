@@ -3,7 +3,7 @@ package com.rafaelfelipeac.replyradar.previews.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyReminder
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
+import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -13,9 +13,10 @@ import kotlinx.datetime.toLocalDateTime
 fun ReplyReminderPreview() {
     val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
 
-    ReplyRadarTheme(
+    ReplyRadarPreviewWrapper(
         darkTheme = false
     ) {
+        // ReminderText wasn't showing in Preview because the icon row was collapsing the layout.
         ReplyReminder(
             selectedTime = now.time,
             selectedDate = now.date,
@@ -31,9 +32,10 @@ fun ReplyReminderPreview() {
 fun ReplyReminderDarkPreview() {
     val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
 
-    ReplyRadarTheme(
+    ReplyRadarPreviewWrapper(
         darkTheme = true
     ) {
+        // ReminderText wasn't showing in Preview because the icon row was collapsing the layout.
         ReplyReminder(
             selectedTime = now.time,
             selectedDate = now.date,

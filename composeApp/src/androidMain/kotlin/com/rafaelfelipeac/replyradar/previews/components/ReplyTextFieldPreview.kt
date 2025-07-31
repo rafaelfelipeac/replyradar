@@ -3,17 +3,19 @@ package com.rafaelfelipeac.replyradar.previews.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyTextField
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
+import com.rafaelfelipeac.replyradar.previews.PreviewStringsFake
+import com.rafaelfelipeac.replyradar.previews.Replies
+import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
 
 @Preview(showBackground = true)
 @Composable
-fun ReplyTextFieldPreview() {
-    ReplyRadarTheme(
+fun ReplyTextFieldPreview1() {
+    ReplyRadarPreviewWrapper(
         darkTheme = false
     ) {
         ReplyTextField(
-            value = "Value",
-            placeholder = "Placeholder",
+            value = Replies.OnTheRadar.reply1.name,
+            placeholder = PreviewStringsFake.replyListBottomSheetName,
             onValueChange = {}
         )
     }
@@ -21,13 +23,41 @@ fun ReplyTextFieldPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun ReplyTextFieldDarkPreview() {
-    ReplyRadarTheme(
+fun ReplyTextFieldPreview2() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = false
+    ) {
+        ReplyTextField(
+            value = "",
+            placeholder = PreviewStringsFake.replyListBottomSheetName,
+            onValueChange = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyTextFieldDarkPreview1() {
+    ReplyRadarPreviewWrapper(
         darkTheme = true
     ) {
         ReplyTextField(
-            value = "Value",
-            placeholder = "Placeholder",
+            value = "",
+            placeholder = PreviewStringsFake.replyListBottomSheetName,
+            onValueChange = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyTextFieldDarkPreview2() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = true
+    ) {
+        ReplyTextField(
+            value = Replies.OnTheRadar.reply1.name,
+            placeholder = PreviewStringsFake.replyListBottomSheetName,
             onValueChange = {}
         )
     }
