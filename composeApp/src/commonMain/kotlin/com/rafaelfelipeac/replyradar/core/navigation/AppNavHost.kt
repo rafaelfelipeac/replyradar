@@ -13,7 +13,7 @@ import com.rafaelfelipeac.replyradar.core.navigation.Route.ActivityLog
 import com.rafaelfelipeac.replyradar.core.navigation.Route.ReplyGraph
 import com.rafaelfelipeac.replyradar.core.navigation.Route.ReplyList
 import com.rafaelfelipeac.replyradar.core.navigation.Route.Settings
-import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogScreen
+import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogScreenRoot
 import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogViewModel
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenRoot
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListViewModel
@@ -67,7 +67,7 @@ fun AppNavHost(navController: NavHostController, pendingReplyId: Long?) {
             ) {
                 val viewModel = koinViewModel<ActivityLogViewModel>()
 
-                ActivityLogScreen(
+                ActivityLogScreenRoot(
                     viewModel = viewModel,
                     onBackClick = { navController.popBackStack() }
                 )

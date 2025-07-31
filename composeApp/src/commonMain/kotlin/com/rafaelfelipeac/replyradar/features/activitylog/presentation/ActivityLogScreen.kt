@@ -83,11 +83,25 @@ import replyradar.composeapp.generated.resources.ic_theme
 import replyradar.composeapp.generated.resources.ic_time
 import replyradar.composeapp.generated.resources.ic_unarchive
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ActivityLogScreen(viewModel: ActivityLogViewModel = koinViewModel(), onBackClick: () -> Unit) {
+fun ActivityLogScreenRoot(
+    viewModel: ActivityLogViewModel = koinViewModel(),
+    onBackClick: () -> Unit
+) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    ActivityLogScreen(
+        state = state,
+        onBackClick = onBackClick
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ActivityLogScreen(
+    state: ActivityLogState,
+    onBackClick: () -> Unit
+) {
     Scaffold(
         topBar = {
             TopAppBar(

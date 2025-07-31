@@ -3,20 +3,54 @@ package com.rafaelfelipeac.replyradar.previews.screens
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogScreen
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
-import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserAction
-import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType
-import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType
-import kotlinx.datetime.Clock
-import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogListItem
+import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogState
+import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
+import com.rafaelfelipeac.replyradar.previews.shared.previewActivityLogItems
+
+@Preview(showBackground = true)
+@Composable
+fun ActivityLogScreenEmptyPreview() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = false
+    ) {
+        ActivityLogScreen(
+            state = ActivityLogState(
+                isLoading = false,
+                activityLogItems = emptyList()
+            ),
+            onBackClick = {}
+        )
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
 fun ActivityLogScreenPreview() {
-    ReplyRadarTheme(
+    ReplyRadarPreviewWrapper(
         darkTheme = false
     ) {
         ActivityLogScreen(
+            state = ActivityLogState(
+                isLoading = false,
+                activityLogItems = previewActivityLogItems
+            ),
+            onBackClick = {}
+        )
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun ActivityLogScreenEmptyDarkPreview() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = true
+    ) {
+        ActivityLogScreen(
+            state = ActivityLogState(
+                isLoading = false,
+                activityLogItems = emptyList()
+            ),
             onBackClick = {}
         )
     }
@@ -25,47 +59,15 @@ fun ActivityLogScreenPreview() {
 @Preview(showBackground = true)
 @Composable
 fun ActivityLogScreenDarkPreview() {
-    ReplyRadarTheme(
+    ReplyRadarPreviewWrapper(
         darkTheme = true
     ) {
         ActivityLogScreen(
+            state = ActivityLogState(
+                isLoading = false,
+                activityLogItems = previewActivityLogItems
+            ),
             onBackClick = {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ActivityLogListItemPreview() {
-    ReplyRadarTheme(
-        darkTheme = false
-    ) {
-        ActivityLogListItem(
-            userAction = UserAction(
-                id = 1,
-                actionType = UserActionType.Create,
-                targetType = UserActionTargetType.Message,
-                targetName = "User Action 1",
-                createdAt = Clock.System.now().toEpochMilliseconds()
-            )
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ActivityLogListItemDarkPreview() {
-    ReplyRadarTheme(
-        darkTheme = true
-    ) {
-        ActivityLogListItem(
-            userAction = UserAction(
-                id = 1,
-                actionType = UserActionType.Create,
-                targetType = UserActionTargetType.Message,
-                targetName = "User Action 1",
-                createdAt = Clock.System.now().toEpochMilliseconds()
-            )
         )
     }
 }

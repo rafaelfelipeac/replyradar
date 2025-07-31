@@ -1,6 +1,9 @@
 package com.rafaelfelipeac.replyradar.previews.shared
 
 import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserAction
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType
+import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType
 
 sealed class Replies {
 
@@ -112,3 +115,90 @@ sealed class Replies {
         val replies = listOf(reply1, reply2, reply3, reply4, reply5)
     }
 }
+
+val previewActivityLogItems = listOf(
+    UserAction(
+        id = 1L,
+        actionType = UserActionType.Create,
+        targetType = UserActionTargetType.Message,
+        targetName = "Lucas Almeida",
+        createdAt = System.currentTimeMillis()
+    ),
+    UserAction(
+        id = 2L,
+        actionType = UserActionType.Edit,
+        targetType = UserActionTargetType.Message,
+        targetName = "Carla Mendes",
+        createdAt = System.currentTimeMillis() - 1_000_000L
+    ),
+    UserAction(
+        id = 3L,
+        actionType = UserActionType.Resolve,
+        targetType = UserActionTargetType.Message,
+        targetName = "João Victor",
+        createdAt = System.currentTimeMillis() - 2_000_000L
+    ),
+    UserAction(
+        id = 4L,
+        actionType = UserActionType.Archive,
+        targetType = UserActionTargetType.Message,
+        targetName = "Ana Paula",
+        createdAt = System.currentTimeMillis() - 3_000_000L
+    ),
+    UserAction(
+        id = 5L,
+        actionType = UserActionType.OpenedNotification,
+        targetType = UserActionTargetType.Message,
+        targetName = "Marcelo Costa",
+        createdAt = System.currentTimeMillis() - 4_000_000L
+    ),
+    UserAction(
+        id = 6L,
+        actionType = UserActionType.Open,
+        targetType = UserActionTargetType.Message,
+        targetName = "Beatriz Rocha",
+        createdAt = System.currentTimeMillis() - 5_000_000L
+    ),
+    UserAction(
+        id = 7L,
+        actionType = UserActionType.Delete,
+        targetType = UserActionTargetType.Message,
+        targetName = "Henrique Silva",
+        createdAt = System.currentTimeMillis() - 6_000_000L
+    ),
+    UserAction(
+        id = 8L,
+        actionType = UserActionType.Scheduled,
+        targetType = UserActionTargetType.Message,
+        targetName = "Fernanda Luz",
+        createdAt = System.currentTimeMillis() - 7_000_000L
+    ),
+    UserAction(
+        id = 9L,
+        actionType = UserActionType.Create,
+        targetType = UserActionTargetType.Feedback,
+        targetName = null,
+        createdAt = System.currentTimeMillis() - 8_000_000L
+    ),
+    UserAction(
+        id = 10L,
+        actionType = UserActionType.Create,
+        targetType = UserActionTargetType.Language,
+        targetName = null,
+        createdAt = System.currentTimeMillis() - 9_000_000L
+    ),
+    UserAction(
+        id = 11L,
+        actionType = UserActionType.Create,
+        targetType = UserActionTargetType.Theme,
+        targetName = null,
+        createdAt = System.currentTimeMillis() - 10_000_000L
+    ),
+    UserAction(
+        id = 12L,
+        actionType = UserActionType.Create,
+        targetType = UserActionTargetType.Rate,
+        targetName = null,
+        createdAt = System.currentTimeMillis() - 11_000_000L
+    )
+)
