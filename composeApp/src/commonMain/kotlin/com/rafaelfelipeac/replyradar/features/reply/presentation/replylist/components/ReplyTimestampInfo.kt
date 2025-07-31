@@ -2,6 +2,7 @@ package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.comp
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +24,8 @@ fun ColumnScope.ReplyTimestampInfo(state: ReplyBottomSheetState) {
                 .padding(start = paddingSmall, top = paddingSmall)
                 .align(Start),
             text = getTimestampInfo(reply),
-            style = typography.bodySmall
+            style = typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurface
         )
     }
 }

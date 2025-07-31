@@ -1,5 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.End
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Row
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,6 +56,7 @@ fun ReplyBottomSheetActions(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .background(colorScheme.surface)
             .padding(top = paddingSmall, bottom = paddingMedium, end = paddingSmall),
         horizontalArrangement = if (isEditMode(state)) spacedBy(paddingSmall) else End,
         verticalAlignment = Alignment.CenterVertically

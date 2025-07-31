@@ -2,18 +2,24 @@ package com.rafaelfelipeac.replyradar.previews.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
+import com.rafaelfelipeac.replyradar.core.util.AppConstants.RESOLVED_INDEX
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState
-import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesResolvedScreen
+import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.RepliesScreen
+import com.rafaelfelipeac.replyradar.previews.Replies
+import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
 
 @Preview(showBackground = true)
 @Composable
 fun RepliesResolvedScreenPreview() {
-    ReplyRadarTheme(
+    ReplyRadarPreviewWrapper(
         darkTheme = false
     ) {
-        RepliesResolvedScreen(
-            state = ReplyListState(),
+        RepliesScreen(
+            pageIndex = RESOLVED_INDEX,
+            state = ReplyListState(
+                isLoading = false,
+                resolvedReplies = Replies.Resolved.replies
+            ),
             onIntent = {}
         )
     }
@@ -22,11 +28,15 @@ fun RepliesResolvedScreenPreview() {
 @Preview(showBackground = true)
 @Composable
 fun RepliesResolvedScreenDarkPreview() {
-    ReplyRadarTheme(
+    ReplyRadarPreviewWrapper(
         darkTheme = true
     ) {
-        RepliesResolvedScreen(
-            state = ReplyListState(),
+        RepliesScreen(
+            pageIndex = RESOLVED_INDEX,
+            state = ReplyListState(
+                isLoading = false,
+                resolvedReplies = Replies.Resolved.replies
+            ),
             onIntent = {}
         )
     }

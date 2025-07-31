@@ -3,12 +3,12 @@ package com.rafaelfelipeac.replyradar.previews.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.NotificationPermissionDialog
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
+import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
 
 @Preview
 @Composable
 fun ReplyNotificationPermissionDialogPreview() {
-    ReplyRadarTheme(
+    ReplyRadarPreviewWrapper(
         darkTheme = false
     ) {
         NotificationPermissionDialog(
@@ -21,7 +21,7 @@ fun ReplyNotificationPermissionDialogPreview() {
 @Preview
 @Composable
 fun ReplyNotificationPermissionDialogDarkPreview() {
-    ReplyRadarTheme(
+    ReplyRadarPreviewWrapper(
         darkTheme = true
     ) {
         NotificationPermissionDialog(

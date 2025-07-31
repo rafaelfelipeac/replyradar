@@ -2,27 +2,43 @@ package com.rafaelfelipeac.replyradar.previews.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
-import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetContent
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
+import com.rafaelfelipeac.replyradar.previews.Replies
+import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
 
 @Preview(showBackground = true)
 @Composable
-fun ReplyBottomSheetContentPreview() {
-    ReplyRadarTheme(
+fun ReplyBottomSheetContentPreview1() {
+    ReplyRadarPreviewWrapper(
         darkTheme = false
     ) {
         ReplyBottomSheetContent(
             replyBottomSheetState = ReplyBottomSheetState(
                 replyBottomSheetMode = ReplyBottomSheetMode.CREATE,
-                reply = Reply(
-                    id = 1,
-                    subject = "Message",
-                    name = "Contact",
-                    isResolved = false
-                )
+            ),
+            onSave = {},
+            onResolve = {},
+            onArchive = {},
+            onDelete = {},
+            onInvalidReminderValue = {}
+        )
+
+
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyBottomSheetContentPreview2() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = false
+    ) {
+        ReplyBottomSheetContent(
+            replyBottomSheetState = ReplyBottomSheetState(
+                replyBottomSheetMode = ReplyBottomSheetMode.EDIT,
+                reply = Replies.OnTheRadar.reply1
             ),
             onSave = {},
             onResolve = {},
@@ -33,21 +49,37 @@ fun ReplyBottomSheetContentPreview() {
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
-fun ReplyBottomSheetContentDarkPreview() {
-    ReplyRadarTheme(
+fun ReplyBottomSheetContentDarkPreview1() {
+    ReplyRadarPreviewWrapper(
         darkTheme = true
     ) {
         ReplyBottomSheetContent(
             replyBottomSheetState = ReplyBottomSheetState(
                 replyBottomSheetMode = ReplyBottomSheetMode.CREATE,
-                reply = Reply(
-                    id = 1,
-                    subject = "Message",
-                    name = "Contact",
-                    isResolved = false
-                )
+            ),
+            onSave = {},
+            onResolve = {},
+            onArchive = {},
+            onDelete = {},
+            onInvalidReminderValue = {}
+        )
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyBottomSheetContentDarkPreview2() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = true
+    ) {
+        ReplyBottomSheetContent(
+            replyBottomSheetState = ReplyBottomSheetState(
+                replyBottomSheetMode = ReplyBottomSheetMode.EDIT,
+                reply = Replies.OnTheRadar.reply1
             ),
             onSave = {},
             onResolve = {},

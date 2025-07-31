@@ -3,19 +3,26 @@ package com.rafaelfelipeac.replyradar.previews.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyConfirmationDialog
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
+import com.rafaelfelipeac.replyradar.core.util.format
+import com.rafaelfelipeac.replyradar.previews.PreviewStringsFake
+import com.rafaelfelipeac.replyradar.previews.Replies
+import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
 
 @Preview
 @Composable
 fun ReplyConfirmationDialogPreview() {
-    ReplyRadarTheme(
+    ReplyRadarPreviewWrapper(
         darkTheme = false
     ) {
         ReplyConfirmationDialog(
-            title = "Title",
-            description = "Description",
-            confirm = "Confirm",
-            dismiss = "Dismiss",
+            title = PreviewStringsFake.replyListDeleteDialogTitle,
+            description =
+                format(
+                    PreviewStringsFake.replyListDeleteDialogDescription,
+                    Replies.OnTheRadar.reply1.name
+                ),
+            confirm = PreviewStringsFake.replyListDeleteDialogConfirm,
+            dismiss = PreviewStringsFake.replyListDeleteDialogDismiss,
             onDismiss = {},
             onConfirm = {}
         )
@@ -25,14 +32,18 @@ fun ReplyConfirmationDialogPreview() {
 @Preview
 @Composable
 fun ReplyConfirmationDialogDarkPreview() {
-    ReplyRadarTheme(
+    ReplyRadarPreviewWrapper(
         darkTheme = true
     ) {
         ReplyConfirmationDialog(
-            title = "Title",
-            description = "Description",
-            confirm = "Confirm",
-            dismiss = "Dismiss",
+            title = PreviewStringsFake.replyListDeleteDialogTitle,
+            description =
+                format(
+                    PreviewStringsFake.replyListDeleteDialogDescription,
+                    Replies.OnTheRadar.reply1.name
+                ),
+            confirm = PreviewStringsFake.replyListDeleteDialogConfirm,
+            dismiss = PreviewStringsFake.replyListDeleteDialogDismiss,
             onDismiss = {},
             onConfirm = {}
         )

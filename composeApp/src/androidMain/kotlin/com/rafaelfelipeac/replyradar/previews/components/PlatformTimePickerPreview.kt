@@ -3,20 +3,21 @@ package com.rafaelfelipeac.replyradar.previews.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.datetime.PlatformTimePicker
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
+import com.rafaelfelipeac.replyradar.previews.PreviewStringsFake
+import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
 
 @Preview(showBackground = true)
 @Composable
 fun PlatformTimePickerPreview() {
-    ReplyRadarTheme(darkTheme = false) {
+    ReplyRadarPreviewWrapper(darkTheme = false) {
         PlatformTimePicker(
             selectedTime = null,
             selectedDate = null,
             onTimeSelected = {},
             onDismiss = {},
-            confirmButtonText = "OK",
-            dismissButtonText = "Cancelar",
-            pickerTimeTitle = "Escolha um horário"
+            confirmButtonText = PreviewStringsFake.replyListReminderTimePickerConfirmButton,
+            dismissButtonText = PreviewStringsFake.replyListReminderTimePickerDismissButton,
+            pickerTimeTitle = PreviewStringsFake.replyListReminderTimePickerTitle,
         )
     }
 }
@@ -24,15 +25,15 @@ fun PlatformTimePickerPreview() {
 @Preview(showBackground = true)
 @Composable
 fun PlatformTimePickerDarkPreview() {
-    ReplyRadarTheme(darkTheme = true) {
+    ReplyRadarPreviewWrapper(darkTheme = true) {
         PlatformTimePicker(
             selectedTime = null,
             selectedDate = null,
             onTimeSelected = {},
             onDismiss = {},
-            confirmButtonText = "OK",
-            dismissButtonText = "Cancelar",
-            pickerTimeTitle = "Escolha um horário"
+            confirmButtonText = PreviewStringsFake.replyListReminderTimePickerConfirmButton,
+            dismissButtonText = PreviewStringsFake.replyListReminderTimePickerDismissButton,
+            pickerTimeTitle = PreviewStringsFake.replyListReminderTimePickerTitle,
         )
     }
 }

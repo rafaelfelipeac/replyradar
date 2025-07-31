@@ -2,27 +2,21 @@ package com.rafaelfelipeac.replyradar.previews.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
-import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetActions
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetMode
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
+import com.rafaelfelipeac.replyradar.previews.Replies
+import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
 
 @Preview(showBackground = true)
 @Composable
-fun ReplyBottomSheetActionsPreview() {
-    ReplyRadarTheme(
+fun ReplyBottomSheetActionsPreview1() {
+    ReplyRadarPreviewWrapper(
         darkTheme = false
     ) {
         ReplyBottomSheetActions(
             state = ReplyBottomSheetState(
-                replyBottomSheetMode = ReplyBottomSheetMode.EDIT,
-                reply = Reply(
-                    id = 1,
-                    subject = "Message",
-                    name = "Contact",
-                    isResolved = false
-                )
+                replyBottomSheetMode = ReplyBottomSheetMode.CREATE
             ),
             onArchive = {},
             onResolve = {},
@@ -40,19 +34,38 @@ fun ReplyBottomSheetActionsPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun ReplyBottomSheetActionsDarkPreview() {
-    ReplyRadarTheme(
-        darkTheme = true
+fun ReplyBottomSheetActionsPreview2() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = false
     ) {
         ReplyBottomSheetActions(
             state = ReplyBottomSheetState(
                 replyBottomSheetMode = ReplyBottomSheetMode.EDIT,
-                reply = Reply(
-                    id = 1,
-                    subject = "Message",
-                    name = "Contact",
-                    isResolved = false
-                )
+                reply = Replies.OnTheRadar.reply1
+            ),
+            onArchive = {},
+            onResolve = {},
+            onDelete = {},
+            onSave = {},
+            onInvalidReminderValue = {},
+            selectedDate = null,
+            selectedTime = null,
+            reply = null,
+            name = Replies.OnTheRadar.reply1.name,
+            subject = Replies.OnTheRadar.reply1.subject
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyBottomSheetActionsDarkPreview1() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = true
+    ) {
+        ReplyBottomSheetActions(
+            state = ReplyBottomSheetState(
+                replyBottomSheetMode = ReplyBottomSheetMode.CREATE
             ),
             onArchive = {},
             onResolve = {},
@@ -64,6 +77,31 @@ fun ReplyBottomSheetActionsDarkPreview() {
             reply = null,
             name = "",
             subject = ""
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyBottomSheetActionsDarkPreview2() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = true
+    ) {
+        ReplyBottomSheetActions(
+            state = ReplyBottomSheetState(
+                replyBottomSheetMode = ReplyBottomSheetMode.EDIT,
+                reply = Replies.OnTheRadar.reply1
+            ),
+            onArchive = {},
+            onResolve = {},
+            onDelete = {},
+            onSave = {},
+            onInvalidReminderValue = {},
+            selectedDate = null,
+            selectedTime = null,
+            reply = null,
+            name = Replies.OnTheRadar.reply1.name,
+            subject = Replies.OnTheRadar.reply1.subject
         )
     }
 }

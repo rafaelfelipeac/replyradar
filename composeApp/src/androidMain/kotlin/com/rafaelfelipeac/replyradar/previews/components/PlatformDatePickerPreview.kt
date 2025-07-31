@@ -3,18 +3,19 @@ package com.rafaelfelipeac.replyradar.previews.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.datetime.PlatformDatePicker
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
+import com.rafaelfelipeac.replyradar.previews.PreviewStringsFake
+import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
 
 @Preview(showBackground = true)
 @Composable
 fun PlatformDatePickerPreview() {
-    ReplyRadarTheme(darkTheme = false) {
+    ReplyRadarPreviewWrapper(darkTheme = false) {
         PlatformDatePicker(
             selectedDate = null,
             selectedTime = null,
             onDateSelected = {},
-            confirmButtonText = "OK",
-            dismissButtonText = "Cancelar",
+            confirmButtonText = PreviewStringsFake.replyListReminderDatePickerConfirmButton,
+            dismissButtonText = PreviewStringsFake.replyListReminderDatePickerDismissButton,
             onTimeInvalidated = {},
             onDismiss = {}
         )
@@ -24,13 +25,13 @@ fun PlatformDatePickerPreview() {
 @Preview(showBackground = true)
 @Composable
 fun PlatformDatePickerDarkPreview() {
-    ReplyRadarTheme(darkTheme = true) {
+    ReplyRadarPreviewWrapper(darkTheme = true) {
         PlatformDatePicker(
             selectedDate = null,
             selectedTime = null,
             onDateSelected = {},
-            confirmButtonText = "OK",
-            dismissButtonText = "Cancelar",
+            confirmButtonText = PreviewStringsFake.replyListReminderDatePickerConfirmButton,
+            dismissButtonText = PreviewStringsFake.replyListReminderDatePickerDismissButton,
             onTimeInvalidated = {},
             onDismiss = {}
         )

@@ -1,28 +1,29 @@
 package com.rafaelfelipeac.replyradar.previews.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
-import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.ReplyTimestampInfo
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.replybottomsheet.ReplyBottomSheetState
+import com.rafaelfelipeac.replyradar.previews.Replies
+import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
 
 @Preview(showBackground = true)
 @Composable
 fun ReplyTimestampInfoPreview() {
-    ReplyRadarTheme(
+    ReplyRadarPreviewWrapper(
         darkTheme = false
     ) {
-        Column {
+        Column(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surface)
+        ) {
             ReplyTimestampInfo(
                 state = ReplyBottomSheetState(
-                    reply = Reply(
-                        id = 1,
-                        name = "Contact 1",
-                        subject = "Message 1",
-                        isResolved = false
-                    )
+                    reply = Replies.OnTheRadar.reply1
                 )
             )
         }
@@ -32,18 +33,16 @@ fun ReplyTimestampInfoPreview() {
 @Preview(showBackground = true)
 @Composable
 fun ReplyTimestampInfoDarkPreview() {
-    ReplyRadarTheme(
+    ReplyRadarPreviewWrapper(
         darkTheme = true
     ) {
-        Column {
+        Column(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surface)
+        ) {
             ReplyTimestampInfo(
                 state = ReplyBottomSheetState(
-                    reply = Reply(
-                        id = 1,
-                        name = "Contact 1",
-                        subject = "Message 1",
-                        isResolved = false
-                    )
+                    reply = Replies.OnTheRadar.reply1
                 )
             )
         }

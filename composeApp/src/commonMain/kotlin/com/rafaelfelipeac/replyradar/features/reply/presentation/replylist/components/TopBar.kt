@@ -1,5 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,6 +29,7 @@ fun TopBar(onActivityLogClick: () -> Unit, onSettingsClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .background(colorScheme.surface)
     ) {
         Text(
             modifier = Modifier

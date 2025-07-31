@@ -1,59 +1,47 @@
 package com.rafaelfelipeac.replyradar.previews.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.rafaelfelipeac.replyradar.core.theme.ReplyRadarTheme
-import com.rafaelfelipeac.replyradar.features.reply.domain.model.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components.ReplyList
+import com.rafaelfelipeac.replyradar.previews.Replies
+import com.rafaelfelipeac.replyradar.previews.ReplyRadarPreviewWrapper
 
 @Preview(showBackground = true)
 @Composable
 fun ReplyListPreview() {
-    ReplyRadarTheme(
+    ReplyRadarPreviewWrapper(
         darkTheme = false
     ) {
-        ReplyList(
-            replies = listOf(
-                Reply(
-                    id = 1,
-                    name = "Contact 1",
-                    subject = "Message 1",
-                    isResolved = false
-                ),
-                Reply(
-                    id = 2,
-                    name = "Contact 2",
-                    subject = "Message 2",
-                    isResolved = false
-                )
-            ),
-            onReplyClick = {}
-        )
+        Box(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
+        ) {
+            ReplyList(
+                replies = Replies.OnTheRadar.replies,
+                onReplyClick = {}
+            )
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun ReplyListDarkPreview() {
-    ReplyRadarTheme(
+    ReplyRadarPreviewWrapper(
         darkTheme = true
     ) {
-        ReplyList(
-            replies = listOf(
-                Reply(
-                    id = 1,
-                    name = "Contact 1",
-                    subject = "Message 1",
-                    isResolved = false
-                ),
-                Reply(
-                    id = 2,
-                    name = "Contact 2",
-                    subject = "Message 2",
-                    isResolved = false
-                )
-            ),
-            onReplyClick = {}
-        )
+        Box(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
+        ) {
+            ReplyList(
+                replies = Replies.OnTheRadar.replies,
+                onReplyClick = {}
+            )
+        }
     }
 }
