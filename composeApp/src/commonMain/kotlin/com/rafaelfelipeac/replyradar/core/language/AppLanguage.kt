@@ -6,6 +6,11 @@ enum class AppLanguage {
     GERMAN,
     FRENCH,
     SPANISH,
+    LATVIAN,
+    ITALIAN,
+    ARABIC,
+    HINDI,
+    JAPANESE,
     SYSTEM;
 
     companion object {
