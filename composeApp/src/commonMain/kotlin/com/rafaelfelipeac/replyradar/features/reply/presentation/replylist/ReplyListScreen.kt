@@ -115,7 +115,10 @@ fun ReplyListScreen(
     val strings = LocalReplyRadarStrings.current
     val notificationPermissionManager = LocalNotificationPermissionManager.current
 
-    val pagerState = rememberPagerState { PAGER_PAGE_COUNT }
+    val pagerState = rememberPagerState(
+        initialPage = state.selectedTabIndex,
+        pageCount = { PAGER_PAGE_COUNT }
+    )
     val snackbarHostState = remember { SnackbarHostState() }
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true

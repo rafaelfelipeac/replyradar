@@ -13,7 +13,7 @@ import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
 
 @Preview(showBackground = true)
 @Composable
-fun ReplyTabPreview() {
+fun ReplyTabOnTheRadarPreview() {
     ReplyRadarPreviewWrapper(darkTheme = false) {
         TabRow(
             selectedTabIndex = 0,
@@ -46,7 +46,7 @@ fun ReplyTabPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun ReplyTabDarkPreview() {
+fun ReplyTabDarkOnTheRadarPreview() {
     ReplyRadarPreviewWrapper(
         darkTheme = true
     ) {
@@ -56,6 +56,144 @@ fun ReplyTabDarkPreview() {
             indicator = { tabPositions ->
                 TabRowDefaults.SecondaryIndicator(
                     modifier = Modifier.tabIndicatorOffset(tabPositions[0]),
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
+        ) {
+            ReplyTab(
+                selected = true,
+                onClick = {},
+                text = PreviewStringsFake.replyListTabOnTheRadar
+            )
+            ReplyTab(
+                selected = false,
+                onClick = {},
+                text = PreviewStringsFake.replyListTabResolved
+            )
+            ReplyTab(
+                selected = false,
+                onClick = {},
+                text = PreviewStringsFake.replyListTabArchived
+            )
+        }
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyTabResolvedPreview() {
+    ReplyRadarPreviewWrapper(darkTheme = false) {
+        TabRow(
+            selectedTabIndex = 1,
+            containerColor = MaterialTheme.colorScheme.background,
+            indicator = { tabPositions ->
+                TabRowDefaults.SecondaryIndicator(
+                    modifier = Modifier.tabIndicatorOffset(tabPositions[1]),
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
+        ) {
+            ReplyTab(
+                selected = true,
+                onClick = {},
+                text = PreviewStringsFake.replyListTabOnTheRadar
+            )
+            ReplyTab(
+                selected = false,
+                onClick = {},
+                text = PreviewStringsFake.replyListTabResolved
+            )
+            ReplyTab(
+                selected = false,
+                onClick = {},
+                text = PreviewStringsFake.replyListTabArchived
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyTabDarkResolvedPreview() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = true
+    ) {
+        TabRow(
+            selectedTabIndex = 1,
+            containerColor = MaterialTheme.colorScheme.background,
+            indicator = { tabPositions ->
+                TabRowDefaults.SecondaryIndicator(
+                    modifier = Modifier.tabIndicatorOffset(tabPositions[1]),
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
+        ) {
+            ReplyTab(
+                selected = true,
+                onClick = {},
+                text = PreviewStringsFake.replyListTabOnTheRadar
+            )
+            ReplyTab(
+                selected = false,
+                onClick = {},
+                text = PreviewStringsFake.replyListTabResolved
+            )
+            ReplyTab(
+                selected = false,
+                onClick = {},
+                text = PreviewStringsFake.replyListTabArchived
+            )
+        }
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyTabArchivedPreview() {
+    ReplyRadarPreviewWrapper(darkTheme = false) {
+        TabRow(
+            selectedTabIndex = 2,
+            containerColor = MaterialTheme.colorScheme.background,
+            indicator = { tabPositions ->
+                TabRowDefaults.SecondaryIndicator(
+                    modifier = Modifier.tabIndicatorOffset(tabPositions[2]),
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
+        ) {
+            ReplyTab(
+                selected = true,
+                onClick = {},
+                text = PreviewStringsFake.replyListTabOnTheRadar
+            )
+            ReplyTab(
+                selected = false,
+                onClick = {},
+                text = PreviewStringsFake.replyListTabResolved
+            )
+            ReplyTab(
+                selected = false,
+                onClick = {},
+                text = PreviewStringsFake.replyListTabArchived
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ReplyTabDarkArchivedPreview() {
+    ReplyRadarPreviewWrapper(
+        darkTheme = true
+    ) {
+        TabRow(
+            selectedTabIndex = 2,
+            containerColor = MaterialTheme.colorScheme.background,
+            indicator = { tabPositions ->
+                TabRowDefaults.SecondaryIndicator(
+                    modifier = Modifier.tabIndicatorOffset(tabPositions[2]),
                     color = MaterialTheme.colorScheme.secondary
                 )
             }

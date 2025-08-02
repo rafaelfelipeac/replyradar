@@ -58,7 +58,7 @@ fun ReplyListScreenResolvedEmptyPreview() {
             state = ReplyListState(
                 selectedTabIndex = 1,
                 isLoading = false,
-                replies = emptyList()
+                resolvedReplies = emptyList()
             ),
             effect = emptyFlow(),
             onIntent = {},
@@ -78,7 +78,7 @@ fun ReplyListScreenResolvedPreview() {
             state = ReplyListState(
                 selectedTabIndex = 1,
                 isLoading = false,
-                replies = Replies.Resolved.replies
+                resolvedReplies = Replies.Resolved.replies
             ),
             effect = emptyFlow(),
             onIntent = {},
@@ -98,7 +98,7 @@ fun ReplyListScreenArchivedEmptyPreview() {
             state = ReplyListState(
                 selectedTabIndex = 2,
                 isLoading = false,
-                replies = emptyList()
+                archivedReplies = emptyList()
             ),
             effect = emptyFlow(),
             onIntent = {},
@@ -118,7 +118,7 @@ fun ReplyListScreenArchivedPreview() {
             state = ReplyListState(
                 selectedTabIndex = 2,
                 isLoading = false,
-                replies = Replies.Archived.replies
+                archivedReplies = Replies.Archived.replies
             ),
             effect = emptyFlow(),
             onIntent = {},
@@ -178,7 +178,7 @@ fun ReplyListScreenResolvedEmptyDarkPreview() {
             state = ReplyListState(
                 selectedTabIndex = 1,
                 isLoading = false,
-                replies = emptyList()
+                resolvedReplies = emptyList()
             ),
             effect = emptyFlow(),
             onIntent = {},
@@ -198,7 +198,7 @@ fun ReplyListScreenResolvedDarkPreview() {
             state = ReplyListState(
                 selectedTabIndex = 1,
                 isLoading = false,
-                replies = Replies.Resolved.replies
+                resolvedReplies = Replies.Resolved.replies
             ),
             effect = emptyFlow(),
             onIntent = {},
@@ -218,7 +218,7 @@ fun ReplyListScreenArchivedEmptyDarkPreview() {
             state = ReplyListState(
                 selectedTabIndex = 2,
                 isLoading = false,
-                replies = emptyList()
+                archivedReplies = emptyList()
             ),
             effect = emptyFlow(),
             onIntent = {},
@@ -238,7 +238,7 @@ fun ReplyListScreenArchivedDarkPreview() {
             state = ReplyListState(
                 selectedTabIndex = 2,
                 isLoading = false,
-                replies = Replies.Archived.replies
+                archivedReplies = Replies.Archived.replies
             ),
             effect = emptyFlow(),
             onIntent = {},
