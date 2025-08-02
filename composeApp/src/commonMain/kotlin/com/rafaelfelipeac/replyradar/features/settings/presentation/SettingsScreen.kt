@@ -40,8 +40,8 @@ import com.rafaelfelipeac.replyradar.core.common.ui.settingsAppVersionOffset
 import com.rafaelfelipeac.replyradar.core.external.openEmailApp
 import com.rafaelfelipeac.replyradar.core.external.openPlayStoreApp
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage
-import com.rafaelfelipeac.replyradar.core.language.AppLanguage.ENGLISH
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage.ARABIC
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage.ENGLISH
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage.FRENCH
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage.GERMAN
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage.HINDI
