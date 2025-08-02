@@ -2,7 +2,7 @@ package com.rafaelfelipeac.replyradar.previews.shared.fakes
 
 import com.rafaelfelipeac.replyradar.core.strings.Strings
 
-// ktlint-disable max-line-length
+@Suppress("MaxLineLength")
 object PreviewStringsFake : Strings {
     override val appName = "Reply Radar"
 
