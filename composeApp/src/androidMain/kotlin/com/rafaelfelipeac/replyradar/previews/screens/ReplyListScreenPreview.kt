@@ -8,6 +8,11 @@ import com.rafaelfelipeac.replyradar.previews.shared.Replies
 import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
 import kotlinx.coroutines.flow.emptyFlow
 
+// Note: We're not using @PreviewParameter here due to limitations in Compose Preview when used in Kotlin Multiplatform (KMP).
+// Although @PreviewParameter is ideal for generating multiple previews from a provider, it causes runtime errors (NPE)
+// in KMP projects because the IDE tries to invoke the function without a parameter.
+// As a workaround, we use separate @Preview-annotated functions with hardcoded configurations instead.
+
 @Preview(showBackground = true)
 @Composable
 fun ReplyListScreenOnTheRadarEmptyPreview() {
