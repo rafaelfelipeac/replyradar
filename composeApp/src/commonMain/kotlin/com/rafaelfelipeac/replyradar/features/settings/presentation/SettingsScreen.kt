@@ -64,15 +64,33 @@ import replyradar.composeapp.generated.resources.Res.drawable
 import replyradar.composeapp.generated.resources.ic_email
 import replyradar.composeapp.generated.resources.ic_rate
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(
+fun SettingsScreenRoot(
     viewModel: SettingsViewModel = koinViewModel(),
+    appVersion: String = getAppVersion(),
     onBackClick: () -> Unit,
     onActivityLogClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    SettingsScreen(
+        state = state,
+        appVersion = appVersion,
+        onBackClick = onBackClick,
+        onActivityLogClick = onActivityLogClick,
+        onIntent = { viewModel.onIntent(it) }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SettingsScreen(
+    state: SettingsState,
+    appVersion: String,
+    onBackClick: () -> Unit,
+    onActivityLogClick: () -> Unit,
+    onIntent: (SettingsIntent) -> Unit
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -109,26 +127,27 @@ fun SettingsScreen(
                         .padding(vertical = paddingMedium)
                 )
 
-                Theme(state = state, onIntent = { viewModel.onIntent(it) })
+                Theme(state = state, onIntent = onIntent)
 
                 HorizontalDivider(
                     modifier = Modifier
                         .padding(vertical = paddingMedium)
                 )
 
-                Language(state = state, onIntent = { viewModel.onIntent(it) })
+                Language(state = state, onIntent = onIntent)
 
                 HorizontalDivider(
                     modifier = Modifier
                         .padding(vertical = paddingMedium)
                 )
 
-                App(onIntent = { viewModel.onIntent(it) })
+                App(onIntent = onIntent)
             }
 
             AppVersionFooter(
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
+                    .align(Alignment.BottomCenter),
+                appVersion = appVersion
             )
         }
     }
@@ -361,7 +380,10 @@ fun SettingsItem(text: String, description: String, icon: DrawableResource, onCl
 }
 
 @Composable
-fun AppVersionFooter(modifier: Modifier = Modifier) {
+fun AppVersionFooter(
+    modifier: Modifier = Modifier,
+    appVersion: String
+) {
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -373,7 +395,7 @@ fun AppVersionFooter(modifier: Modifier = Modifier) {
         )
 
         Text(
-            text = "${LocalReplyRadarStrings.current.settingsAppVersion} ${getAppVersion()}",
+            text = "${LocalReplyRadarStrings.current.settingsAppVersion} $appVersion",
             style = typography.bodySmall,
             modifier = Modifier
                 .align(Alignment.Center)

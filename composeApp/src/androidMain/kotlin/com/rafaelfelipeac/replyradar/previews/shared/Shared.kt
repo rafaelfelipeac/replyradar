@@ -5,6 +5,8 @@ import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActio
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionTargetType
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType
 
+val appVersion = "1.0.0 - Preview"
+
 sealed class Replies {
 
     data object OnTheRadar : Replies() {

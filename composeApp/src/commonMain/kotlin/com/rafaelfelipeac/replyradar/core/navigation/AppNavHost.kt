@@ -17,7 +17,7 @@ import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityL
 import com.rafaelfelipeac.replyradar.features.activitylog.presentation.ActivityLogViewModel
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreenRoot
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListViewModel
-import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsScreen
+import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsScreenRoot
 import com.rafaelfelipeac.replyradar.features.settings.presentation.SettingsViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -52,7 +52,7 @@ fun AppNavHost(navController: NavHostController, pendingReplyId: Long?) {
             ) {
                 val viewModel = koinViewModel<SettingsViewModel>()
 
-                SettingsScreen(
+                SettingsScreenRoot(
                     viewModel = viewModel,
                     onBackClick = { navController.popBackStack() },
                     onActivityLogClick = { navController.navigate(ActivityLog) }
