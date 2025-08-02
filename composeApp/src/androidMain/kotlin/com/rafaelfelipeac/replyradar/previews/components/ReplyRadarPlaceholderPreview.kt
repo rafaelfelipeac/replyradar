@@ -9,8 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRadarPlaceholder
+import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
 import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
-import com.rafaelfelipeac.replyradar.previews.shared.fakes.PreviewStringsFake
 
 @Preview(showBackground = true)
 @Composable
@@ -25,7 +25,7 @@ fun ReplyRadarPlaceholderPreview() {
             contentAlignment = Alignment.Center
         ) {
             ReplyRadarPlaceholder(
-                message = PreviewStringsFake.replyListPlaceholderOnTheRadar
+                message = LocalReplyRadarStrings.current.replyListPlaceholderOnTheRadar
             )
         }
     }
@@ -44,7 +44,7 @@ fun ReplyRadarPlaceholderDarkPreview() {
             contentAlignment = Alignment.Center
         ) {
             ReplyRadarPlaceholder(
-                message = PreviewStringsFake.replyListPlaceholderOnTheRadar
+                message = LocalReplyRadarStrings.current.replyListPlaceholderOnTheRadar
             )
         }
     }

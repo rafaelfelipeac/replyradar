@@ -94,12 +94,12 @@ fun ReplyTabResolvedPreview() {
             }
         ) {
             ReplyTab(
-                selected = true,
+                selected = false,
                 onClick = {},
                 text = PreviewStringsFake.replyListTabOnTheRadar
             )
             ReplyTab(
-                selected = false,
+                selected = true,
                 onClick = {},
                 text = PreviewStringsFake.replyListTabResolved
             )
@@ -129,12 +129,12 @@ fun ReplyTabDarkResolvedPreview() {
             }
         ) {
             ReplyTab(
-                selected = true,
+                selected = false,
                 onClick = {},
                 text = PreviewStringsFake.replyListTabOnTheRadar
             )
             ReplyTab(
-                selected = false,
+                selected = true,
                 onClick = {},
                 text = PreviewStringsFake.replyListTabResolved
             )
@@ -162,7 +162,7 @@ fun ReplyTabArchivedPreview() {
             }
         ) {
             ReplyTab(
-                selected = true,
+                selected = false,
                 onClick = {},
                 text = PreviewStringsFake.replyListTabOnTheRadar
             )
@@ -172,7 +172,7 @@ fun ReplyTabArchivedPreview() {
                 text = PreviewStringsFake.replyListTabResolved
             )
             ReplyTab(
-                selected = false,
+                selected = true,
                 onClick = {},
                 text = PreviewStringsFake.replyListTabArchived
             )
@@ -197,7 +197,7 @@ fun ReplyTabDarkArchivedPreview() {
             }
         ) {
             ReplyTab(
-                selected = true,
+                selected = false,
                 onClick = {},
                 text = PreviewStringsFake.replyListTabOnTheRadar
             )
@@ -207,7 +207,7 @@ fun ReplyTabDarkArchivedPreview() {
                 text = PreviewStringsFake.replyListTabResolved
             )
             ReplyTab(
-                selected = false,
+                selected = true,
                 onClick = {},
                 text = PreviewStringsFake.replyListTabArchived
             )

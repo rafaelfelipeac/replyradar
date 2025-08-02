@@ -22,7 +22,7 @@ fun ReplyReminderPreview() {
             selectedDate = now.date,
             onSelectedTimeChange = {},
             onSelectedDateChange = {},
-            closeKeyboard = { null }
+            closeKeyboard = { }
         )
     }
 }
@@ -41,7 +41,7 @@ fun ReplyReminderDarkPreview() {
             selectedDate = now.date,
             onSelectedTimeChange = {},
             onSelectedDateChange = {},
-            closeKeyboard = { null }
+            closeKeyboard = { }
         )
     }
 }
