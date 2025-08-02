@@ -20,7 +20,7 @@ fun SettingsScreenEnglishPreview() {
             state = SettingsState(
                 theme = LIGHT,
                 language = ENGLISH,
-                isLoading = false,
+                isLoading = false
             ),
             onBackClick = {},
             onActivityLogClick = {},
@@ -40,7 +40,7 @@ fun SettingsScreenDarkEnglishPreview() {
             state = SettingsState(
                 theme = DARK,
                 language = ENGLISH,
-                isLoading = false,
+                isLoading = false
             ),
             onBackClick = {},
             onActivityLogClick = {},

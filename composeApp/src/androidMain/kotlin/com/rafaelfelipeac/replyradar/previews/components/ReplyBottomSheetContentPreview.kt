@@ -16,7 +16,7 @@ fun ReplyBottomSheetContentPreview1() {
     ) {
         ReplyBottomSheetContent(
             replyBottomSheetState = ReplyBottomSheetState(
-                replyBottomSheetMode = ReplyBottomSheetMode.CREATE,
+                replyBottomSheetMode = ReplyBottomSheetMode.CREATE
             ),
             onSave = {},
             onResolve = {},
@@ -24,8 +24,6 @@ fun ReplyBottomSheetContentPreview1() {
             onDelete = {},
             onInvalidReminderValue = {}
         )
-
-
     }
 }
 
@@ -49,7 +47,6 @@ fun ReplyBottomSheetContentPreview2() {
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun ReplyBottomSheetContentDarkPreview1() {
@@ -58,7 +55,7 @@ fun ReplyBottomSheetContentDarkPreview1() {
     ) {
         ReplyBottomSheetContent(
             replyBottomSheetState = ReplyBottomSheetState(
-                replyBottomSheetMode = ReplyBottomSheetMode.CREATE,
+                replyBottomSheetMode = ReplyBottomSheetMode.CREATE
             ),
             onSave = {},
             onResolve = {},
@@ -68,7 +65,6 @@ fun ReplyBottomSheetContentDarkPreview1() {
         )
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

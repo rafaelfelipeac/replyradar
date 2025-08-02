@@ -39,7 +39,6 @@ fun ActivityLogScreenPreview() {
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun ActivityLogScreenEmptyDarkPreview() {

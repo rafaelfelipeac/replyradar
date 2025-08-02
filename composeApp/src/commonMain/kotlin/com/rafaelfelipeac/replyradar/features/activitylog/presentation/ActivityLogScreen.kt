@@ -98,10 +98,7 @@ fun ActivityLogScreenRoot(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ActivityLogScreen(
-    state: ActivityLogState,
-    onBackClick: () -> Unit
-) {
+fun ActivityLogScreen(state: ActivityLogState, onBackClick: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(

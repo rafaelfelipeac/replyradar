@@ -3,8 +3,8 @@ package com.rafaelfelipeac.replyradar.previews.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.datetime.PlatformTimePicker
-import com.rafaelfelipeac.replyradar.previews.shared.fakes.PreviewStringsFake
 import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
+import com.rafaelfelipeac.replyradar.previews.shared.fakes.PreviewStringsFake
 
 @Preview(showBackground = true)
 @Composable
@@ -17,7 +17,7 @@ fun PlatformTimePickerPreview() {
             onDismiss = {},
             confirmButtonText = PreviewStringsFake.replyListReminderTimePickerConfirmButton,
             dismissButtonText = PreviewStringsFake.replyListReminderTimePickerDismissButton,
-            pickerTimeTitle = PreviewStringsFake.replyListReminderTimePickerTitle,
+            pickerTimeTitle = PreviewStringsFake.replyListReminderTimePickerTitle
         )
     }
 }
@@ -33,7 +33,7 @@ fun PlatformTimePickerDarkPreview() {
             onDismiss = {},
             confirmButtonText = PreviewStringsFake.replyListReminderTimePickerConfirmButton,
             dismissButtonText = PreviewStringsFake.replyListReminderTimePickerDismissButton,
-            pickerTimeTitle = PreviewStringsFake.replyListReminderTimePickerTitle,
+            pickerTimeTitle = PreviewStringsFake.replyListReminderTimePickerTitle
         )
     }
 }

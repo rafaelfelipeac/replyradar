@@ -21,7 +21,7 @@ fun ReplyButtonPreview() {
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.surface)
                 .padding(8.dp)
-        ){
+        ) {
             ReplyButton(
                 modifier = Modifier,
                 text = "Button",

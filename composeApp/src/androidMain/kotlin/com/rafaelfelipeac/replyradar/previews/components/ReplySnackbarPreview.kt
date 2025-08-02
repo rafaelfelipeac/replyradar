@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rafaelfelipeac.replyradar.core.theme.snackbarBackgroundColor
-import com.rafaelfelipeac.replyradar.previews.shared.fakes.PreviewStringsFake
 import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
+import com.rafaelfelipeac.replyradar.previews.shared.fakes.PreviewStringsFake
 
 // ReplySnackbar can't be used directly in Preview because SnackbarHostState requires an active SnackbarData,
 // which is only created at runtime via showSnackbar() inside a coroutine.

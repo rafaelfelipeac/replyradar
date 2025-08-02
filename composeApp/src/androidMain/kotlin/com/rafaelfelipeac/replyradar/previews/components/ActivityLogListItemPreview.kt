@@ -21,7 +21,6 @@ import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActio
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Resolve
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Scheduled
 import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Unarchive
-import com.rafaelfelipeac.replyradar.features.useractions.domain.model.UserActionType.Unknown
 import com.rafaelfelipeac.replyradar.previews.shared.Replies
 import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
 import kotlinx.datetime.Clock
@@ -164,7 +163,6 @@ fun PreviewCreateRate() = PreviewAction(
     name = null,
     timeOffsetMillis = 13_000_000L
 )
-
 
 @Preview(showBackground = true)
 @Composable

@@ -11,10 +11,7 @@ import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.Reply
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState
 
 @Composable
-fun RepliesArchivedScreen(
-    state: ReplyListState,
-    onIntent: (ReplyListScreenIntent) -> Unit
-) {
+fun RepliesArchivedScreen(state: ReplyListState, onIntent: (ReplyListScreenIntent) -> Unit) {
     if (state.archivedReplies.isEmpty()) {
         ReplyRadarPlaceholder(message = LocalReplyRadarStrings.current.replyListPlaceholderArchived)
     } else {

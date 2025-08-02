@@ -380,10 +380,7 @@ fun SettingsItem(text: String, description: String, icon: DrawableResource, onCl
 }
 
 @Composable
-fun AppVersionFooter(
-    modifier: Modifier = Modifier,
-    appVersion: String
-) {
+fun AppVersionFooter(modifier: Modifier = Modifier, appVersion: String) {
     Box(
         modifier = modifier
             .fillMaxWidth()

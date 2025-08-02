@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyConfirmationDialog
 import com.rafaelfelipeac.replyradar.core.util.format
-import com.rafaelfelipeac.replyradar.previews.shared.fakes.PreviewStringsFake
 import com.rafaelfelipeac.replyradar.previews.shared.Replies
 import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
+import com.rafaelfelipeac.replyradar.previews.shared.fakes.PreviewStringsFake
 
 @Preview
 @Composable
@@ -17,10 +17,10 @@ fun ReplyConfirmationDialogPreview() {
         ReplyConfirmationDialog(
             title = PreviewStringsFake.replyListDeleteDialogTitle,
             description =
-                format(
-                    PreviewStringsFake.replyListDeleteDialogDescription,
-                    Replies.OnTheRadar.reply1.name
-                ),
+            format(
+                PreviewStringsFake.replyListDeleteDialogDescription,
+                Replies.OnTheRadar.reply1.name
+            ),
             confirm = PreviewStringsFake.replyListDeleteDialogConfirm,
             dismiss = PreviewStringsFake.replyListDeleteDialogDismiss,
             onDismiss = {},
@@ -38,10 +38,10 @@ fun ReplyConfirmationDialogDarkPreview() {
         ReplyConfirmationDialog(
             title = PreviewStringsFake.replyListDeleteDialogTitle,
             description =
-                format(
-                    PreviewStringsFake.replyListDeleteDialogDescription,
-                    Replies.OnTheRadar.reply1.name
-                ),
+            format(
+                PreviewStringsFake.replyListDeleteDialogDescription,
+                Replies.OnTheRadar.reply1.name
+            ),
             confirm = PreviewStringsFake.replyListDeleteDialogConfirm,
             dismiss = PreviewStringsFake.replyListDeleteDialogDismiss,
             onDismiss = {},

@@ -9,10 +9,7 @@ import com.rafaelfelipeac.replyradar.previews.shared.fakes.FakeNotificationPermi
 import com.rafaelfelipeac.replyradar.previews.shared.fakes.PreviewStringsFake
 
 @Composable
-fun ReplyRadarPreviewWrapper(
-    darkTheme: Boolean = false,
-    content: @Composable () -> Unit
-) {
+fun ReplyRadarPreviewWrapper(darkTheme: Boolean = false, content: @Composable () -> Unit) {
     CompositionLocalProvider(
         LocalReplyRadarStrings provides PreviewStringsFake,
         LocalNotificationPermissionManager provides FakeNotificationPermissionManager()

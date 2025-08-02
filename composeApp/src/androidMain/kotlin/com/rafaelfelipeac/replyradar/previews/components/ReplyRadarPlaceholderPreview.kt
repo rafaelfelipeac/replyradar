@@ -9,8 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.core.common.ui.components.ReplyRadarPlaceholder
-import com.rafaelfelipeac.replyradar.previews.shared.fakes.PreviewStringsFake
 import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
+import com.rafaelfelipeac.replyradar.previews.shared.fakes.PreviewStringsFake
 
 @Preview(showBackground = true)
 @Composable

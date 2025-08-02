@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListScreen
 import com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.ReplyListState
-import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
 import com.rafaelfelipeac.replyradar.previews.shared.Replies
+import com.rafaelfelipeac.replyradar.previews.shared.ReplyRadarPreviewWrapper
 import kotlinx.coroutines.flow.emptyFlow
 
 @Preview(showBackground = true)
