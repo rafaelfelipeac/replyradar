@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## [v1.6.0] - 2025-08-02
+
+### Added
+- Support for 8 new languages: German, French, Spanish, Latvian, Italian, Arabic, Hindi, and Japanese.
+- Preview functions for all major components and screens, covering light/dark themes, different states, and tabs.
+
 ## [v1.5.0] - 2025-07-24
 
 ### Added
