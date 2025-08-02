@@ -1,6 +1,7 @@
 package com.rafaelfelipeac.replyradar.core.common.ui.components
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,6 +15,7 @@ fun ReplyRadarPlaceholder(message: String) {
         modifier = Modifier
             .padding(horizontal = paddingMedium),
         text = message,
+        color = MaterialTheme.colorScheme.onSurface,
         textAlign = TextAlign.Center,
         style = typography.headlineSmall
     )

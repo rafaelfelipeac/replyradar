@@ -1,5 +1,6 @@
 package com.rafaelfelipeac.replyradar.core.common.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -114,7 +115,8 @@ fun ReplyReminder(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = paddingSmall),
+            .padding(top = paddingSmall)
+            .background(colorScheme.surface),
         horizontalArrangement = Arrangement.Start
     ) {
         IconButton(
@@ -167,7 +169,8 @@ private fun ReminderText(reminderText: String?, onDeleteClick: () -> Unit) {
     if (reminderText != null) {
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .background(colorScheme.surface),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -175,7 +178,8 @@ private fun ReminderText(reminderText: String?, onDeleteClick: () -> Unit) {
                 modifier = Modifier
                     .padding(start = paddingSmall, top = paddingSmall),
                 text = reminderText,
-                style = typography.bodySmall
+                style = typography.bodySmall,
+                color = colorScheme.onSurface
             )
 
             IconButton(

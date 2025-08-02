@@ -1,5 +1,6 @@
 package com.rafaelfelipeac.replyradar.features.reply.presentation.replylist.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,6 +34,7 @@ fun ReplyList(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .background(colorScheme.surface)
             ) {
                 ReplyListItem(
                     modifier = Modifier
