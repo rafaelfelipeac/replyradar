@@ -41,8 +41,13 @@ import com.rafaelfelipeac.replyradar.core.external.openEmailApp
 import com.rafaelfelipeac.replyradar.core.external.openPlayStoreApp
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage.ENGLISH
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage.ARABIC
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage.FRENCH
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage.GERMAN
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage.HINDI
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage.ITALIAN
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage.JAPANESE
+import com.rafaelfelipeac.replyradar.core.language.AppLanguage.LATVIAN
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage.PORTUGUESE
 import com.rafaelfelipeac.replyradar.core.language.AppLanguage.SPANISH
 import com.rafaelfelipeac.replyradar.core.strings.LocalReplyRadarStrings
@@ -285,6 +290,11 @@ private fun LanguageOptions(state: SettingsState, onLanguageSelected: (AppLangua
     LanguageOption(GERMAN, state.language, onLanguageSelected)
     LanguageOption(FRENCH, state.language, onLanguageSelected)
     LanguageOption(SPANISH, state.language, onLanguageSelected)
+    LanguageOption(LATVIAN, state.language, onLanguageSelected)
+    LanguageOption(ITALIAN, state.language, onLanguageSelected)
+    LanguageOption(ARABIC, state.language, onLanguageSelected)
+    LanguageOption(HINDI, state.language, onLanguageSelected)
+    LanguageOption(JAPANESE, state.language, onLanguageSelected)
     LanguageOption(AppLanguage.SYSTEM, state.language, onLanguageSelected)
 }
 
@@ -319,11 +329,16 @@ private fun LanguageOption(
 
 @Composable
 private fun getLanguageLabel(language: AppLanguage) = when (language) {
-    ENGLISH -> LocalReplyRadarStrings.current.settingsLanguageEnglish
-    PORTUGUESE -> LocalReplyRadarStrings.current.settingsLanguagePortuguese
-    GERMAN -> LocalReplyRadarStrings.current.settingsLanguageGerman
-    FRENCH -> LocalReplyRadarStrings.current.settingsLanguageFrench
-    SPANISH -> LocalReplyRadarStrings.current.settingsLanguageSpanish
+    AppLanguage.ENGLISH -> "English"
+    AppLanguage.PORTUGUESE -> "Português"
+    AppLanguage.GERMAN -> "Deutsch"
+    AppLanguage.FRENCH -> "Français"
+    AppLanguage.SPANISH -> "Español"
+    AppLanguage.LATVIAN -> "Latviešu"
+    AppLanguage.ITALIAN -> "Italiano"
+    AppLanguage.ARABIC -> "العربية"
+    AppLanguage.HINDI -> "हिन्दी"
+    AppLanguage.JAPANESE -> "日本語"
     AppLanguage.SYSTEM -> LocalReplyRadarStrings.current.settingsLanguageSystem
 }
 
